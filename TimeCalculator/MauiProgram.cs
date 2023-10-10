@@ -17,10 +17,13 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSansRegular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSansSemibold.ttf", "OpenSansSemibold");
+			}).ConfigureEssentials(essentials =>
+			{
+				essentials.UseVersionTracking();
 			});
 
 #if DEBUG
-	builder.Logging.AddDebug();
+		builder.Logging.AddDebug();
 #endif
 
 		return builder.Build();
