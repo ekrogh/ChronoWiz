@@ -144,7 +144,6 @@
 				>
 				<Setter Property="VerticalOptions" Value="Center" />
 				<Setter Property="TextColor" Value="Black" />
-				<Setter Property="IsTabStop" Value="True" />
 				<Setter Property="IsEnabled" Value="True" />
 				<Setter Property="FontFamily" Value="Courier" />
 				<Setter Property="FontSize" Value="Default" />
@@ -158,7 +157,6 @@
 				<Setter Property="HorizontalOptions" Value="StartAndExpand" />
 				<Setter Property="VerticalOptions" Value="Center" />
 				<Setter Property="TextColor" Value="Black" />
-				<Setter Property="IsTabStop" Value="True" />
 				<Setter Property="IsEnabled" Value="True" />
 				<Setter Property="FontSize" Value="Default" />
 				<Setter Property="FontAttributes" Value="Bold" />
