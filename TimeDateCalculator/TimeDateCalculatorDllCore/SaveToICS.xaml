@@ -3,7 +3,7 @@
 	x:Class="TimeDateCalculatorDll.SaveToICS"
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:local="clr-namespace:TimeDateCalculatorDll;assembly=TimeDateCalculatorDll"
+	xmlns:local="clr-namespace:TimeDateCalculatorDll;assembly=TimeDateCalculatorDllCore"
 	x:Name="SaveToICSContentPageName"
 	>
 
@@ -16,7 +16,6 @@
 				TargetType="Label"
 				>
 				<Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
-				<Setter Property="IsTabStop" Value="False" />
 				<Setter Property="IsEnabled" Value="False" />
 			</Style>
 
@@ -28,7 +27,6 @@
 				<Setter Property="BackgroundColor" Value="{AppThemeBinding Light=Yellow, Dark=#FF00004B}" />
 				<Setter Property="TextColor" Value="{AppThemeBinding Light=Blue, Dark=#FFFFFFB4}" />
 				<Setter Property="HorizontalTextAlignment" Value="Start" />
-				<Setter Property="IsTabStop" Value="True" />
 				<Setter Property="IsEnabled" Value="True" />
 			</Style>
 
@@ -39,7 +37,6 @@
 				<Setter Property="BorderColor" Value="Gray" />
 				<Setter Property="TextColor" Value="{AppThemeBinding Light=#FF579AE5, Dark=#FF9E5B10}" />
 				<Setter Property="BorderWidth" Value="0.5" />
-				<Setter Property="IsTabStop" Value="True" />
 				<Setter Property="IsEnabled" Value="True" />
 			</Style>
 
@@ -64,14 +61,12 @@
 				<Image
 					Margin="0,0,0,20"
 					Source="{local:ImageResource TimeDateCalculatorDll.SaveToIcs.png}"
-					IsTabStop="False"
 					IsEnabled="False"
 					/>
 
 				<Label
 					Text="Summary (&quot;Event Name&quot;)"
 					Style="{StaticResource baseLabelStyle}"
-					IsTabStop="False"
 					IsEnabled="False"
 					/>
 				<Entry
@@ -79,14 +74,12 @@
 					Style="{StaticResource baseEntryStyle}"
 					Placeholder="Summary"
 					ReturnType="Next"
-					TabIndex="0"
 					Keyboard="Text"
 					/>
 
 				<Label
 					Text="Description"
 					Style="{StaticResource baseLabelStyle}"
-					IsTabStop="False"
 					IsEnabled="False"
 					/>
 				<Entry
@@ -94,7 +87,6 @@
 					Style="{StaticResource baseEntryStyle}"
 					Placeholder="Description"
 					ReturnType="Next"
-					TabIndex="1"
 					Keyboard="Text"
 					/>
 
@@ -102,14 +94,12 @@
 					Text="Location"
 					Style="{StaticResource baseLabelStyle}"
 					IsEnabled="False"
-					IsTabStop="False"
 					/>
 				<Entry
 					x:Name="LocationEntry"
 					Style="{StaticResource baseEntryStyle}"
 					Placeholder="Location"
 					ReturnType="Next"
-					TabIndex="2"
 					Keyboard="Text"
 					/>
 
@@ -118,7 +108,6 @@
 					Clicked="SaveICSButton_Clicked"
 					Style="{DynamicResource DynamicBaseButtonStyle}"
 					Text="Save to .ics file"
-					TabIndex="3"
 					/>
 
 				<Button
@@ -126,7 +115,6 @@
 					Clicked="FileSaveToCancelButton_Clicked"
 					IsVisible="False"
 					Style="{DynamicResource DynamicBaseButtonStyle}"
-					TabIndex="4"
 					Text="Cancel" />
 
 			</StackLayout>

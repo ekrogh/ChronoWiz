@@ -1,15 +1,15 @@
-
+using TimeDateCalculator;
 
 namespace TimeDateCalculatorDll;
 
 public static class MauiProgram
 {
-    public static MauiApp CreateMauiApp()
-    {
-        var builder = MauiApp.CreateBuilder();
-        builder
-            .UseMauiApp<App>();
+	public static MauiApp CreateMauiApp()
+	{
+		var builder = MauiApp.CreateBuilder();
+		builder
+			.UseMauiApp<App>();
 
-        return builder.Build();
-    }
+		return builder.Build();
+	}
 }

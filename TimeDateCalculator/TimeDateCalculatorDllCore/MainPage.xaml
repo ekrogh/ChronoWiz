@@ -29,7 +29,6 @@
 				>
 				<Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
 				<Setter Property="FontSize" Value="Small" />
-				<Setter Property="IsTabStop" Value="False" />
 				<Setter Property="IsEnabled" Value="False" />
 			</Style>
 
@@ -61,7 +60,6 @@
 				<Setter Property="BackgroundColor" Value="{AppThemeBinding Light=Yellow, Dark=#FF00004B}" />
 				<Setter Property="TextColor" Value="{AppThemeBinding Light=Blue, Dark=#FFFFFFB4}" />
 				<Setter Property="HorizontalTextAlignment" Value="End" />
-				<Setter Property="IsTabStop" Value="True" />
 				<Setter Property="IsEnabled" Value="True" />
 			</Style>
 
@@ -83,7 +81,6 @@
 				<Setter Property="BorderColor" Value="Gray" />
 				<Setter Property="TextColor" Value="{AppThemeBinding Light=#FF579AE5, Dark=#FF9E5B10}" />
 				<Setter Property="BorderWidth" Value="0.5" />
-				<Setter Property="IsTabStop" Value="True" />
 				<Setter Property="IsEnabled" Value="True" />
 			</Style>
 
@@ -107,7 +104,6 @@
 				<Setter Property="Orientation" Value="Vertical" />
 				<Setter Property="HorizontalOptions" Value="CenterAndExpand" />
 				<Setter Property="VerticalOptions" Value="Center" />
-				<Setter Property="IsTabStop" Value="False" />
 				<Setter Property="IsEnabled" Value="True" />
 			</Style>
 
@@ -125,7 +121,6 @@
 				<Setter Property="VerticalOptions" Value="Center" />
 				<Setter Property="BackgroundColor" Value="{AppThemeBinding Light=Yellow, Dark=#FF00004B}" />
 				<Setter Property="TextColor" Value="{AppThemeBinding Light=Blue, Dark=#FFFFFFB4}" />
-				<Setter Property="IsTabStop" Value="True" />
 				<Setter Property="IsEnabled" Value="True" />
 				<Setter Property="FontFamily" Value="Courier" />
 				<Setter Property="FontSize" Value="Small" />
@@ -139,7 +134,6 @@
 				<Setter Property="VerticalOptions" Value="Center" />
 				<Setter Property="BackgroundColor" Value="{AppThemeBinding Light=Yellow, Dark=#FF00004B}" />
 				<Setter Property="TextColor" Value="{AppThemeBinding Light=Blue, Dark=#FFFFFFB4}" />
-				<Setter Property="IsTabStop" Value="True" />
 				<Setter Property="IsEnabled" Value="True" />
 				<Setter Property="FontSize" Value="Small" />
 			</Style>
@@ -242,7 +236,6 @@
 									Grid.Row="1"
 									Grid.Column="0"
 									HorizontalOptions="Start"
-									IsTabStop="True"
 									IsToggled="false"
 									OnColor="Green"
 									Toggled="CalcStartDateSwitch_Toggled"
@@ -279,7 +272,6 @@
 							x:Name="SwitchCalcYMWDHM"
 							HorizontalOptions="Start"
 							IsEnabled="False"
-							IsTabStop="True"
 							IsToggled="True"
 							OnColor="Green"
 							Toggled="CalcYMWDHM_toggeled"
@@ -523,7 +515,6 @@
 				<StackLayout
 					x:Name="EndDateTimeAndCalculateAndClearAllButtonsStackName"
 					HorizontalOptions="Center"
-					IsTabStop="False"
 					Orientation="Vertical"
 					Spacing="0"
 					>
@@ -582,7 +573,6 @@
 									Grid.Row="1"
 									Grid.Column="0"
 									HorizontalOptions="Start"
-									IsTabStop="True"
 									IsToggled="false"
 									OnColor="Green"
 									Toggled="CalcEndDateSwitch_Toggled"

@@ -1,17 +1,11 @@
 ﻿using CustomRenderer;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.IO;
 using System.Text;
 using TimeDateCalculator.FileHandlers;
 using TimeDateCalculator.Interfaces;
 using TimeDateCalculator.MessageThings;
 using TimeDateCalculatorDll;
-using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui;
 namespace TimeDateCalculator
 {
 	// Learn more about making custom code visible in the Xamarin.Forms previewer
@@ -124,25 +118,25 @@ namespace TimeDateCalculator
 			try
 			{
 				// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-				if (Device.RuntimePlatform == Device.GTK)
-				{
-					// Remove event
-					GtkStartHourPicker.SelectedIndexChanged -= GtkStartTime_SelectedIndexChanged;
-					GtkStartMinutsPicker.SelectedIndexChanged -= GtkStartTime_SelectedIndexChanged;
-					// Show time
-					GtkStartHourPicker.SelectedIndex = StartTimeIn.Hours;
-					GtkStartMinutsPicker.SelectedIndex = StartTimeIn.Minutes;
-					// Restore event
-					GtkStartHourPicker.SelectedIndexChanged += GtkStartTime_SelectedIndexChanged;
-					GtkStartMinutsPicker.SelectedIndexChanged += GtkStartTime_SelectedIndexChanged;
-				}
-				else
-				{
-					MacStartDatePicker.Date = StartDateIn;
-					MacStartTimePicker.Time = new TimeSpan(StartTimeIn.Hours, StartTimeIn.Minutes, 0);
+				//if (DeviceInfo.Platform == DevicePlatform.GTK)
+				//{
+				//	// Remove event
+				//	GtkStartHourPicker.SelectedIndexChanged -= GtkStartTime_SelectedIndexChanged;
+				//	GtkStartMinutsPicker.SelectedIndexChanged -= GtkStartTime_SelectedIndexChanged;
+				//	// Show time
+				//	GtkStartHourPicker.SelectedIndex = StartTimeIn.Hours;
+				//	GtkStartMinutsPicker.SelectedIndex = StartTimeIn.Minutes;
+				//	// Restore event
+				//	GtkStartHourPicker.SelectedIndexChanged += GtkStartTime_SelectedIndexChanged;
+				//	GtkStartMinutsPicker.SelectedIndexChanged += GtkStartTime_SelectedIndexChanged;
+				//}
+				//else
+				//{
+				MacStartDatePicker.Date = StartDateIn;
+				MacStartTimePicker.Time = new TimeSpan(StartTimeIn.Hours, StartTimeIn.Minutes, 0);
 
-					StartTimePicker.Time = new TimeSpan(StartTimeIn.Hours, StartTimeIn.Minutes, 0);
-				}
+				StartTimePicker.Time = new TimeSpan(StartTimeIn.Hours, StartTimeIn.Minutes, 0);
+				//}
 
 				StartDatePicker.Date = StartDateIn;
 
@@ -159,25 +153,25 @@ namespace TimeDateCalculator
 			try
 			{
 				// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-				if (Device.RuntimePlatform == Device.GTK)
-				{
-					// Remove events
-					GtkEndHourPicker.SelectedIndexChanged -= GtkEndTime_SelectedIndexChanged;
-					GtkEndMinutsPicker.SelectedIndexChanged -= GtkEndTime_SelectedIndexChanged;
-					// Show time
-					GtkEndHourPicker.SelectedIndex = EndTimeIn.Hours;
-					GtkEndMinutsPicker.SelectedIndex = EndTimeIn.Minutes;
-					// Restore events
-					GtkEndHourPicker.SelectedIndexChanged += GtkEndTime_SelectedIndexChanged;
-					GtkEndMinutsPicker.SelectedIndexChanged += GtkEndTime_SelectedIndexChanged;
-				}
-				else
-				{
-					MacEndDatePicker.Date = EndDateIn;
-					MacEndTimePicker.Time = new TimeSpan(EndTimeIn.Hours, EndTimeIn.Minutes, 0);
+				//if (DeviceInfo.Platform == DevicePlatform.GTK)
+				//{
+				//	// Remove events
+				//	GtkEndHourPicker.SelectedIndexChanged -= GtkEndTime_SelectedIndexChanged;
+				//	GtkEndMinutsPicker.SelectedIndexChanged -= GtkEndTime_SelectedIndexChanged;
+				//	// Show time
+				//	GtkEndHourPicker.SelectedIndex = EndTimeIn.Hours;
+				//	GtkEndMinutsPicker.SelectedIndex = EndTimeIn.Minutes;
+				//	// Restore events
+				//	GtkEndHourPicker.SelectedIndexChanged += GtkEndTime_SelectedIndexChanged;
+				//	GtkEndMinutsPicker.SelectedIndexChanged += GtkEndTime_SelectedIndexChanged;
+				//}
+				//else
+				//{
+				MacEndDatePicker.Date = EndDateIn;
+				MacEndTimePicker.Time = new TimeSpan(EndTimeIn.Hours, EndTimeIn.Minutes, 0);
 
-					EndTimePicker.Time = new TimeSpan(EndTimeIn.Hours, EndTimeIn.Minutes, 0);
-				}
+				EndTimePicker.Time = new TimeSpan(EndTimeIn.Hours, EndTimeIn.Minutes, 0);
+				//}
 
 				EndDatePicker.Date = EndDateIn;
 
@@ -467,25 +461,19 @@ namespace TimeDateCalculator
 
 
 			// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-			switch (Device.RuntimePlatform)
+			if (DeviceInfo.Platform == DevicePlatform.Android)
 			{
-				case Device.Android:
-					{
-						ContentPageName.SetAppThemeColor(BackgroundColorProperty, Color.White, Color.Black);
-						Resources["DynamicBaseButtonStyle"] = Resources["AndroidBaseButtonStyle"];
-						break;
-					}
-				case Device.GTK:
-					{
-						//ContentPageName.SetAppThemeColor(BackgroundColorProperty, Color.White, Color.Black);
-						Resources["DynamicBaseButtonStyle"] = Resources["baseButtonStyle"];
-						break;
-					}
-				default:
-					{
-						Resources["DynamicBaseButtonStyle"] = Resources["baseButtonStyle"];
-						break;
-					}
+				ContentPageName.SetAppThemeColor(BackgroundColorProperty, Colors.White, Colors.Black);
+				Resources["DynamicBaseButtonStyle"] = Resources["AndroidBaseButtonStyle"];
+			}
+			//else if (DeviceInfo.Platform == DevicePlatform.GTK)
+			//		{
+			//			//ContentPageName.SetAppThemeColor(BackgroundColorProperty, Colors.White, Colors.Black);
+			//			Resources["DynamicBaseButtonStyle"] = Resources["baseButtonStyle"];
+			//		}
+			else
+			{
+				Resources["DynamicBaseButtonStyle"] = Resources["baseButtonStyle"];
 			}
 
 			ListOfSwitches = new List<Switch>()
@@ -569,7 +557,7 @@ namespace TimeDateCalculator
 				VerticalOptions = LayoutOptions.Center
 			};
 			// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-			if (Device.RuntimePlatform == Device.Android)
+			if (DeviceInfo.Platform == DevicePlatform.Android)
 			{
 				StartDateTimeNowButton.Style = Resources["AndroidBaseButtonStyle"] as Style;
 			}
@@ -626,7 +614,7 @@ namespace TimeDateCalculator
 
 			};
 			// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-			if (Device.RuntimePlatform == Device.Android)
+			if (DeviceInfo.Platform == DevicePlatform.Android)
 			{
 				EndDateTimeNowButton.Style = Resources["AndroidBaseButtonStyle"] as Style;
 			}
@@ -637,227 +625,222 @@ namespace TimeDateCalculator
 			EndDateTimeNowButton.Clicked += OnEndDateTimeNowButtonClicked;
 
 			// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-			switch (Device.RuntimePlatform)
+			if (DeviceInfo.Platform == DevicePlatform.macOS)
 			{
-				case Device.macOS:
-					{
-						// Start Date/Time
-						StartDatePicker = new myMacOSDatePicker();
-						StartDatePicker.BackgroundColor = Color.Gray;
-						StartDatePicker.DateSelected += StartDatePicker_DateSelected;
+				// Start Date/Time
+				StartDatePicker = new myMacOSDatePicker();
+				StartDatePicker.BackgroundColor = Colors.Gray;
+				StartDatePicker.DateSelected += StartDatePicker_DateSelected;
 
-						StartTimePicker = new myMacOSTimePicker();
-						StartTimePicker.PropertyChanged += StartTimePicker_PropertyChanged;
+				StartTimePicker = new myMacOSTimePicker();
+				StartTimePicker.PropertyChanged += StartTimePicker_PropertyChanged;
 
-						var localStartDateStack = new StackLayout();
-						localStartDateStack.Children.Add(MacStartDatePicker);
-						localStartDateStack.Children.Add(StartDatePicker);
+				var localStartDateStack = new StackLayout();
+				localStartDateStack.Children.Add(MacStartDatePicker);
+				localStartDateStack.Children.Add(StartDatePicker);
 
-						StartDateTimeStack.Children.Add(localStartDateStack);
+				StartDateTimeStack.Children.Add(localStartDateStack);
 
-						var localStartTimeStack = new StackLayout();
-						localStartTimeStack.Children.Add(MacStartTimePicker);
-						localStartTimeStack.Children.Add(StartTimePicker);
+				var localStartTimeStack = new StackLayout();
+				localStartTimeStack.Children.Add(MacStartTimePicker);
+				localStartTimeStack.Children.Add(StartTimePicker);
 
-						StartDateTimeStack.Children.Add(localStartTimeStack);
+				StartDateTimeStack.Children.Add(localStartTimeStack);
 
-						StartDateTimeStack.Children.Add(StartDayName);
-						StartDateTimeStack.Children.Add(StartDateTimeNowButton);
+				StartDateTimeStack.Children.Add(StartDayName);
+				StartDateTimeStack.Children.Add(StartDateTimeNowButton);
 
 
-						// End Date/Time
-						EndDatePicker = new myMacOSDatePicker();
-						EndDatePicker.BackgroundColor = Color.Gray;
-						EndDatePicker.DateSelected += EndDatePicker_DateSelected;
+				// End Date/Time
+				EndDatePicker = new myMacOSDatePicker();
+				EndDatePicker.BackgroundColor = Colors.Gray;
+				EndDatePicker.DateSelected += EndDatePicker_DateSelected;
 
-						EndTimePicker = new myMacOSTimePicker();
-						EndTimePicker.PropertyChanged += EndTimePicker_PropertyChanged;
+				EndTimePicker = new myMacOSTimePicker();
+				EndTimePicker.PropertyChanged += EndTimePicker_PropertyChanged;
 
-						var localEndDateStack = new StackLayout();
-						localEndDateStack.Children.Add(MacEndDatePicker);
-						localEndDateStack.Children.Add(EndDatePicker);
+				var localEndDateStack = new StackLayout();
+				localEndDateStack.Children.Add(MacEndDatePicker);
+				localEndDateStack.Children.Add(EndDatePicker);
 
-						EndDateTimeStack.Children.Add(localEndDateStack);
+				EndDateTimeStack.Children.Add(localEndDateStack);
 
-						var localEndTimeStack = new StackLayout();
-						localEndTimeStack.Children.Add(MacEndTimePicker);
-						localEndTimeStack.Children.Add(EndTimePicker);
+				var localEndTimeStack = new StackLayout();
+				localEndTimeStack.Children.Add(MacEndTimePicker);
+				localEndTimeStack.Children.Add(EndTimePicker);
 
-						EndDateTimeStack.Children.Add(localEndTimeStack);
+				EndDateTimeStack.Children.Add(localEndTimeStack);
 
-						EndDateTimeStack.Children.Add(EndDayName);
-						EndDateTimeStack.Children.Add(EndDateTimeNowButton);
+				EndDateTimeStack.Children.Add(EndDayName);
+				EndDateTimeStack.Children.Add(EndDateTimeNowButton);
 
-						break;
-					}
-				case Device.GTK:
-					{
-						// Start Date/Time
-						StartDatePicker = new DatePicker
-						{
-							Style = Resources["baseGTKDatePickerStyle_WO_WidthRequest"] as Style
-						};
-						StartDatePicker.DateSelected += StartDatePicker_DateSelected;
-						//StartDatePicker.BackgroundColor = Color.White;
-						//StartDatePicker.BackgroundColor = Color.DarkSlateBlue;
+			}
+			//			else if (DeviceInfo.Platform == DevicePlatform.GTK)
+			//					{
+			//						// Start Date/Time
+			//						StartDatePicker = new DatePicker
+			//						{
+			//							Style = Resources["baseGTKDatePickerStyle_WO_WidthRequest"] as Style
+			//						};
+			//						StartDatePicker.DateSelected += StartDatePicker_DateSelected;
+			//						//StartDatePicker.BackgroundColor = Colors.White;
+			//						//StartDatePicker.BackgroundColor = Colors.DarkSlateBlue;
 
-						StartDatePicker.Format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern;
-						StartDatePicker.HorizontalOptions = LayoutOptions.CenterAndExpand;
+			//						StartDatePicker.Format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern;
+			//						StartDatePicker.HorizontalOptions = LayoutOptions.CenterAndExpand;
 
-						StartDateTimeStack.Children.Add(StartDatePicker);
-
-
-						GtkStartHourPicker = new Picker
-						{
-							Style = Resources["baseGTKTimePickerStyle"] as Style
-						};
-						for (int i = 0; i <= 23; i++)
-						{
-							GtkStartHourPicker.Items.Add(i.ToString());
-						}
-						StartDateTimeStack.Children.Add(GtkStartHourPicker);
-
-						Label StartHMColon = new Label
-						{
-							Text = ":"
-	,
-							Style = Resources["baseStartEndDateTimeEntryLabelStyle"] as Style
-						};
-						StartDateTimeStack.Children.Add(StartHMColon);
-
-						GtkStartMinutsPicker = new Picker
-						{
-							Style = Resources["baseGTKTimePickerStyle"] as Style
-						};
-						for (int i = 0; i <= 59; i++)
-						{
-							GtkStartMinutsPicker.Items.Add(i.ToString());
-						}
-						StartDateTimeStack.Children.Add(GtkStartMinutsPicker);
-
-						StartDateTimeStack.Children.Add(StartDayName);
-						StartDateTimeStack.Children.Add(StartDateTimeNowButton);
+			//						StartDateTimeStack.Children.Add(StartDatePicker);
 
 
-						// End Date/Time
-						EndDatePicker = new DatePicker
-						{
-							Style = Resources["baseGTKDatePickerStyle_WO_WidthRequest"] as Style
-						};
-						EndDatePicker.DateSelected += EndDatePicker_DateSelected;
+			//						GtkStartHourPicker = new Picker
+			//						{
+			//							Style = Resources["baseGTKTimePickerStyle"] as Style
+			//						};
+			//						for (int i = 0; i <= 23; i++)
+			//						{
+			//							GtkStartHourPicker.Items.Add(i.ToString());
+			//						}
+			//						StartDateTimeStack.Children.Add(GtkStartHourPicker);
 
-						EndDatePicker.Format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern;
-						EndDatePicker.HorizontalOptions = LayoutOptions.CenterAndExpand;
+			//						Label StartHMColon = new Label
+			//						{
+			//							Text = ":"
+			//	,
+			//							Style = Resources["baseStartEndDateTimeEntryLabelStyle"] as Style
+			//						};
+			//						StartDateTimeStack.Children.Add(StartHMColon);
 
-						EndDateTimeStack.Children.Add(EndDatePicker);
+			//						GtkStartMinutsPicker = new Picker
+			//						{
+			//							Style = Resources["baseGTKTimePickerStyle"] as Style
+			//						};
+			//						for (int i = 0; i <= 59; i++)
+			//						{
+			//							GtkStartMinutsPicker.Items.Add(i.ToString());
+			//						}
+			//						StartDateTimeStack.Children.Add(GtkStartMinutsPicker);
 
-
-						GtkEndHourPicker = new Picker
-						{
-							Style = Resources["baseGTKTimePickerStyle"] as Style
-						};
-						for (int i = 0; i <= 23; i++)
-						{
-							GtkEndHourPicker.Items.Add(i.ToString());
-						}
-						EndDateTimeStack.Children.Add(GtkEndHourPicker);
-
-						Label EndMColon = new Label
-						{
-							Text = ":"
-,
-							Style = Resources["baseStartEndDateTimeEntryLabelStyle"] as Style
-						};
-						EndDateTimeStack.Children.Add(EndMColon);
-
-						GtkEndMinutsPicker = new Picker
-						{
-							Style = Resources["baseGTKTimePickerStyle"] as Style
-						};
-						for (int i = 0; i <= 59; i++)
-						{
-							GtkEndMinutsPicker.Items.Add(i.ToString());
-						}
-						EndDateTimeStack.Children.Add(GtkEndMinutsPicker);
-
-						EndDateTimeStack.Children.Add(EndDayName);
-						EndDateTimeStack.Children.Add(EndDateTimeNowButton);
+			//						StartDateTimeStack.Children.Add(StartDayName);
+			//						StartDateTimeStack.Children.Add(StartDateTimeNowButton);
 
 
-						break;
-					}
-				default:
-					{
-						// Start Date/Time
-						StartDatePicker = new DatePicker
-						{
-							Style = Resources["baseDatePickerStyle_WO_WidthRequest"] as Style
-						};
-						StartDatePicker.DateSelected += StartDatePicker_DateSelected;
-						//StartDatePicker.BackgroundColor = Color.DarkSlateBlue;
+			//						// End Date/Time
+			//						EndDatePicker = new DatePicker
+			//						{
+			//							Style = Resources["baseGTKDatePickerStyle_WO_WidthRequest"] as Style
+			//						};
+			//						EndDatePicker.DateSelected += EndDatePicker_DateSelected;
 
-						StartTimePicker = new TimePicker
-						{
-							Style = Resources["baseTimePickerStyle"] as Style
-						};
-						StartTimePicker.PropertyChanged += StartTimePicker_PropertyChanged;
+			//						EndDatePicker.Format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern;
+			//						EndDatePicker.HorizontalOptions = LayoutOptions.CenterAndExpand;
 
-						StartDateTimeStack.Children.Add(StartDatePicker);
-						StartDateTimeStack.Children.Add(StartTimePicker);
-						StartDateTimeStack.Children.Add(StartDayName);
-						StartDateTimeStack.Children.Add(StartDateTimeNowButton);
+			//						EndDateTimeStack.Children.Add(EndDatePicker);
 
-						// End Date/Time
-						EndDatePicker = new DatePicker
-						{
-							Style = Resources["baseDatePickerStyle_WO_WidthRequest"] as Style
-						};
-						EndDatePicker.DateSelected += EndDatePicker_DateSelected;
 
-						EndTimePicker = new TimePicker
-						{
-							Style = Resources["baseTimePickerStyle"] as Style
-						};
-						EndTimePicker.PropertyChanged += EndTimePicker_PropertyChanged;
+			//						GtkEndHourPicker = new Picker
+			//						{
+			//							Style = Resources["baseGTKTimePickerStyle"] as Style
+			//						};
+			//						for (int i = 0; i <= 23; i++)
+			//						{
+			//							GtkEndHourPicker.Items.Add(i.ToString());
+			//						}
+			//						EndDateTimeStack.Children.Add(GtkEndHourPicker);
 
-						EndDateTimeStack.Children.Add(EndDatePicker);
-						EndDateTimeStack.Children.Add(EndTimePicker);
-						EndDateTimeStack.Children.Add(EndDayName);
-						EndDateTimeStack.Children.Add(EndDateTimeNowButton);
+			//						Label EndMColon = new Label
+			//						{
+			//							Text = ":"
+			//,
+			//							Style = Resources["baseStartEndDateTimeEntryLabelStyle"] as Style
+			//						};
+			//						EndDateTimeStack.Children.Add(EndMColon);
 
-						StartDatePicker.Format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern;
-						StartDatePicker.HorizontalOptions = LayoutOptions.CenterAndExpand;
-						StartTimePicker.Format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern;
+			//						GtkEndMinutsPicker = new Picker
+			//						{
+			//							Style = Resources["baseGTKTimePickerStyle"] as Style
+			//						};
+			//						for (int i = 0; i <= 59; i++)
+			//						{
+			//							GtkEndMinutsPicker.Items.Add(i.ToString());
+			//						}
+			//						EndDateTimeStack.Children.Add(GtkEndMinutsPicker);
 
-						EndDatePicker.Format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern;
-						EndDatePicker.HorizontalOptions = LayoutOptions.CenterAndExpand;
-						EndTimePicker.Format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern;
+			//						EndDateTimeStack.Children.Add(EndDayName);
+			//						EndDateTimeStack.Children.Add(EndDateTimeNowButton);
 
-						break;
-					}
+
+			//						break;
+			//					}
+			else
+			{
+				// Start Date/Time
+				StartDatePicker = new DatePicker
+				{
+					Style = Resources["baseDatePickerStyle_WO_WidthRequest"] as Style
+				};
+				StartDatePicker.DateSelected += StartDatePicker_DateSelected;
+				//StartDatePicker.BackgroundColor = Colors.DarkSlateBlue;
+
+				StartTimePicker = new TimePicker
+				{
+					Style = Resources["baseTimePickerStyle"] as Style
+				};
+				StartTimePicker.PropertyChanged += StartTimePicker_PropertyChanged;
+
+				StartDateTimeStack.Children.Add(StartDatePicker);
+				StartDateTimeStack.Children.Add(StartTimePicker);
+				StartDateTimeStack.Children.Add(StartDayName);
+				StartDateTimeStack.Children.Add(StartDateTimeNowButton);
+
+				// End Date/Time
+				EndDatePicker = new DatePicker
+				{
+					Style = Resources["baseDatePickerStyle_WO_WidthRequest"] as Style
+				};
+				EndDatePicker.DateSelected += EndDatePicker_DateSelected;
+
+				EndTimePicker = new TimePicker
+				{
+					Style = Resources["baseTimePickerStyle"] as Style
+				};
+				EndTimePicker.PropertyChanged += EndTimePicker_PropertyChanged;
+
+				EndDateTimeStack.Children.Add(EndDatePicker);
+				EndDateTimeStack.Children.Add(EndTimePicker);
+				EndDateTimeStack.Children.Add(EndDayName);
+				EndDateTimeStack.Children.Add(EndDateTimeNowButton);
+
+				StartDatePicker.Format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern;
+				StartDatePicker.HorizontalOptions = LayoutOptions.CenterAndExpand;
+				StartTimePicker.Format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern;
+
+				EndDatePicker.Format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern;
+				EndDatePicker.HorizontalOptions = LayoutOptions.CenterAndExpand;
+				EndTimePicker.Format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern;
+
 			}
 
 			// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-			if (Device.RuntimePlatform == Device.GTK)
-			{
-				GtkStartHourPicker.SelectedIndex = DateTime.Now.TimeOfDay.Hours;
-				GtkStartMinutsPicker.SelectedIndex = DateTime.Now.TimeOfDay.Minutes;
-				GtkEndHourPicker.SelectedIndex = DateTime.Now.TimeOfDay.Hours;
-				GtkEndMinutsPicker.SelectedIndex = DateTime.Now.TimeOfDay.Minutes;
+			//if (DeviceInfo.Platform == DevicePlatform.GTK)
+			//{
+			//	GtkStartHourPicker.SelectedIndex = DateTime.Now.TimeOfDay.Hours;
+			//	GtkStartMinutsPicker.SelectedIndex = DateTime.Now.TimeOfDay.Minutes;
+			//	GtkEndHourPicker.SelectedIndex = DateTime.Now.TimeOfDay.Hours;
+			//	GtkEndMinutsPicker.SelectedIndex = DateTime.Now.TimeOfDay.Minutes;
 
 
-				GtkStartHourPicker.SelectedIndexChanged += GtkStartTime_SelectedIndexChanged;
-				GtkStartMinutsPicker.SelectedIndexChanged += GtkStartTime_SelectedIndexChanged;
+			//	GtkStartHourPicker.SelectedIndexChanged += GtkStartTime_SelectedIndexChanged;
+			//	GtkStartMinutsPicker.SelectedIndexChanged += GtkStartTime_SelectedIndexChanged;
 
-				GtkEndHourPicker.SelectedIndexChanged += GtkEndTime_SelectedIndexChanged;
-				GtkEndMinutsPicker.SelectedIndexChanged += GtkEndTime_SelectedIndexChanged;
+			//	GtkEndHourPicker.SelectedIndexChanged += GtkEndTime_SelectedIndexChanged;
+			//	GtkEndMinutsPicker.SelectedIndexChanged += GtkEndTime_SelectedIndexChanged;
 
-			}
-			else
-			{
-				StartTimePicker.Time = DateTime.Now.TimeOfDay;
-				EndTimePicker.Time = DateTime.Now.TimeOfDay;
-			}
+			//}
+			//else
+			//{
+			StartTimePicker.Time = DateTime.Now.TimeOfDay;
+			EndTimePicker.Time = DateTime.Now.TimeOfDay;
+			//}
 
 			StartDatePicker.Date = DateTime.Now.Date;
 
@@ -866,7 +849,7 @@ namespace TimeDateCalculator
 
 
 			// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-			if (Device.RuntimePlatform == Device.UWP)
+			if (DeviceInfo.Platform == DevicePlatform.UWP)
 			{
 				ScreenWidth = DependencyService.Get<IScreenSizeInterface>().GetScreenWidth();
 				ScreenHeight = DependencyService.Get<IScreenSizeInterface>().GetScreenHeight();
@@ -900,7 +883,7 @@ namespace TimeDateCalculator
 
 
 			// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-			if (Device.RuntimePlatform == Device.UWP)
+			if (DeviceInfo.Platform == DevicePlatform.UWP)
 			{
 				ScreenWidth = DependencyService.Get<IScreenSizeInterface>().GetScreenWidth();
 				ScreenHeight = DependencyService.Get<IScreenSizeInterface>().GetScreenHeight();
@@ -952,31 +935,31 @@ namespace TimeDateCalculator
 				bool portrait = false;
 
 				// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-				if (Device.RuntimePlatform != Device.GTK)
-				{
-					// Get Metrics
-					mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
+				//if (DeviceInfo.Platform == DevicePlatform.GTK)
+				//{
+				//	// Get Metrics
+				//	mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
 
-					// Orientation (Landscape, Portrait, Square, Unknown)
-					orientation = mainDisplayInfo.Orientation;
+				//	// Orientation (Landscape, Portrait, Square, Unknown)
+				//	orientation = mainDisplayInfo.Orientation;
 
-					// Width (in pixels)
-					mainWidth = mainDisplayInfo.Width;
+				//	// Width (in pixels)
+				//	mainWidth = mainDisplayInfo.Width;
 
-					// Height (in pixels)
-					mainHeight = mainDisplayInfo.Height;
+				//	// Height (in pixels)
+				//	mainHeight = mainDisplayInfo.Height;
 
-					portrait = (orientation == DisplayOrientation.Portrait);
-				}
+				//	portrait = (orientation == DisplayOrientation.Portrait);
+				//}
 
 				if (portrait)
 				{ // Portrait
-					// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
+				  // TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
 					if
 					(
-						   (Device.RuntimePlatform == Device.macOS)
-						|| (Device.RuntimePlatform == Device.UWP)
-						|| ((Device.RuntimePlatform == Device.Android) && (mainHeight < 1920))
+						   (DeviceInfo.Platform == DevicePlatform.macOS)
+						|| (DeviceInfo.Platform == DevicePlatform.UWP)
+						|| ((DeviceInfo.Platform == DevicePlatform.Android) && (mainHeight < 1920))
 					//|| ((Device.RuntimePlatform == Device.iOS) && (mainWidth <= 828))
 					)
 					{ // Only Landscape allowed
@@ -1003,211 +986,199 @@ namespace TimeDateCalculator
 				}
 
 				// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-				switch (Device.RuntimePlatform)
+				//if (DeviceInfo.Platform == DevicePlatform.GTK)
+				//		{
+				//			StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+				//			EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+				//			StartDayName.WidthRequest = EndDayName.WidthRequest = 45;
+
+				//		}
+				if (DeviceInfo.Platform == DevicePlatform.macOS)
 				{
-					case Device.GTK:
-						{
-							StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-							EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-							StartDayName.WidthRequest = EndDayName.WidthRequest = 45;
+					StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+					EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 
-							break;
+				}
+				else if (DeviceInfo.Platform == DevicePlatform.Android)
+				{
+					if (portrait) // Portrait ?
+					{ // Portrait
+						StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
+						EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
+
+						if (height > nativeTotalStackHeightPortrait)
+						{
+							ContentPageNameScaleLast = height / nativeTotalStackHeightPortrait;
+							ContentPageName.Scale = ContentPageNameScaleLast;
 						}
-					case Device.macOS:
-						{
-							StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-							EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+					}
+					else
+					{ // Landscape
+						StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+						EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 
-							break;
+						if (width > nativeTotalStackWidthLandscape)
+						{
+							ContentPageNameScaleLast = width / nativeTotalStackWidthLandscape;
+							ContentPageName.Scale = ContentPageNameScaleLast;
 						}
-					case Device.Android:
+						else if (width < 659.0f)
 						{
-							if (portrait) // Portrait ?
-							{ // Portrait
-								StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
-								EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
-
-								if (height > nativeTotalStackHeightPortrait)
-								{
-									ContentPageNameScaleLast = height / nativeTotalStackHeightPortrait;
-									ContentPageName.Scale = ContentPageNameScaleLast;
-								}
-							}
-							else
-							{ // Landscape
-								StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-								EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-
-								if (width > nativeTotalStackWidthLandscape)
-								{
-									ContentPageNameScaleLast = width / nativeTotalStackWidthLandscape;
-									ContentPageName.Scale = ContentPageNameScaleLast;
-								}
-								else if (width < 659.0f)
-								{
-									scrollViewNameScaleLast = width / scrollViewName.Width;
-									scrollViewName.Scale = scrollViewNameScaleLast;
-									TotalStackName.Scale = width / TotalStackName.Width;
-									double entriesOuterGridScale = width / entriesOuterGrid.Width;
-									double entriesOuterGridScaleY = 0.9f;
-									entriesOuterGrid.Scale = entriesOuterGridScale;
-									entriesOuterGrid.ScaleY = entriesOuterGridScaleY;
-									StartDateTimeStacAndPlus.Scale = entriesOuterGridScale;
-									StartDateTimeStacAndPlus.ScaleY = entriesOuterGridScaleY;
-									EndDateTimeAndCalculateAndClearAllButtonsStackName.Scale = entriesOuterGridScale;
-									EndDateTimeAndCalculateAndClearAllButtonsStackName.ScaleY = entriesOuterGridScaleY;
-								}
-							}
-							scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Center, false);
-
-							StartDayName.WidthRequest = EndDayName.WidthRequest = 50;
-
-							break;
+							scrollViewNameScaleLast = width / scrollViewName.Width;
+							scrollViewName.Scale = scrollViewNameScaleLast;
+							TotalStackName.Scale = width / TotalStackName.Width;
+							double entriesOuterGridScale = width / entriesOuterGrid.Width;
+							double entriesOuterGridScaleY = 0.9f;
+							entriesOuterGrid.Scale = entriesOuterGridScale;
+							entriesOuterGrid.ScaleY = entriesOuterGridScaleY;
+							StartDateTimeStacAndPlus.Scale = entriesOuterGridScale;
+							StartDateTimeStacAndPlus.ScaleY = entriesOuterGridScaleY;
+							EndDateTimeAndCalculateAndClearAllButtonsStackName.Scale = entriesOuterGridScale;
+							EndDateTimeAndCalculateAndClearAllButtonsStackName.ScaleY = entriesOuterGridScaleY;
 						}
-					case Device.iOS:
+					}
+					scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Center, false);
+
+					StartDayName.WidthRequest = EndDayName.WidthRequest = 50;
+
+				}
+				else if (DeviceInfo.Platform == DevicePlatform.iOS)
+				{
+					if (portrait) // Portrait ?
+					{ // Portrait
+						StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
+						EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
+
+						if (DeviceInfo.Idiom == DeviceIdiom.Tablet)
 						{
-							if (portrait) // Portrait ?
-							{ // Portrait
-								StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
-								EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
-
-								if (DeviceInfo.Idiom == DeviceIdiom.Tablet)
-								{
-									scrollViewNameScaleLast = width * 0.7f / scrollViewName.Width;
-									scrollViewName.Scale = scrollViewNameScaleLast;
-								}
-								else if ((mainHeight / mainWidth) >= 2.16f)
-								{
-									scrollViewNameScaleLast = width / scrollViewName.Width;
-									scrollViewName.Scale = scrollViewNameScaleLast;
-								}
-								else if (width <= 320f)
-								{
-									scrollViewNameScaleLast = width / scrollViewName.Width;
-									scrollViewName.Scale = scrollViewNameScaleLast;
-									TotalStackName.Scale = width * 0.5f / TotalStackName.Width;
-								}
-								else
-								{
-									scrollViewNameScaleLast = width / scrollViewName.Width;
-									scrollViewName.Scale = scrollViewNameScaleLast;
-									TotalStackName.Scale = width * 0.7f / TotalStackName.Width;
-								}
-							}
-							else
-							{ // Landscape
-								StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-								EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-
-								if (DeviceInfo.Idiom == DeviceIdiom.Tablet)
-								{
-									scrollViewNameScaleLast = width / scrollViewName.Width;
-									scrollViewName.Scale = scrollViewNameScaleLast;
-								}
-								else if ((mainWidth / mainHeight) >= 2.16f)
-								{
-									scrollViewNameScaleLast = width * 0.9f / scrollViewName.Width;
-									scrollViewName.Scale = scrollViewNameScaleLast;
-								}
-								else if (height <= 320f)
-								{
-									scrollViewNameScaleLast = width / scrollViewName.Width;
-									scrollViewName.Scale = scrollViewNameScaleLast;
-									TotalStackName.Scale = width / TotalStackName.Width;
-									double entriesOuterGridScale = width * 0.55f / entriesOuterGrid.Width;
-									double entriesOuterGridScaleY = 1.05f;
-									entriesOuterGrid.Scale = entriesOuterGridScale;
-									entriesOuterGrid.ScaleY = entriesOuterGridScaleY;
-									StartDateTimeStacAndPlus.Scale = entriesOuterGridScale;
-									StartDateTimeStacAndPlus.ScaleY = entriesOuterGridScaleY;
-									EndDateTimeAndCalculateAndClearAllButtonsStackName.Scale = entriesOuterGridScale;
-									EndDateTimeAndCalculateAndClearAllButtonsStackName.ScaleY = entriesOuterGridScaleY;
-								}
-								else
-								{
-									scrollViewNameScaleLast = width / scrollViewName.Width;
-									scrollViewName.Scale = scrollViewNameScaleLast;
-									TotalStackName.Scale = width * 0.9f / TotalStackName.Width;
-								}
-							}
-
-							scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Start, true);
-							scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.End, true);
-							scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Center, true);
-
-							break;
+							scrollViewNameScaleLast = width * 0.7f / scrollViewName.Width;
+							scrollViewName.Scale = scrollViewNameScaleLast;
 						}
-					case Device.UWP:
+						else if ((mainHeight / mainWidth) >= 2.16f)
 						{
-							StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-							EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+							scrollViewNameScaleLast = width / scrollViewName.Width;
+							scrollViewName.Scale = scrollViewNameScaleLast;
+						}
+						else if (width <= 320f)
+						{
+							scrollViewNameScaleLast = width / scrollViewName.Width;
+							scrollViewName.Scale = scrollViewNameScaleLast;
+							TotalStackName.Scale = width * 0.5f / TotalStackName.Width;
+						}
+						else
+						{
+							scrollViewNameScaleLast = width / scrollViewName.Width;
+							scrollViewName.Scale = scrollViewNameScaleLast;
+							TotalStackName.Scale = width * 0.7f / TotalStackName.Width;
+						}
+					}
+					else
+					{ // Landscape
+						StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+						EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 
-							if (DependencyService.Get<IPlatformInterface>().IsMobile())
+						if (DeviceInfo.Idiom == DeviceIdiom.Tablet)
+						{
+							scrollViewNameScaleLast = width / scrollViewName.Width;
+							scrollViewName.Scale = scrollViewNameScaleLast;
+						}
+						else if ((mainWidth / mainHeight) >= 2.16f)
+						{
+							scrollViewNameScaleLast = width * 0.9f / scrollViewName.Width;
+							scrollViewName.Scale = scrollViewNameScaleLast;
+						}
+						else if (height <= 320f)
+						{
+							scrollViewNameScaleLast = width / scrollViewName.Width;
+							scrollViewName.Scale = scrollViewNameScaleLast;
+							TotalStackName.Scale = width / TotalStackName.Width;
+							double entriesOuterGridScale = width * 0.55f / entriesOuterGrid.Width;
+							double entriesOuterGridScaleY = 1.05f;
+							entriesOuterGrid.Scale = entriesOuterGridScale;
+							entriesOuterGrid.ScaleY = entriesOuterGridScaleY;
+							StartDateTimeStacAndPlus.Scale = entriesOuterGridScale;
+							StartDateTimeStacAndPlus.ScaleY = entriesOuterGridScaleY;
+							EndDateTimeAndCalculateAndClearAllButtonsStackName.Scale = entriesOuterGridScale;
+							EndDateTimeAndCalculateAndClearAllButtonsStackName.ScaleY = entriesOuterGridScaleY;
+						}
+						else
+						{
+							scrollViewNameScaleLast = width / scrollViewName.Width;
+							scrollViewName.Scale = scrollViewNameScaleLast;
+							TotalStackName.Scale = width * 0.9f / TotalStackName.Width;
+						}
+					}
+
+					scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Start, true);
+					scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.End, true);
+					scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Center, true);
+
+				}
+				else if (DeviceInfo.Platform == DevicePlatform.WinUI)
+				{
+					StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+					EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+
+					if (DependencyService.Get<IPlatformInterface>().IsMobile())
+					{
+						if (portrait) // Portrait ?
+						{ // Portrait
+							StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
+							EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
+
+							if (height <= nativeTotalStackHeightPortrait) // Need scaling ?
 							{
-								if (portrait) // Portrait ?
-								{ // Portrait
-									StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
-									EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
+								TotalStackNameScaleLast = widthAndHightScale =
+									-(2.7410270192276622436e-009 * Math.Pow(ScreenHeight, 3))
+									+ (4.7754782031987597521e-006 * Math.Pow(ScreenHeight, 2))
+									- (0.0013991090738610563200 * ScreenHeight)
+									+ 0.49946777681408938143;
+								TotalStackName.Scale = TotalStackNameScaleLast;
 
-									if (height <= nativeTotalStackHeightPortrait) // Need scaling ?
-									{
-										TotalStackNameScaleLast = widthAndHightScale =
-											-(2.7410270192276622436e-009 * Math.Pow(ScreenHeight, 3))
-											+ (4.7754782031987597521e-006 * Math.Pow(ScreenHeight, 2))
-											- (0.0013991090738610563200 * ScreenHeight)
-											+ 0.49946777681408938143;
-										TotalStackName.Scale = TotalStackNameScaleLast;
+								TotalStackName.TranslationX = 0;
+								TotalStackName.TranslationY =
+									(3.3707997844973771142e-005 * Math.Pow(ScreenHeight, 3))
+									- (0.066636967320806955728 * Math.Pow(ScreenHeight, 2))
+									+ (43.568112848719657393 * ScreenHeight)
+									- 9425.4397956508601055;
 
-										TotalStackName.TranslationX = 0;
-										TotalStackName.TranslationY =
-											(3.3707997844973771142e-005 * Math.Pow(ScreenHeight, 3))
-											- (0.066636967320806955728 * Math.Pow(ScreenHeight, 2))
-											+ (43.568112848719657393 * ScreenHeight)
-											- 9425.4397956508601055;
-
-										StartDateTimeIntroLabelName.FontSize = EndDateTimeIntroLabelName.FontSize
-												= StartDateTimeIntroLabelNameFontSizeOrig * widthAndHightScale / 1.5;
-										StartDayName.FontSize = EndDayName.FontSize = StartEndDayNameFontSizeOrig * widthAndHightScale / 1.5;
-									}
-								}
-								else
-								{ // Landscape
-									StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-									EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-
-									if (width <= nativeTotalStackWidthLandscape) // Need scaling ?
-									{
-										TotalStackNameScaleLast =
-											-(1.0433447427359796688e-007 * Math.Pow(ScreenWidth, 3))
-											+ (0.00020154923472775974880 * Math.Pow(ScreenWidth, 2))
-											- (0.12705258908531044670 * ScreenWidth)
-											+ 26.859746894086349300;
-										TotalStackName.Scale = TotalStackNameScaleLast;
-
-										//TotalStackName.TranslationX = 0;
-										TotalStackName.TranslationX =
-											+(6.0103507005254339091e-005 * Math.Pow(ScreenWidth, 3))
-											- (0.11838955202431701574 * Math.Pow(ScreenWidth, 2))
-											+ (77.536187041332297554 * ScreenWidth)
-											- 16935.307290964530694;
-										TotalStackName.TranslationY = 0;
-									}
-								}
-								scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Start, true);
+								StartDateTimeIntroLabelName.FontSize = EndDateTimeIntroLabelName.FontSize
+										= StartDateTimeIntroLabelNameFontSizeOrig * widthAndHightScale / 1.5;
+								StartDayName.FontSize = EndDayName.FontSize = StartEndDayNameFontSizeOrig * widthAndHightScale / 1.5;
 							}
-							else
-							{ // NOT Mobile
-								StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-								EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-							}
+						}
+						else
+						{ // Landscape
+							StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+							EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 
-							StartDayName.WidthRequest = EndDayName.WidthRequest = 45;
-							break;
+							if (width <= nativeTotalStackWidthLandscape) // Need scaling ?
+							{
+								TotalStackNameScaleLast =
+									-(1.0433447427359796688e-007 * Math.Pow(ScreenWidth, 3))
+									+ (0.00020154923472775974880 * Math.Pow(ScreenWidth, 2))
+									- (0.12705258908531044670 * ScreenWidth)
+									+ 26.859746894086349300;
+								TotalStackName.Scale = TotalStackNameScaleLast;
+
+								//TotalStackName.TranslationX = 0;
+								TotalStackName.TranslationX =
+									+(6.0103507005254339091e-005 * Math.Pow(ScreenWidth, 3))
+									- (0.11838955202431701574 * Math.Pow(ScreenWidth, 2))
+									+ (77.536187041332297554 * ScreenWidth)
+									- 16935.307290964530694;
+								TotalStackName.TranslationY = 0;
+							}
 						}
-					default:
-						{
-							break;
-						}
+						scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Start, true);
+					}
+					else
+					{ // NOT Mobile
+						StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+						EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+					}
+
+					StartDayName.WidthRequest = EndDayName.WidthRequest = 45;
 				}
 			}
 
@@ -1856,16 +1827,16 @@ namespace TimeDateCalculator
 		private async void DoCalculate()
 		{
 			// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-			if (Device.RuntimePlatform == Device.GTK)
-			{
-				StartTimeIn = new TimeSpan(GtkStartHourPicker.SelectedIndex, GtkStartMinutsPicker.SelectedIndex, 0);
-				EndTimeIn = new TimeSpan(GtkEndHourPicker.SelectedIndex, GtkEndMinutsPicker.SelectedIndex, 0);
-			}
-			else
-			{
-				StartTimeIn = StartTimePicker.Time;
-				EndTimeIn = EndTimePicker.Time;
-			}
+			//if (DeviceInfo.Platform == DevicePlatform.GTK)
+			//{
+			//	StartTimeIn = new TimeSpan(GtkStartHourPicker.SelectedIndex, GtkStartMinutsPicker.SelectedIndex, 0);
+			//	EndTimeIn = new TimeSpan(GtkEndHourPicker.SelectedIndex, GtkEndMinutsPicker.SelectedIndex, 0);
+			//}
+			//else
+			//{
+			StartTimeIn = StartTimePicker.Time;
+			EndTimeIn = EndTimePicker.Time;
+			//}
 
 			StartDateIn = StartDatePicker.Date;
 			EndDateIn = EndDatePicker.Date;

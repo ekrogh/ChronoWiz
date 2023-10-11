@@ -1,10 +1,4 @@
-﻿using System;
-using Microsoft.Maui.Controls.Xaml;
-using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui;
-
-namespace TimeDateCalculatorDll
+﻿namespace TimeDateCalculatorDll
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class FileICS : ContentPage
@@ -16,14 +10,14 @@ namespace TimeDateCalculatorDll
 			// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
 			if (Device.RuntimePlatform == Device.Android)
 			{
-				FileICSContentPageName.SetAppThemeColor(ContentPage.BackgroundColorProperty, Color.White, Color.Black);
+				FileICSContentPageName.SetAppThemeColor(ContentPage.BackgroundColorProperty, Colors.White, Colors.Black);
 				Resources["DynamicBaseButtonStyle"] = Resources["AndroidBaseButtonStyle"];
 			}
 			else
 			{
 				Resources["DynamicBaseButtonStyle"] = Resources["baseButtonStyle"];
 
-				if (Device.RuntimePlatform == Device.macOS)
+				if (DeviceInfo.Platform == DevicePlatform.macOS)
 				{
 					FileCancelButton.IsVisible = true;
 				}
@@ -44,7 +38,7 @@ namespace TimeDateCalculatorDll
 		private async void FileCancelButton_Clicked(object sender, EventArgs e)
 		{
 			await Navigation.PopAsync(true);
-//			await Navigation.PopToRootAsync(true);
+			//			await Navigation.PopToRootAsync(true);
 		}
 	}
 }

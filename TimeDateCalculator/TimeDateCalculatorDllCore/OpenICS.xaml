@@ -3,7 +3,7 @@
 	x:Class="TimeDateCalculatorDll.OpenICS"
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:local="clr-namespace:TimeDateCalculatorDll;assembly=TimeDateCalculatorDll"
+	xmlns:local="clr-namespace:TimeDateCalculatorDll;assembly=TimeDateCalculatorDllCore"
 	x:Name="OpenICSContentPageName"
 	>
 
@@ -16,7 +16,6 @@
 				TargetType="Label"
 				>
 				<Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
-				<Setter Property="IsTabStop" Value="False" />
 				<Setter Property="IsEnabled" Value="False" />
 			</Style>
 
@@ -27,7 +26,6 @@
 				<Setter Property="BorderColor" Value="Gray" />
 				<Setter Property="TextColor" Value="{AppThemeBinding Light=#FF579AE5, Dark=#FF9E5B10}" />
 				<Setter Property="BorderWidth" Value="0.5" />
-				<Setter Property="IsTabStop" Value="True" />
 				<Setter Property="IsEnabled" Value="True" />
 			</Style>
 
@@ -50,7 +48,6 @@
 				<Image
 					Margin="0,0,0,20"
 					IsEnabled="False"
-					IsTabStop="False"
 					Source="{local:ImageResource TimeDateCalculatorDll.OpenIcs.png}"
 					/>
 				<Label

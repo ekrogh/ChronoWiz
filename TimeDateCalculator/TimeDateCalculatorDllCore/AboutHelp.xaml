@@ -24,9 +24,6 @@
 					Property="BorderWidth"
 					Value="0.5" />
 				<Setter
-					Property="IsTabStop"
-					Value="True" />
-				<Setter
 					Property="IsEnabled"
 					Value="True" />
 			</Style>
@@ -46,7 +43,6 @@
 				TargetType="Label"
 				>
 				<Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
-				<Setter Property="IsTabStop" Value="False" />
 				<Setter Property="IsEnabled" Value="False" />
 			</Style>
 
