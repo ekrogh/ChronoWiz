@@ -1,8 +1,7 @@
-﻿using CustomRenderer;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Globalization;
 using System.Text;
-using TimeDateCalculatorDll;
+using TimeCalculator.MessageThings;
 
 namespace TimeCalculator;
 
@@ -25,9 +24,9 @@ public partial class MainPage : ContentPage
 
 
 	DatePicker MacStartDatePicker = new DatePicker();
-	TimePicker MacStartTimePicker = new myMacOSNormalTimePicker();
+	//TimePicker MacStartTimePicker = new myMacOSNormalTimePicker();
 	DatePicker MacEndDatePicker = new DatePicker();
-	TimePicker MacEndTimePicker = new myMacOSNormalTimePicker();
+	//TimePicker MacEndTimePicker = new myMacOSNormalTimePicker();
 
 	DatePicker StartDatePicker = new DatePicker();
 	TimePicker StartTimePicker = new TimePicker();
@@ -130,8 +129,8 @@ public partial class MainPage : ContentPage
 			//}
 			//else
 			//{
-			MacStartDatePicker.Date = StartDateIn;
-			MacStartTimePicker.Time = new TimeSpan(StartTimeIn.Hours, StartTimeIn.Minutes, 0);
+			//MacStartDatePicker.Date = StartDateIn;
+			//MacStartTimePicker.Time = new TimeSpan(StartTimeIn.Hours, StartTimeIn.Minutes, 0);
 
 			StartTimePicker.Time = new TimeSpan(StartTimeIn.Hours, StartTimeIn.Minutes, 0);
 			//}
@@ -165,8 +164,8 @@ public partial class MainPage : ContentPage
 			//}
 			//else
 			//{
-			MacEndDatePicker.Date = EndDateIn;
-			MacEndTimePicker.Time = new TimeSpan(EndTimeIn.Hours, EndTimeIn.Minutes, 0);
+			//MacEndDatePicker.Date = EndDateIn;
+			//MacEndTimePicker.Time = new TimeSpan(EndTimeIn.Hours, EndTimeIn.Minutes, 0);
 
 			EndTimePicker.Time = new TimeSpan(EndTimeIn.Hours, EndTimeIn.Minutes, 0);
 			//}
@@ -503,35 +502,35 @@ public partial class MainPage : ContentPage
 		EndTimeIn = DateTime.Now.TimeOfDay;
 
 		// Start Date/Time
-		MacStartDatePicker = new DatePicker
-		{
-			Style = Resources["baseDatePickerStyle_WO_WidthRequest"] as Style
-			,
-			Format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern
-			,
-			HorizontalOptions = LayoutOptions.CenterAndExpand
-			,
-			Date = DateTime.Today.Date
-		};
-		MacStartDatePicker.DateSelected += OnMacStartDatePickerDateSelected;
+		//MacStartDatePicker = new DatePicker
+		//{
+		//	Style = Resources["baseDatePickerStyle_WO_WidthRequest"] as Style
+		//	,
+		//	Format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern
+		//	,
+		//	HorizontalOptions = LayoutOptions.CenterAndExpand
+		//	,
+		//	Date = DateTime.Today.Date
+		//};
+		//MacStartDatePicker.DateSelected += OnMacStartDatePickerDateSelected;
 
-		MacStartTimePicker = new myMacOSNormalTimePicker
-		{
-			Style = Resources["baseTimePickerStyle"] as Style
-				,
-			Time = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, 0)
-				,
-			Format =
-				(
-					CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern
-				).Substring
-					(
-						0
-						,
-						CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern.Length - 3
-					)
-		};
-		MacStartTimePicker.PropertyChanged += OnMacStartTimePickerPropertyChanged;
+		//MacStartTimePicker = new myMacOSNormalTimePicker
+		//{
+		//	Style = Resources["baseTimePickerStyle"] as Style
+		//		,
+		//	Time = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, 0)
+		//		,
+		//	Format =
+		//		(
+		//			CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern
+		//		).Substring
+		//			(
+		//				0
+		//				,
+		//				CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern.Length - 3
+		//			)
+		//};
+		//MacStartTimePicker.PropertyChanged += OnMacStartTimePickerPropertyChanged;
 
 		StartDayName = new Label
 		{
@@ -559,35 +558,35 @@ public partial class MainPage : ContentPage
 		StartDateTimeNowButton.Clicked += OnStartDateTimeNowButtonClicked;
 
 		// End Date/Time
-		MacEndDatePicker = new DatePicker
-		{
-			Style = Resources["baseDatePickerStyle_WO_WidthRequest"] as Style
-			,
-			Format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern
-			,
-			HorizontalOptions = LayoutOptions.CenterAndExpand
-			,
-			Date = DateTime.Today.Date
-		};
-		MacEndDatePicker.DateSelected += OnMacEndDatePickerDateSelected;
+		//MacEndDatePicker = new DatePicker
+		//{
+		//	Style = Resources["baseDatePickerStyle_WO_WidthRequest"] as Style
+		//	,
+		//	Format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern
+		//	,
+		//	HorizontalOptions = LayoutOptions.CenterAndExpand
+		//	,
+		//	Date = DateTime.Today.Date
+		//};
+		//MacEndDatePicker.DateSelected += OnMacEndDatePickerDateSelected;
 
-		MacEndTimePicker = new myMacOSNormalTimePicker
-		{
-			Style = Resources["baseTimePickerStyle"] as Style
-				,
-			Time = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, 0)
-				,
-			Format =
-				(
-					CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern
-				).Substring
-					(
-						0
-						,
-						CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern.Length - 3
-					)
-		};
-		MacEndTimePicker.PropertyChanged += OnMacEndTimePickerPropertyChanged;
+		//MacEndTimePicker = new myMacOSNormalTimePicker
+		//{
+		//	Style = Resources["baseTimePickerStyle"] as Style
+		//		,
+		//	Time = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, 0)
+		//		,
+		//	Format =
+		//		(
+		//			CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern
+		//		).Substring
+		//			(
+		//				0
+		//				,
+		//				CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern.Length - 3
+		//			)
+		//};
+		//MacEndTimePicker.PropertyChanged += OnMacEndTimePickerPropertyChanged;
 
 		EndDayName = new Label
 		{
@@ -619,51 +618,51 @@ public partial class MainPage : ContentPage
 		if (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
 		{
 			// Start Date/Time
-			StartDatePicker = new myMacOSDatePicker();
-			StartDatePicker.BackgroundColor = Colors.Gray;
-			StartDatePicker.DateSelected += StartDatePicker_DateSelected;
+			//	StartDatePicker = new myMacOSDatePicker();
+			//	StartDatePicker.BackgroundColor = Colors.Gray;
+			//	StartDatePicker.DateSelected += StartDatePicker_DateSelected;
 
-			StartTimePicker = new myMacOSTimePicker();
-			StartTimePicker.PropertyChanged += StartTimePicker_PropertyChanged;
+			//	StartTimePicker = new myMacOSTimePicker();
+			//	StartTimePicker.PropertyChanged += StartTimePicker_PropertyChanged;
 
-			var localStartDateStack = new StackLayout();
-			localStartDateStack.Children.Add(MacStartDatePicker);
-			localStartDateStack.Children.Add(StartDatePicker);
+			//	var localStartDateStack = new StackLayout();
+			//	localStartDateStack.Children.Add(MacStartDatePicker);
+			//	localStartDateStack.Children.Add(StartDatePicker);
 
-			StartDateTimeStack.Children.Add(localStartDateStack);
+			//	StartDateTimeStack.Children.Add(localStartDateStack);
 
-			var localStartTimeStack = new StackLayout();
-			localStartTimeStack.Children.Add(MacStartTimePicker);
-			localStartTimeStack.Children.Add(StartTimePicker);
+			//	var localStartTimeStack = new StackLayout();
+			//	localStartTimeStack.Children.Add(MacStartTimePicker);
+			//	localStartTimeStack.Children.Add(StartTimePicker);
 
-			StartDateTimeStack.Children.Add(localStartTimeStack);
+			//	StartDateTimeStack.Children.Add(localStartTimeStack);
 
-			StartDateTimeStack.Children.Add(StartDayName);
-			StartDateTimeStack.Children.Add(StartDateTimeNowButton);
+			//	StartDateTimeStack.Children.Add(StartDayName);
+			//	StartDateTimeStack.Children.Add(StartDateTimeNowButton);
 
 
-			// End Date/Time
-			EndDatePicker = new myMacOSDatePicker();
-			EndDatePicker.BackgroundColor = Colors.Gray;
-			EndDatePicker.DateSelected += EndDatePicker_DateSelected;
+			//	// End Date/Time
+			//	EndDatePicker = new myMacOSDatePicker();
+			//	EndDatePicker.BackgroundColor = Colors.Gray;
+			//	EndDatePicker.DateSelected += EndDatePicker_DateSelected;
 
-			EndTimePicker = new myMacOSTimePicker();
-			EndTimePicker.PropertyChanged += EndTimePicker_PropertyChanged;
+			//	EndTimePicker = new myMacOSTimePicker();
+			//	EndTimePicker.PropertyChanged += EndTimePicker_PropertyChanged;
 
-			var localEndDateStack = new StackLayout();
-			localEndDateStack.Children.Add(MacEndDatePicker);
-			localEndDateStack.Children.Add(EndDatePicker);
+			//	var localEndDateStack = new StackLayout();
+			//	localEndDateStack.Children.Add(MacEndDatePicker);
+			//	localEndDateStack.Children.Add(EndDatePicker);
 
-			EndDateTimeStack.Children.Add(localEndDateStack);
+			//	EndDateTimeStack.Children.Add(localEndDateStack);
 
-			var localEndTimeStack = new StackLayout();
-			localEndTimeStack.Children.Add(MacEndTimePicker);
-			localEndTimeStack.Children.Add(EndTimePicker);
+			//	var localEndTimeStack = new StackLayout();
+			//	localEndTimeStack.Children.Add(MacEndTimePicker);
+			//	localEndTimeStack.Children.Add(EndTimePicker);
 
-			EndDateTimeStack.Children.Add(localEndTimeStack);
+			//	EndDateTimeStack.Children.Add(localEndTimeStack);
 
-			EndDateTimeStack.Children.Add(EndDayName);
-			EndDateTimeStack.Children.Add(EndDateTimeNowButton);
+			//	EndDateTimeStack.Children.Add(EndDayName);
+			//	EndDateTimeStack.Children.Add(EndDateTimeNowButton);
 
 		}
 		//			else if (DeviceInfo.Platform == DevicePlatform.GTK)
@@ -838,12 +837,10 @@ public partial class MainPage : ContentPage
 		EndDatePicker.Date = DateTime.Now.Date;
 
 
-
-		// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
 		if (DeviceInfo.Platform == DevicePlatform.WinUI)
 		{
-			ScreenWidth = DependencyService.Get<IScreenSizeInterface>().GetScreenWidth();
-			ScreenHeight = DependencyService.Get<IScreenSizeInterface>().GetScreenHeight();
+			ScreenWidth = DeviceDisplay.Current.MainDisplayInfo.Width;
+			ScreenHeight = DeviceDisplay.Current.MainDisplayInfo.Height;
 		}
 
 
@@ -876,8 +873,8 @@ public partial class MainPage : ContentPage
 		// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
 		if (DeviceInfo.Platform == DevicePlatform.WinUI)
 		{
-			ScreenWidth = DependencyService.Get<IScreenSizeInterface>().GetScreenWidth();
-			ScreenHeight = DependencyService.Get<IScreenSizeInterface>().GetScreenHeight();
+			ScreenWidth = DeviceDisplay.Current.MainDisplayInfo.Width;
+			ScreenHeight = DeviceDisplay.Current.MainDisplayInfo.Height;
 		}
 		else
 		{
@@ -1110,64 +1107,64 @@ public partial class MainPage : ContentPage
 				StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 				EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 
-				if (DependencyService.Get<IPlatformInterface>().IsMobile())
-				{
-					if (portrait) // Portrait ?
-					{ // Portrait
-						StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
-						EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
+				//if (DependencyService.Get<IPlatformInterface>().IsMobile())
+				//{
+				//	if (portrait) // Portrait ?
+				//	{ // Portrait
+				//		StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
+				//		EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
 
-						if (height <= nativeTotalStackHeightPortrait) // Need scaling ?
-						{
-							TotalStackNameScaleLast = widthAndHightScale =
-								-(2.7410270192276622436e-009 * Math.Pow(ScreenHeight, 3))
-								+ (4.7754782031987597521e-006 * Math.Pow(ScreenHeight, 2))
-								- (0.0013991090738610563200 * ScreenHeight)
-								+ 0.49946777681408938143;
-							TotalStackName.Scale = TotalStackNameScaleLast;
+				//		if (height <= nativeTotalStackHeightPortrait) // Need scaling ?
+				//		{
+				//			TotalStackNameScaleLast = widthAndHightScale =
+				//				-(2.7410270192276622436e-009 * Math.Pow(ScreenHeight, 3))
+				//				+ (4.7754782031987597521e-006 * Math.Pow(ScreenHeight, 2))
+				//				- (0.0013991090738610563200 * ScreenHeight)
+				//				+ 0.49946777681408938143;
+				//			TotalStackName.Scale = TotalStackNameScaleLast;
 
-							TotalStackName.TranslationX = 0;
-							TotalStackName.TranslationY =
-								(3.3707997844973771142e-005 * Math.Pow(ScreenHeight, 3))
-								- (0.066636967320806955728 * Math.Pow(ScreenHeight, 2))
-								+ (43.568112848719657393 * ScreenHeight)
-								- 9425.4397956508601055;
+				//			TotalStackName.TranslationX = 0;
+				//			TotalStackName.TranslationY =
+				//				(3.3707997844973771142e-005 * Math.Pow(ScreenHeight, 3))
+				//				- (0.066636967320806955728 * Math.Pow(ScreenHeight, 2))
+				//				+ (43.568112848719657393 * ScreenHeight)
+				//				- 9425.4397956508601055;
 
-							StartDateTimeIntroLabelName.FontSize = EndDateTimeIntroLabelName.FontSize
-									= StartDateTimeIntroLabelNameFontSizeOrig * widthAndHightScale / 1.5;
-							StartDayName.FontSize = EndDayName.FontSize = StartEndDayNameFontSizeOrig * widthAndHightScale / 1.5;
-						}
-					}
-					else
-					{ // Landscape
-						StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-						EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+				//			StartDateTimeIntroLabelName.FontSize = EndDateTimeIntroLabelName.FontSize
+				//					= StartDateTimeIntroLabelNameFontSizeOrig * widthAndHightScale / 1.5;
+				//			StartDayName.FontSize = EndDayName.FontSize = StartEndDayNameFontSizeOrig * widthAndHightScale / 1.5;
+				//		}
+				//	}
+				//	else
+				//	{ // Landscape
+				//		StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+				//		EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 
-						if (width <= nativeTotalStackWidthLandscape) // Need scaling ?
-						{
-							TotalStackNameScaleLast =
-								-(1.0433447427359796688e-007 * Math.Pow(ScreenWidth, 3))
-								+ (0.00020154923472775974880 * Math.Pow(ScreenWidth, 2))
-								- (0.12705258908531044670 * ScreenWidth)
-								+ 26.859746894086349300;
-							TotalStackName.Scale = TotalStackNameScaleLast;
+				//		if (width <= nativeTotalStackWidthLandscape) // Need scaling ?
+				//		{
+				//			TotalStackNameScaleLast =
+				//				-(1.0433447427359796688e-007 * Math.Pow(ScreenWidth, 3))
+				//				+ (0.00020154923472775974880 * Math.Pow(ScreenWidth, 2))
+				//				- (0.12705258908531044670 * ScreenWidth)
+				//				+ 26.859746894086349300;
+				//			TotalStackName.Scale = TotalStackNameScaleLast;
 
-							//TotalStackName.TranslationX = 0;
-							TotalStackName.TranslationX =
-								+(6.0103507005254339091e-005 * Math.Pow(ScreenWidth, 3))
-								- (0.11838955202431701574 * Math.Pow(ScreenWidth, 2))
-								+ (77.536187041332297554 * ScreenWidth)
-								- 16935.307290964530694;
-							TotalStackName.TranslationY = 0;
-						}
-					}
-					scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Start, true);
-				}
-				else
-				{ // NOT Mobile
-					StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-					EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-				}
+				//			//TotalStackName.TranslationX = 0;
+				//			TotalStackName.TranslationX =
+				//				+(6.0103507005254339091e-005 * Math.Pow(ScreenWidth, 3))
+				//				- (0.11838955202431701574 * Math.Pow(ScreenWidth, 2))
+				//				+ (77.536187041332297554 * ScreenWidth)
+				//				- 16935.307290964530694;
+				//			TotalStackName.TranslationY = 0;
+				//		}
+				//	}
+				//	scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Start, true);
+				//}
+				//else
+				//{ // NOT Mobile
+				StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+				EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+				//}
 
 				StartDayName.WidthRequest = EndDayName.WidthRequest = 45;
 			}
@@ -1200,8 +1197,8 @@ public partial class MainPage : ContentPage
 		}
 		else
 		{
-			MacStartDatePicker.IsEnabled = true;
-			MacStartTimePicker.IsEnabled = true;
+			//MacStartDatePicker.IsEnabled = true;
+			//MacStartTimePicker.IsEnabled = true;
 			StartDatePicker.IsEnabled = true;
 			StartTimePicker.IsEnabled = true;
 			StartDateTimeNowButton.IsEnabled = true;
@@ -1252,7 +1249,7 @@ public partial class MainPage : ContentPage
 	{
 		if (e.PropertyName == "Time")
 		{
-			StartTimeIn = MacStartTimePicker.Time;
+			//StartTimeIn = MacStartTimePicker.Time;
 
 			StartTimePicker.Time = StartTimeIn;
 			//StartTimePicker.Time = new TimeSpan(StartTimeIn.Hours, StartTimeIn.Minutes, 0);
@@ -1273,15 +1270,15 @@ public partial class MainPage : ContentPage
 		{
 			StartTimeIn = StartTimePicker.Time;
 
-			if
-			(
-				(MacStartTimePicker.Time.Hours != StartTimeIn.Hours)
-				||
-				(MacStartTimePicker.Time.Minutes != StartTimeIn.Minutes)
-			)
-			{
-				MacStartTimePicker.Time = StartTimeIn;
-			}
+			//if
+			//(
+			//	(MacStartTimePicker.Time.Hours != StartTimeIn.Hours)
+			//	||
+			//	(MacStartTimePicker.Time.Minutes != StartTimeIn.Minutes)
+			//)
+			//{
+			//	MacStartTimePicker.Time = StartTimeIn;
+			//}
 
 			CheckSetEndDateTime();
 		}
@@ -1626,8 +1623,8 @@ public partial class MainPage : ContentPage
 		}
 		else
 		{
-			MacEndDatePicker.IsEnabled = true;
-			MacEndTimePicker.IsEnabled = true;
+			//MacEndDatePicker.IsEnabled = true;
+			//MacEndTimePicker.IsEnabled = true;
 			EndDatePicker.IsEnabled = true;
 			EndTimePicker.IsEnabled = true;
 			EndDateTimeNowButton.IsEnabled = true;
@@ -1680,7 +1677,7 @@ public partial class MainPage : ContentPage
 	{
 		if (e.PropertyName == "Time")
 		{
-			EndTimeIn = MacEndTimePicker.Time;
+			//EndTimeIn = MacEndTimePicker.Time;
 
 			EndTimePicker.Time = EndTimeIn;
 			//EndTimePicker.Time = new TimeSpan(EndTimeIn.Hours, EndTimeIn.Minutes, 0);
@@ -1702,15 +1699,15 @@ public partial class MainPage : ContentPage
 		{
 			EndTimeIn = EndTimePicker.Time;
 
-			if
-			(
-				(MacEndTimePicker.Time.Hours != EndTimeIn.Hours)
-				||
-				(MacEndTimePicker.Time.Minutes != EndTimeIn.Minutes)
-			)
-			{
-				MacEndTimePicker.Time = EndTimeIn;
-			}
+			//if
+			//(
+			//	(MacEndTimePicker.Time.Hours != EndTimeIn.Hours)
+			//	||
+			//	(MacEndTimePicker.Time.Minutes != EndTimeIn.Minutes)
+			//)
+			//{
+			//	MacEndTimePicker.Time = EndTimeIn;
+			//}
 
 			CheckSetStartDateTime();
 		}

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+	x:Class="TimeCalculator.AboutHelp"
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Name="AboutHelpContentPageName"
+	>
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<Style
+				x:Key="baseButtonStyle"
+				TargetType="Button">
+				<Setter
+					Property="BorderColor"
+					Value="Gray" />
+				<Setter
+					Property="TextColor"
+					Value="{AppThemeBinding Light=#FF579AE5, Dark=#FF9E5B10}" />
+				<Setter
+					Property="BorderWidth"
+					Value="0.5" />
+				<Setter
+					Property="IsEnabled"
+					Value="True" />
+			</Style>
+
+			<Style
+				x:Key="AndroidBaseButtonStyle"
+				TargetType="Button"
+				BasedOn="{StaticResource baseButtonStyle}">
+				<Setter
+					Property="BackgroundColor"
+					Value="{AppThemeBinding Light=Default, Dark=#FF333333}" />
+			</Style>
+
+			<Style
+				x:Key="baseLabelStyle"
+				x:Name="baseLabelStyleName"
+				TargetType="Label"
+				>
+				<Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+				<Setter Property="IsEnabled" Value="False" />
+			</Style>
+
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
+	<ContentPage.Content>
+		<StackLayout x:Name="AboutHelpStack">
+			<Label
+				x:Name="AppNameAndVer"
+				Style="{StaticResource baseLabelStyle}"
+				Text=""
+				HorizontalTextAlignment="Center"
+			/>
+			<Button
+				x:Name="UsersGuideButton"
+				Clicked="UsersGuideButton_Clicked"
+				Style="{DynamicResource DynamicBaseButtonStyle}"
+				Text="User`s Guide"
+				/>
+			<Label
+				x:Name="MeLabel"
+				Style="{StaticResource baseLabelStyle}"
+				Text="Eigil Krogh Sorensen"
+				HorizontalTextAlignment="Center"
+			/>
+			<Button
+				x:Name="MyUrlButton"
+				Clicked="MyUrlButton_Clicked"
+				Style="{DynamicResource DynamicBaseButtonStyle}"
+				Text="http://eksit.dk"
+				/>
+			<Button
+				x:Name="EmaiBtn"
+				Clicked="EmaiBtn_Clicked"
+				Style="{DynamicResource DynamicBaseButtonStyle}"
+				Text="timedatecalculator@eksit.dk"
+				/>
+			<Button
+				x:Name="OKButton"
+				Clicked="OKButton_Clicked"
+				Style="{DynamicResource DynamicBaseButtonStyle}"
+				Text="OK"
+				/>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
