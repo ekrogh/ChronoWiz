@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+	x:Class="TimeDateCalculatorDll.SaveToICS"
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:TimeDateCalculatorDll;assembly=TimeCalculator"
+	x:Name="SaveToICSContentPageName"
+	>
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+
+			<Style
+				x:Key="baseLabelStyle"
+				x:Name="baseLabelStyleName"
+				TargetType="Label"
+				>
+				<Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+				<Setter Property="IsEnabled" Value="False" />
+			</Style>
+
+			<Style
+				x:Key="baseEntryStyle"
+				x:Name="baseEntryStyleName"
+				TargetType="Entry"
+				>
+				<Setter Property="BackgroundColor" Value="{AppThemeBinding Light=Yellow, Dark=#FF00004B}" />
+				<Setter Property="TextColor" Value="{AppThemeBinding Light=Blue, Dark=#FFFFFFB4}" />
+				<Setter Property="HorizontalTextAlignment" Value="Start" />
+				<Setter Property="IsEnabled" Value="True" />
+			</Style>
+
+			<Style
+				x:Key="baseButtonStyle"
+				TargetType="Button"
+				>
+				<Setter Property="BorderColor" Value="Gray" />
+				<Setter Property="TextColor" Value="{AppThemeBinding Light=#FF579AE5, Dark=#FF9E5B10}" />
+				<Setter Property="BorderWidth" Value="0.5" />
+				<Setter Property="IsEnabled" Value="True" />
+			</Style>
+
+			<Style
+				x:Key="AndroidBaseButtonStyle"
+				TargetType="Button"
+				BasedOn="{StaticResource baseButtonStyle}"
+				>
+				<Setter Property="BackgroundColor" Value="{AppThemeBinding Light=Default, Dark=#FF333333}" />
+			</Style>
+
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
+
+	<ContentPage.Content>
+
+		<ScrollView>
+			<StackLayout
+				Padding="20"
+				>
+				<Image
+					Margin="0,0,0,20"
+					Source="{local:ImageResource TimeDateCalculatorDll.SaveToIcs.png}"
+					IsEnabled="False"
+					/>
+
+				<Label
+					Text="Summary (&quot;Event Name&quot;)"
+					Style="{StaticResource baseLabelStyle}"
+					IsEnabled="False"
+					/>
+				<Entry
+					x:Name="Summary"
+					Style="{StaticResource baseEntryStyle}"
+					Placeholder="Summary"
+					ReturnType="Next"
+					Keyboard="Text"
+					/>
+
+				<Label
+					Text="Description"
+					Style="{StaticResource baseLabelStyle}"
+					IsEnabled="False"
+					/>
+				<Entry
+					x:Name="Description"
+					Style="{StaticResource baseEntryStyle}"
+					Placeholder="Description"
+					ReturnType="Next"
+					Keyboard="Text"
+					/>
+
+				<Label
+					Text="Location"
+					Style="{StaticResource baseLabelStyle}"
+					IsEnabled="False"
+					/>
+				<Entry
+					x:Name="LocationEntry"
+					Style="{StaticResource baseEntryStyle}"
+					Placeholder="Location"
+					ReturnType="Next"
+					Keyboard="Text"
+					/>
+
+				<Button
+					x:Name="SaveICSButton"
+					Clicked="SaveICSButton_Clicked"
+					Style="{DynamicResource DynamicBaseButtonStyle}"
+					Text="Save to .ics file"
+					/>
+
+				<Button
+					x:Name="FileSaveToCancelButton"
+					Clicked="FileSaveToCancelButton_Clicked"
+					IsVisible="False"
+					Style="{DynamicResource DynamicBaseButtonStyle}"
+					Text="Cancel" />
+
+			</StackLayout>
+		</ScrollView>
+
+	</ContentPage.Content>
+
+</ContentPage>

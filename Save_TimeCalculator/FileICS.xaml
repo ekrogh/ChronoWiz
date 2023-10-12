@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+	x:Class="TimeDateCalculatorDll.FileICS"
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:TimeDateCalculatorDll;assembly=TimeCalculator"
+	x:Name="FileICSContentPageName"
+	>
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+
+			<Style
+				x:Key="baseLabelStyle"
+				x:Name="baseLabelStyleName"
+				TargetType="Label"
+				>
+				<Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+				<Setter Property="IsEnabled" Value="False" />
+			</Style>
+
+			<Style
+				x:Key="baseButtonStyle"
+				TargetType="Button"
+				>
+				<Setter Property="BorderColor" Value="Gray" />
+				<Setter Property="TextColor" Value="{AppThemeBinding Light=#FF579AE5, Dark=#FF9E5B10}" />
+				<Setter Property="BorderWidth" Value="0.5" />
+				<Setter Property="IsEnabled" Value="True" />
+			</Style>
+
+			<Style
+				x:Key="AndroidBaseButtonStyle"
+				BasedOn="{StaticResource baseButtonStyle}"
+				TargetType="Button"
+				>
+				<Setter Property="BackgroundColor" Value="{AppThemeBinding Light=Default, Dark=#FF333333}" />
+			</Style>
+
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
+	<ContentPage.Content>
+
+		<ScrollView>
+			<StackLayout Padding="20">
+				<Image
+					Margin="0,0,0,20"
+					IsEnabled="False"
+					Source="{local:ImageResource TimeDateCalculatorDll.FileIcs.png}"
+					/>
+
+				<Button
+					x:Name="OpenICSButton"
+					Clicked="OpenICSButton_Clicked"
+					Style="{DynamicResource DynamicBaseButtonStyle}"
+					Text="Open"
+					/>
+
+				<Button
+					x:Name="SaveToICSButton"
+					Clicked="SaveToICSButton_ClickedAsync"
+					Style="{DynamicResource DynamicBaseButtonStyle}"
+					Text="Save"
+					/>
+
+				<Button
+					x:Name="FileCancelButton"
+					Clicked="FileCancelButton_Clicked"
+					IsVisible="False"
+					Style="{DynamicResource DynamicBaseButtonStyle}"
+					Text="Cancel"
+					/>
+
+
+
+			</StackLayout>
+		</ScrollView>
+
+	</ContentPage.Content>
+</ContentPage>
