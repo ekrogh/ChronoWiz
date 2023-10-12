@@ -369,80 +369,73 @@ namespace TimeDateCalculator
 			ClearYMWDHM(null);
 
 			// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-			switch (Device.RuntimePlatform)
+			if (DeviceInfo.Platform == DevicePlatform.iOS)
 			{
-				case Device.iOS:
-					{
-						CombndYears.WidthRequest = 105;
-						CombndMonths.WidthRequest = 105;
-						CombndWeeks.WidthRequest = 105;
-						CombndDays.WidthRequest = 105;
-						CombndHours.WidthRequest = 105;
-						CombndMinutes.WidthRequest = 105;
+				CombndYears.WidthRequest = 105;
+				CombndMonths.WidthRequest = 105;
+				CombndWeeks.WidthRequest = 105;
+				CombndDays.WidthRequest = 105;
+				CombndHours.WidthRequest = 105;
+				CombndMinutes.WidthRequest = 105;
 
-						TotYears.WidthRequest = 105;
-						TotMonths.WidthRequest = 105;
-						TotWeeks.WidthRequest = 105;
-						TotDays.WidthRequest = 105;
-						TotHours.WidthRequest = 105;
-						TotMinutes.WidthRequest = 105;
+				TotYears.WidthRequest = 105;
+				TotMonths.WidthRequest = 105;
+				TotWeeks.WidthRequest = 105;
+				TotDays.WidthRequest = 105;
+				TotHours.WidthRequest = 105;
+				TotMinutes.WidthRequest = 105;
 
-						break;
-					}
-				case Device.Android:
-					{
-						CombndYears.WidthRequest = 88;
-						CombndMonths.WidthRequest = 88;
-						CombndWeeks.WidthRequest = 88;
-						CombndDays.WidthRequest = 88;
-						CombndHours.WidthRequest = 88;
-						CombndMinutes.WidthRequest = 88;
+			}
+			else if (DeviceInfo.Platform == DevicePlatform.Android)
+			{
+				CombndYears.WidthRequest = 88;
+				CombndMonths.WidthRequest = 88;
+				CombndWeeks.WidthRequest = 88;
+				CombndDays.WidthRequest = 88;
+				CombndHours.WidthRequest = 88;
+				CombndMinutes.WidthRequest = 88;
 
-						TotYears.WidthRequest = 88;
-						TotMonths.WidthRequest = 88;
-						TotWeeks.WidthRequest = 88;
-						TotDays.WidthRequest = 88;
-						TotHours.WidthRequest = 88;
-						TotMinutes.WidthRequest = 88;
+				TotYears.WidthRequest = 88;
+				TotMonths.WidthRequest = 88;
+				TotWeeks.WidthRequest = 88;
+				TotDays.WidthRequest = 88;
+				TotHours.WidthRequest = 88;
+				TotMinutes.WidthRequest = 88;
 
-						break;
-					}
-				case Device.UWP:
-					{
-						CombndYears.WidthRequest = 121;
-						CombndMonths.WidthRequest = 121;
-						CombndWeeks.WidthRequest = 121;
-						CombndDays.WidthRequest = 121;
-						CombndHours.WidthRequest = 121;
-						CombndMinutes.WidthRequest = 121;
+			}
+			else if (DeviceInfo.Platform == DevicePlatform.WinUI)
+			{
+				CombndYears.WidthRequest = 121;
+				CombndMonths.WidthRequest = 121;
+				CombndWeeks.WidthRequest = 121;
+				CombndDays.WidthRequest = 121;
+				CombndHours.WidthRequest = 121;
+				CombndMinutes.WidthRequest = 121;
 
-						TotYears.WidthRequest = 121;
-						TotMonths.WidthRequest = 121;
-						TotWeeks.WidthRequest = 121;
-						TotDays.WidthRequest = 121;
-						TotHours.WidthRequest = 121;
-						TotMinutes.WidthRequest = 121;
+				TotYears.WidthRequest = 121;
+				TotMonths.WidthRequest = 121;
+				TotWeeks.WidthRequest = 121;
+				TotDays.WidthRequest = 121;
+				TotHours.WidthRequest = 121;
+				TotMinutes.WidthRequest = 121;
 
-						break;
-					}
-				default: //Set as UWP
-					{
-						CombndYears.WidthRequest = 121;
-						CombndMonths.WidthRequest = 121;
-						CombndWeeks.WidthRequest = 121;
-						CombndDays.WidthRequest = 121;
-						CombndHours.WidthRequest = 121;
-						CombndMinutes.WidthRequest = 121;
+			}
+			else //Set as UWP
+			{
+				CombndYears.WidthRequest = 121;
+				CombndMonths.WidthRequest = 121;
+				CombndWeeks.WidthRequest = 121;
+				CombndDays.WidthRequest = 121;
+				CombndHours.WidthRequest = 121;
+				CombndMinutes.WidthRequest = 121;
 
-						TotYears.WidthRequest = 121;
-						TotMonths.WidthRequest = 121;
-						TotWeeks.WidthRequest = 121;
-						TotDays.WidthRequest = 121;
-						TotHours.WidthRequest = 121;
-						TotMinutes.WidthRequest = 121;
+				TotYears.WidthRequest = 121;
+				TotMonths.WidthRequest = 121;
+				TotWeeks.WidthRequest = 121;
+				TotDays.WidthRequest = 121;
+				TotHours.WidthRequest = 121;
+				TotMinutes.WidthRequest = 121;
 
-						break;
-					}
 			}
 
 			ClearAllIOVars();
