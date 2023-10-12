@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
+﻿using CommunityToolkit.Maui.Storage;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
-using TimeCalculator.MessageThings;
 
 namespace TimeCalculator;
 
@@ -438,10 +438,16 @@ public partial class MainPage : ContentPage
 		ClearAllIOVars();
 	}
 
-	public MainPage()
+	readonly IFileSaver fileSaver;
+	readonly FileHandler fh = null;
+
+	public MainPage(IFileSaver fileSaver)
 	{
 
 		InitializeComponent();
+
+		this.fileSaver = fileSaver;
+		this.fh = new(fileSaver);
 
 		MessagingCenter.Subscribe<App, SelectFileResultMessageArgs>((App)Application.Current, MessengerKeys.FileToReadFromSelected, On_FileToReadFromSelectedAsync);
 		MessagingCenter.Subscribe<App, SelectFileResultMessageArgs>((App)Application.Current, MessengerKeys.FileToSaveToSelected, On_FileToSaveToSelected);
@@ -2834,11 +2840,14 @@ public partial class MainPage : ContentPage
 	private string CalendarItem = "";
 	private bool CorrectForIcsTimeZone = false;
 
+	private readonly string[] filetypesToReadFrom = new string[] { "ics" };
+	private readonly string[] filetypesToSaveTo = new string[] { "ics" };
+
 	private async void On_OpenIcsMessageReceived(App arg1, OpenIcsMessageArgs arg2)
 	{
 		CorrectForIcsTimeZone = arg2.CorrectForTimeZone;
 
-		await DependencyService.Get<IHandleFiles>().SelectFilesToReadFrom(new string[] { "ics" });
+		var selectedFiles = await fh.SelectFilesToReadFrom(filetypesToReadFrom);
 
 		await Navigation.PopAsync(true);
 	}

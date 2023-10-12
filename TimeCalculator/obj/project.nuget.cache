@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "RtvHV8H8cvHY2+jOZN7N6CzjiiEcHkyN8ujSTMoBxHwVOC1kzoTzfc/m9+pQ/KW01RpXFBexGpIIuHN8Y8S0bw==",
+  "dgSpecHash": "hwFBQbrsph+ZakdsJj1llRtiXjBZ2NOQ8TEOZ3Klejx9Zxk5fE8em7bWhpk36VkoA5bfaka3ofXu8tza87j7ZQ==",
   "success": true,
   "projectFilePath": "D:\\Users\\eigil\\projects\\MAUI\\TimeCalculator\\TimeCalculator\\TimeCalculator.csproj",
   "expectedPackageFiles": [
+    "D:\\Users\\eigil\\.nuget\\packages\\communitytoolkit.maui\\6.0.0\\communitytoolkit.maui.6.0.0.nupkg.sha512",
+    "D:\\Users\\eigil\\.nuget\\packages\\communitytoolkit.maui.core\\6.0.0\\communitytoolkit.maui.core.6.0.0.nupkg.sha512",
+    "D:\\Users\\eigil\\.nuget\\packages\\communitytoolkit.mvvm\\8.2.1\\communitytoolkit.mvvm.8.2.1.nupkg.sha512",
     "D:\\Users\\eigil\\.nuget\\packages\\googlegson\\2.9.1.1\\googlegson.2.9.1.1.nupkg.sha512",
     "D:\\Users\\eigil\\.nuget\\packages\\microsoft.extensions.configuration\\7.0.0\\microsoft.extensions.configuration.7.0.0.nupkg.sha512",
     "D:\\Users\\eigil\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
@@ -19,6 +22,7 @@
     "D:\\Users\\eigil\\.nuget\\packages\\microsoft.maui.graphics.win2d.winui.desktop\\7.0.96\\microsoft.maui.graphics.win2d.winui.desktop.7.0.96.nupkg.sha512",
     "D:\\Program_Files\\Microsoft_Visual_Studio\\Shared\\NuGetPackages\\microsoft.windows.sdk.buildtools\\10.0.22621.756\\microsoft.windows.sdk.buildtools.10.0.22621.756.nupkg.sha512",
     "D:\\Users\\eigil\\.nuget\\packages\\microsoft.windowsappsdk\\1.2.221209.1\\microsoft.windowsappsdk.1.2.221209.1.nupkg.sha512",
+    "D:\\Users\\eigil\\.nuget\\packages\\system.speech\\7.0.0\\system.speech.7.0.0.nupkg.sha512",
     "D:\\Users\\eigil\\.nuget\\packages\\xamarin.android.glide\\4.13.2.2\\xamarin.android.glide.4.13.2.2.nupkg.sha512",
     "D:\\Users\\eigil\\.nuget\\packages\\xamarin.android.glide.annotations\\4.13.2.2\\xamarin.android.glide.annotations.4.13.2.2.nupkg.sha512",
     "D:\\Users\\eigil\\.nuget\\packages\\xamarin.android.glide.disklrucache\\4.13.2.2\\xamarin.android.glide.disklrucache.4.13.2.2.nupkg.sha512",
