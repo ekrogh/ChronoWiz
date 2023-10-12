@@ -4,7 +4,7 @@
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
     <ActiveDebugFramework>net7.0-ios</ActiveDebugFramework>
     <ActiveDebugProfile>Eigil Kroghs iPad</ActiveDebugProfile>
-    <SelectedPlatformGroup>RemoteDevice</SelectedPlatformGroup>
+    <SelectedPlatformGroup>LocalDevice</SelectedPlatformGroup>
     <DefaultDevice>pixel_5_-_api_29</DefaultDevice>
     <TargetiOSDevice>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;
@@ -32,13 +32,22 @@
     <PlatformTarget>arm64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <MauiXaml Update="AboutHelp.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
     <MauiXaml Update="App.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
     <MauiXaml Update="AppShell.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
+    <MauiXaml Update="FileICS.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
     <MauiXaml Update="MainPage.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
+    <MauiXaml Update="OpenICS.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
     <MauiXaml Update="Platforms\Windows\App.xaml">
@@ -48,6 +57,9 @@
       <SubType>Designer</SubType>
     </MauiXaml>
     <MauiXaml Update="Resources\Styles\Styles.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
+    <MauiXaml Update="SaveToICS.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
   </ItemGroup>
