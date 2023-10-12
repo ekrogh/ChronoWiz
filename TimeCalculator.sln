@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31612.314
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeCalculator", "TimeCalculator\TimeCalculator.csproj", "{58097A9B-A816-452A-958B-66357FD915C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "try_TimeCalculator", "TimeCalculator\try_TimeCalculator.csproj", "{58097A9B-A816-452A-958B-66357FD915C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
