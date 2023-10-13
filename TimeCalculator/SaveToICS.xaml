@@ -60,8 +60,8 @@
 				>
 				<Image
 					Margin="0,0,0,20"
-					Source="{local:ImageResource TimeCalculator.SaveToIcs.png}"
 					IsEnabled="False"
+					Source="savetoics.png"
 					/>
 
 				<Label

@@ -48,7 +48,7 @@
 				<Image
 					Margin="0,0,0,20"
 					IsEnabled="False"
-					Source="{local:ImageResource TimeCalculator.OpenIcs.png}"
+					Source="openics.png"
 					/>
 				<Label
 					Padding="0,30,0,0"
