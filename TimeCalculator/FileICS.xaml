@@ -47,7 +47,7 @@
 				<Image
 					Margin="0,0,0,20"
 					IsEnabled="False"
-					Source="{local:ImageResource TimeCalculator.FileIcs.png}"
+					Source="FileIcs.png"
 					/>
 
 				<Button

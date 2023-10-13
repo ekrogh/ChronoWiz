@@ -12,7 +12,7 @@ public partial class FileHandler
 		this.fileSaver = fileSaver;
 	}
 
-	public async Task<SelectFilesResult> SelectFilesToReadFrom(string filetype)
+	public async Task<SelectFilesResult> SelectFiles(string filetype)
 	{
 		try
 		{
@@ -20,7 +20,11 @@ public partial class FileHandler
 			var customFileType = new FilePickerFileType(
 							new Dictionary<DevicePlatform, IEnumerable<string>>
 							{
-					{ DevicePlatform.MacCatalyst, new[] { filetype } }, // UTType values
+								{ DevicePlatform.MacCatalyst,   new[] { filetype } }, // UTType values
+								{ DevicePlatform.WinUI,         new[] { filetype } }, // UTType values
+								{ DevicePlatform.iOS,           new[] { filetype } }, // UTType values
+								{ DevicePlatform.Android,       new[] { filetype } }, // UTType values
+								{ DevicePlatform.Tizen,         new[] { filetype } }, // UTType values
                             });
 			PickOptions options = new()
 			{
@@ -34,6 +38,7 @@ public partial class FileHandler
 			//				PickerTitle = "Please select file(s)"
 			//			};
 			//#endif
+
 			FileResult pickResult = await FilePicker.PickAsync(options);
 
 			if (pickResult != null)
@@ -42,8 +47,7 @@ public partial class FileHandler
 
 				args.DidPick = true;
 
-
-				args.TheStream = await pickResult.OpenReadAsync();
+				args.pickResult = pickResult;
 
 				return args;
 

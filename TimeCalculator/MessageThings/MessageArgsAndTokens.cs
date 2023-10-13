@@ -16,7 +16,7 @@ public class OpenIcsMessageArgs : EventArgs
 public sealed class SelectFilesResult
 {
 	public bool DidPick { get; set; }
-	public Stream TheStream { get; set; }
+	public FileResult pickResult { get; set; }
 }
 
 // Message keys

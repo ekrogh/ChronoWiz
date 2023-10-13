@@ -17,7 +17,10 @@
 			{
 				Resources["DynamicBaseButtonStyle"] = Resources["baseButtonStyle"];
 
-				if (DeviceInfo.Platform == DevicePlatform.macOS)
+				if
+				(
+						(DeviceInfo.Platform == DevicePlatform.macOS)
+					|| (DeviceInfo.Platform == DevicePlatform.MacCatalyst))
 				{
 					FileCancelButton.IsVisible = true;
 				}

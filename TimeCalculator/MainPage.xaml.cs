@@ -2,8 +2,8 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Text;
-using TimeCalculator.MessageThings;
 using TimeCalculator.FileHandlers;
+using TimeCalculator.MessageThings;
 
 namespace TimeCalculator;
 
@@ -451,9 +451,6 @@ public partial class MainPage : ContentPage
 		this.fileSaver = fileSaver;
 		this.fh = new(fileSaver);
 
-		MessagingCenter.Subscribe<App, SelectFileResultMessageArgs>((App)Application.Current, MessengerKeys.FileToReadFromSelected, On_FileToReadFromSelectedAsync);
-		MessagingCenter.Subscribe<App, SelectFileResultMessageArgs>((App)Application.Current, MessengerKeys.FileToSaveToSelected, On_FileToSaveToSelected);
-		MessagingCenter.Subscribe<App, SelectFileResultMessageArgs>((App)Application.Current, MessengerKeys.FileToSaveRawTextToSelected, On_FileToSaveRawTextToSelected);
 		MessagingCenter.Subscribe<App, SaveToIcsMessageArgs>((App)Application.Current, MessengerKeys.SaveToIcsMessageKey, On_SaveToIcsMessageReceived);
 		MessagingCenter.Subscribe<App, OpenIcsMessageArgs>((App)Application.Current, MessengerKeys.OpenIcsMessageKey, On_OpenIcsMessageReceived);
 
@@ -2842,14 +2839,14 @@ public partial class MainPage : ContentPage
 	private string CalendarItem = "";
 	private bool CorrectForIcsTimeZone = false;
 
-	private readonly string filetypeToReadFrom = new string[] { "ics" };
-	private readonly string filetypeToSaveTo = new string[] { "ics" };
+	private readonly string filetypeToReadFrom = "ics";
+	private readonly string filetypeToSaveTo = "ics";
 
 	private async void On_OpenIcsMessageReceived(App arg1, OpenIcsMessageArgs arg2)
 	{
 		CorrectForIcsTimeZone = arg2.CorrectForTimeZone;
 
-		SelectFilesResult selectedFiles = await fh.SelectFilesToReadFrom(filetypeToReadFrom);
+		SelectFilesResult selectedFiles = await fh.SelectFiles(filetypeToReadFrom);
 
 		On_FileToReadFromSelectedAsync(selectedFiles);
 
@@ -2866,7 +2863,7 @@ public partial class MainPage : ContentPage
 			{
 				// Create an instance of StreamReader to read from a file.
 				// The using statement also closes the StreamReader.
-				using StreamReader sr = new StreamReader(arg2.TheStream);
+				using StreamReader sr = new StreamReader(await arg2.pickResult.OpenReadAsync());
 				string line;
 				// Read and display lines from the file until the end of
 				// the file is reached.
@@ -3086,7 +3083,10 @@ public partial class MainPage : ContentPage
 
 		string[] filetypesToSaveTo = new string[] { "ics" };
 		SuggestedNameOfFileToSaveTo = Summary;
-		await DependencyService.Get<IHandleFiles>().SelectFilesToSaveTo(SuggestedNameOfFileToSaveTo, filetypesToSaveTo, MessengerKeys.FileToSaveToSelected);
+
+		SelectFilesResult selectedFiles = await fh.SelectFiles(filetypeToReadFrom);
+
+		On_FileToSaveToSelected(selectedFiles);
 
 		await Navigation.PopAsync(true);
 	}
@@ -3096,22 +3096,20 @@ public partial class MainPage : ContentPage
 		await Navigation.PushAsync(new FileICS(), true);
 	}
 
-	private async void On_FileToSaveToSelected(App arg1, SelectFileResultMessageArgs arg2)
+	private async void On_FileToSaveToSelected(SelectFilesResult arg2)
 	{
 		if (arg2.DidPick)
 		{
-			_ = await DependencyService.Get<IHandleFiles>().SaveToTextFile(arg2.TheSelectedFileInfo.TheStream, CalendarItem);
+			using MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(CalendarItem));
+
+			FileSaverResult fileSaveResult = await fh.SaveToTextFile(stream, arg2.pickResult.FullPath);
 
 			// Close file
-			arg2.TheSelectedFileInfo.TheStream.Dispose();
+			stream.Dispose();
 		}
 
 		await Navigation.PopAsync(true);
 
-	}
-
-	private void On_FileToSaveRawTextToSelected(App arg1, SelectFileResultMessageArgs arg2)
-	{
 	}
 
 }
