@@ -1,4 +1,4 @@
-﻿namespace TimeCalculator;
+﻿namespace TimeCalculator.MessageThings;
 
 // .ics file
 public class SaveToIcsMessageArgs : EventArgs
@@ -13,19 +13,10 @@ public class OpenIcsMessageArgs : EventArgs
 }
 
 // Select file
-public struct SelectedFileInfo
-{
-	public System.IO.Stream TheStream { get; set; }
-}
-public class SelectFileResultMessageArgs : EventArgs
-{
-	public bool DidPick { get; set; }
-	public SelectedFileInfo TheSelectedFileInfo { get; set; }
-}
 public sealed class SelectFilesResult
 {
 	public bool DidPick { get; set; }
-	public List<SelectedFileInfo> TheSelectedFilesInfo { get; set; }
+	public Stream TheStream { get; set; }
 }
 
 // Message keys

@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Text;
+using TimeCalculator.MessageThings;
+using TimeCalculator.FileHandlers;
 
 namespace TimeCalculator;
 
@@ -2840,19 +2842,21 @@ public partial class MainPage : ContentPage
 	private string CalendarItem = "";
 	private bool CorrectForIcsTimeZone = false;
 
-	private readonly string[] filetypesToReadFrom = new string[] { "ics" };
-	private readonly string[] filetypesToSaveTo = new string[] { "ics" };
+	private readonly string filetypeToReadFrom = new string[] { "ics" };
+	private readonly string filetypeToSaveTo = new string[] { "ics" };
 
 	private async void On_OpenIcsMessageReceived(App arg1, OpenIcsMessageArgs arg2)
 	{
 		CorrectForIcsTimeZone = arg2.CorrectForTimeZone;
 
-		var selectedFiles = await fh.SelectFilesToReadFrom(filetypesToReadFrom);
+		SelectFilesResult selectedFiles = await fh.SelectFilesToReadFrom(filetypeToReadFrom);
+
+		On_FileToReadFromSelectedAsync(selectedFiles);
 
 		await Navigation.PopAsync(true);
 	}
 
-	private async void On_FileToReadFromSelectedAsync(App arg1, SelectFileResultMessageArgs arg2)
+	private async void On_FileToReadFromSelectedAsync(SelectFilesResult arg2)
 	{
 		if (arg2.DidPick)
 		{
@@ -2862,15 +2866,13 @@ public partial class MainPage : ContentPage
 			{
 				// Create an instance of StreamReader to read from a file.
 				// The using statement also closes the StreamReader.
-				using (StreamReader sr = new StreamReader(arg2.TheSelectedFileInfo.TheStream))
+				using StreamReader sr = new StreamReader(arg2.TheStream);
+				string line;
+				// Read and display lines from the file until the end of
+				// the file is reached.
+				while ((line = sr.ReadLine()) != null)
 				{
-					string line;
-					// Read and display lines from the file until the end of
-					// the file is reached.
-					while ((line = sr.ReadLine()) != null)
-					{
-						TheIcsTxt.Add(line);
-					}
+					TheIcsTxt.Add(line);
 				}
 			}
 			catch (Exception e)
