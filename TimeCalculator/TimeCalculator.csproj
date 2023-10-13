@@ -103,4 +103,6 @@
 	  </None>
 	</ItemGroup>
 
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionTimeCalculatorHideInfoBar="True" /></VisualStudio></ProjectExtensions>
+
 </Project>
