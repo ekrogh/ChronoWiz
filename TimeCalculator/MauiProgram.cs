@@ -1,8 +1,4 @@
-﻿using CommunityToolkit.Maui;
-using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Maui.Storage;
-using Microsoft.Extensions.Logging;
-
+﻿
 namespace TimeCalculator;
 
 public static class MauiProgram
@@ -30,6 +26,9 @@ public static class MauiProgram
 #endif
 
 		builder.Services.AddSingleton<IFileSaver>(FileSaver.Default);
+
+		builder.Services.AddTransient<MainPageViewModel>();
+		builder.Services.AddSingleton<MainPage>();
 
 		return builder.Build();
 	}

@@ -9,6 +9,8 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = TimeCalculator
 build_property.ProjectDir = D:\Users\eigil\projects\MAUI\TimeCalculator\TimeCalculator\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
 
 [D:/Users/eigil/projects/MAUI/TimeCalculator/TimeCalculator/AboutHelp.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml

@@ -1,9 +1,4 @@
-﻿using CommunityToolkit.Maui.Storage;
-using System.ComponentModel;
-using System.Globalization;
-using System.Text;
-using TimeCalculator.FileHandlers;
-using TimeCalculator.MessageThings;
+﻿using TimeCalculator.FileHandlers;
 
 namespace TimeCalculator;
 
@@ -78,7 +73,7 @@ public partial class MainPage : ContentPage
 	List<Entry> ListOfCmbndEntrys;
 	List<Entry> ListOfTotEntrys;
 
-	List<Switch> ListOfSwitches;
+	List<Microsoft.Maui.Controls.Switch> ListOfSwitches;
 
 
 	// Total values for dateTime span
@@ -277,9 +272,9 @@ public partial class MainPage : ContentPage
 		DisableTotYMWDHM(ImInFocus);
 	}
 
-	private void EnableAndToggleOffAllSwitchedXceptMe(Switch SwitchToDisaable)
+	private void EnableAndToggleOffAllSwitchedXceptMe(Microsoft.Maui.Controls.Switch SwitchToDisaable)
 	{
-		foreach (Switch CurSwitch in ListOfSwitches)
+		foreach (Microsoft.Maui.Controls.Switch CurSwitch in ListOfSwitches)
 		{
 			if (CurSwitch != SwitchToDisaable)
 			{
@@ -443,11 +438,12 @@ public partial class MainPage : ContentPage
 	readonly IFileSaver fileSaver;
 	readonly FileHandler fh = null;
 
-	public MainPage(IFileSaver fileSaver)
+	public MainPage(MainPageViewModel viewModel, IFileSaver fileSaver)
 	{
 
 		InitializeComponent();
 
+		BindingContext = viewModel;
 		this.fileSaver = fileSaver;
 		this.fh = new(fileSaver);
 
@@ -471,7 +467,7 @@ public partial class MainPage : ContentPage
 			Resources["DynamicBaseButtonStyle"] = Resources["baseButtonStyle"];
 		}
 
-		ListOfSwitches = new List<Switch>()
+		ListOfSwitches = new List<Microsoft.Maui.Controls.Switch>()
 		{
 			  SwitchCalcStartDateTime
 			, SwitchCalcYMWDHM
@@ -1195,7 +1191,7 @@ public partial class MainPage : ContentPage
 			StartDateTimeNowButton.IsEnabled = false;
 
 			DoClearAll();
-			EnableAndToggleOffAllSwitchedXceptMe((Switch)sender);
+			EnableAndToggleOffAllSwitchedXceptMe((Microsoft.Maui.Controls.Switch)sender);
 
 			LabelEqual.Text = "-";
 			LabelPlus.Text = "=";
@@ -1620,7 +1616,7 @@ public partial class MainPage : ContentPage
 			EndDateTimeNowButton.IsEnabled = false;
 
 			DoClearAll();
-			EnableAndToggleOffAllSwitchedXceptMe((Switch)sender);
+			EnableAndToggleOffAllSwitchedXceptMe((Microsoft.Maui.Controls.Switch)sender);
 
 			LabelEqual.Text = "=";
 			LabelPlus.Text = "+";
@@ -2814,7 +2810,7 @@ public partial class MainPage : ContentPage
 		{
 			DisableYMWDHM(null);
 			DoClearAll();
-			EnableAndToggleOffAllSwitchedXceptMe((Switch)sender);
+			EnableAndToggleOffAllSwitchedXceptMe((Microsoft.Maui.Controls.Switch)sender);
 			LabelEqual.Text = "=";
 			LabelPlus.Text = "+";
 		}
