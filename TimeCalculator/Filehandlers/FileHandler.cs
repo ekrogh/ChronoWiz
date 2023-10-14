@@ -5,12 +5,12 @@ namespace TimeCalculator.FileHandlers;
 
 public partial class FileHandler
 {
-	readonly IFileSaver fileSaver;
+	//readonly IFileSaver fileSaver;
 
-	public FileHandler(IFileSaver fileSaver)
-	{
-		this.fileSaver = fileSaver;
-	}
+	//public FileHandler(IFileSaver fileSaver)
+	//{
+	//	this.fileSaver = fileSaver;
+	//}
 
 	public async Task<SelectFilesResult> SelectFiles(string filetype)
 	{

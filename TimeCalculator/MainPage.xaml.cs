@@ -7,33 +7,33 @@ namespace TimeCalculator;
 //[DesignTimeVisible(true)]
 public partial class MainPage : ContentPage
 {
-	public MainPage(IFileSaver fileSaver)
+	public MainPage()
 	{
 
 		InitializeComponent();
 
 		//BindingContext = viewModel;
-		this.fileSaver = fileSaver;
-		this.fh = new(fileSaver);
+		//this.fileSaver = fileSaver;
+		//this.fh = new(fileSaver);
 
 		//MessagingCenter.Subscribe<App, SaveToIcsMessageArgs>((App)Application.Current, MessengerKeys.SaveToIcsMessageKey, On_SaveToIcsMessageReceived);
 		//MessagingCenter.Subscribe<App, OpenIcsMessageArgs>((App)Application.Current, MessengerKeys.OpenIcsMessageKey, On_OpenIcsMessageReceived);
 
 
-		if (DeviceInfo.Platform == DevicePlatform.Android)
-		{
-			//ContentPageName.SetAppThemeColor(BackgroundColorProperty, Colors.White, Colors.Black);
-			Resources["DynamicBaseButtonStyle"] = Resources["AndroidBaseButtonStyle"];
-		}
+		//if (DeviceInfo.Platform == DevicePlatform.Android)
+		//{
+		//	//ContentPageName.SetAppThemeColor(BackgroundColorProperty, Colors.White, Colors.Black);
+		//	Resources["DynamicBaseButtonStyle"] = Resources["AndroidBaseButtonStyle"];
+		//}
 		//else if (DeviceInfo.Platform == DevicePlatform.GTK)
 		//		{
 		//			//ContentPageName.SetAppThemeColor(BackgroundColorProperty, Colors.White, Colors.Black);
 		//			Resources["DynamicBaseButtonStyle"] = Resources["baseButtonStyle"];
 		//		}
-		else
-		{
-			Resources["DynamicBaseButtonStyle"] = Resources["baseButtonStyle"];
-		}
+		//else
+		//{
+		//	Resources["DynamicBaseButtonStyle"] = Resources["baseButtonStyle"];
+		//}
 
 		//ListOfSwitches = new List<Microsoft.Maui.Controls.Switch>()
 		//{
