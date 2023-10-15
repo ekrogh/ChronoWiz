@@ -49,6 +49,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="NEW_MainPage.xaml.cs" />
+	  <Compile Remove="OLD_MainPage.xaml.cs" />
+	  <Compile Remove="Orig_MainPage.xaml.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Remove="MainPage - Copy.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>

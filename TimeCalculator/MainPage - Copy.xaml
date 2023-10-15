@@ -353,7 +353,7 @@
 									HorizontalOptions="Start"
 									IsToggled="false"
 									OnColor="Green"
-									Toggled="SwitchCalcStartDateTime_Toggled"
+									Toggled="CalcStartDateSwitch_Toggled"
 									/>
 							</Grid>
 						</StackLayout>
@@ -389,7 +389,7 @@
 							IsEnabled="False"
 							IsToggled="True"
 							OnColor="Green"
-							Toggled="SwitchCalcYMWDHM_Toggled_1"
+							Toggled="CalcYMWDHM_toggeled"
 							VerticalOptions="StartAndExpand"
 							/>
 					</StackLayout>
@@ -417,10 +417,10 @@
 									/>
 								<Entry
 									x:Name="CombndYears"
-									Completed="CombndYears_Completed"
-									Focused="CombndYears_Focused"
+									Completed="OnCombndYearsCompleted"
+									Focused="OnCombndYMWDHMFocused"
 									Style="{StaticResource baseEntryStyle}"
-									Unfocused="CombndYears_Unfocused"
+									Unfocused="OnCombndYearsUnfocused"
 									/>
 							</StackLayout>
 
@@ -434,11 +434,11 @@
 									/>
 								<Entry
 									x:Name="CombndMonths"
-									Completed="CombndMonths_Completed"
-									Focused="CombndMonths_Focused"
+									Completed="OnCombndMonthsCompleted"
+									Focused="OnCombndYMWDHMFocused"
 									IsReadOnly="True"
 									Style="{StaticResource baseEntryStyle}"
-									Unfocused="CombndMonths_Unfocused"
+									Unfocused="OnCombndMonthsUnfocused"
 									/>
 							</StackLayout>
 
@@ -452,11 +452,11 @@
 									/>
 								<Entry
 									x:Name="CombndWeeks"
-									Completed="CombndWeeks_Completed"
-									Focused="CombndWeeks_Focused"
+									Completed="OnCombndWeeksCompleted"
+									Focused="OnCombndYMWDHMFocused"
 									IsReadOnly="True"
 									Style="{StaticResource baseEntryStyle}"
-									Unfocused="CombndWeeks_Unfocused"
+									Unfocused="OnCombndWeeksUnfocused"
 									/>
 							</StackLayout>
 
@@ -470,11 +470,11 @@
 									/>
 								<Entry
 									x:Name="CombndDays"
-									Completed="CombndDays_Completed"
-									Focused="CombndDays_Focused"
+									Completed="OnCombndDaysCompleted"
+									Focused="OnCombndYMWDHMFocused"
 									IsReadOnly="True"
 									Style="{StaticResource baseEntryStyle}"
-									Unfocused="CombndDays_Unfocused"
+									Unfocused="OnCombndDaysUnfocused"
 									/>
 							</StackLayout>
 
@@ -488,11 +488,11 @@
 									/>
 								<Entry
 									x:Name="CombndHours"
-									Completed="CombndHours_Completed"
-									Focused="CombndHours_Focused"
+									Completed="OnCombndHoursCompleted"
+									Focused="OnCombndYMWDHMFocused"
 									IsReadOnly="True"
 									Style="{StaticResource baseEntryStyle}"
-									Unfocused="CombndHours_Unfocused"
+									Unfocused="OnCombndHoursUnfocused"
 									/>
 							</StackLayout>
 
@@ -506,11 +506,11 @@
 									/>
 								<Entry
 									x:Name="CombndMinutes"
-									Completed="CombndMinutes_Completed"
-									Focused="CombndMinutes_Focused"
+									Completed="OnCombndMinutesCompleted"
+									Focused="OnCombndYMWDHMFocused"
 									IsReadOnly="True"
 									Style="{StaticResource baseEntryStyle}"
-									Unfocused="CombndMinutes_Unfocused"
+									Unfocused="OnCombndMinutesUnfocused"
 									/>
 							</StackLayout>
 						</StackLayout>
@@ -530,11 +530,11 @@
 									/>
 								<Entry
 									x:Name="TotYears"
-									Completed="TotYears_Completed"
-									Focused="TotYears_Focused"
+									Completed="OnTotYearsCompleted"
+									Focused="OnTotYMWDHMFocused"
 									IsReadOnly="True"
 									Style="{StaticResource baseEntryStyle}"
-									Unfocused="TotYears_Unfocused"
+									Unfocused="OnTotYearsUnfocused"
 									/>
 							</StackLayout>
 
@@ -548,10 +548,10 @@
 									/>
 								<Entry
 									x:Name="TotMonths"
-									Completed="TotMonths_Completed"
-									Focused="TotMonths_Focused"
+									Completed="OnTotMonthsCompleted"
+									Focused="OnTotYMWDHMFocused"
 									Style="{StaticResource baseEntryStyle}"
-									Unfocused="TotMonths_Unfocused"
+									Unfocused="OnTotMonthsUnfocused"
 									/>
 							</StackLayout>
 
@@ -565,10 +565,10 @@
 									/>
 								<Entry
 									x:Name="TotWeeks"
-									Completed="TotWeeks_Completed"
-									Focused="TotWeeks_Focused"
+									Completed="OnTotWeeksCompleted"
+									Focused="OnTotYMWDHMFocused"
 									Style="{StaticResource baseEntryStyle}"
-									Unfocused="TotWeeks_Unfocused"
+									Unfocused="OnTotWeeksUnfocused"
 									/>
 							</StackLayout>
 
@@ -582,10 +582,10 @@
 									/>
 								<Entry
 									x:Name="TotDays"
-									Completed="TotDays_Completed"
-									Focused="TotDays_Focused"
+									Completed="OnTotDaysCompleted"
+									Focused="OnTotYMWDHMFocused"
 									Style="{StaticResource baseEntryStyle}"
-									Unfocused="TotDays_Unfocused"
+									Unfocused="OnTotDaysUnfocused"
 									/>
 							</StackLayout>
 
@@ -599,10 +599,10 @@
 									/>
 								<Entry
 									x:Name="TotHours"
-									Completed="TotHours_Completed"
-									Focused="TotHours_Focused"
+									Completed="OnTotHoursCompleted"
+									Focused="OnTotYMWDHMFocused"
 									Style="{StaticResource baseEntryStyle}"
-									Unfocused="TotHours_Unfocused"
+									Unfocused="OnTotHoursUnfocused"
 									/>
 							</StackLayout>
 
@@ -616,10 +616,10 @@
 									/>
 								<Entry
 									x:Name="TotMinutes"
-									Completed="TotMinutes_Completed"
-									Focused="TotMinutes_Focused"
+									Completed="OnTotMinutesCompleted"
+									Focused="OnTotYMWDHMFocused"
 									Style="{StaticResource baseEntryStyle}"
-									Unfocused="TotMinutes_Unfocused"
+									Unfocused="OnTotMinutesUnfocused"
 									/>
 							</StackLayout>
 						</StackLayout>
@@ -677,7 +677,7 @@
 									HorizontalOptions="Start"
 									IsToggled="false"
 									OnColor="Green"
-									Toggled="SwitchCalcEndDateTime_Toggled"
+									Toggled="CalcEndDateSwitch_Toggled"
 									/>
 							</Grid>
 						</StackLayout>
@@ -714,14 +714,14 @@
 						</StackLayout.Spacing>
 						<Button
 							x:Name="clearAllButtonName"
-							Clicked="clearAllButtonName_Clicked"
+							Clicked="OnClearAllButtonClicked"
 							HorizontalOptions="Start"
 							Style="{DynamicResource DynamicBaseButtonStyle}"
 							Text="Clear All"
 							/>
 						<Button
 							x:Name="CalculateButton"
-							Clicked="CalculateButton_Clicked"
+							Clicked="OnCalculateButtonClicked"
 							HorizontalOptions="Center"
 							Style="{DynamicResource DynamicBaseButtonStyle}"
 							Text="Calculate"
@@ -734,7 +734,7 @@
 							/>
 						<Button
 							x:Name="HelpButtonName"
-							Clicked="HelpButtonName_Clicked"
+							Clicked="OnHelpButtonClicked"
 							FontAttributes="Bold"
 							HorizontalOptions="End"
 							Style="{DynamicResource DynamicBaseButtonStyle}"
