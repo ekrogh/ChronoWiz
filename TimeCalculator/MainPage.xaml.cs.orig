@@ -905,7 +905,7 @@ public partial class MainPage : ContentPage
 			}
 
 			// Reset scaling
-			ContentPageName.Scale = 1.0f / ContentPageNameScaleLast;
+			//ContentPageName.Scale = 1.0f / ContentPageNameScaleLast;
 			scrollViewName.Scale = 1.0f / scrollViewNameScaleLast;
 			TotalStackName.Scale = 1.0f / TotalStackNameScaleLast;
 			StartDateTimeStacAndPlus.Scale = 1.0f / StartDateTimeStacAndPlusScaleLast;
@@ -1000,7 +1000,7 @@ public partial class MainPage : ContentPage
 					if (height > nativeTotalStackHeightPortrait)
 					{
 						ContentPageNameScaleLast = height / nativeTotalStackHeightPortrait;
-						ContentPageName.Scale = ContentPageNameScaleLast;
+						//ContentPageName.Scale = ContentPageNameScaleLast;
 					}
 				}
 				else
@@ -1011,7 +1011,7 @@ public partial class MainPage : ContentPage
 					if (width > nativeTotalStackWidthLandscape)
 					{
 						ContentPageNameScaleLast = width / nativeTotalStackWidthLandscape;
-						ContentPageName.Scale = ContentPageNameScaleLast;
+						//ContentPageName.Scale = ContentPageNameScaleLast;
 					}
 					else if (width < 659.0f)
 					{
