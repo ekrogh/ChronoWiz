@@ -65,7 +65,7 @@ public partial class FileHandler
 		}
 	}
 
-	public static async Task<FileSaverResult> SaveToTextFile(/*Memory*/Stream TheStream, string filename)
+	public static async Task<FileSaverResult> SaveToTextFile(MemoryStream TheStream, string filename)
 	{
 		try
 		{

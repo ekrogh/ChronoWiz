@@ -25,11 +25,6 @@ public partial class AboutHelp : ContentPage
 							+ VersionTracking.Default.CurrentBuild.ToString();
 	}
 
-	private async void OKButton_Clicked(object sender, EventArgs e)
-	{
-		_ = await Navigation.PopAsync(true);
-	}
-
 	private async void UsersGuideButton_Clicked(object sender, EventArgs e)
 	{
 		// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes

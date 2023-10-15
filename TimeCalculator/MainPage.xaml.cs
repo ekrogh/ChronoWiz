@@ -37,7 +37,7 @@ public partial class MainPage : ContentPage
 		//		}
 		//else
 		//{
-			Resources["DynamicBaseButtonStyle"] = Resources["baseButtonStyle"];
+		Resources["DynamicBaseButtonStyle"] = Resources["baseButtonStyle"];
 		//}
 
 		ListOfSwitches = new List<Microsoft.Maui.Controls.Switch>()
@@ -2796,13 +2796,11 @@ public partial class MainPage : ContentPage
 
 	private async void OnHelpButtonClicked(object sEnder, EventArgs e)
 	{
-		await Navigation.PushAsync(new AboutHelp(), true);
-
-		//	+ Environment.NewLine + Environment.NewLine
-		//	+ "Test"
-		//	;
-		//await DisplayAlert("Application", AppTitleAndVersion, "OK");
-
+		await Shell.Current.GoToAsync
+		(
+			nameof(AboutHelp)
+			, true
+		);
 	}
 
 	private void CalcYMWDHM_toggeled(object sender, ToggledEventArgs e)
@@ -3082,16 +3080,23 @@ public partial class MainPage : ContentPage
 		string[] filetypesToSaveTo = new string[] { "ics" };
 		SuggestedNameOfFileToSaveTo = Summary;
 
-		SelectFilesResult selectedFiles = await FileHandler.SelectFiles(filetypeToReadFrom);
+		using MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(CalendarItem));
 
-		On_FileToSaveToSelected(selectedFiles);
+		FileSaverResult fileSaveResult = await FileHandler.SaveToTextFile(stream, "Calendar.ics");
 
-		await Navigation.PopAsync(true);
+		// Close file
+		stream.Dispose();
+
+		//await Navigation.PopAsync(true);
 	}
 
 	private async void FileButton_Clicked(object sender, EventArgs e)
 	{
-		await Navigation.PushAsync(new FileICS(), true);
+		await Shell.Current.GoToAsync
+		(
+			nameof(FileICS)
+			, true
+		);
 	}
 
 	private async void On_FileToSaveToSelected(SelectFilesResult arg2)
