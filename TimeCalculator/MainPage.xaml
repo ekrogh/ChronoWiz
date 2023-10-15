@@ -5,7 +5,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	>
 
-	<ScrollView>
+	<!--<ScrollView>
 		<VerticalStackLayout
 			Spacing="25"
 			Padding="30,0"
@@ -37,9 +37,283 @@
 				HorizontalOptions="Center" />
 
 		</VerticalStackLayout>
-	</ScrollView>
-	
-	<!--<ScrollView>
+	</ScrollView>-->
+
+	<!--<ContentPage.Padding>
+		<OnPlatform
+			x:TypeArguments="Thickness">
+			<On
+				Platform="iOS"
+				Value="30" />
+			<On
+				Platform="Android, UWP, GTK"
+				Value="0, 0, 0, 30" />
+		</OnPlatform>
+	</ContentPage.Padding>-->
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<Style
+				x:Key="baseLabelStyle"
+				x:Name="baseLabelStyleName"
+				TargetType="Label"
+				>
+				<Setter
+					Property="TextColor"
+					Value="{AppThemeBinding Light=Black,
+					                        Dark=White}"
+					/>
+				<Setter
+					Property="FontSize"
+					Value="Small"
+					/>
+				<Setter
+					Property="IsEnabled"
+					Value="False"
+					/>
+			</Style>
+
+			<Style
+				x:Key="baseLabelStyleEntries"
+				BasedOn="{StaticResource baseLabelStyle}"
+				TargetType="Label"
+				>
+				<Setter
+					Property="FontSize"
+					Value="Micro"
+					/>
+			</Style>
+
+			<Style
+				x:Key="baseStartEndDateTimeEntryLabelStyle"
+				BasedOn="{StaticResource baseLabelStyle}"
+				TargetType="Label"
+				>
+				<Setter
+					Property="HorizontalOptions"
+					Value="Center"
+					/>
+				<Setter
+					Property="VerticalOptions"
+					Value="Center"
+					/>
+				<Setter
+					Property="FontSize"
+					Value="Micro"
+					/>
+			</Style>
+
+			<Style
+				x:Key="baseEntryStyle"
+				x:Name="baseEntryStyleName"
+				TargetType="Entry"
+				>
+				<Setter
+					Property="FontSize"
+					Value="Small"
+					/>
+				<Setter
+					Property="Keyboard"
+					Value="Numeric"
+					/>
+				<Setter
+					Property="BackgroundColor"
+					Value="{AppThemeBinding Light=Yellow,
+					                        Dark=#FF00004B}"
+					/>
+				<Setter
+					Property="TextColor"
+					Value="{AppThemeBinding Light=Blue,
+					                        Dark=#FFFFFFB4}"
+					/>
+				<Setter
+					Property="HorizontalTextAlignment"
+					Value="End"
+					/>
+				<Setter
+					Property="IsEnabled"
+					Value="True"
+					/>
+			</Style>
+
+			<Style
+				x:Key="baseStartEndDateTimeEntryStyle"
+				x:Name="baseStartEndDateTimeEntryStyleName"
+				BasedOn="{StaticResource baseEntryStyle}"
+				TargetType="Entry"
+				>
+				<Setter
+					Property="HorizontalTextAlignment"
+					Value="Center"
+					/>
+				<Setter
+					Property="HorizontalOptions"
+					Value="Fill"
+					/>
+				<Setter
+					Property="VerticalOptions"
+					Value="Center"
+					/>
+			</Style>
+
+			<Style
+				x:Key="baseButtonStyle"
+				TargetType="Button"
+				>
+				<Setter
+					Property="BorderColor"
+					Value="Gray"
+					/>
+				<Setter
+					Property="TextColor"
+					Value="{AppThemeBinding Light=#FF579AE5,
+					                        Dark=#FF9E5B10}"
+					/>
+				<Setter
+					Property="BorderWidth"
+					Value="0.5"
+					/>
+				<Setter
+					Property="IsEnabled"
+					Value="True"
+					/>
+			</Style>
+
+			<!--<Style
+				x:Key="AndroidBaseButtonStyle"
+				TargetType="Button"
+				>
+				<Setter
+					Property="BackgroundColor"
+					Value="{AppThemeBinding Light=Default,
+					                        Dark=#FF333333}"
+					/>
+			</Style>-->
+
+			<Style
+				x:Key="baseCmbndAndTotStackLayoutStyle"
+				x:Name="baseCmbndAndTotStackLayoutStyleName"
+				TargetType="StackLayout">
+				<Setter
+					Property="Spacing"
+					Value="1" />
+				<Setter
+					Property="Orientation"
+					Value="Vertical" />
+				<Setter
+					Property="HorizontalOptions"
+					Value="CenterAndExpand" />
+				<Setter
+					Property="VerticalOptions"
+					Value="Center" />
+				<Setter
+					Property="IsEnabled"
+					Value="True" />
+			</Style>
+
+			<Style
+				x:Key="baseCmbndAndTotTimeEntriesStackLayoutStyle"
+				x:Name="baseCmbndAndTotTimeEntriesStackLayoutStyleName"
+				BasedOn="{StaticResource baseCmbndAndTotStackLayoutStyle}"
+				TargetType="StackLayout" />
+
+			<Style
+				x:Key="baseDatePickerStyle_WO_WidthRequest"
+				TargetType="DatePicker">
+				<Setter
+					Property="VerticalOptions"
+					Value="Center" />
+				<Setter
+					Property="BackgroundColor"
+					Value="{AppThemeBinding Light=Yellow, Dark=#FF00004B}" />
+				<Setter
+					Property="TextColor"
+					Value="{AppThemeBinding Light=Blue, Dark=#FFFFFFB4}" />
+				<Setter
+					Property="IsEnabled"
+					Value="True" />
+				<Setter
+					Property="FontFamily"
+					Value="Courier" />
+				<Setter
+					Property="FontSize"
+					Value="Small" />
+			</Style>
+
+			<Style
+				x:Key="baseTimePickerStyle"
+				TargetType="TimePicker">
+				<Setter
+					Property="HorizontalOptions"
+					Value="StartAndExpand" />
+				<Setter
+					Property="VerticalOptions"
+					Value="Center" />
+				<Setter
+					Property="BackgroundColor"
+					Value="{AppThemeBinding Light=Yellow, Dark=#FF00004B}" />
+				<Setter
+					Property="TextColor"
+					Value="{AppThemeBinding Light=Blue, Dark=#FFFFFFB4}" />
+				<Setter
+					Property="IsEnabled"
+					Value="True" />
+				<Setter
+					Property="FontSize"
+					Value="Small" />
+			</Style>
+
+			<Style
+				x:Key="baseGTKDatePickerStyle_WO_WidthRequest"
+				TargetType="DatePicker">
+				<Setter
+					Property="VerticalOptions"
+					Value="Center" />
+				<Setter
+					Property="TextColor"
+					Value="Black" />
+				<Setter
+					Property="IsEnabled"
+					Value="True" />
+				<Setter
+					Property="FontFamily"
+					Value="Courier" />
+				<Setter
+					Property="FontSize"
+					Value="Default" />
+				<Setter
+					Property="FontAttributes"
+					Value="Bold" />
+			</Style>
+
+			<Style
+				x:Key="baseGTKTimePickerStyle"
+				TargetType="TimePicker">
+				<Setter
+					Property="HorizontalOptions"
+					Value="StartAndExpand" />
+				<Setter
+					Property="VerticalOptions"
+					Value="Center" />
+				<Setter
+					Property="TextColor"
+					Value="Black" />
+				<Setter
+					Property="IsEnabled"
+					Value="True" />
+				<Setter
+					Property="FontSize"
+					Value="Default" />
+				<Setter
+					Property="FontAttributes"
+					Value="Bold" />
+			</Style>
+
+
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
+	<ScrollView>
 		<VerticalStackLayout
 			Padding="30,0"
 			Spacing="25"
@@ -53,29 +327,19 @@
 				VerticalOptions="Center"
 				>
 
-				--><!--  Combined time  --><!--
-				<StackLayout
-					x:Name="CombndTimeEntriesStack"
-					Style="{StaticResource baseCmbndAndTotTimeEntriesStackLayoutStyle}"
-					>
-					<StackLayout
-						x:Name="CombndYearsStackName"
-						Style="{StaticResource baseCmbndAndTotStackLayoutStyle}"
-						>
-						<Label
-							Style="{StaticResource baseLabelStyleEntries}"
-							Text="  Years"
-							/>
+				<!--  Combined time  -->
+				<StackLayout x:Name="CombndTimeEntriesStack">
+					<StackLayout x:Name="CombndYearsStackName">
+						<Label Text="  Years" />
 						<Entry
 							x:Name="CombndYears"
-							Completed="OnCombndYearsCompleted"
-							Focused="OnCombndYMWDHMFocused"
-							Style="{StaticResource baseEntryStyle}"
-							Unfocused="OnCombndYearsUnfocused"
+							Completed="CombndYears_Completed"
+							Focused="CombndYears_Focused"
+							Unfocused="CombndYears_Unfocused"
 							/>
 					</StackLayout>
 
-					<StackLayout
+					<!--<StackLayout
 						x:Name="CombndMonthsStackName"
 						Style="{StaticResource baseCmbndAndTotStackLayoutStyle}"
 						>
@@ -91,9 +355,9 @@
 							Style="{StaticResource baseEntryStyle}"
 							Unfocused="OnCombndMonthsUnfocused"
 							/>
-					</StackLayout>
+					</StackLayout>-->
 
-					<StackLayout
+					<!--<StackLayout
 						x:Name="CombndWeeksStackName"
 						Style="{StaticResource baseCmbndAndTotStackLayoutStyle}"
 						>
@@ -109,9 +373,9 @@
 							Style="{StaticResource baseEntryStyle}"
 							Unfocused="OnCombndWeeksUnfocused"
 							/>
-					</StackLayout>
+					</StackLayout>-->
 
-					<StackLayout
+					<!--<StackLayout
 						x:Name="CombndDaysStackName"
 						Style="{StaticResource baseCmbndAndTotStackLayoutStyle}"
 						>
@@ -127,9 +391,9 @@
 							Style="{StaticResource baseEntryStyle}"
 							Unfocused="OnCombndDaysUnfocused"
 							/>
-					</StackLayout>
+					</StackLayout>-->
 
-					<StackLayout
+					<!--<StackLayout
 						x:Name="CombndHoursStackName"
 						Style="{StaticResource baseCmbndAndTotStackLayoutStyle}"
 						>
@@ -145,9 +409,9 @@
 							Style="{StaticResource baseEntryStyle}"
 							Unfocused="OnCombndHoursUnfocused"
 							/>
-					</StackLayout>
+					</StackLayout>-->
 
-					<StackLayout
+					<!--<StackLayout
 						x:Name="CombndMinutesStackName"
 						Style="{StaticResource baseCmbndAndTotStackLayoutStyle}"
 						>
@@ -163,11 +427,13 @@
 							Style="{StaticResource baseEntryStyle}"
 							Unfocused="OnCombndMinutesUnfocused"
 							/>
-					</StackLayout>
-				</StackLayout>
+					</StackLayout>-->
 
-				--><!--  Total time  --><!--
-				<StackLayout
+				</StackLayout>
+				<!--  HERTIL  -->
+
+				<!--  Total time  -->
+				<!--<StackLayout
 					x:Name="TotalTimeEntriesStack"
 					Style="{StaticResource baseCmbndAndTotTimeEntriesStackLayoutStyle}"
 					>
@@ -273,11 +539,11 @@
 							Unfocused="OnTotMinutesUnfocused"
 							/>
 					</StackLayout>
-				</StackLayout>
+				</StackLayout>-->
 
 			</HorizontalStackLayout>
 
 		</VerticalStackLayout>
-	</ScrollView>-->
+	</ScrollView>
 
 </ContentPage>
