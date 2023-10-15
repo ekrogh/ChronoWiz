@@ -14,7 +14,7 @@
 				Value="30"
 				/>
 			<On
-				Platform="Android, UWP, GTK"
+				Platform="Android, WinUI, GTK"
 				Value="0, 0, 0, 30"
 				/>
 		</OnPlatform>
@@ -38,7 +38,7 @@
 					/>
 				<Setter
 					Property="IsEnabled"
-					Value="False"
+					Value="True"
 					/>
 			</Style>
 
@@ -706,7 +706,7 @@
 						<StackLayout.Margin>
 							<OnPlatform x:TypeArguments="Thickness">
 								<On
-									Platform="macOS, UWP, GTK"
+									Platform="MacCatalyst, UWP, GTK"
 									Value="0, 20, 0, 0"
 									/>
 							</OnPlatform>
@@ -722,7 +722,7 @@
 									Value="20"
 									/>
 								<On
-									Platform="macOS, UWP, GTK"
+									Platform="MacCatalyst, WinUI, GTK"
 									Value="100"
 									/>
 							</OnPlatform>
