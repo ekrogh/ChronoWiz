@@ -12,7 +12,7 @@ public partial class FileHandler
 	//	this.fileSaver = fileSaver;
 	//}
 
-	public async Task<SelectFilesResult> SelectFiles(string filetype)
+	public static async Task<SelectFilesResult> SelectFiles(string filetype)
 	{
 		try
 		{
@@ -65,7 +65,7 @@ public partial class FileHandler
 		}
 	}
 
-	public async Task<FileSaverResult> SaveToTextFile(/*Memory*/Stream TheStream, string filename)
+	public static async Task<FileSaverResult> SaveToTextFile(/*Memory*/Stream TheStream, string filename)
 	{
 		try
 		{
