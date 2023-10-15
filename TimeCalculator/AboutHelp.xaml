@@ -66,8 +66,8 @@
 				x:Name="AppNameAndVer"
 				HorizontalTextAlignment="Center"
 				IsEnabled="True"
+				Style="{StaticResource baseLabelStyle}"
 				Text=""
-				Style="{StaticResource baseLabelStyle}" 
 				/>
 			<Button
 				x:Name="UsersGuideButton"
@@ -78,8 +78,8 @@
 			<Label
 				x:Name="MeLabel"
 				HorizontalTextAlignment="Center"
+				Style="{StaticResource baseLabelStyle}"
 				Text="Eigil Krogh Sorensen"
-				Style="{StaticResource baseLabelStyle}" 
 				/>
 			<Button
 				x:Name="MyUrlButton"
