@@ -8,7 +8,6 @@ namespace TimeCalculator;
 [DesignTimeVisible(true)]
 public partial class MainPage : ContentPage
 {
-
 	public MainPage()
 	{
 		InitializeComponent();
@@ -435,6 +434,318 @@ public partial class MainPage : ContentPage
 
 	}
 
+	protected override void OnSizeAllocated(double width, double height)
+	{
+		if (firstTime)
+		{
+			DoClearAll();
+			firstTime = false;
+		}
+
+		base.OnSizeAllocated(width, height);
+
+//#if false
+		if (DeviceInfo.Platform == DevicePlatform.WinUI)
+		{
+			ScreenWidth = DeviceDisplay.Current.MainDisplayInfo.Width;
+			ScreenHeight = DeviceDisplay.Current.MainDisplayInfo.Height;
+		}
+		else
+		{
+			ScreenWidth = width;
+			ScreenHeight = height;
+		}
+
+		if (width != this.width || height != this.height)
+		{
+
+			this.width = width;
+			this.height = height;
+
+			TotalStackName.TranslationX = 0.0f;
+			TotalStackName.TranslationY = 0.0f;
+
+			double widthAndHightScale;
+
+
+			if (firstTimeWdthOrHeightChanged)
+			{
+				StartDateTimeIntroLabelNameFontSizeOrig = StartDateTimeIntroLabelName.FontSize;
+				StartEndDayNameFontSizeOrig = StartDayName.FontSize;
+				firstTimeWdthOrHeightChanged = false;
+			}
+
+			// Reset scaling
+			ContentPageName.Scale = 1.0f / ContentPageNameScaleLast;
+			scrollViewName.Scale = 1.0f / scrollViewNameScaleLast;
+			TotalStackName.Scale = 1.0f / TotalStackNameScaleLast;
+			StartDateTimeStacAndPlus.Scale = 1.0f / StartDateTimeStacAndPlusScaleLast;
+			entriesOuterGrid.Scale = 1.0f / entriesOuterGridScaleLast;
+			EndDateTimeAndCalculateAndClearAllButtonsStackName.Scale = 1.0f / EndDateTimeAndCalculateAndClearAllButtonsStackNameScaleLast;
+
+			ContentPageNameScaleLast = 1.0f;
+			scrollViewNameScaleLast = 1.0f;
+			TotalStackNameScaleLast = 1.0f;
+			StartDateTimeStacAndPlusScaleLast = 1.0f;
+			entriesOuterGridScaleLast = 1.0f;
+			EndDateTimeAndCalculateAndClearAllButtonsStackNameScaleLast = 1.0f;
+
+			DisplayInfo mainDisplayInfo;
+			DisplayOrientation orientation = DisplayOrientation.Landscape;
+			double mainWidth = 1080;
+			double mainHeight = 1920f;
+			bool portrait = false;
+
+			//if (DeviceInfo.Platform == DevicePlatform.GTK)
+			//{
+			//	// Get Metrics
+			//	mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
+
+			//	// Orientation (Landscape, Portrait, Square, Unknown)
+			//	orientation = mainDisplayInfo.Orientation;
+
+			//	// Width (in pixels)
+			//	mainWidth = mainDisplayInfo.Width;
+
+			//	// Height (in pixels)
+			//	mainHeight = mainDisplayInfo.Height;
+
+			//	portrait = (orientation == DisplayOrientation.Portrait);
+			//}
+
+			if (portrait)
+			{ // Portrait
+				if
+				(
+					   (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
+					|| (DeviceInfo.Platform == DevicePlatform.WinUI)
+					|| ((DeviceInfo.Platform == DevicePlatform.Android) && (mainHeight < 1920))
+				//|| ((Device.RuntimePlatform == Device.iOS) && (mainWidth <= 828))
+				)
+				{ // Only Landscape allowed
+					entriesOuterStack.Orientation = StackOrientation.Vertical;
+					CombndTimeEntriesStack.Orientation = StackOrientation.Horizontal;
+					TotalTimeEntriesStack.Orientation = StackOrientation.Horizontal;
+					scrollViewName.Orientation = ScrollOrientation.Horizontal;
+					WeakReferenceMessenger.Default.Send
+					(
+						MessengerKeys.LandscapeOrientationRequest
+					);
+				}
+				else
+				{
+					entriesOuterStack.Orientation = StackOrientation.Horizontal;
+					CombndTimeEntriesStack.Orientation = StackOrientation.Vertical;
+					TotalTimeEntriesStack.Orientation = StackOrientation.Vertical;
+					scrollViewName.Orientation = ScrollOrientation.Vertical;
+				}
+			}
+			else
+			{ // Landscape
+				entriesOuterStack.Orientation = StackOrientation.Vertical;
+				CombndTimeEntriesStack.Orientation = StackOrientation.Horizontal;
+				TotalTimeEntriesStack.Orientation = StackOrientation.Horizontal;
+				scrollViewName.Orientation = ScrollOrientation.Horizontal;
+			}
+
+			// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
+			//if (DeviceInfo.Platform == DevicePlatform.GTK)
+			//		{
+			//			StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+			//			EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+			//			StartDayName.WidthRequest = EndDayName.WidthRequest = 45;
+
+			//		}
+			if (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
+			{
+				StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+				EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+
+			}
+			else if (DeviceInfo.Platform == DevicePlatform.Android)
+			{
+				if (portrait) // Portrait ?
+				{ // Portrait
+					StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
+					EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
+
+					if (height > nativeTotalStackHeightPortrait)
+					{
+						ContentPageNameScaleLast = height / nativeTotalStackHeightPortrait;
+						ContentPageName.Scale = ContentPageNameScaleLast;
+					}
+				}
+				else
+				{ // Landscape
+					StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+					EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+
+					if (width > nativeTotalStackWidthLandscape)
+					{
+						ContentPageNameScaleLast = width / nativeTotalStackWidthLandscape;
+						ContentPageName.Scale = ContentPageNameScaleLast;
+					}
+					else if (width < 659.0f)
+					{
+						scrollViewNameScaleLast = width / scrollViewName.Width;
+						scrollViewName.Scale = scrollViewNameScaleLast;
+						TotalStackName.Scale = width / TotalStackName.Width;
+						double entriesOuterGridScale = width / entriesOuterGrid.Width;
+						double entriesOuterGridScaleY = 0.9f;
+						entriesOuterGrid.Scale = entriesOuterGridScale;
+						entriesOuterGrid.ScaleY = entriesOuterGridScaleY;
+						StartDateTimeStacAndPlus.Scale = entriesOuterGridScale;
+						StartDateTimeStacAndPlus.ScaleY = entriesOuterGridScaleY;
+						EndDateTimeAndCalculateAndClearAllButtonsStackName.Scale = entriesOuterGridScale;
+						EndDateTimeAndCalculateAndClearAllButtonsStackName.ScaleY = entriesOuterGridScaleY;
+					}
+				}
+				scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Center, false);
+
+				StartDayName.WidthRequest = EndDayName.WidthRequest = 50;
+
+			}
+			else if (DeviceInfo.Platform == DevicePlatform.iOS)
+			{
+				if (portrait) // Portrait ?
+				{ // Portrait
+					StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
+					EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
+
+					if (DeviceInfo.Idiom == DeviceIdiom.Tablet)
+					{
+						scrollViewNameScaleLast = width * 0.7f / scrollViewName.Width;
+						scrollViewName.Scale = scrollViewNameScaleLast;
+					}
+					else if ((mainHeight / mainWidth) >= 2.16f)
+					{
+						scrollViewNameScaleLast = width / scrollViewName.Width;
+						scrollViewName.Scale = scrollViewNameScaleLast;
+					}
+					else if (width <= 320f)
+					{
+						scrollViewNameScaleLast = width / scrollViewName.Width;
+						scrollViewName.Scale = scrollViewNameScaleLast;
+						TotalStackName.Scale = width * 0.5f / TotalStackName.Width;
+					}
+					else
+					{
+						scrollViewNameScaleLast = width / scrollViewName.Width;
+						scrollViewName.Scale = scrollViewNameScaleLast;
+						TotalStackName.Scale = width * 0.7f / TotalStackName.Width;
+					}
+				}
+				else
+				{ // Landscape
+					StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+					EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+
+					if (DeviceInfo.Idiom == DeviceIdiom.Tablet)
+					{
+						scrollViewNameScaleLast = width / scrollViewName.Width;
+						scrollViewName.Scale = scrollViewNameScaleLast;
+					}
+					else if ((mainWidth / mainHeight) >= 2.16f)
+					{
+						scrollViewNameScaleLast = width * 0.9f / scrollViewName.Width;
+						scrollViewName.Scale = scrollViewNameScaleLast;
+					}
+					else if (height <= 320f)
+					{
+						scrollViewNameScaleLast = width / scrollViewName.Width;
+						scrollViewName.Scale = scrollViewNameScaleLast;
+						TotalStackName.Scale = width / TotalStackName.Width;
+						double entriesOuterGridScale = width * 0.55f / entriesOuterGrid.Width;
+						double entriesOuterGridScaleY = 1.05f;
+						entriesOuterGrid.Scale = entriesOuterGridScale;
+						entriesOuterGrid.ScaleY = entriesOuterGridScaleY;
+						StartDateTimeStacAndPlus.Scale = entriesOuterGridScale;
+						StartDateTimeStacAndPlus.ScaleY = entriesOuterGridScaleY;
+						EndDateTimeAndCalculateAndClearAllButtonsStackName.Scale = entriesOuterGridScale;
+						EndDateTimeAndCalculateAndClearAllButtonsStackName.ScaleY = entriesOuterGridScaleY;
+					}
+					else
+					{
+						scrollViewNameScaleLast = width / scrollViewName.Width;
+						scrollViewName.Scale = scrollViewNameScaleLast;
+						TotalStackName.Scale = width * 0.9f / TotalStackName.Width;
+					}
+				}
+
+				scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Start, true);
+				scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.End, true);
+				scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Center, true);
+
+			}
+			else if (DeviceInfo.Platform == DevicePlatform.WinUI)
+			{
+				StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+				EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+
+				//if (DependencyService.Get<IPlatformInterface>().IsMobile())
+				//{
+				//	if (portrait) // Portrait ?
+				//	{ // Portrait
+				//		StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
+				//		EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
+
+				//		if (height <= nativeTotalStackHeightPortrait) // Need scaling ?
+				//		{
+				//			TotalStackNameScaleLast = widthAndHightScale =
+				//				-(2.7410270192276622436e-009 * Math.Pow(ScreenHeight, 3))
+				//				+ (4.7754782031987597521e-006 * Math.Pow(ScreenHeight, 2))
+				//				- (0.0013991090738610563200 * ScreenHeight)
+				//				+ 0.49946777681408938143;
+				//			TotalStackName.Scale = TotalStackNameScaleLast;
+
+				//			TotalStackName.TranslationX = 0;
+				//			TotalStackName.TranslationY =
+				//				(3.3707997844973771142e-005 * Math.Pow(ScreenHeight, 3))
+				//				- (0.066636967320806955728 * Math.Pow(ScreenHeight, 2))
+				//				+ (43.568112848719657393 * ScreenHeight)
+				//				- 9425.4397956508601055;
+
+				//			StartDateTimeIntroLabelName.FontSize = EndDateTimeIntroLabelName.FontSize
+				//					= StartDateTimeIntroLabelNameFontSizeOrig * widthAndHightScale / 1.5;
+				//			StartDayName.FontSize = EndDayName.FontSize = StartEndDayNameFontSizeOrig * widthAndHightScale / 1.5;
+				//		}
+				//	}
+				//	else
+				//	{ // Landscape
+				//		StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+				//		EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+
+				//		if (width <= nativeTotalStackWidthLandscape) // Need scaling ?
+				//		{
+				//			TotalStackNameScaleLast =
+				//				-(1.0433447427359796688e-007 * Math.Pow(ScreenWidth, 3))
+				//				+ (0.00020154923472775974880 * Math.Pow(ScreenWidth, 2))
+				//				- (0.12705258908531044670 * ScreenWidth)
+				//				+ 26.859746894086349300;
+				//			TotalStackName.Scale = TotalStackNameScaleLast;
+
+				//			//TotalStackName.TranslationX = 0;
+				//			TotalStackName.TranslationX =
+				//				+(6.0103507005254339091e-005 * Math.Pow(ScreenWidth, 3))
+				//				- (0.11838955202431701574 * Math.Pow(ScreenWidth, 2))
+				//				+ (77.536187041332297554 * ScreenWidth)
+				//				- 16935.307290964530694;
+				//			TotalStackName.TranslationY = 0;
+				//		}
+				//	}
+				//	scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Start, true);
+				//}
+				//else
+				//{ // NOT Mobile
+				StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+				EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
+				//}
+
+				StartDayName.WidthRequest = EndDayName.WidthRequest = 45;
+			}
+		}
+//#endif
+	}
 
 	private double width;
 	private double height;
@@ -872,318 +1183,6 @@ public partial class MainPage : ContentPage
 	private double entriesOuterGridScaleLast = 1.0f;
 	private double EndDateTimeAndCalculateAndClearAllButtonsStackNameScaleLast = 1.0f;
 
-	protected override void OnSizeAllocated(double width, double height)
-	{
-		if (firstTime)
-		{
-			DoClearAll();
-			firstTime = false;
-		}
-
-		base.OnSizeAllocated(width, height);
-
-#if false
-		if (DeviceInfo.Platform == DevicePlatform.WinUI)
-		{
-			ScreenWidth = DeviceDisplay.Current.MainDisplayInfo.Width;
-			ScreenHeight = DeviceDisplay.Current.MainDisplayInfo.Height;
-		}
-		else
-		{
-			ScreenWidth = width;
-			ScreenHeight = height;
-		}
-
-		if (width != this.width || height != this.height)
-		{
-
-			this.width = width;
-			this.height = height;
-
-			TotalStackName.TranslationX = 0.0f;
-			TotalStackName.TranslationY = 0.0f;
-
-			double widthAndHightScale;
-
-
-			if (firstTimeWdthOrHeightChanged)
-			{
-				StartDateTimeIntroLabelNameFontSizeOrig = StartDateTimeIntroLabelName.FontSize;
-				StartEndDayNameFontSizeOrig = StartDayName.FontSize;
-				firstTimeWdthOrHeightChanged = false;
-			}
-
-			// Reset scaling
-			ContentPageName.Scale = 1.0f / ContentPageNameScaleLast;
-			scrollViewName.Scale = 1.0f / scrollViewNameScaleLast;
-			TotalStackName.Scale = 1.0f / TotalStackNameScaleLast;
-			StartDateTimeStacAndPlus.Scale = 1.0f / StartDateTimeStacAndPlusScaleLast;
-			entriesOuterGrid.Scale = 1.0f / entriesOuterGridScaleLast;
-			EndDateTimeAndCalculateAndClearAllButtonsStackName.Scale = 1.0f / EndDateTimeAndCalculateAndClearAllButtonsStackNameScaleLast;
-
-			ContentPageNameScaleLast = 1.0f;
-			scrollViewNameScaleLast = 1.0f;
-			TotalStackNameScaleLast = 1.0f;
-			StartDateTimeStacAndPlusScaleLast = 1.0f;
-			entriesOuterGridScaleLast = 1.0f;
-			EndDateTimeAndCalculateAndClearAllButtonsStackNameScaleLast = 1.0f;
-
-			DisplayInfo mainDisplayInfo;
-			DisplayOrientation orientation = DisplayOrientation.Landscape;
-			double mainWidth = 1080;
-			double mainHeight = 1920f;
-			bool portrait = false;
-
-			//if (DeviceInfo.Platform == DevicePlatform.GTK)
-			//{
-			//	// Get Metrics
-			//	mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
-
-			//	// Orientation (Landscape, Portrait, Square, Unknown)
-			//	orientation = mainDisplayInfo.Orientation;
-
-			//	// Width (in pixels)
-			//	mainWidth = mainDisplayInfo.Width;
-
-			//	// Height (in pixels)
-			//	mainHeight = mainDisplayInfo.Height;
-
-			//	portrait = (orientation == DisplayOrientation.Portrait);
-			//}
-
-			if (portrait)
-			{ // Portrait
-				if
-				(
-					   (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
-					|| (DeviceInfo.Platform == DevicePlatform.WinUI)
-					|| ((DeviceInfo.Platform == DevicePlatform.Android) && (mainHeight < 1920))
-				//|| ((Device.RuntimePlatform == Device.iOS) && (mainWidth <= 828))
-				)
-				{ // Only Landscape allowed
-					entriesOuterStack.Orientation = StackOrientation.Vertical;
-					CombndTimeEntriesStack.Orientation = StackOrientation.Horizontal;
-					TotalTimeEntriesStack.Orientation = StackOrientation.Horizontal;
-					scrollViewName.Orientation = ScrollOrientation.Horizontal;
-					WeakReferenceMessenger.Default.Send
-					(
-						MessengerKeys.LandscapeOrientationRequest
-					);
-				}
-				else
-				{
-					entriesOuterStack.Orientation = StackOrientation.Horizontal;
-					CombndTimeEntriesStack.Orientation = StackOrientation.Vertical;
-					TotalTimeEntriesStack.Orientation = StackOrientation.Vertical;
-					scrollViewName.Orientation = ScrollOrientation.Vertical;
-				}
-			}
-			else
-			{ // Landscape
-				entriesOuterStack.Orientation = StackOrientation.Vertical;
-				CombndTimeEntriesStack.Orientation = StackOrientation.Horizontal;
-				TotalTimeEntriesStack.Orientation = StackOrientation.Horizontal;
-				scrollViewName.Orientation = ScrollOrientation.Horizontal;
-			}
-
-			// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-			//if (DeviceInfo.Platform == DevicePlatform.GTK)
-			//		{
-			//			StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-			//			EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-			//			StartDayName.WidthRequest = EndDayName.WidthRequest = 45;
-
-			//		}
-			if (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
-			{
-				StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-				EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-
-			}
-			else if (DeviceInfo.Platform == DevicePlatform.Android)
-			{
-				if (portrait) // Portrait ?
-				{ // Portrait
-					StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
-					EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
-
-					if (height > nativeTotalStackHeightPortrait)
-					{
-						ContentPageNameScaleLast = height / nativeTotalStackHeightPortrait;
-						ContentPageName.Scale = ContentPageNameScaleLast;
-					}
-				}
-				else
-				{ // Landscape
-					StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-					EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-
-					if (width > nativeTotalStackWidthLandscape)
-					{
-						ContentPageNameScaleLast = width / nativeTotalStackWidthLandscape;
-						ContentPageName.Scale = ContentPageNameScaleLast;
-					}
-					else if (width < 659.0f)
-					{
-						scrollViewNameScaleLast = width / scrollViewName.Width;
-						scrollViewName.Scale = scrollViewNameScaleLast;
-						TotalStackName.Scale = width / TotalStackName.Width;
-						double entriesOuterGridScale = width / entriesOuterGrid.Width;
-						double entriesOuterGridScaleY = 0.9f;
-						entriesOuterGrid.Scale = entriesOuterGridScale;
-						entriesOuterGrid.ScaleY = entriesOuterGridScaleY;
-						StartDateTimeStacAndPlus.Scale = entriesOuterGridScale;
-						StartDateTimeStacAndPlus.ScaleY = entriesOuterGridScaleY;
-						EndDateTimeAndCalculateAndClearAllButtonsStackName.Scale = entriesOuterGridScale;
-						EndDateTimeAndCalculateAndClearAllButtonsStackName.ScaleY = entriesOuterGridScaleY;
-					}
-				}
-				scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Center, false);
-
-				StartDayName.WidthRequest = EndDayName.WidthRequest = 50;
-
-			}
-			else if (DeviceInfo.Platform == DevicePlatform.iOS)
-			{
-				if (portrait) // Portrait ?
-				{ // Portrait
-					StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
-					EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
-
-					if (DeviceInfo.Idiom == DeviceIdiom.Tablet)
-					{
-						scrollViewNameScaleLast = width * 0.7f / scrollViewName.Width;
-						scrollViewName.Scale = scrollViewNameScaleLast;
-					}
-					else if ((mainHeight / mainWidth) >= 2.16f)
-					{
-						scrollViewNameScaleLast = width / scrollViewName.Width;
-						scrollViewName.Scale = scrollViewNameScaleLast;
-					}
-					else if (width <= 320f)
-					{
-						scrollViewNameScaleLast = width / scrollViewName.Width;
-						scrollViewName.Scale = scrollViewNameScaleLast;
-						TotalStackName.Scale = width * 0.5f / TotalStackName.Width;
-					}
-					else
-					{
-						scrollViewNameScaleLast = width / scrollViewName.Width;
-						scrollViewName.Scale = scrollViewNameScaleLast;
-						TotalStackName.Scale = width * 0.7f / TotalStackName.Width;
-					}
-				}
-				else
-				{ // Landscape
-					StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-					EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-
-					if (DeviceInfo.Idiom == DeviceIdiom.Tablet)
-					{
-						scrollViewNameScaleLast = width / scrollViewName.Width;
-						scrollViewName.Scale = scrollViewNameScaleLast;
-					}
-					else if ((mainWidth / mainHeight) >= 2.16f)
-					{
-						scrollViewNameScaleLast = width * 0.9f / scrollViewName.Width;
-						scrollViewName.Scale = scrollViewNameScaleLast;
-					}
-					else if (height <= 320f)
-					{
-						scrollViewNameScaleLast = width / scrollViewName.Width;
-						scrollViewName.Scale = scrollViewNameScaleLast;
-						TotalStackName.Scale = width / TotalStackName.Width;
-						double entriesOuterGridScale = width * 0.55f / entriesOuterGrid.Width;
-						double entriesOuterGridScaleY = 1.05f;
-						entriesOuterGrid.Scale = entriesOuterGridScale;
-						entriesOuterGrid.ScaleY = entriesOuterGridScaleY;
-						StartDateTimeStacAndPlus.Scale = entriesOuterGridScale;
-						StartDateTimeStacAndPlus.ScaleY = entriesOuterGridScaleY;
-						EndDateTimeAndCalculateAndClearAllButtonsStackName.Scale = entriesOuterGridScale;
-						EndDateTimeAndCalculateAndClearAllButtonsStackName.ScaleY = entriesOuterGridScaleY;
-					}
-					else
-					{
-						scrollViewNameScaleLast = width / scrollViewName.Width;
-						scrollViewName.Scale = scrollViewNameScaleLast;
-						TotalStackName.Scale = width * 0.9f / TotalStackName.Width;
-					}
-				}
-
-				scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Start, true);
-				scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.End, true);
-				scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Center, true);
-
-			}
-			else if (DeviceInfo.Platform == DevicePlatform.WinUI)
-			{
-				StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-				EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-
-				//if (DependencyService.Get<IPlatformInterface>().IsMobile())
-				//{
-				//	if (portrait) // Portrait ?
-				//	{ // Portrait
-				//		StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
-				//		EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
-
-				//		if (height <= nativeTotalStackHeightPortrait) // Need scaling ?
-				//		{
-				//			TotalStackNameScaleLast = widthAndHightScale =
-				//				-(2.7410270192276622436e-009 * Math.Pow(ScreenHeight, 3))
-				//				+ (4.7754782031987597521e-006 * Math.Pow(ScreenHeight, 2))
-				//				- (0.0013991090738610563200 * ScreenHeight)
-				//				+ 0.49946777681408938143;
-				//			TotalStackName.Scale = TotalStackNameScaleLast;
-
-				//			TotalStackName.TranslationX = 0;
-				//			TotalStackName.TranslationY =
-				//				(3.3707997844973771142e-005 * Math.Pow(ScreenHeight, 3))
-				//				- (0.066636967320806955728 * Math.Pow(ScreenHeight, 2))
-				//				+ (43.568112848719657393 * ScreenHeight)
-				//				- 9425.4397956508601055;
-
-				//			StartDateTimeIntroLabelName.FontSize = EndDateTimeIntroLabelName.FontSize
-				//					= StartDateTimeIntroLabelNameFontSizeOrig * widthAndHightScale / 1.5;
-				//			StartDayName.FontSize = EndDayName.FontSize = StartEndDayNameFontSizeOrig * widthAndHightScale / 1.5;
-				//		}
-				//	}
-				//	else
-				//	{ // Landscape
-				//		StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-				//		EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-
-				//		if (width <= nativeTotalStackWidthLandscape) // Need scaling ?
-				//		{
-				//			TotalStackNameScaleLast =
-				//				-(1.0433447427359796688e-007 * Math.Pow(ScreenWidth, 3))
-				//				+ (0.00020154923472775974880 * Math.Pow(ScreenWidth, 2))
-				//				- (0.12705258908531044670 * ScreenWidth)
-				//				+ 26.859746894086349300;
-				//			TotalStackName.Scale = TotalStackNameScaleLast;
-
-				//			//TotalStackName.TranslationX = 0;
-				//			TotalStackName.TranslationX =
-				//				+(6.0103507005254339091e-005 * Math.Pow(ScreenWidth, 3))
-				//				- (0.11838955202431701574 * Math.Pow(ScreenWidth, 2))
-				//				+ (77.536187041332297554 * ScreenWidth)
-				//				- 16935.307290964530694;
-				//			TotalStackName.TranslationY = 0;
-				//		}
-				//	}
-				//	scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Start, true);
-				//}
-				//else
-				//{ // NOT Mobile
-				StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-				EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-				//}
-
-				StartDayName.WidthRequest = EndDayName.WidthRequest = 45;
-			}
-		}
-#endif
-	}
 
 
 
