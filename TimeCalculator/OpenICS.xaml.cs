@@ -1,5 +1,6 @@
 ﻿using TimeCalculator.MessageThings;
 using Microsoft.Maui.Graphics;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace TimeCalculator
 {
@@ -34,12 +35,11 @@ namespace TimeCalculator
 			};
 
 			// Fire the message
-			MessagingCenter.Send
-					(
-						(App)Application.Current,
-						MessengerKeys.OpenIcsMessageKey,
-						TheAgr
-					);
+			WeakReferenceMessenger.Default.Send
+			(
+				TheAgr
+				, MessengerKeys.OpenIcsMessageKey
+			);
 
 		}
 

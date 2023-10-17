@@ -1,4 +1,5 @@
-﻿using TimeCalculator.FileHandlers;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using TimeCalculator.FileHandlers;
 
 namespace TimeCalculator;
 
@@ -10,19 +11,23 @@ public partial class MainPage : ContentPage
 
 	public MainPage()
 	{
-		try
-		{
-			InitializeComponent();
-		}
-		catch (Exception ex)
-		{
-			var excpt = ex;
-		}
+		InitializeComponent();
+		//try
+		//{
+		//	InitializeComponent();
+		//}
+		//catch (Exception ex)
+		//{
+		//	var excpt = ex;
+		//}
 
 		//BindingContext = viewModel;
 
-		MessagingCenter.Subscribe<App, SaveToIcsMessageArgs>((App)Application.Current, MessengerKeys.SaveToIcsMessageKey, On_SaveToIcsMessageReceived);
-		MessagingCenter.Subscribe<App, OpenIcsMessageArgs>((App)Application.Current, MessengerKeys.OpenIcsMessageKey, On_OpenIcsMessageReceived);
+		WeakReferenceMessenger.Default.Register<SaveToIcsMessageArgs, string>
+			(this, MessengerKeys.SaveToIcsMessageKey, On_SaveToIcsMessageReceived);
+
+		WeakReferenceMessenger.Default.Register<OpenIcsMessageArgs, string>
+			(this, MessengerKeys.OpenIcsMessageKey, On_OpenIcsMessageReceived);
 
 
 		//if (DeviceInfo.Platform == DevicePlatform.Android)
@@ -120,15 +125,16 @@ public partial class MainPage : ContentPage
 						,
 			VerticalOptions = LayoutOptions.Center
 		};
-		// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-		if (DeviceInfo.Platform == DevicePlatform.Android)
-		{
-			StartDateTimeNowButton.Style = Resources["AndroidBaseButtonStyle"] as Style;
-		}
-		else
-		{
-			StartDateTimeNowButton.Style = Resources["baseButtonStyle"] as Style;
-		}
+		//if (DeviceInfo.Platform == DevicePlatform.Android)
+		//{
+		//	StartDateTimeNowButton.Style = Resources["AndroidBaseButtonStyle"] as Style;
+		//}
+		//else
+		//{
+		//	StartDateTimeNowButton.Style = Resources["baseButtonStyle"] as Style;
+		//}
+
+		StartDateTimeNowButton.Style = Resources["baseButtonStyle"] as Style;
 		StartDateTimeNowButton.Clicked += OnStartDateTimeNowButtonClicked;
 
 		// End Date/Time
@@ -177,15 +183,16 @@ public partial class MainPage : ContentPage
 			VerticalOptions = LayoutOptions.Center
 
 		};
-		// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-		if (DeviceInfo.Platform == DevicePlatform.Android)
-		{
-			EndDateTimeNowButton.Style = Resources["AndroidBaseButtonStyle"] as Style;
-		}
-		else
-		{
-			EndDateTimeNowButton.Style = Resources["baseButtonStyle"] as Style;
-		}
+		//if (DeviceInfo.Platform == DevicePlatform.Android)
+		//{
+		//	EndDateTimeNowButton.Style = Resources["AndroidBaseButtonStyle"] as Style;
+		//}
+		//else
+		//{
+		//	EndDateTimeNowButton.Style = Resources["baseButtonStyle"] as Style;
+		//}
+
+		EndDateTimeNowButton.Style = Resources["baseButtonStyle"] as Style;
 		EndDateTimeNowButton.Clicked += OnEndDateTimeNowButtonClicked;
 
 		// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
@@ -418,6 +425,8 @@ public partial class MainPage : ContentPage
 		}
 
 
+		Dispatcher.Dispatch(() =>
+			(scrollViewName as IView).InvalidateArrange());
 
 		//StartDatePicker.MinimumDate = DateTime.MinValue;
 		//StartDatePicker.MaximumDate = DateTime.MaxValue;
@@ -425,6 +434,7 @@ public partial class MainPage : ContentPage
 		//EndDatePicker.MaximumDate = DateTime.MaxValue;
 
 	}
+
 
 	private double width;
 	private double height;
@@ -872,8 +882,7 @@ public partial class MainPage : ContentPage
 
 		base.OnSizeAllocated(width, height);
 
-
-		// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
+#if false
 		if (DeviceInfo.Platform == DevicePlatform.WinUI)
 		{
 			ScreenWidth = DeviceDisplay.Current.MainDisplayInfo.Width;
@@ -925,7 +934,6 @@ public partial class MainPage : ContentPage
 			double mainHeight = 1920f;
 			bool portrait = false;
 
-			// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
 			//if (DeviceInfo.Platform == DevicePlatform.GTK)
 			//{
 			//	// Get Metrics
@@ -945,7 +953,6 @@ public partial class MainPage : ContentPage
 
 			if (portrait)
 			{ // Portrait
-			  // TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
 				if
 				(
 					   (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
@@ -958,7 +965,10 @@ public partial class MainPage : ContentPage
 					CombndTimeEntriesStack.Orientation = StackOrientation.Horizontal;
 					TotalTimeEntriesStack.Orientation = StackOrientation.Horizontal;
 					scrollViewName.Orientation = ScrollOrientation.Horizontal;
-					MessagingCenter.Send((App)Microsoft.Maui.Controls.Application.Current, MessengerKeys.LandscapeOrientationRequest);
+					WeakReferenceMessenger.Default.Send
+					(
+						MessengerKeys.LandscapeOrientationRequest
+					);
 				}
 				else
 				{
@@ -1172,7 +1182,7 @@ public partial class MainPage : ContentPage
 				StartDayName.WidthRequest = EndDayName.WidthRequest = 45;
 			}
 		}
-
+#endif
 	}
 
 
@@ -2838,15 +2848,14 @@ public partial class MainPage : ContentPage
 	private readonly string filetypeToReadFrom = "ics";
 	private readonly string filetypeToSaveTo = "ics";
 
-	private async void On_OpenIcsMessageReceived(App arg1, OpenIcsMessageArgs arg2)
+	private async void On_OpenIcsMessageReceived(object recipient, OpenIcsMessageArgs message)
 	{
-		CorrectForIcsTimeZone = arg2.CorrectForTimeZone;
+		CorrectForIcsTimeZone = message.CorrectForTimeZone;
 
 		SelectFilesResult selectedFiles = await FileHandler.SelectFiles(filetypeToReadFrom);
 
 		On_FileToReadFromSelectedAsync(selectedFiles);
 
-		await Navigation.PopAsync(true);
 	}
 
 	private async void On_FileToReadFromSelectedAsync(SelectFilesResult arg2)
@@ -2959,13 +2968,13 @@ public partial class MainPage : ContentPage
 	}
 
 	string SuggestedNameOfFileToSaveTo = "";
-	private async void On_SaveToIcsMessageReceived(App arg1, SaveToIcsMessageArgs arg2)
+	private async void On_SaveToIcsMessageReceived(object recipient, SaveToIcsMessageArgs message)
 	{
 		DateTime DateStart = StartDateIn + StartTimeIn;
 		DateTime DateEnd = EndDateIn + EndTimeIn;
-		string Summary = arg2.EventName_Summary;
-		string Location = arg2.Location;
-		string Description = arg2.TheDescription;
+		string Summary = message.EventName_Summary;
+		string Location = message.Location;
+		string Description = message.TheDescription;
 		//string FileName = "CalendarItem";
 
 		//create a new stringbuilder instance

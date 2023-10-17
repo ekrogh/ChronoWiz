@@ -1,5 +1,6 @@
 ﻿using TimeCalculator.MessageThings;
 using Microsoft.Maui.Graphics;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace TimeCalculator
 {
@@ -53,14 +54,11 @@ namespace TimeCalculator
 			}
 
 			// Fire the message
-			MessagingCenter.Send
-				(
-					(App)Application.Current,
-					MessengerKeys.SaveToIcsMessageKey,
-					IcsDescription
-				);
-
-
+			WeakReferenceMessenger.Default.Send
+			(
+				IcsDescription
+				, MessengerKeys.SaveToIcsMessageKey
+			);
 		}
 
 		private async void FileSaveToCancelButton_Clicked(object sender, EventArgs e)
