@@ -167,7 +167,7 @@ public partial class MainPage : ContentPage
 				   (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
 				|| (DeviceInfo.Platform == DevicePlatform.WinUI)
 				|| ((DeviceInfo.Platform == DevicePlatform.Android) && (mainHeight < 1920))
-				|| (((DeviceInfo.Platform == DevicePlatform.iOS) && (mainWidth <= 828))
+				|| ((DeviceInfo.Platform == DevicePlatform.iOS) && (mainWidth <= 828))
 			)
 			{ // Only Landscape allowed
 				entriesOuterStack.Orientation = StackOrientation.Vertical;
