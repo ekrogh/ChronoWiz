@@ -4,11 +4,13 @@
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	x:Name="ContentPageName"
-	NavigationPage.HasNavigationBar="false"
+	Shell.NavBarIsVisible="False"
 	>
 
 	<ContentPage.Padding>
-		<OnPlatform x:TypeArguments="Thickness">
+		<OnPlatform
+			x:TypeArguments="Thickness"
+			>
 			<On
 				Platform="iOS"
 				Value="30"
@@ -176,13 +178,6 @@
 			</Style>
 
 			<Style
-				x:Key="baseCmbndAndTotTimeEntriesStackLayoutStyle"
-				x:Name="baseCmbndAndTotTimeEntriesStackLayoutStyleName"
-				BasedOn="{StaticResource baseCmbndAndTotStackLayoutStyle}"
-				TargetType="StackLayout"
-				/>
-
-			<Style
 				x:Key="baseDatePickerStyle_WO_WidthRequest"
 				TargetType="DatePicker"
 				>
@@ -346,11 +341,19 @@
 							>
 							<Grid>
 								<Grid.RowDefinitions>
-									<RowDefinition Height="Auto" />
-									<RowDefinition Height="Auto" />
+									<RowDefinition
+										Height="Auto"
+										/>
+									<RowDefinition
+										Height="Auto"
+										/>
 								</Grid.RowDefinitions>
 								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="{OnPlatform Auto, MacCatalyst=80, WinUI=80}" />
+									<ColumnDefinition
+										Width="{OnPlatform Auto,
+										                   MacCatalyst=80,
+										                   WinUI=80}"
+										/>
 								</Grid.ColumnDefinitions>
 								<Label
 									Grid.Row="0"
@@ -371,6 +374,31 @@
 									Toggled="CalcStartDateSwitch_Toggled"
 									/>
 							</Grid>
+							<DatePicker
+								x:Name="StartDatePicker"
+								DateSelected="StartDatePicker_DateSelected"
+								HorizontalOptions="CenterAndExpand"
+								Style="{StaticResource baseDatePickerStyle_WO_WidthRequest}"
+								/>
+							<TimePicker
+								x:Name="StartTimePicker"
+								PropertyChanged="StartTimePicker_PropertyChanged"
+								Style="{StaticResource baseTimePickerStyle}"
+								/>
+							<Label
+								x:Name="StartDayName"
+								LineBreakMode="WordWrap"
+								MinimumWidthRequest="30"
+								Style="{StaticResource baseStartEndDateTimeEntryLabelStyle}"
+								Text=" MMM "
+								/>
+							<Button
+								x:Name="StartDateTimeNowButton"
+								Clicked="OnStartDateTimeNowButtonClicked"
+								Style="{StaticResource baseButtonStyle}"
+								Text="Now"
+								VerticalOptions="Center"
+								/>
 						</StackLayout>
 					</StackLayout>
 					<Label
@@ -381,10 +409,16 @@
 						/>
 				</StackLayout>
 
-				<Grid x:Name="entriesOuterGrid">
+				<Grid
+					x:Name="entriesOuterGrid"
+					>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="80" />
-						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition
+							Width="80"
+							/>
+						<ColumnDefinition
+							Width="Auto"
+							/>
 					</Grid.ColumnDefinitions>
 
 					<StackLayout
@@ -420,7 +454,7 @@
 						<!--  Combined time  -->
 						<StackLayout
 							x:Name="CombndTimeEntriesStack"
-							Style="{StaticResource baseCmbndAndTotTimeEntriesStackLayoutStyle}"
+							Style="{StaticResource baseCmbndAndTotStackLayoutStyle}"
 							>
 							<StackLayout
 								x:Name="CombndYearsStackName"
@@ -533,7 +567,7 @@
 						<!--  Total time  -->
 						<StackLayout
 							x:Name="TotalTimeEntriesStack"
-							Style="{StaticResource baseCmbndAndTotTimeEntriesStackLayoutStyle}"
+							Style="{StaticResource baseCmbndAndTotStackLayoutStyle}"
 							>
 							<StackLayout
 								x:Name="TotYearsStackName"
@@ -670,11 +704,19 @@
 							>
 							<Grid>
 								<Grid.RowDefinitions>
-									<RowDefinition Height="Auto" />
-									<RowDefinition Height="Auto" />
+									<RowDefinition
+										Height="Auto"
+										/>
+									<RowDefinition
+										Height="Auto"
+										/>
 								</Grid.RowDefinitions>
 								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="{OnPlatform Auto, MacCatalyst=80, WinUI=80}" />
+									<ColumnDefinition
+										Width="{OnPlatform Auto,
+										                   MacCatalyst=80,
+										                   WinUI=80}"
+										/>
 								</Grid.ColumnDefinitions>
 								<Label
 									Grid.Row="0"
@@ -695,6 +737,31 @@
 									Toggled="CalcEndDateSwitch_Toggled"
 									/>
 							</Grid>
+							<DatePicker
+								x:Name="EndDatePicker"
+								DateSelected="EndDatePicker_DateSelected"
+								HorizontalOptions="CenterAndExpand"
+								Style="{StaticResource baseDatePickerStyle_WO_WidthRequest}"
+								/>
+							<TimePicker
+								x:Name="EndTimePicker"
+								PropertyChanged="EndTimePicker_PropertyChanged"
+								Style="{StaticResource baseTimePickerStyle}"
+								/>
+							<Label
+								x:Name="EndDayName"
+								LineBreakMode="WordWrap"
+								MinimumWidthRequest="30"
+								Style="{StaticResource baseStartEndDateTimeEntryLabelStyle}"
+								Text=" MMM "
+								/>
+							<Button
+								x:Name="EndDateTimeNowButton"
+								Clicked="OnEndDateTimeNowButtonClicked"
+								Style="{StaticResource baseButtonStyle}"
+								Text="Now"
+								VerticalOptions="Center"
+								/>
 						</StackLayout>
 					</StackLayout>
 					<StackLayout
@@ -704,7 +771,9 @@
 						VerticalOptions="Center"
 						>
 						<StackLayout.Margin>
-							<OnPlatform x:TypeArguments="Thickness">
+							<OnPlatform
+								x:TypeArguments="Thickness"
+								>
 								<On
 									Platform="MacCatalyst, UWP, GTK"
 									Value="0, 20, 0, 0"
@@ -712,7 +781,9 @@
 							</OnPlatform>
 						</StackLayout.Margin>
 						<StackLayout.Spacing>
-							<OnPlatform x:TypeArguments="x:Double">
+							<OnPlatform
+								x:TypeArguments="x:Double"
+								>
 								<On
 									Platform="Android"
 									Value="10"
