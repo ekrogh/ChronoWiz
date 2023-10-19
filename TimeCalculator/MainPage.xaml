@@ -7,7 +7,7 @@
 	Shell.NavBarIsVisible="False"
 	>
 
-	<ContentPage.Padding>
+	<!--<ContentPage.Padding>
 		<OnPlatform
 			x:TypeArguments="Thickness"
 			>
@@ -20,7 +20,7 @@
 				Value="0, 0, 0, 30"
 				/>
 		</OnPlatform>
-	</ContentPage.Padding>
+	</ContentPage.Padding>-->
 
 	<ContentPage.Resources>
 		<ResourceDictionary>
@@ -155,7 +155,7 @@
 				x:Name="baseCmbndAndTotStackLayoutStyleName"
 				TargetType="StackLayout"
 				>
-				<Setter
+				<!--<Setter
 					Property="Spacing"
 					Value="1"
 					/>
@@ -174,7 +174,7 @@
 				<Setter
 					Property="IsEnabled"
 					Value="True"
-					/>
+					/>-->
 			</Style>
 
 			<Style
@@ -307,12 +307,6 @@
 
 	<ContentPage.Content>
 
-		<ScrollView
-			x:Name="scrollViewName"
-			HorizontalOptions="CenterAndExpand"
-			Orientation="Vertical"
-			VerticalOptions="CenterAndExpand"
-			>
 			<StackLayout
 				x:Name="TotalStackName"
 				HorizontalOptions="CenterAndExpand"
@@ -414,7 +408,7 @@
 					>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition
-							Width="80"
+							Width="Auto"
 							/>
 						<ColumnDefinition
 							Width="Auto"
@@ -446,9 +440,7 @@
 					<StackLayout
 						x:Name="entriesOuterStack"
 						Grid.Column="1"
-						HorizontalOptions="StartAndExpand"
 						Orientation="Horizontal"
-						VerticalOptions="Center"
 						>
 
 						<!--  Combined time  -->
@@ -832,7 +824,6 @@
 				</StackLayout>
 
 			</StackLayout>
-		</ScrollView>
 
 
 

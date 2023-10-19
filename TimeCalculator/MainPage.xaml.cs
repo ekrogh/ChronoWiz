@@ -72,12 +72,6 @@ public partial class MainPage : ContentPage
 		EndDatePicker.Date = DateTime.Now.Date;
 
 
-		if (DeviceInfo.Platform == DevicePlatform.WinUI)
-		{
-			ScreenWidth = DeviceDisplay.Current.MainDisplayInfo.Width;
-			ScreenHeight = DeviceDisplay.Current.MainDisplayInfo.Height;
-		}
-
 		SetOrientationRight
 		(
 			DeviceDisplay.Current.MainDisplayInfo.Width
@@ -87,13 +81,7 @@ public partial class MainPage : ContentPage
 			DeviceDisplay.Current.MainDisplayInfo.Orientation
 		);
 
-		//Dispatcher.Dispatch(() =>
-		//	(scrollViewName as IView).InvalidateArrange());
-
 		DeviceDisplay.Current.MainDisplayInfoChanged += Current_MainDisplayInfoChanged;
-		//var tst = this.Content;
-		//this.Content = VerticalScrollView;
-		//this.Content = DeviceDisplay.Current.MainDisplayInfo.Orientation == DisplayOrientation.Portrait ? potraitView : landscapeView;
 	}
 
 	private void Current_MainDisplayInfoChanged(object sender, DisplayInfoChangedEventArgs e)
@@ -119,20 +107,6 @@ public partial class MainPage : ContentPage
 	{
 		bool portrait = (DipsOrient == DisplayOrientation.Portrait);
 
-		if (DeviceInfo.Platform == DevicePlatform.WinUI)
-		{
-			ScreenWidth = DeviceDisplay.Current.MainDisplayInfo.Width;
-			ScreenHeight = DeviceDisplay.Current.MainDisplayInfo.Height;
-		}
-		else
-		{
-			ScreenWidth = width;
-			ScreenHeight = height;
-		}
-
-		this.width = DipsWidth;
-		this.height = DipsHight;
-
 		TotalStackName.TranslationX = 0.0f;
 		TotalStackName.TranslationY = 0.0f;
 
@@ -144,53 +118,22 @@ public partial class MainPage : ContentPage
 			firstTimeWdthOrHeightChanged = false;
 		}
 
-		//// Reset scaling
-		//ContentPageName.Scale = 1.0f / ContentPageNameScaleLast;
-		//scrollViewName.Scale = 1.0f / scrollViewNameScaleLast;
-		//TotalStackName.Scale = 1.0f / TotalStackNameScaleLast;
-		//StartDateTimeStacAndPlus.Scale = 1.0f / StartDateTimeStacAndPlusScaleLast;
-		//entriesOuterGrid.Scale = 1.0f / entriesOuterGridScaleLast;
-		//EndDateTimeAndCalculateAndClearAllButtonsStackName.Scale = 1.0f / EndDateTimeAndCalculateAndClearAllButtonsStackNameScaleLast;
-
-		//ContentPageNameScaleLast = 1.0f;
-		//scrollViewNameScaleLast = 1.0f;
-		//TotalStackNameScaleLast = 1.0f;
-		//StartDateTimeStacAndPlusScaleLast = 1.0f;
-		//entriesOuterGridScaleLast = 1.0f;
-		//EndDateTimeAndCalculateAndClearAllButtonsStackNameScaleLast = 1.0f;
-
 		double mainWidth = 1080;
 		double mainHeight = 1920f;
 
 		if (portrait)
 		{ // Portrait
-		  //if
-		  //(
-		  //	   (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
-		  //	|| (DeviceInfo.Platform == DevicePlatform.WinUI)
-		  //	|| ((DeviceInfo.Platform == DevicePlatform.Android) && (mainHeight < 1920))
-		  ////|| ((Device.RuntimePlatform == Device.iOS) && (mainWidth <= 828))
-		  //)
-		  //{ // Only Landscape allowed
-		  //	entriesOuterStack.Orientation = StackOrientation.Vertical;
-		  //	CombndTimeEntriesStack.Orientation = StackOrientation.Horizontal;
-		  //	TotalTimeEntriesStack.Orientation = StackOrientation.Horizontal;
-		  //	scrollViewName.Orientation = ScrollOrientation.Horizontal;
-		  //}
-		  //else
-		  //{
 			entriesOuterStack.Orientation = StackOrientation.Horizontal;
 			CombndTimeEntriesStack.Orientation = StackOrientation.Vertical;
 			TotalTimeEntriesStack.Orientation = StackOrientation.Vertical;
-			scrollViewName.Orientation = ScrollOrientation.Vertical;
-			//}
+			//scrollViewName.Orientation = ScrollOrientation.Vertical;
 		}
 		else
 		{ // Landscape
 			entriesOuterStack.Orientation = StackOrientation.Vertical;
 			CombndTimeEntriesStack.Orientation = StackOrientation.Horizontal;
 			TotalTimeEntriesStack.Orientation = StackOrientation.Horizontal;
-			scrollViewName.Orientation = ScrollOrientation.Horizontal;
+			//scrollViewName.Orientation = ScrollOrientation.Horizontal;
 		}
 
 		if (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
@@ -205,39 +148,13 @@ public partial class MainPage : ContentPage
 			{ // Portrait
 				StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
 				EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
-
-				//if (height > nativeTotalStackHeightPortrait)
-				//{
-				//	ContentPageNameScaleLast = height / nativeTotalStackHeightPortrait;
-				//	ContentPageName.Scale = ContentPageNameScaleLast;
-				//}
 			}
 			else
 			{ // Landscape
 				StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 				EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-
-				//if (width > nativeTotalStackWidthLandscape)
-				//{
-				//	ContentPageNameScaleLast = width / nativeTotalStackWidthLandscape;
-				//	ContentPageName.Scale = ContentPageNameScaleLast;
-				//}
-				//else if (width < 659.0f)
-				//{
-				//	scrollViewNameScaleLast = width / scrollViewName.Width;
-				//	scrollViewName.Scale = scrollViewNameScaleLast;
-				//	TotalStackName.Scale = width / TotalStackName.Width;
-				//	double entriesOuterGridScale = width / entriesOuterGrid.Width;
-				//	double entriesOuterGridScaleY = 0.9f;
-				//	entriesOuterGrid.Scale = entriesOuterGridScale;
-				//	entriesOuterGrid.ScaleY = entriesOuterGridScaleY;
-				//	StartDateTimeStacAndPlus.Scale = entriesOuterGridScale;
-				//	StartDateTimeStacAndPlus.ScaleY = entriesOuterGridScaleY;
-				//	EndDateTimeAndCalculateAndClearAllButtonsStackName.Scale = entriesOuterGridScale;
-				//	EndDateTimeAndCalculateAndClearAllButtonsStackName.ScaleY = entriesOuterGridScaleY;
-				//}
 			}
-			scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Center, false);
+			//scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Center, false);
 
 			StartDayName.WidthRequest = EndDayName.WidthRequest = 50;
 
@@ -248,70 +165,16 @@ public partial class MainPage : ContentPage
 			{ // Portrait
 				StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
 				EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
-
-				if (DeviceInfo.Idiom == DeviceIdiom.Tablet)
-				{
-					scrollViewNameScaleLast = width * 0.7f / scrollViewName.Width;
-					scrollViewName.Scale = scrollViewNameScaleLast;
-				}
-				//else if ((mainHeight / mainWidth) >= 2.16f)
-				//{
-				//	scrollViewNameScaleLast = width / scrollViewName.Width;
-				//	scrollViewName.Scale = scrollViewNameScaleLast;
-				//}
-				//else if (width <= 320f)
-				//{
-				//	scrollViewNameScaleLast = width / scrollViewName.Width;
-				//	scrollViewName.Scale = scrollViewNameScaleLast;
-				//	TotalStackName.Scale = width * 0.5f / TotalStackName.Width;
-				//}
-				else
-				{
-					scrollViewNameScaleLast = width / scrollViewName.Width;
-					scrollViewName.Scale = scrollViewNameScaleLast;
-					TotalStackName.Scale = width * 0.7f / TotalStackName.Width;
-				}
 			}
 			else
 			{ // Landscape
 				StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 				EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-
-				if (DeviceInfo.Idiom == DeviceIdiom.Tablet)
-				{
-					scrollViewNameScaleLast = width / scrollViewName.Width;
-					scrollViewName.Scale = scrollViewNameScaleLast;
-				}
-				//else if ((mainWidth / mainHeight) >= 2.16f)
-				//{
-				//	scrollViewNameScaleLast = width * 0.9f / scrollViewName.Width;
-				//	scrollViewName.Scale = scrollViewNameScaleLast;
-				//}
-				//else if (height <= 320f)
-				//{
-				//	scrollViewNameScaleLast = width / scrollViewName.Width;
-				//	scrollViewName.Scale = scrollViewNameScaleLast;
-				//	TotalStackName.Scale = width / TotalStackName.Width;
-				//	double entriesOuterGridScale = width * 0.55f / entriesOuterGrid.Width;
-				//	double entriesOuterGridScaleY = 1.05f;
-				//	entriesOuterGrid.Scale = entriesOuterGridScale;
-				//	entriesOuterGrid.ScaleY = entriesOuterGridScaleY;
-				//	StartDateTimeStacAndPlus.Scale = entriesOuterGridScale;
-				//	StartDateTimeStacAndPlus.ScaleY = entriesOuterGridScaleY;
-				//	EndDateTimeAndCalculateAndClearAllButtonsStackName.Scale = entriesOuterGridScale;
-				//	EndDateTimeAndCalculateAndClearAllButtonsStackName.ScaleY = entriesOuterGridScaleY;
-				//}
-				else
-				{
-					scrollViewNameScaleLast = width / scrollViewName.Width;
-					scrollViewName.Scale = scrollViewNameScaleLast;
-					TotalStackName.Scale = width * 0.9f / TotalStackName.Width;
-				}
 			}
 
-			scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Start, true);
-			scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.End, true);
-			scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Center, true);
+			//scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Start, true);
+			//scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.End, true);
+			//scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Center, true);
 
 		}
 		else if (DeviceInfo.Platform == DevicePlatform.WinUI)
@@ -322,17 +185,11 @@ public partial class MainPage : ContentPage
 			StartDayName.WidthRequest = EndDayName.WidthRequest = 45;
 		}
 
-		Dispatcher.Dispatch(() =>
-			(scrollViewName as IView).InvalidateArrange());
+		//Dispatcher.Dispatch(() =>
+		//	(scrollViewName as IView).InvalidateArrange());
 
 	}
 
-
-	private double width;
-	private double height;
-
-	private double ScreenWidth = 0.0;
-	private double ScreenHeight = 0.0;
 
 	private bool firstTime = true;
 	private bool firstTimeWdthOrHeightChanged = true;
@@ -342,22 +199,12 @@ public partial class MainPage : ContentPage
 
 
 	DatePicker MacStartDatePicker = new DatePicker();
-	//TimePicker MacStartTimePicker = new myMacOSNormalTimePicker();
 	DatePicker MacEndDatePicker = new DatePicker();
-	//TimePicker MacEndTimePicker = new myMacOSNormalTimePicker();
 
-	//DatePicker StartDatePicker = new DatePicker();
-	//TimePicker StartTimePicker = new TimePicker();
 	Picker GtkStartHourPicker = new Picker();
 	Picker GtkStartMinutsPicker = new Picker();
-	//Label StartDayName = new Label();
-	//Button StartDateTimeNowButton = new Button();
-	//DatePicker EndDatePicker = new DatePicker();
-	//TimePicker EndTimePicker = new TimePicker();
 	Picker GtkEndHourPicker = new Picker();
 	Picker GtkEndMinutsPicker = new Picker();
-	//Label EndDayName = new Label();
-	//Button EndDateTimeNowButton = new Button();
 
 	private double StartDateTimeIntroLabelNameFontSizeOrig = 0.0;
 
