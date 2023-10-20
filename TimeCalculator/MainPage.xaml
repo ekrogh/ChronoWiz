@@ -387,262 +387,210 @@
 						/>
 				</StackLayout>
 
-				<!--  time entries -->
-				<Grid
-					x:Name="EntriesOuterGrid"
+				<!--  time entries  -->
+				<StackLayout
+					x:Name="EntriesCenterOuterStack"
 					>
-					<Grid.RowDefinitions>
-						<RowDefinition
-							Height="*"
-							/>
-						<RowDefinition
-							Height="*"
-							/>
-					</Grid.RowDefinitions>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition
-							Width="*"
-							/>
-						<ColumnDefinition
-							Width="*"
-							/>
-						<ColumnDefinition
-							Width="*"
-							/>
-						<ColumnDefinition
-							Width="*"
-							/>
-						<ColumnDefinition
-							Width="*"
-							/>
-						<ColumnDefinition
-							Width="*"
-							/>
-					</Grid.ColumnDefinitions>
-	
-					<StackLayout
-						x:Name="CombndYearsStackName"
-						Grid.Row="0"
-						Grid.Column="0"
-						>
-						<Label
-							Style="{StaticResource baseLabelStyleEntries}"
-							Text="  Years"
-							/>
-						<Entry
-							x:Name="CombndYears"
-							Completed="OnCombndYearsCompleted"
-							Focused="OnCombndYMWDHMFocused"
-							Style="{StaticResource baseEntryStyle}"
-							Unfocused="OnCombndYearsUnfocused"
-							/>
-					</StackLayout>
 
-					<StackLayout
-						x:Name="CombndMonthsStackName"
-						Grid.Row="0"
-						Grid.Column="1"
-						>
-						<Label
-							Style="{StaticResource baseLabelStyleEntries}"
-							Text="+ Months"
-							/>
-						<Entry
-							x:Name="CombndMonths"
-							Completed="OnCombndMonthsCompleted"
-							Focused="OnCombndYMWDHMFocused"
-							IsReadOnly="True"
-							Style="{StaticResource baseEntryStyle}"
-							Unfocused="OnCombndMonthsUnfocused"
-							/>
-					</StackLayout>
+						<StackLayout
+							x:Name="CombndYearsStackName"
+							>
+							<Label
+								Style="{StaticResource baseLabelStyleEntries}"
+								Text="  Years"
+								/>
+							<Entry
+								x:Name="CombndYears"
+								Completed="OnCombndYearsCompleted"
+								Focused="OnCombndYMWDHMFocused"
+								Style="{StaticResource baseEntryStyle}"
+								Unfocused="OnCombndYearsUnfocused"
+								/>
+						</StackLayout>
 
-					<StackLayout
-						x:Name="CombndWeeksStackName"
-						Grid.Row="0"
-						Grid.Column="2"
-						>
-						<Label
-							Style="{StaticResource baseLabelStyleEntries}"
-							Text="+ Weeks"
-							/>
-						<Entry
-							x:Name="CombndWeeks"
-							Completed="OnCombndWeeksCompleted"
-							Focused="OnCombndYMWDHMFocused"
-							IsReadOnly="True"
-							Style="{StaticResource baseEntryStyle}"
-							Unfocused="OnCombndWeeksUnfocused"
-							/>
-					</StackLayout>
+						<StackLayout
+							x:Name="CombndMonthsStackName"
+							>
+							<Label
+								Style="{StaticResource baseLabelStyleEntries}"
+								Text="+ Months"
+								/>
+							<Entry
+								x:Name="CombndMonths"
+								Completed="OnCombndMonthsCompleted"
+								Focused="OnCombndYMWDHMFocused"
+								IsReadOnly="True"
+								Style="{StaticResource baseEntryStyle}"
+								Unfocused="OnCombndMonthsUnfocused"
+								/>
+						</StackLayout>
 
-					<StackLayout
-						x:Name="CombndDaysStackName"
-						Grid.Row="0"
-						Grid.Column="3"
-						>
-						<Label
-							Style="{StaticResource baseLabelStyleEntries}"
-							Text="+ Days"
-							/>
-						<Entry
-							x:Name="CombndDays"
-							Completed="OnCombndDaysCompleted"
-							Focused="OnCombndYMWDHMFocused"
-							IsReadOnly="True"
-							Style="{StaticResource baseEntryStyle}"
-							Unfocused="OnCombndDaysUnfocused"
-							/>
-					</StackLayout>
+						<StackLayout
+							x:Name="CombndWeeksStackName"
+							>
+							<Label
+								Style="{StaticResource baseLabelStyleEntries}"
+								Text="+ Weeks"
+								/>
+							<Entry
+								x:Name="CombndWeeks"
+								Completed="OnCombndWeeksCompleted"
+								Focused="OnCombndYMWDHMFocused"
+								IsReadOnly="True"
+								Style="{StaticResource baseEntryStyle}"
+								Unfocused="OnCombndWeeksUnfocused"
+								/>
+						</StackLayout>
 
-					<StackLayout
-						x:Name="CombndHoursStackName"
-						Grid.Row="0"
-						Grid.Column="4"
-						>
-						<Label
-							Style="{StaticResource baseLabelStyleEntries}"
-							Text="+ Hours"
-							/>
-						<Entry
-							x:Name="CombndHours"
-							Completed="OnCombndHoursCompleted"
-							Focused="OnCombndYMWDHMFocused"
-							IsReadOnly="True"
-							Style="{StaticResource baseEntryStyle}"
-							Unfocused="OnCombndHoursUnfocused"
-							/>
-					</StackLayout>
+						<StackLayout
+							x:Name="CombndDaysStackName"
+							>
+							<Label
+								Style="{StaticResource baseLabelStyleEntries}"
+								Text="+ Days"
+								/>
+							<Entry
+								x:Name="CombndDays"
+								Completed="OnCombndDaysCompleted"
+								Focused="OnCombndYMWDHMFocused"
+								IsReadOnly="True"
+								Style="{StaticResource baseEntryStyle}"
+								Unfocused="OnCombndDaysUnfocused"
+								/>
+						</StackLayout>
 
-					<StackLayout
-						x:Name="CombndMinutesStackName"
-						Grid.Row="0"
-						Grid.Column="5"
-						>
-						<Label
-							Style="{StaticResource baseLabelStyleEntries}"
-							Text="+ Minutes"
-							/>
-						<Entry
-							x:Name="CombndMinutes"
-							Completed="OnCombndMinutesCompleted"
-							Focused="OnCombndYMWDHMFocused"
-							IsReadOnly="True"
-							Style="{StaticResource baseEntryStyle}"
-							Unfocused="OnCombndMinutesUnfocused"
-							/>
-					</StackLayout>
+						<StackLayout
+							x:Name="CombndHoursStackName"
+							>
+							<Label
+								Style="{StaticResource baseLabelStyleEntries}"
+								Text="+ Hours"
+								/>
+							<Entry
+								x:Name="CombndHours"
+								Completed="OnCombndHoursCompleted"
+								Focused="OnCombndYMWDHMFocused"
+								IsReadOnly="True"
+								Style="{StaticResource baseEntryStyle}"
+								Unfocused="OnCombndHoursUnfocused"
+								/>
+						</StackLayout>
 
-					<!--  Total time  -->
-					<StackLayout
-						x:Name="TotYearsStackName"
-						Grid.Row="1"
-						Grid.Column="0"
-						>
-						<Label
-							Style="{StaticResource baseLabelStyleEntries}"
-							Text="   Years Tot."
-							/>
-						<Entry
-							x:Name="TotYears"
-							Completed="OnTotYearsCompleted"
-							Focused="OnTotYMWDHMFocused"
-							IsReadOnly="True"
-							Style="{StaticResource baseEntryStyle}"
-							Unfocused="OnTotYearsUnfocused"
-							/>
-					</StackLayout>
+						<StackLayout
+							x:Name="CombndMinutesStackName"
+							>
+							<Label
+								Style="{StaticResource baseLabelStyleEntries}"
+								Text="+ Minutes"
+								/>
+							<Entry
+								x:Name="CombndMinutes"
+								Completed="OnCombndMinutesCompleted"
+								Focused="OnCombndYMWDHMFocused"
+								IsReadOnly="True"
+								Style="{StaticResource baseEntryStyle}"
+								Unfocused="OnCombndMinutesUnfocused"
+								/>
+						</StackLayout>
 
-					<StackLayout
-						x:Name="TotMonthsStackName"
-						Grid.Row="1"
-						Grid.Column="1"
-						>
-						<Label
-							Style="{StaticResource baseLabelStyleEntries}"
-							Text="or Months Tot."
-							/>
-						<Entry
-							x:Name="TotMonths"
-							Completed="OnTotMonthsCompleted"
-							Focused="OnTotYMWDHMFocused"
-							Style="{StaticResource baseEntryStyle}"
-							Unfocused="OnTotMonthsUnfocused"
-							/>
-					</StackLayout>
+						<!--  Total time  -->
+						<StackLayout
+							x:Name="TotYearsStackName"
+							>
+							<Label
+								Style="{StaticResource baseLabelStyleEntries}"
+								Text="   Years Tot."
+								/>
+							<Entry
+								x:Name="TotYears"
+								Completed="OnTotYearsCompleted"
+								Focused="OnTotYMWDHMFocused"
+								IsReadOnly="True"
+								Style="{StaticResource baseEntryStyle}"
+								Unfocused="OnTotYearsUnfocused"
+								/>
+						</StackLayout>
 
-					<StackLayout
-						x:Name="TotWeeksStackName"
-						Grid.Row="1"
-						Grid.Column="2"
-						>
-						<Label
-							Style="{StaticResource baseLabelStyleEntries}"
-							Text="or Weeks Tot."
-							/>
-						<Entry
-							x:Name="TotWeeks"
-							Completed="OnTotWeeksCompleted"
-							Focused="OnTotYMWDHMFocused"
-							Style="{StaticResource baseEntryStyle}"
-							Unfocused="OnTotWeeksUnfocused"
-							/>
-					</StackLayout>
+						<StackLayout
+							x:Name="TotMonthsStackName"
+							>
+							<Label
+								Style="{StaticResource baseLabelStyleEntries}"
+								Text="or Months Tot."
+								/>
+							<Entry
+								x:Name="TotMonths"
+								Completed="OnTotMonthsCompleted"
+								Focused="OnTotYMWDHMFocused"
+								Style="{StaticResource baseEntryStyle}"
+								Unfocused="OnTotMonthsUnfocused"
+								/>
+						</StackLayout>
 
-					<StackLayout
-						x:Name="TotDaysStackName"
-						Grid.Row="1"
-						Grid.Column="3"
-						>
-						<Label
-							Style="{StaticResource baseLabelStyleEntries}"
-							Text="or Days Tot."
-							/>
-						<Entry
-							x:Name="TotDays"
-							Completed="OnTotDaysCompleted"
-							Focused="OnTotYMWDHMFocused"
-							Style="{StaticResource baseEntryStyle}"
-							Unfocused="OnTotDaysUnfocused"
-							/>
-					</StackLayout>
+						<StackLayout
+							x:Name="TotWeeksStackName"
+							>
+							<Label
+								Style="{StaticResource baseLabelStyleEntries}"
+								Text="or Weeks Tot."
+								/>
+							<Entry
+								x:Name="TotWeeks"
+								Completed="OnTotWeeksCompleted"
+								Focused="OnTotYMWDHMFocused"
+								Style="{StaticResource baseEntryStyle}"
+								Unfocused="OnTotWeeksUnfocused"
+								/>
+						</StackLayout>
 
-					<StackLayout
-						x:Name="TotHoursStackName"
-						Grid.Row="1"
-						Grid.Column="4"
-						>
-						<Label
-							Style="{StaticResource baseLabelStyleEntries}"
-							Text="or Hours Tot."
-							/>
-						<Entry
-							x:Name="TotHours"
-							Completed="OnTotHoursCompleted"
-							Focused="OnTotYMWDHMFocused"
-							Style="{StaticResource baseEntryStyle}"
-							Unfocused="OnTotHoursUnfocused"
-							/>
-					</StackLayout>
+						<StackLayout
+							x:Name="TotDaysStackName"
+							>
+							<Label
+								Style="{StaticResource baseLabelStyleEntries}"
+								Text="or Days Tot."
+								/>
+							<Entry
+								x:Name="TotDays"
+								Completed="OnTotDaysCompleted"
+								Focused="OnTotYMWDHMFocused"
+								Style="{StaticResource baseEntryStyle}"
+								Unfocused="OnTotDaysUnfocused"
+								/>
+						</StackLayout>
 
-					<StackLayout
-						x:Name="TotMinutesStackName"
-						Grid.Row="1"
-						Grid.Column="5"
-						>
-						<Label
-							Style="{StaticResource baseLabelStyleEntries}"
-							Text="or Minutes Tot"
-							/>
-						<Entry
-							x:Name="TotMinutes"
-							Completed="OnTotMinutesCompleted"
-							Focused="OnTotYMWDHMFocused"
-							Style="{StaticResource baseEntryStyle}"
-							Unfocused="OnTotMinutesUnfocused"
-							/>
-					</StackLayout>
-				</Grid>
+						<StackLayout
+							x:Name="TotHoursStackName"
+							>
+							<Label
+								Style="{StaticResource baseLabelStyleEntries}"
+								Text="or Hours Tot."
+								/>
+							<Entry
+								x:Name="TotHours"
+								Completed="OnTotHoursCompleted"
+								Focused="OnTotYMWDHMFocused"
+								Style="{StaticResource baseEntryStyle}"
+								Unfocused="OnTotHoursUnfocused"
+								/>
+						</StackLayout>
+
+						<StackLayout
+							x:Name="TotMinutesStackName"
+							>
+							<Label
+								Style="{StaticResource baseLabelStyleEntries}"
+								Text="or Minutes Tot"
+								/>
+							<Entry
+								x:Name="TotMinutes"
+								Completed="OnTotMinutesCompleted"
+								Focused="OnTotYMWDHMFocused"
+								Style="{StaticResource baseEntryStyle}"
+								Unfocused="OnTotMinutesUnfocused"
+								/>
+						</StackLayout>
+				</StackLayout>
 
 			</StackLayout>
 
