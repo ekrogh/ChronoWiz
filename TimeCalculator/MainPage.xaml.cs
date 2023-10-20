@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using TimeCalculator.FileHandlers;
-using static CommunityToolkit.Maui.Markup.GridRowsColumns;
 
 namespace TimeCalculator;
 
@@ -178,6 +177,31 @@ public partial class MainPage : ContentPage
 		DoClearAll();
 	}
 
+	private double LastScale = 1.0f;
+	protected override void OnSizeAllocated(double width, double height)
+	{
+
+		base.OnSizeAllocated(width, height);
+
+		TotalStackName.Scale = 1.0f / LastScale;
+
+		double WidthTotalStackName = TotalStackName.Width;
+		double HeightTotalStackName = TotalStackName.Height;
+
+		double WidthFactor = width / WidthTotalStackName;
+		double HeightFactor = height / HeightTotalStackName;
+
+		if (WidthFactor < HeightFactor)
+		{
+			TotalStackName.Scale = WidthFactor;
+			LastScale = WidthFactor;
+		}
+		else
+		{
+			TotalStackName.Scale = HeightFactor;
+			LastScale = HeightFactor;
+		}
+	}
 
 	private bool firstTime = true;
 	private bool firstTimeWdthOrHeightChanged = true;
