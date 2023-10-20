@@ -391,6 +391,9 @@
 				<StackLayout
 					x:Name="EntriesCenterOuterStack"
 					>
+					<StackLayout
+						x:Name="EntriesCenterCombndStack"
+						>
 
 						<StackLayout
 							x:Name="CombndYearsStackName"
@@ -493,7 +496,13 @@
 								/>
 						</StackLayout>
 
-						<!--  Total time  -->
+					</StackLayout>
+
+					<!--  Total time  -->
+					<StackLayout
+						x:Name="EntriesCenterTotStack"
+						>
+
 						<StackLayout
 							x:Name="TotYearsStackName"
 							>
@@ -590,6 +599,9 @@
 								Unfocused="OnTotMinutesUnfocused"
 								/>
 						</StackLayout>
+						
+					</StackLayout>
+					
 				</StackLayout>
 
 			</StackLayout>

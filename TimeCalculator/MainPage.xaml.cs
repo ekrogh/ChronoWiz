@@ -121,106 +121,15 @@ public partial class MainPage : ContentPage
 
 		if (portrait)
 		{ // Portrait
-			EntriesCenterOuterStack.Orientation = StackOrientation.Vertical;
-			//try
-			//{
-			//	EntriesOuterGrid.ColumnDefinitions =
-			//		Columns.Define
-			//		(
-			//			Star
-			//			,
-			//			Star
-			//			,
-			//			Star
-			//		);
-			//	EntriesOuterGrid.RowDefinitions =
-			//		Rows.Define
-			//		(
-			//			Star
-			//			,
-			//			Star
-			//			,
-			//			Star
-			//			,
-			//			Star
-			//			,
-			//			Star
-			//			,
-			//			Star
-			//			,
-			//			Star
-			//		);
-
-			//EntriesOuterGrid.Add(CombndYearsStackName, 1, 0);
-			//EntriesOuterGrid.Add(CombndMonthsStackName, 1, 1);
-			//EntriesOuterGrid.Add(CombndWeeksStackName, 1, 2);
-			//EntriesOuterGrid.Add(CombndDaysStackName, 1, 3);
-			//EntriesOuterGrid.Add(CombndHoursStackName, 1, 4);
-			//EntriesOuterGrid.Add(CombndMinutesStackName, 1, 5);
-
-			//EntriesOuterGrid.Add(TotYearsStackName, 0, 0);
-			//EntriesOuterGrid.Add(TotMonthsStackName, 0, 1);
-			//EntriesOuterGrid.Add(TotWeeksStackName, 0, 2);
-			//EntriesOuterGrid.Add(TotDaysStackName, 0, 3);
-			//EntriesOuterGrid.Add(TotHoursStackName, 0, 4);
-			//EntriesOuterGrid.Add(TotMinutesStackName, 0, 5);
-			//}
-			//catch (Exception ex)
-			//{
-			//	var tst = ex;
-			//}
+			EntriesCenterOuterStack.Orientation = StackOrientation.Horizontal;
+			EntriesCenterCombndStack.Orientation = StackOrientation.Vertical;
+			EntriesCenterTotStack.Orientation = StackOrientation.Vertical;
 		}
 		else
 		{ // Landscape
-			EntriesCenterOuterStack.Orientation = StackOrientation.Horizontal;
-			//try
-			//{
-			//	EntriesOuterGrid.ColumnDefinitions =
-			//	Columns.Define
-			//	(
-			//		Star
-			//		,
-			//		Star
-			//		,
-			//		Star
-			//	);
-			//	EntriesOuterGrid.RowDefinitions =
-			//		Rows.Define
-			//		(
-			//			Star
-			//			,
-			//			Star
-			//			,
-			//			Star
-			//			,
-			//			Star
-			//			,
-			//			Star
-			//			,
-			//			Star
-			//			,
-			//			Star
-			//		);
-
-			//GridExtensions.Add(EntriesOuterGrid, CombndYearsStackName/*, 1, 0*/);
-			//EntriesOuterGrid.Add(CombndYearsStackName, 0, 0);
-			//EntriesOuterGrid.Add(CombndMonthsStackName, 1, 0);
-			//EntriesOuterGrid.Add(CombndWeeksStackName, 2, 0);
-			//EntriesOuterGrid.Add(CombndDaysStackName, 3, 0);
-			//EntriesOuterGrid.Add(CombndHoursStackName, 4, 0);
-			//EntriesOuterGrid.Add(CombndMinutesStackName, 5, 0);
-
-			//EntriesOuterGrid.Add(TotYearsStackName, 0, 1);
-			//EntriesOuterGrid.Add(TotMonthsStackName, 1, 1);
-			//EntriesOuterGrid.Add(TotWeeksStackName, 2, 1);
-			//EntriesOuterGrid.Add(TotDaysStackName, 3, 1);
-			//EntriesOuterGrid.Add(TotHoursStackName, 4, 1);
-			//EntriesOuterGrid.Add(TotMinutesStackName, 5, 1);
-			//}
-			//catch (Exception ex)
-			//{
-			//	var tst = ex;
-			//}
+			EntriesCenterOuterStack.Orientation = StackOrientation.Vertical;
+			EntriesCenterCombndStack.Orientation = StackOrientation.Horizontal;
+			EntriesCenterTotStack.Orientation = StackOrientation.Horizontal;
 		}
 
 		if (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
@@ -241,7 +150,6 @@ public partial class MainPage : ContentPage
 				StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 				EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 			}
-			//scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Center, false);
 
 			StartDayName.WidthRequest = EndDayName.WidthRequest = 50;
 
@@ -258,11 +166,6 @@ public partial class MainPage : ContentPage
 				StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 				EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 			}
-
-			//scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Start, true);
-			//scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.End, true);
-			//scrollViewName.ScrollToAsync(TotalStackName, ScrollToPosition.Center, true);
-
 		}
 		else if (DeviceInfo.Platform == DevicePlatform.WinUI)
 		{
@@ -272,9 +175,7 @@ public partial class MainPage : ContentPage
 			StartDayName.WidthRequest = EndDayName.WidthRequest = 45;
 		}
 
-		//Dispatcher.Dispatch(() =>
-		//	(scrollViewName as IView).InvalidateArrange());
-
+		DoClearAll();
 	}
 
 
