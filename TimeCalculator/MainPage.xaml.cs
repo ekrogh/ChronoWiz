@@ -118,22 +118,37 @@ public partial class MainPage : ContentPage
 			firstTimeWdthOrHeightChanged = false;
 		}
 
-		double mainWidth = 1080;
-		double mainHeight = 1920f;
-
 		if (portrait)
 		{ // Portrait
-			entriesOuterStack.Orientation = StackOrientation.Horizontal;
-			CombndTimeEntriesStack.Orientation = StackOrientation.Vertical;
-			TotalTimeEntriesStack.Orientation = StackOrientation.Vertical;
-			//scrollViewName.Orientation = ScrollOrientation.Vertical;
+			//CombndTimeEntriesGrid.Add(CombndYearsStackName, 1, 0);
+			//CombndTimeEntriesGrid.Add(CombndMonthsStackName, 1, 1);
+			//CombndTimeEntriesGrid.Add(CombndWeeksStackName, 1, 2);
+			//CombndTimeEntriesGrid.Add(CombndDaysStackName, 1, 3);
+			//CombndTimeEntriesGrid.Add(CombndHoursStackName, 1, 4);
+			//CombndTimeEntriesGrid.Add(CombndMinutesStackName, 1, 5);
+
+			//TotalTimeEntriesGrid.Add(TotYearsStackName, 0, 0);
+			//TotalTimeEntriesGrid.Add(TotMonthsStackName, 0, 1);
+			//TotalTimeEntriesGrid.Add(TotWeeksStackName, 0, 2);
+			//TotalTimeEntriesGrid.Add(TotDaysStackName, 0, 3);
+			//TotalTimeEntriesGrid.Add(TotHoursStackName, 0, 4);
+			//TotalTimeEntriesGrid.Add(TotMinutesStackName, 0, 5);
 		}
 		else
 		{ // Landscape
-			entriesOuterStack.Orientation = StackOrientation.Vertical;
-			CombndTimeEntriesStack.Orientation = StackOrientation.Horizontal;
-			TotalTimeEntriesStack.Orientation = StackOrientation.Horizontal;
-			//scrollViewName.Orientation = ScrollOrientation.Horizontal;
+			//CombndTimeEntriesGrid.Add(CombndYearsStackName, 0, 0);
+			//CombndTimeEntriesGrid.Add(CombndMonthsStackName, 1, 0);
+			//CombndTimeEntriesGrid.Add(CombndWeeksStackName, 2, 0);
+			//CombndTimeEntriesGrid.Add(CombndDaysStackName, 3, 0);
+			//CombndTimeEntriesGrid.Add(CombndHoursStackName, 4, 0);
+			//CombndTimeEntriesGrid.Add(CombndMinutesStackName, 5, 0);
+
+			//TotalTimeEntriesGrid.Add(TotYearsStackName, 0, 1);
+			//TotalTimeEntriesGrid.Add(TotMonthsStackName, 1, 1);
+			//TotalTimeEntriesGrid.Add(TotWeeksStackName, 2, 1);
+			//TotalTimeEntriesGrid.Add(TotDaysStackName, 3, 1);
+			//TotalTimeEntriesGrid.Add(TotHoursStackName, 4, 1);
+			//TotalTimeEntriesGrid.Add(TotMinutesStackName, 5, 1);
 		}
 
 		if (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
