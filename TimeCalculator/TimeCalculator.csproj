@@ -123,16 +123,16 @@
 	  <MauiXaml Update="AboutHelp.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="FileICS.xaml">
+	  <MauiXaml Update="ICSFiling\FileICS.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MainPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="OpenICS.xaml">
+	  <MauiXaml Update="ICSFiling\OpenICS.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="SaveToICS.xaml">
+	  <MauiXaml Update="ICSFiling\SaveToICS.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

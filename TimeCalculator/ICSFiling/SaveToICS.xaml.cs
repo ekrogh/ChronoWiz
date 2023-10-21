@@ -10,22 +10,6 @@ namespace TimeCalculator
 		{
 			InitializeComponent();
 
-			// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-			if (DeviceInfo.Platform == DevicePlatform.Android)
-			{
-				SaveToICSContentPageName.SetAppThemeColor(ContentPage.BackgroundColorProperty, Colors.White, Colors.Black);
-				Resources["DynamicBaseButtonStyle"] = Resources["AndroidBaseButtonStyle"];
-			}
-			else
-			{
-				Resources["DynamicBaseButtonStyle"] = Resources["baseButtonStyle"];
-
-				if (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
-				{
-					FileSaveToCancelButton.IsVisible = true;
-				}
-			}
-
 			Summary.Focus();
 		}
 

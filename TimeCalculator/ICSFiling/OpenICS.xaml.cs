@@ -10,21 +10,6 @@ namespace TimeCalculator
 		public OpenICS()
 		{
 			InitializeComponent();
-
-			if (DeviceInfo.Platform == DevicePlatform.Android)
-			{
-				OpenICSContentPageName.SetAppThemeColor(ContentPage.BackgroundColorProperty, Colors.White, Colors.Black);
-				Resources["DynamicBaseButtonStyle"] = Resources["AndroidBaseButtonStyle"];
-			}
-			else
-			{
-				Resources["DynamicBaseButtonStyle"] = Resources["baseButtonStyle"];
-
-				if (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
-				{
-					FileOpenCancelButton.IsVisible = true;
-				}
-			}
 		}
 
 		private void Open_Button_Clicked(object sender, System.EventArgs e)

@@ -38,15 +38,6 @@
 					Value="True" />
 			</Style>
 
-			<Style
-				x:Key="AndroidBaseButtonStyle"
-				BasedOn="{StaticResource baseButtonStyle}"
-				TargetType="Button">
-				<Setter
-					Property="BackgroundColor"
-					Value="{AppThemeBinding Light=Default, Dark=#FF333333}" />
-			</Style>
-
 		</ResourceDictionary>
 	</ContentPage.Resources>
 
@@ -63,13 +54,13 @@
 				<Button
 					x:Name="OpenICSButton"
 					Clicked="OpenICSButton_Clicked"
-					Style="{DynamicResource DynamicBaseButtonStyle}"
+					Style="{StaticResource baseButtonStyle}"
 					Text="Open" />
 
 				<Button
 					x:Name="SaveToICSButton"
 					Clicked="SaveToICSButton_ClickedAsync"
-					Style="{DynamicResource DynamicBaseButtonStyle}"
+					Style="{StaticResource baseButtonStyle}"
 					Text="Save" />
 
 
