@@ -1,7 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup;
-using Microsoft.Extensions.Logging;
-
-namespace TimeCalculator
+﻿namespace TimeCalculator
 {
 	public static class MauiProgram
 	{
@@ -10,12 +7,11 @@ namespace TimeCalculator
 			var builder = MauiApp.CreateBuilder();
 			builder
 				.UseMauiCommunityToolkit()
-				.UseMauiCommunityToolkitMarkup()
 				.UseMauiApp<App>()
 				.ConfigureFonts(fonts =>
 				{
-					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-					fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+					fonts.AddFont("opensansregular.ttf", "OpenSansRegular");
+					fonts.AddFont("opensanssemibold.ttf", "OpenSansSemibold");
 				});
 #if DEBUG
 			builder.Logging.AddDebug();

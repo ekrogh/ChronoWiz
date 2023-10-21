@@ -15,18 +15,38 @@
 				x:Name="baseLabelStyleName"
 				TargetType="Label"
 				>
-				<Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
-				<Setter Property="IsEnabled" Value="False" />
+				<Setter
+					Property="TextColor"
+					Value="{AppThemeBinding Light=Black,
+					                        Dark=White}"
+					/>
+				<Setter
+					Property="IsEnabled"
+					Value="False"
+					/>
 			</Style>
 
 			<Style
 				x:Key="baseButtonStyle"
 				TargetType="Button"
 				>
-				<Setter Property="BorderColor" Value="Gray" />
-				<Setter Property="TextColor" Value="{AppThemeBinding Light=#FF579AE5, Dark=#FF9E5B10}" />
-				<Setter Property="BorderWidth" Value="0.5" />
-				<Setter Property="IsEnabled" Value="True" />
+				<Setter
+					Property="BorderColor"
+					Value="Gray"
+					/>
+				<Setter
+					Property="TextColor"
+					Value="{AppThemeBinding Light=#FF579AE5,
+					                        Dark=#FF9E5B10}"
+					/>
+				<Setter
+					Property="BorderWidth"
+					Value="0.5"
+					/>
+				<Setter
+					Property="IsEnabled"
+					Value="True"
+					/>
 			</Style>
 
 			<Style
@@ -34,7 +54,11 @@
 				BasedOn="{StaticResource baseButtonStyle}"
 				TargetType="Button"
 				>
-				<Setter Property="BackgroundColor" Value="{AppThemeBinding Light=Default, Dark=#FF333333}" />
+				<Setter
+					Property="BackgroundColor"
+					Value="{AppThemeBinding Light=Default,
+					                        Dark=#FF333333}"
+					/>
 			</Style>
 
 		</ResourceDictionary>
@@ -44,7 +68,9 @@
 	<ContentPage.Content>
 
 		<ScrollView>
-			<StackLayout Padding="20">
+			<StackLayout
+				Padding="20"
+				>
 				<Image
 					Margin="0,0,0,20"
 					IsEnabled="False"
