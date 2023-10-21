@@ -78,7 +78,8 @@
 		<MauiImage Include="Resources\Images\*" />
 		<MauiImage Include="Resources\Images\MauiImage.svg" />
 		<MauiImage Include="Resources\Images\fileics.png" />
-		<MauiImage Include="Resources\Images\fileics.svg" />
+		<MauiImage Include="Resources\Images\openics.png" />
+		<MauiImage Include="Resources\Images\savetoics.png" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
