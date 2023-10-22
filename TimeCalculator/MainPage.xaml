@@ -3,7 +3,9 @@
 	x:Class="TimeCalculator.MainPage"
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
 	x:Name="ContentPageName"
+	ios:Page.UseSafeArea="True"
 	Shell.NavBarIsVisible="False"
 	>
 
@@ -599,9 +601,9 @@
 								Unfocused="OnTotMinutesUnfocused"
 								/>
 						</StackLayout>
-						
+
 					</StackLayout>
-					
+
 				</StackLayout>
 
 			</StackLayout>

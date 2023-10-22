@@ -120,7 +120,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="AboutHelp.xaml">
+	  <MauiXaml Update="AboutHelp\AboutHelp.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ICSFiling\FileICS.xaml">

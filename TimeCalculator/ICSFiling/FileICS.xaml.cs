@@ -5,6 +5,7 @@ public partial class FileICS : ContentPage
 	public FileICS()
 	{
 		InitializeComponent();
+		FileICSMainStack.Scale = 1.0f / FileICSMainStack.Scale;
 	}
 
 	private async void OpenICSButton_Clicked(object sender, EventArgs e)
@@ -23,6 +24,5 @@ public partial class FileICS : ContentPage
 			nameof(SaveToICS)
 			, true
 		);
-		await Navigation.PushAsync(new SaveToICS(), true);
 	}
 }

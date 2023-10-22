@@ -1,37 +1,28 @@
-﻿using TimeCalculator.MessageThings;
-using Microsoft.Maui.Graphics;
-using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 
-namespace TimeCalculator
+namespace TimeCalculator;
+
+public partial class OpenICS : ContentPage
 {
-	public partial class OpenICS : ContentPage
+
+	public OpenICS()
 	{
+		InitializeComponent();
+	}
 
-		public OpenICS()
+	private void Open_Button_Clicked(object sender, System.EventArgs e)
+	{
+		OpenIcsMessageArgs TheAgr = new OpenIcsMessageArgs
 		{
-			InitializeComponent();
-		}
+			CorrectForTimeZone = SwitchTimeZone.IsToggled
+		};
 
-		private void Open_Button_Clicked(object sender, System.EventArgs e)
-		{
-			OpenIcsMessageArgs TheAgr = new OpenIcsMessageArgs
-			{
-				CorrectForTimeZone = SwitchTimeZone.IsToggled
-			};
+		// Fire the message
+		WeakReferenceMessenger.Default.Send
+		(
+			TheAgr
+			, MessengerKeys.OpenIcsMessageKey
+		);
 
-			// Fire the message
-			WeakReferenceMessenger.Default.Send
-			(
-				TheAgr
-				, MessengerKeys.OpenIcsMessageKey
-			);
-
-		}
-
-		private async void FileOpenCancelButtn_Clicked(object sender, System.EventArgs e)
-		{
-			await Navigation.PopAsync(true);
-			//			await Navigation.PopToRootAsync(true);
-		}
 	}
 }

@@ -4,8 +4,10 @@
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+	xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	x:Name="AboutHelpContentPageName"
+	ios:Page.UseSafeArea="True"
 	mc:Ignorable="d"
 	>
 
@@ -61,7 +63,9 @@
 	</ContentPage.Resources>
 
 	<ContentPage.Content>
-		<StackLayout x:Name="AboutHelpStack">
+		<StackLayout
+			x:Name="AboutHelpStack"
+			>
 			<Label
 				x:Name="AppNameAndVer"
 				HorizontalTextAlignment="Center"

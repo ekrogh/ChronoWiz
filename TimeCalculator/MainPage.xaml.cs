@@ -177,29 +177,22 @@ public partial class MainPage : ContentPage
 		DoClearAll();
 	}
 
-	private double LastScale = 1.0f;
 	protected override void OnSizeAllocated(double width, double height)
 	{
-
 		base.OnSizeAllocated(width, height);
 
-		TotalStackName.Scale = 1.0f / LastScale;
+		TotalStackName.Scale = 1.0f / TotalStackName.Scale;
 
-		double WidthTotalStackName = TotalStackName.Width;
-		double HeightTotalStackName = TotalStackName.Height;
-
-		double WidthFactor = width / WidthTotalStackName;
-		double HeightFactor = height / HeightTotalStackName;
+		double WidthFactor = width / TotalStackName.Width;
+		double HeightFactor = height / TotalStackName.Height;
 
 		if (WidthFactor < HeightFactor)
 		{
 			TotalStackName.Scale = WidthFactor;
-			LastScale = WidthFactor;
 		}
 		else
 		{
 			TotalStackName.Scale = HeightFactor;
-			LastScale = HeightFactor;
 		}
 	}
 
@@ -2401,9 +2394,6 @@ public partial class MainPage : ContentPage
 						   );
 			}
 		}
-
-		await Navigation.PopAsync(true);
-
 	}
 
 	string SuggestedNameOfFileToSaveTo = "";
@@ -2534,8 +2524,6 @@ public partial class MainPage : ContentPage
 
 		// Close file
 		stream.Dispose();
-
-		//await Navigation.PopAsync(true);
 	}
 
 	private async void FileButton_Clicked(object sender, EventArgs e)
@@ -2558,9 +2546,6 @@ public partial class MainPage : ContentPage
 			// Close file
 			stream.Dispose();
 		}
-
-		await Navigation.PopAsync(true);
-
 	}
 
 }

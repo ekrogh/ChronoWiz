@@ -44,11 +44,5 @@ namespace TimeCalculator
 				, MessengerKeys.SaveToIcsMessageKey
 			);
 		}
-
-		private async void FileSaveToCancelButton_Clicked(object sender, EventArgs e)
-		{
-			await Navigation.PopAsync(true);
-			//			await Navigation.PopToRootAsync(true);
-		}
 	}
 }
