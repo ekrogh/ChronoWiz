@@ -109,13 +109,6 @@
 					Style="{StaticResource baseButtonStyle}"
 					Text="Save to .ics file" />
 
-				<Button
-					x:Name="FileSaveToCancelButton"
-					Clicked="FileSaveToCancelButton_Clicked"
-					IsVisible="False"
-					Style="{StaticResource baseButtonStyle}"
-					Text="Cancel" />
-
 			</StackLayout>
 		</ScrollView>
 

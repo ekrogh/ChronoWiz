@@ -83,14 +83,6 @@
 					Text="Open"
 					/>
 
-				<Button
-					x:Name="FileOpenCancelButton"
-					Clicked="FileOpenCancelButtn_Clicked"
-					IsVisible="False"
-					Style="{StaticResource baseButtonStyle}"
-					Text="Cancel"
-					/>
-
 			</StackLayout>
 		</ScrollView>
 
