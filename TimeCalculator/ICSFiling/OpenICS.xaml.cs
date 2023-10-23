@@ -10,6 +10,25 @@ public partial class OpenICS : ContentPage
 		InitializeComponent();
 	}
 
+	protected override void OnSizeAllocated(double width, double height)
+	{
+		base.OnSizeAllocated(width, height);
+
+		TotalStack.Scale = 1.0f / TotalStack.Scale;
+
+		double WidthFactor = width * 0.7f / TotalStack.Width;
+		double HeightFactor = height * 0.7f / TotalStack.Height;
+
+		if (WidthFactor < HeightFactor)
+		{
+			TotalStack.Scale = WidthFactor;
+		}
+		else
+		{
+			TotalStack.Scale = HeightFactor;
+		}
+	}
+
 	private void Open_Button_Clicked(object sender, System.EventArgs e)
 	{
 		OpenIcsMessageArgs TheAgr = new OpenIcsMessageArgs

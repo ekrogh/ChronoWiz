@@ -4,7 +4,8 @@
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:local="clr-namespace:TimeCalculator;assembly=TimeCalculator"
-	x:Name="FileICSContentPageName">
+	x:Name="FileICSContentPageName"
+	>
 
 	<ContentPage.Resources>
 		<ResourceDictionary>
@@ -12,30 +13,40 @@
 			<Style
 				x:Key="baseLabelStyle"
 				x:Name="baseLabelStyleName"
-				TargetType="Label">
+				TargetType="Label"
+				>
 				<Setter
 					Property="TextColor"
-					Value="{AppThemeBinding Light=Black, Dark=White}" />
+					Value="{AppThemeBinding Light=Black,
+					                        Dark=White}"
+					/>
 				<Setter
 					Property="IsEnabled"
-					Value="False" />
+					Value="False"
+					/>
 			</Style>
 
 			<Style
 				x:Key="baseButtonStyle"
-				TargetType="Button">
+				TargetType="Button"
+				>
 				<Setter
 					Property="BorderColor"
-					Value="Gray" />
+					Value="Gray"
+					/>
 				<Setter
 					Property="TextColor"
-					Value="{AppThemeBinding Light=#FF579AE5, Dark=#FF9E5B10}" />
+					Value="{AppThemeBinding Light=#FF579AE5,
+					                        Dark=#FF9E5B10}"
+					/>
 				<Setter
 					Property="BorderWidth"
-					Value="0.5" />
+					Value="0.5"
+					/>
 				<Setter
 					Property="IsEnabled"
-					Value="True" />
+					Value="True"
+					/>
 			</Style>
 
 		</ResourceDictionary>
@@ -45,23 +56,28 @@
 
 		<ScrollView>
 			<StackLayout
-				Padding="20">
+				Padding="20"
+				x:Name="TotalStack"
+				>
 				<Image
 					Margin="0,0,0,20"
 					IsEnabled="False"
-					Source="fileics.png" />
+					Source="fileics.png"
+					/>
 
 				<Button
 					x:Name="OpenICSButton"
 					Clicked="OpenICSButton_Clicked"
 					Style="{StaticResource baseButtonStyle}"
-					Text="Open" />
+					Text="Open"
+					/>
 
 				<Button
 					x:Name="SaveToICSButton"
 					Clicked="SaveToICSButton_ClickedAsync"
 					Style="{StaticResource baseButtonStyle}"
-					Text="Save" />
+					Text="Save"
+					/>
 
 
 

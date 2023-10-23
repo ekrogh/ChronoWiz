@@ -4,7 +4,8 @@
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:local="clr-namespace:TimeCalculator;assembly=TimeCalculator"
-	x:Name="SaveToICSContentPageName">
+	x:Name="SaveToICSContentPageName"
+	>
 
 	<ContentPage.Resources>
 		<ResourceDictionary>
@@ -12,48 +13,65 @@
 			<Style
 				x:Key="baseLabelStyle"
 				x:Name="baseLabelStyleName"
-				TargetType="Label">
+				TargetType="Label"
+				>
 				<Setter
 					Property="TextColor"
-					Value="{AppThemeBinding Light=Black, Dark=White}" />
+					Value="{AppThemeBinding Light=Black,
+					                        Dark=White}"
+					/>
 				<Setter
 					Property="IsEnabled"
-					Value="False" />
+					Value="False"
+					/>
 			</Style>
 
 			<Style
 				x:Key="baseEntryStyle"
 				x:Name="baseEntryStyleName"
-				TargetType="Entry">
+				TargetType="Entry"
+				>
 				<Setter
 					Property="BackgroundColor"
-					Value="{AppThemeBinding Light=Yellow, Dark=#FF00004B}" />
+					Value="{AppThemeBinding Light=Yellow,
+					                        Dark=#FF00004B}"
+					/>
 				<Setter
 					Property="TextColor"
-					Value="{AppThemeBinding Light=Blue, Dark=#FFFFFFB4}" />
+					Value="{AppThemeBinding Light=Blue,
+					                        Dark=#FFFFFFB4}"
+					/>
 				<Setter
 					Property="HorizontalTextAlignment"
-					Value="Start" />
+					Value="Start"
+					/>
 				<Setter
 					Property="IsEnabled"
-					Value="True" />
+					Value="True"
+					/>
 			</Style>
 
 			<Style
 				x:Key="baseButtonStyle"
-				TargetType="Button">
+				TargetType="Button"
+				>
 				<Setter
 					Property="BorderColor"
-					Value="Gray" />
+					Value="Gray"
+					/>
 				<Setter
 					Property="TextColor"
-					Value="{AppThemeBinding Light=#FF579AE5, Dark=#FF9E5B10}" />
+					Value="{AppThemeBinding Light=#FF579AE5,
+					                        Dark=#FF9E5B10}"
+					/>
 				<Setter
 					Property="BorderWidth"
-					Value="0.5" />
+					Value="0.5"
+					/>
 				<Setter
 					Property="IsEnabled"
-					Value="True" />
+					Value="True"
+					/>
 			</Style>
 
 		</ResourceDictionary>
@@ -64,50 +82,60 @@
 
 		<ScrollView>
 			<StackLayout
-				Padding="20">
+				Padding="20"
+				x:Name="TotalStack"
+				>
 				<Image
 					Margin="0,0,0,20"
 					IsEnabled="False"
-					Source="savetoics.png" />
+					Source="savetoics.png"
+					/>
 
 				<Label
-					Text="Summary (&quot;Event Name&quot;)"
+					IsEnabled="False"
 					Style="{StaticResource baseLabelStyle}"
-					IsEnabled="False" />
+					Text="Summary (&quot;Event Name&quot;)"
+					/>
 				<Entry
 					x:Name="Summary"
-					Style="{StaticResource baseEntryStyle}"
+					Keyboard="Text"
 					Placeholder="Summary"
 					ReturnType="Next"
-					Keyboard="Text" />
+					Style="{StaticResource baseEntryStyle}"
+					/>
 
 				<Label
-					Text="Description"
+					IsEnabled="False"
 					Style="{StaticResource baseLabelStyle}"
-					IsEnabled="False" />
+					Text="Description"
+					/>
 				<Entry
 					x:Name="Description"
-					Style="{StaticResource baseEntryStyle}"
+					Keyboard="Text"
 					Placeholder="Description"
 					ReturnType="Next"
-					Keyboard="Text" />
+					Style="{StaticResource baseEntryStyle}"
+					/>
 
 				<Label
-					Text="Location"
+					IsEnabled="False"
 					Style="{StaticResource baseLabelStyle}"
-					IsEnabled="False" />
+					Text="Location"
+					/>
 				<Entry
 					x:Name="LocationEntry"
-					Style="{StaticResource baseEntryStyle}"
+					Keyboard="Text"
 					Placeholder="Location"
 					ReturnType="Next"
-					Keyboard="Text" />
+					Style="{StaticResource baseEntryStyle}"
+					/>
 
 				<Button
 					x:Name="SaveICSButton"
 					Clicked="SaveICSButton_Clicked"
 					Style="{StaticResource baseButtonStyle}"
-					Text="Save to .ics file" />
+					Text="Save to .ics file"
+					/>
 
 			</StackLayout>
 		</ScrollView>

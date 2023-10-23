@@ -55,17 +55,13 @@
 
 	<ContentPage.Content>
 
-		<ScrollView>
 			<StackLayout
-				Padding="20"
+				x:Name="TotalStack"
 				>
 				<Image
-					Margin="0,0,0,20"
-					IsEnabled="False"
 					Source="openics.png"
 					/>
 				<Label
-					Padding="0,30,0,0"
 					HorizontalOptions="Start"
 					Text="Correct for time zone"
 					TextColor="{AppThemeBinding Light=Black,
@@ -84,7 +80,6 @@
 					/>
 
 			</StackLayout>
-		</ScrollView>
 
 	</ContentPage.Content>
 
