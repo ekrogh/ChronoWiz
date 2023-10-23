@@ -55,31 +55,32 @@
 
 	<ContentPage.Content>
 
-			<StackLayout
-				x:Name="TotalStack"
-				>
-				<Image
-					Source="openics.png"
-					/>
-				<Label
-					HorizontalOptions="Start"
-					Text="Correct for time zone"
-					TextColor="{AppThemeBinding Light=Black,
-					                            Dark=White}"
-					/>
-				<Switch
-					x:Name="SwitchTimeZone"
-					HorizontalOptions="Start"
-					IsToggled="false"
-					OnColor="Green"
-					/>
-				<Button
-					Clicked="Open_Button_Clicked"
-					Style="{StaticResource baseButtonStyle}"
-					Text="Open"
-					/>
+		<StackLayout
+			x:Name="TotalStack"
+			Margin="0,0,0,10"
+			>
+			<Image
+				Source="openics.png"
+				/>
+			<Label
+				HorizontalOptions="Start"
+				Text="Correct for time zone"
+				TextColor="{AppThemeBinding Light=Black,
+				                            Dark=White}"
+				/>
+			<Switch
+				x:Name="SwitchTimeZone"
+				HorizontalOptions="Start"
+				IsToggled="false"
+				OnColor="Green"
+				/>
+			<Button
+				Clicked="Open_Button_Clicked"
+				Style="{StaticResource baseButtonStyle}"
+				Text="Open"
+				/>
 
-			</StackLayout>
+		</StackLayout>
 
 	</ContentPage.Content>
 

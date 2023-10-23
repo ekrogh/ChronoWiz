@@ -16,8 +16,8 @@ public partial class OpenICS : ContentPage
 
 		TotalStack.Scale = 1.0f / TotalStack.Scale;
 
-		double WidthFactor = width * 0.7f / TotalStack.Width;
-		double HeightFactor = height * 0.7f / TotalStack.Height;
+		double WidthFactor = width / TotalStack.Width;
+		double HeightFactor = height / TotalStack.Height;
 
 		if (WidthFactor < HeightFactor)
 		{

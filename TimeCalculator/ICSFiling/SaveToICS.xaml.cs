@@ -19,8 +19,8 @@ namespace TimeCalculator
 
 			TotalStack.Scale = 1.0f / TotalStack.Scale;
 
-			double WidthFactor = width / TotalStack.Width;
-			double HeightFactor = height / TotalStack.Height;
+			double WidthFactor = width * 0.9f / TotalStack.Width;
+			double HeightFactor = height * 0.9f / TotalStack.Height;
 
 			if (WidthFactor < HeightFactor)
 			{
