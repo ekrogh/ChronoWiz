@@ -312,8 +312,9 @@
 									/>
 							</Grid.ColumnDefinitions>
 							<Button
-								Command="{Binding CalculateStartTimeCommand}"
+								Command="{Binding CalcStartTimeCommand}"
 								Text="Calculate"
+								Style="{DynamicResource DynamicBaseButtonStyle}" 
 								/>
 						</Grid>
 						<DatePicker
@@ -359,21 +360,10 @@
 				<StackLayout
 					Orientation="Vertical"
 					>
-					<Label
-						FontSize="Micro"
-						HorizontalOptions="Start"
-						Style="{StaticResource baseLabelStyle}"
+					<Button
 						Text="Calculate"
-						VerticalOptions="EndAndExpand"
-						/>
-					<Switch
-						x:Name="SwitchCalcYMWDHM"
-						HorizontalOptions="Start"
-						IsEnabled="False"
-						IsToggled="True"
-						OnColor="Green"
-						Toggled="CalcYMWDHM_toggeled"
-						VerticalOptions="StartAndExpand"
+						Command="{Binding CalcYMWDHMCommand}"
+						Style="{DynamicResource DynamicBaseButtonStyle}" 
 						/>
 				</StackLayout>
 
@@ -638,23 +628,10 @@
 									                   WinUI=80}"
 									/>
 							</Grid.ColumnDefinitions>
-							<Label
-								Grid.Row="0"
-								Grid.Column="0"
-								FontSize="Micro"
-								HorizontalOptions="Start"
-								Style="{StaticResource baseLabelStyle}"
+							<Button
 								Text="Calculate"
-								VerticalOptions="End"
-								/>
-							<Switch
-								x:Name="SwitchCalcEndDateTime"
-								Grid.Row="1"
-								Grid.Column="0"
-								HorizontalOptions="Start"
-								IsToggled="false"
-								OnColor="Green"
-								Toggled="CalcEndDateSwitch_Toggled"
+								Command="{Binding CalcEndTimeCommand}"
+								Style="{DynamicResource DynamicBaseButtonStyle}" 
 								/>
 						</Grid>
 						<DatePicker

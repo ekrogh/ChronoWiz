@@ -598,7 +598,12 @@ public partial class MainPage : ContentPage
 	{
 	}
 
-		private void CalcStartDateSwitch_Toggled(object sender, ToggledEventArgs e)
+	[RelayCommand]
+	public async Task CalcStartTime()
+	{
+	}
+
+	private void CalcStartDateSwitch_Toggled(object sender, ToggledEventArgs e)
 	{
 		CalcStartDateSwitchIsOn = e.Value;
 
@@ -1021,6 +1026,10 @@ public partial class MainPage : ContentPage
 
 
 	// End date-time... 
+	[RelayCommand]
+	private void CalcEndTime()
+	{
+	}
 
 	private void CalcEndDateSwitch_Toggled(object sender, ToggledEventArgs e)
 	{
@@ -2220,6 +2229,10 @@ public partial class MainPage : ContentPage
 		);
 	}
 
+	[RelayCommand]
+	private void CalcYMWDHM()
+	{
+	}
 	private void CalcYMWDHM_toggeled(object sender, ToggledEventArgs e)
 	{
 		CalcYMWDHMIsOn = e.Value;
@@ -2293,8 +2306,6 @@ public partial class MainPage : ContentPage
 							   , "OK"
 						   );
 			}
-
-			SwitchCalcYMWDHM.IsToggled = true;
 
 			try
 			{
