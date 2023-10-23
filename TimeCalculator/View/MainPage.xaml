@@ -295,28 +295,12 @@
 						x:Name="StartDateTimeStack"
 						Orientation="Horizontal"
 						>
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition
-									Height="Auto"
-									/>
-								<RowDefinition
-									Height="Auto"
-									/>
-							</Grid.RowDefinitions>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition
-									Width="{OnPlatform Auto,
-									                   MacCatalyst=80,
-									                   WinUI=80}"
-									/>
-							</Grid.ColumnDefinitions>
-							<Button
-								Command="{Binding CalcStartTimeCommand}"
-								Text="Calculate"
-								Style="{DynamicResource DynamicBaseButtonStyle}" 
-								/>
-						</Grid>
+						<Button
+							Margin="3,0"
+							Command="{Binding CalcStartTimeBtnClickedCommand}"
+							Style="{DynamicResource DynamicBaseButtonStyle}"
+							Text="Calculate -->"
+							/>
 						<DatePicker
 							x:Name="StartDatePicker"
 							DateSelected="StartDatePicker_DateSelected"
@@ -357,15 +341,13 @@
 				Orientation="Horizontal"
 				>
 
-				<StackLayout
-					Orientation="Vertical"
-					>
-					<Button
-						Text="Calculate"
-						Command="{Binding CalcYMWDHMCommand}"
-						Style="{DynamicResource DynamicBaseButtonStyle}" 
-						/>
-				</StackLayout>
+				<Button
+					Margin="0,0,3,0"
+					Command="{Binding CalcYMWDHMBtnClickedCommand}"
+					Style="{DynamicResource DynamicBaseButtonStyle}"
+					Text="Calculate -->"
+					VerticalOptions="Center"
+					/>
 
 				<!--  time entries  -->
 				<StackLayout
@@ -612,28 +594,12 @@
 						x:Name="EndDateTimeStack"
 						Orientation="Horizontal"
 						>
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition
-									Height="Auto"
-									/>
-								<RowDefinition
-									Height="Auto"
-									/>
-							</Grid.RowDefinitions>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition
-									Width="{OnPlatform Auto,
-									                   MacCatalyst=80,
-									                   WinUI=80}"
-									/>
-							</Grid.ColumnDefinitions>
-							<Button
-								Text="Calculate"
-								Command="{Binding CalcEndTimeCommand}"
-								Style="{DynamicResource DynamicBaseButtonStyle}" 
-								/>
-						</Grid>
+						<Button
+							Margin="3,0"
+							Command="{Binding CalcEndTimeBtnClickedCommand}"
+							Style="{DynamicResource DynamicBaseButtonStyle}"
+							Text="Calculate -->"
+							/>
 						<DatePicker
 							x:Name="EndDatePicker"
 							DateSelected="EndDatePicker_DateSelected"
@@ -701,13 +667,6 @@
 						HorizontalOptions="Start"
 						Style="{DynamicResource DynamicBaseButtonStyle}"
 						Text="Clear All"
-						/>
-					<Button
-						x:Name="CalculateButton"
-						Clicked="OnCalculateButtonClicked"
-						HorizontalOptions="Center"
-						Style="{DynamicResource DynamicBaseButtonStyle}"
-						Text="Calculate"
 						/>
 					<Button
 						x:Name="FileButton"
