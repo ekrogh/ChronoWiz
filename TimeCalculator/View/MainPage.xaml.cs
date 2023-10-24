@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using TimeCalculator.FileHandlers;
 
@@ -42,8 +43,6 @@ public partial class MainPage : ContentPage
 			, TotHours
 			, TotMinutes
 		};
-
-		DisableYMWDHM(null);
 
 		StartDateIn = DateTime.Now.Date;
 		StartTimeIn = DateTime.Now.TimeOfDay;
@@ -215,6 +214,7 @@ public partial class MainPage : ContentPage
 
 	public TimeSpan StartTimeIn { get; set; }
 
+	public bool JustDidCalculation { get; set; } = false;
 
 	public bool DoCalcStartTime { get; set; } = false;
 	public DateTime StartDateTimeOut { get; set; }
@@ -604,36 +604,15 @@ public partial class MainPage : ContentPage
 		LabelEqual.Text = "-";
 		LabelPlus.Text = "=";
 
+		if (JustDidCalculation)
+		{
+			ClearTotYMWDHM(null);
+		}
+
 		DoCalculate();
+
+		JustDidCalculation = true;
 	}
-
-	//private void CalcStartDateSwitch_Toggled(object sender, ToggledEventArgs e)
-	//{
-	//	DoCalcStartTime = e.Value;
-
-	//	if (DoCalcStartTime)
-	//	{
-	//		//MacStartDatePicker.IsEnabled = false;
-	//		//MacStartTimePicker.IsEnabled = false;
-	//		//StartDatePicker.IsEnabled = false;
-	//		//StartTimePicker.IsEnabled = false;
-
-	//		StartDateTimeNowButton.IsEnabled = false;
-
-	//		DoClearAll();
-
-	//		LabelEqual.Text = "-";
-	//		LabelPlus.Text = "=";
-	//	}
-	//	else
-	//	{
-	//		//MacStartDatePicker.IsEnabled = true;
-	//		//MacStartTimePicker.IsEnabled = true;
-	//		StartDatePicker.IsEnabled = true;
-	//		StartTimePicker.IsEnabled = true;
-	//		StartDateTimeNowButton.IsEnabled = true;
-	//	}
-	//}
 
 	private void CheckSetEndDateTime()
 	{
@@ -714,7 +693,8 @@ public partial class MainPage : ContentPage
 		}
 	}
 
-	private void OnStartDateTimeNowButtonClicked(object sEnder, EventArgs args)
+	[RelayCommand]
+	public void StartDateTimeNowButtonClicked()
 	{
 		StartDateIn = DateTime.Now.Date;
 		StartTimeIn = DateTime.Now.TimeOfDay;
@@ -1039,39 +1019,16 @@ public partial class MainPage : ContentPage
 
 		LabelEqual.Text = "=";
 		LabelPlus.Text = "+";
-	
+
+		if (JustDidCalculation)
+		{
+			ClearTotYMWDHM(null);
+		}
+
 		DoCalculate();
+	
+		JustDidCalculation = true;
 	}
-
-	//private void CalcEndDateSwitch_Toggled(object sender, ToggledEventArgs e)
-	//{
-	//	DoCalcEndTime = e.Value;
-
-	//	if (DoCalcEndTime)
-	//	{
-	//		//MacEndDatePicker.IsEnabled = false;
-	//		//MacEndTimePicker.IsEnabled = false;
-	//		//EndDatePicker.IsEnabled = false;
-	//		//EndTimePicker.IsEnabled = false;
-
-	//		EndDateTimeNowButton.IsEnabled = false;
-
-	//		DoClearAll();
-
-	//		LabelEqual.Text = "=";
-	//		LabelPlus.Text = "+";
-
-	//	}
-	//	else
-	//	{
-	//		//MacEndDatePicker.IsEnabled = true;
-	//		//MacEndTimePicker.IsEnabled = true;
-	//		EndDatePicker.IsEnabled = true;
-	//		EndTimePicker.IsEnabled = true;
-	//		EndDateTimeNowButton.IsEnabled = true;
-	//	}
-
-	//}
 
 
 	private void CheckSetStartDateTime()
@@ -1154,7 +1111,8 @@ public partial class MainPage : ContentPage
 		}
 	}
 
-	private void OnEndDateTimeNowButtonClicked(object sEnder, EventArgs args)
+	[RelayCommand]
+	private void EndDateTimeNowButtonClicked()
 	{
 		EndDateIn = DateTime.Now.Date;
 		EndTimeIn = DateTime.Now.TimeOfDay;
@@ -1164,8 +1122,8 @@ public partial class MainPage : ContentPage
 		CheckSetStartDateTime();
 	}
 
-
-	private void OnClearAllButtonClicked(object sEnder, EventArgs args)
+	[RelayCommand]
+	private void ClearAllButtonClicked()
 	{
 		DoClearAll();
 	}
@@ -2230,7 +2188,8 @@ public partial class MainPage : ContentPage
 
 	// CALCULATION Ends here...
 
-	private async void OnHelpButtonClicked(object sEnder, EventArgs e)
+	[RelayCommand]
+	private async Task HelpButtonClicked()
 	{
 		await Shell.Current.GoToAsync
 		(
@@ -2248,35 +2207,35 @@ public partial class MainPage : ContentPage
 
 		LabelEqual.Text = "=";
 		LabelPlus.Text = "+";
-	
-		DoCalculate();
-	}
 
-	//private void CalcYMWDHM_toggeled(object sender, ToggledEventArgs e)
-	//{
-	//	DoCalcYMWDHM = e.Value;
-	//	if (DoCalcYMWDHM)
-	//	{
-	//		DisableYMWDHM(null);
-	//		DoClearAll();
-	//		LabelEqual.Text = "=";
-	//		LabelPlus.Text = "+";
-	//	}
-	//	else
-	//	{
-	//		EnableYMWDHM(null);
-	//		RWYMWDHM(null);
-	//	}
-	//}
+		if (JustDidCalculation)
+		{
+			ClearTotYMWDHM(null);
+		}
+		
+		DoCalculate();
+	
+		JustDidCalculation = true;
+	}
 
 	private void OnTotYMWDHMFocused(object sender, FocusEventArgs e)
 	{
-		ClearYMWDHM((Entry)sender);
+		if (JustDidCalculation)
+		{
+			ClearYMWDHM((Entry)sender);
+
+			JustDidCalculation = false;
+		}
 	}
 
 	private void OnCombndYMWDHMFocused(object sender, FocusEventArgs e)
 	{
-		ClearTotYMWDHM((Entry)sender);
+		if (JustDidCalculation)
+		{
+			ClearYMWDHM((Entry)sender);
+
+			JustDidCalculation = false;
+		}
 	}
 
 	// Calendar
@@ -2530,7 +2489,8 @@ public partial class MainPage : ContentPage
 		stream.Dispose();
 	}
 
-	private async void FileButton_Clicked(object sender, EventArgs e)
+	[RelayCommand]
+	private async Task FileButton_Clicked()
 	{
 		await Shell.Current.GoToAsync
 		(
@@ -2552,4 +2512,8 @@ public partial class MainPage : ContentPage
 		}
 	}
 
+	private void OnTotMinutesUnfocused(object sender, FocusEventArgs e)
+	{
+
+	}
 }

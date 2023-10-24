@@ -320,8 +320,7 @@
 							Text=" MMM "
 							/>
 						<Button
-							x:Name="StartDateTimeNowButton"
-							Clicked="OnStartDateTimeNowButtonClicked"
+							Command="{Binding StartDateTimeNowButtonClickedCommand}"
 							Style="{StaticResource baseButtonStyle}"
 							Text="Now"
 							VerticalOptions="Center"
@@ -384,7 +383,6 @@
 								x:Name="CombndMonths"
 								Completed="OnCombndMonthsCompleted"
 								Focused="OnCombndYMWDHMFocused"
-								IsReadOnly="True"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnCombndMonthsUnfocused"
 								/>
@@ -401,7 +399,6 @@
 								x:Name="CombndWeeks"
 								Completed="OnCombndWeeksCompleted"
 								Focused="OnCombndYMWDHMFocused"
-								IsReadOnly="True"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnCombndWeeksUnfocused"
 								/>
@@ -418,7 +415,6 @@
 								x:Name="CombndDays"
 								Completed="OnCombndDaysCompleted"
 								Focused="OnCombndYMWDHMFocused"
-								IsReadOnly="True"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnCombndDaysUnfocused"
 								/>
@@ -435,7 +431,6 @@
 								x:Name="CombndHours"
 								Completed="OnCombndHoursCompleted"
 								Focused="OnCombndYMWDHMFocused"
-								IsReadOnly="True"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnCombndHoursUnfocused"
 								/>
@@ -452,7 +447,6 @@
 								x:Name="CombndMinutes"
 								Completed="OnCombndMinutesCompleted"
 								Focused="OnCombndYMWDHMFocused"
-								IsReadOnly="True"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnCombndMinutesUnfocused"
 								/>
@@ -476,7 +470,6 @@
 								x:Name="TotYears"
 								Completed="OnTotYearsCompleted"
 								Focused="OnTotYMWDHMFocused"
-								IsReadOnly="True"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnTotYearsUnfocused"
 								/>
@@ -619,8 +612,7 @@
 							Text=" MMM "
 							/>
 						<Button
-							x:Name="EndDateTimeNowButton"
-							Clicked="OnEndDateTimeNowButtonClicked"
+							Command="{Binding EndDateTimeNowButtonClickedCommand}"
 							Style="{StaticResource baseButtonStyle}"
 							Text="Now"
 							VerticalOptions="Center"
@@ -662,21 +654,18 @@
 						</OnPlatform>
 					</StackLayout.Spacing>
 					<Button
-						x:Name="clearAllButtonName"
-						Clicked="OnClearAllButtonClicked"
+						Command="{Binding ClearAllButtonClickedCommand}"
 						HorizontalOptions="Start"
 						Style="{DynamicResource DynamicBaseButtonStyle}"
 						Text="Clear All"
 						/>
 					<Button
-						x:Name="FileButton"
-						Clicked="FileButton_Clicked"
+						Command="{Binding FileButton_ClickedCommand}"
 						Style="{DynamicResource DynamicBaseButtonStyle}"
 						Text="File..."
 						/>
 					<Button
-						x:Name="HelpButtonName"
-						Clicked="OnHelpButtonClicked"
+						Command="{Binding HelpButtonClickedCommand}"
 						FontAttributes="Bold"
 						HorizontalOptions="End"
 						Style="{DynamicResource DynamicBaseButtonStyle}"
