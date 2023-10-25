@@ -1746,12 +1746,32 @@ public partial class MainPage : ContentPage
 			} // if ( !(TotChk && CombndChk) )
 			else
 			{
-				await DisplayAlert
-				   (
-					   "Type error"
-					   , "When \"Start Date + Time\" entered and no \"End Date + Time\" either a \"Total\" or \"Combined\" time span must be entered"
-					   , "OK"
-				   );
+				// Output values
+				EndDateTimeOut = StartDateTimeIn;
+				// Save tmp SartDateTime and EndDateTime
+				var tmpDoCalcEndTime = DoCalcEndTime;
+
+				// Clear and reseteverything
+				DoClearAll();
+
+				// Show Start- and End Date Time
+				DoCalcEndTime = tmpDoCalcEndTime;
+
+				EndDateTimeIn = EndDateTimeOut;
+				EndDateIn = EndDateTimeOut.Date;
+				EndTimeIn = EndDateTimeOut.TimeOfDay;
+
+				SetEndDateTime();
+
+				// Show Time Spans.
+				CalcAndShowTimeSpans();
+
+				//await DisplayAlert
+				//   (
+				//	   "Type error"
+				//	   , "When \"Start Date + Time\" entered and no \"End Date + Time\" either a \"Total\" or \"Combined\" time span must be entered"
+				//	   , "OK"
+				//   );
 			} //  // if ( !(TotChk && CombndChk) ) ... else ...
 		} // if (!DoCalcEndTime) ... else ...
 
@@ -2165,12 +2185,33 @@ public partial class MainPage : ContentPage
 				} // if ( !(TotChk && CombndChk) )
 				else
 				{
-					await DisplayAlert
-					   (
-						   "Error"
-						   , "When \"Calculate\" \"End Date + Time\" selected then either a \"Total\" or \"Combined\" time span must be entered"
-						   , "OK"
-					   );
+
+					// Output values
+					StartDateTimeOut = EndDateTimeIn;
+					// Save tmp SartDateTime and EndDateTime
+					var tmpDoCalcStartTime = DoCalcStartTime;
+
+					// Clear and reseteverything
+					DoClearAll();
+
+					//// Show Start- and End Date Time
+					DoCalcStartTime = tmpDoCalcStartTime;
+					StartDateTimeIn = StartDateTimeOut;
+
+					StartDateIn = StartDateTimeOut.Date;
+					StartTimeIn = StartDateTimeOut.TimeOfDay;
+
+					SetStartDateTime();
+
+					// Show Time Spans.
+					CalcAndShowTimeSpans();
+
+					//await DisplayAlert
+					//   (
+					//	   "Error"
+					//	   , "When \"Calculate\" \"End Date + Time\" selected then either a \"Total\" or \"Combined\" time span must be entered"
+					//	   , "OK"
+					//   );
 				} //  // if ( !(TotChk && CombndChk) ) ... else ...
 			} // if (!DoCalcEndTime)
 			else
