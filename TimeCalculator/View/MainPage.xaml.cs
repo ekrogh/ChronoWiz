@@ -12,7 +12,14 @@ public partial class MainPage : ContentPage
 {
 	public MainPage()
 	{
-		InitializeComponent();
+		try
+		{
+			InitializeComponent();
+		}
+		catch (Exception ex)
+		{
+			var tst = ex;
+		}
 
 		BindingContext = this;
 
@@ -713,9 +720,9 @@ public partial class MainPage : ContentPage
 		CombndYearsIn = 0;
 	}
 
-	private void OnCombndYearsUnfocused(object sEnder, EventArgs args)
+	private void OnCombndYearsUnfocused(object sender, FocusEventArgs e)
 	{
-		OnCombndYearsCompleted(sEnder, args);
+		OnCombndYearsCompleted(sender, e);
 	}
 
 	private async void OnCombndYearsCompleted(object sEnder, EventArgs args)
@@ -738,9 +745,9 @@ public partial class MainPage : ContentPage
 		CombndMonthsIn = 0;
 	}
 
-	private void OnCombndMonthsUnfocused(object sEnder, EventArgs args)
+	private void OnCombndMonthsUnfocused(object sender, FocusEventArgs e)
 	{
-		OnCombndMonthsCompleted(sEnder, args);
+		OnCombndMonthsCompleted(sender, e);
 	}
 
 	private async void OnCombndMonthsCompleted(object sEnder, EventArgs args)
@@ -763,9 +770,9 @@ public partial class MainPage : ContentPage
 		CombndWeeksIn = 0;
 	}
 
-	private void OnCombndWeeksUnfocused(object sEnder, EventArgs args)
+	private void OnCombndWeeksUnfocused(object sender, FocusEventArgs e)
 	{
-		OnCombndWeeksCompleted(sEnder, args);
+		OnCombndWeeksCompleted(sender, e);
 	}
 
 	private async void OnCombndWeeksCompleted(object sEnder, EventArgs args)
@@ -788,9 +795,9 @@ public partial class MainPage : ContentPage
 		CombndDaysIn = 0;
 	}
 
-	private void OnCombndDaysUnfocused(object sEnder, EventArgs args)
+	private void OnCombndDaysUnfocused(object sender, FocusEventArgs e)
 	{
-		OnCombndDaysCompleted(sEnder, args);
+		OnCombndDaysCompleted(sender, e);
 	}
 
 	private async void OnCombndDaysCompleted(object sEnder, EventArgs args)
@@ -813,9 +820,9 @@ public partial class MainPage : ContentPage
 		CombndHoursIn = 0;
 	}
 
-	private void OnCombndHoursUnfocused(object sEnder, EventArgs args)
+	private void OnCombndHoursUnfocused(object sender, FocusEventArgs e)
 	{
-		OnCombndHoursCompleted(sEnder, args);
+		OnCombndHoursCompleted(sender, e);
 	}
 
 	private async void OnCombndHoursCompleted(object sEnder, EventArgs args)
@@ -838,9 +845,9 @@ public partial class MainPage : ContentPage
 		CombndMinutesIn = 0;
 	}
 
-	private void OnCombndMinutesUnfocused(object sEnder, EventArgs args)
+	private void OnCombndMinutesUnfocused(object sender, FocusEventArgs e)
 	{
-		OnCombndMinutesCompleted(sEnder, args);
+		OnCombndMinutesCompleted(sender, e);
 	}
 
 	private async void OnCombndMinutesCompleted(object sEnder, EventArgs args)
@@ -865,9 +872,9 @@ public partial class MainPage : ContentPage
 		TotYearsIn = 0;
 	}
 
-	private void OnTotYearsUnfocused(object sEnder, EventArgs args)
+	private void OnTotYearsUnfocused(object sender, FocusEventArgs e)
 	{
-		OnTotYearsCompleted(sEnder, args);
+		OnTotYearsCompleted(sender, e);
 	}
 
 	private async void OnTotYearsCompleted(object sEnder, EventArgs args)
@@ -890,9 +897,9 @@ public partial class MainPage : ContentPage
 		TotMonthsIn = 0;
 	}
 
-	private void OnTotMonthsUnfocused(object sEnder, EventArgs args)
+	private void OnTotMonthsUnfocused(object sender, FocusEventArgs e)
 	{
-		OnTotMonthsCompleted(sEnder, args);
+		OnTotMonthsCompleted(sender, e);
 	}
 
 	private async void OnTotMonthsCompleted(object sEnder, EventArgs args)
@@ -915,9 +922,9 @@ public partial class MainPage : ContentPage
 		TotWeeksIn = 0;
 	}
 
-	private void OnTotWeeksUnfocused(object sEnder, EventArgs args)
+	private void OnTotWeeksUnfocused(object sender, FocusEventArgs e)
 	{
-		OnTotWeeksCompleted(sEnder, args);
+		OnTotWeeksCompleted(sender, e);
 	}
 
 	private async void OnTotWeeksCompleted(object sEnder, EventArgs args)
@@ -940,9 +947,9 @@ public partial class MainPage : ContentPage
 		TotDaysIn = 0;
 	}
 
-	private void OnTotDaysUnfocused(object sEnder, EventArgs args)
+	private void OnTotDaysUnfocused(object sender, FocusEventArgs e)
 	{
-		OnTotDaysCompleted(sEnder, args);
+		OnTotDaysCompleted(sender, e);
 	}
 
 	private async void OnTotDaysCompleted(object sEnder, EventArgs args)
@@ -965,9 +972,9 @@ public partial class MainPage : ContentPage
 		TotHoursIn = 0;
 	}
 
-	private void OnTotHoursUnfocused(object sEnder, EventArgs args)
+	private void OnTotHoursUnfocused(object sender, FocusEventArgs e)
 	{
-		OnTotHoursCompleted(sEnder, args);
+		OnTotHoursCompleted(sender, e);
 	}
 
 	private async void OnTotHoursCompleted(object sEnder, EventArgs args)
@@ -990,9 +997,9 @@ public partial class MainPage : ContentPage
 		TotMinutesIn = 0;
 	}
 
-	private void OnTotMinutesUnfocused(object sEnder, EventArgs args)
+	private void OnTotMinutesUnfocused(object sender, FocusEventArgs e)
 	{
-		OnTotMinutesCompleted(sEnder, args);
+		OnTotMinutesCompleted(sender, e);
 	}
 
 	private async void OnTotMinutesCompleted(object sEnder, EventArgs args)
@@ -2551,10 +2558,5 @@ public partial class MainPage : ContentPage
 			// Close file
 			stream.Dispose();
 		}
-	}
-
-	private void OnTotMinutesUnfocused(object sender, FocusEventArgs e)
-	{
-
 	}
 }
