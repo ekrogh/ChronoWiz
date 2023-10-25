@@ -1,4 +1,5 @@
-﻿namespace TimeCalculator;
+﻿using Microsoft.Maui.Graphics;
+namespace TimeCalculator;
 
 public partial class AboutHelp : ContentPage
 {
