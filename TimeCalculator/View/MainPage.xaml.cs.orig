@@ -12,14 +12,7 @@ public partial class MainPage : ContentPage
 {
 	public MainPage()
 	{
-		try
-		{
-			InitializeComponent();
-		}
-		catch (Exception ex)
-		{
-			var tst = ex;
-		}
+		InitializeComponent();
 
 		BindingContext = this;
 
@@ -720,9 +713,9 @@ public partial class MainPage : ContentPage
 		CombndYearsIn = 0;
 	}
 
-	private void OnCombndYearsUnfocused(object sender, FocusEventArgs e)
+	private void OnCombndYearsUnfocused(object sEnder, EventArgs args)
 	{
-		OnCombndYearsCompleted(sender, e);
+		OnCombndYearsCompleted(sEnder, args);
 	}
 
 	private async void OnCombndYearsCompleted(object sEnder, EventArgs args)
@@ -745,9 +738,9 @@ public partial class MainPage : ContentPage
 		CombndMonthsIn = 0;
 	}
 
-	private void OnCombndMonthsUnfocused(object sender, FocusEventArgs e)
+	private void OnCombndMonthsUnfocused(object sEnder, EventArgs args)
 	{
-		OnCombndMonthsCompleted(sender, e);
+		OnCombndMonthsCompleted(sEnder, args);
 	}
 
 	private async void OnCombndMonthsCompleted(object sEnder, EventArgs args)
@@ -770,9 +763,9 @@ public partial class MainPage : ContentPage
 		CombndWeeksIn = 0;
 	}
 
-	private void OnCombndWeeksUnfocused(object sender, FocusEventArgs e)
+	private void OnCombndWeeksUnfocused(object sEnder, EventArgs args)
 	{
-		OnCombndWeeksCompleted(sender, e);
+		OnCombndWeeksCompleted(sEnder, args);
 	}
 
 	private async void OnCombndWeeksCompleted(object sEnder, EventArgs args)
@@ -795,9 +788,9 @@ public partial class MainPage : ContentPage
 		CombndDaysIn = 0;
 	}
 
-	private void OnCombndDaysUnfocused(object sender, FocusEventArgs e)
+	private void OnCombndDaysUnfocused(object sEnder, EventArgs args)
 	{
-		OnCombndDaysCompleted(sender, e);
+		OnCombndDaysCompleted(sEnder, args);
 	}
 
 	private async void OnCombndDaysCompleted(object sEnder, EventArgs args)
@@ -820,9 +813,9 @@ public partial class MainPage : ContentPage
 		CombndHoursIn = 0;
 	}
 
-	private void OnCombndHoursUnfocused(object sender, FocusEventArgs e)
+	private void OnCombndHoursUnfocused(object sEnder, EventArgs args)
 	{
-		OnCombndHoursCompleted(sender, e);
+		OnCombndHoursCompleted(sEnder, args);
 	}
 
 	private async void OnCombndHoursCompleted(object sEnder, EventArgs args)
@@ -845,9 +838,9 @@ public partial class MainPage : ContentPage
 		CombndMinutesIn = 0;
 	}
 
-	private void OnCombndMinutesUnfocused(object sender, FocusEventArgs e)
+	private void OnCombndMinutesUnfocused(object sEnder, EventArgs args)
 	{
-		OnCombndMinutesCompleted(sender, e);
+		OnCombndMinutesCompleted(sEnder, args);
 	}
 
 	private async void OnCombndMinutesCompleted(object sEnder, EventArgs args)
@@ -872,9 +865,9 @@ public partial class MainPage : ContentPage
 		TotYearsIn = 0;
 	}
 
-	private void OnTotYearsUnfocused(object sender, FocusEventArgs e)
+	private void OnTotYearsUnfocused(object sEnder, EventArgs args)
 	{
-		OnTotYearsCompleted(sender, e);
+		OnTotYearsCompleted(sEnder, args);
 	}
 
 	private async void OnTotYearsCompleted(object sEnder, EventArgs args)
@@ -897,9 +890,9 @@ public partial class MainPage : ContentPage
 		TotMonthsIn = 0;
 	}
 
-	private void OnTotMonthsUnfocused(object sender, FocusEventArgs e)
+	private void OnTotMonthsUnfocused(object sEnder, EventArgs args)
 	{
-		OnTotMonthsCompleted(sender, e);
+		OnTotMonthsCompleted(sEnder, args);
 	}
 
 	private async void OnTotMonthsCompleted(object sEnder, EventArgs args)
@@ -922,9 +915,9 @@ public partial class MainPage : ContentPage
 		TotWeeksIn = 0;
 	}
 
-	private void OnTotWeeksUnfocused(object sender, FocusEventArgs e)
+	private void OnTotWeeksUnfocused(object sEnder, EventArgs args)
 	{
-		OnTotWeeksCompleted(sender, e);
+		OnTotWeeksCompleted(sEnder, args);
 	}
 
 	private async void OnTotWeeksCompleted(object sEnder, EventArgs args)
@@ -947,9 +940,9 @@ public partial class MainPage : ContentPage
 		TotDaysIn = 0;
 	}
 
-	private void OnTotDaysUnfocused(object sender, FocusEventArgs e)
+	private void OnTotDaysUnfocused(object sEnder, EventArgs args)
 	{
-		OnTotDaysCompleted(sender, e);
+		OnTotDaysCompleted(sEnder, args);
 	}
 
 	private async void OnTotDaysCompleted(object sEnder, EventArgs args)
@@ -972,9 +965,9 @@ public partial class MainPage : ContentPage
 		TotHoursIn = 0;
 	}
 
-	private void OnTotHoursUnfocused(object sender, FocusEventArgs e)
+	private void OnTotHoursUnfocused(object sEnder, EventArgs args)
 	{
-		OnTotHoursCompleted(sender, e);
+		OnTotHoursCompleted(sEnder, args);
 	}
 
 	private async void OnTotHoursCompleted(object sEnder, EventArgs args)
@@ -997,9 +990,9 @@ public partial class MainPage : ContentPage
 		TotMinutesIn = 0;
 	}
 
-	private void OnTotMinutesUnfocused(object sender, FocusEventArgs e)
+	private void OnTotMinutesUnfocused(object sEnder, EventArgs args)
 	{
-		OnTotMinutesCompleted(sender, e);
+		OnTotMinutesCompleted(sEnder, args);
 	}
 
 	private async void OnTotMinutesCompleted(object sEnder, EventArgs args)
@@ -2297,7 +2290,7 @@ public partial class MainPage : ContentPage
 	{
 		CorrectForIcsTimeZone = message.CorrectForTimeZone;
 
-		SelectFilesResult selectedFiles = await OLD_FileHandler.SelectFiles(filetypeToReadFrom);
+		SelectFilesResult selectedFiles = await FileHandler.SelectFiles(filetypeToReadFrom);
 
 		On_FileToReadFromSelectedAsync(selectedFiles);
 
@@ -2531,7 +2524,7 @@ public partial class MainPage : ContentPage
 
 		using MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(CalendarItem));
 
-		FileSaverResult fileSaveResult = await OLD_FileHandler.SaveToTextFile(stream, "Calendar.ics");
+		FileSaverResult fileSaveResult = await FileHandler.SaveToTextFile(stream, "Calendar.ics");
 
 		// Close file
 		stream.Dispose();
@@ -2553,10 +2546,15 @@ public partial class MainPage : ContentPage
 		{
 			using MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(CalendarItem));
 
-			FileSaverResult fileSaveResult = await OLD_FileHandler.SaveToTextFile(stream, arg2.pickResult.FullPath);
+			FileSaverResult fileSaveResult = await FileHandler.SaveToTextFile(stream, arg2.pickResult.FullPath);
 
 			// Close file
 			stream.Dispose();
 		}
+	}
+
+	private void OnTotMinutesUnfocused(object sender, FocusEventArgs e)
+	{
+
 	}
 }

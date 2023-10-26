@@ -3,7 +3,7 @@ using TimeCalculator.MessageThings;
 
 namespace TimeCalculator.FileHandlers;
 
-public partial class FileHandler
+public partial class OLD_FileHandler
 {
 	//readonly IFileSaver fileSaver;
 
@@ -16,15 +16,11 @@ public partial class FileHandler
 	{
 		try
 		{
-			//#if __MACCATALYST__
+#if __MACCATALYST__
 			var customFileType = new FilePickerFileType(
 							new Dictionary<DevicePlatform, IEnumerable<string>>
 							{
-								{ DevicePlatform.MacCatalyst,   new[] { filetype } }, // UTType values
-								{ DevicePlatform.WinUI,         new[] { filetype } }, // UTType values
-								{ DevicePlatform.iOS,           new[] { filetype } }, // UTType values
-								{ DevicePlatform.Android,       new[] { filetype } }, // UTType values
-								{ DevicePlatform.Tizen,         new[] { filetype } }, // UTType values
+					{ DevicePlatform.MacCatalyst, new[] { "Pdf" } }, // UTType values
                             });
 			PickOptions options = new()
 			{
@@ -32,12 +28,14 @@ public partial class FileHandler
 				,
 				FileTypes = customFileType
 			};
-			//#else
-			//			PickOptions options = new()
-			//			{
-			//				PickerTitle = "Please select file(s)"
-			//			};
-			//#endif
+#else
+			PickOptions options = new()
+			{
+				PickerTitle = "Please select file(s)"
+				,
+				FileTypes = null // All types allowed ?
+			};
+#endif
 
 			FileResult pickResult = await FilePicker.PickAsync(options);
 
