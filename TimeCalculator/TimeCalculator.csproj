@@ -118,7 +118,6 @@
 
 	<ItemGroup>
 	  <None Include="..\.editorconfig" Link=".editorconfig" />
-	  <None Include="Filehandlers\NEW_FileHandler.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

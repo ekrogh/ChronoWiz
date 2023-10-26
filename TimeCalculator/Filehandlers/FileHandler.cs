@@ -1,41 +1,28 @@
-﻿using CommunityToolkit.Maui.Storage;
-using TimeCalculator.MessageThings;
-
-namespace TimeCalculator.FileHandlers;
+﻿namespace TimeCalculator.FileHandlers;
 
 public partial class OLD_FileHandler
 {
-	//readonly IFileSaver fileSaver;
-
-	//public FileHandler(IFileSaver fileSaver)
-	//{
-	//	this.fileSaver = fileSaver;
-	//}
-
 	public static async Task<SelectFilesResult> SelectFiles(string filetype)
 	{
 		try
 		{
-#if __MACCATALYST__
 			var customFileType = new FilePickerFileType(
-							new Dictionary<DevicePlatform, IEnumerable<string>>
-							{
-					{ DevicePlatform.MacCatalyst, new[] { "Pdf" } }, // UTType values
-                            });
+				new Dictionary<DevicePlatform, IEnumerable<string>>
+				{
+					{ DevicePlatform.iOS, new[] { "com.apple.ical.ics" } }, // UTType values
+                    { DevicePlatform.Android, new[] { "text/calendar" } }, // MIME type
+                    { DevicePlatform.WinUI, new[] { ".ics" } }, // file extension
+                    { DevicePlatform.Tizen, new[] { "*/*" } },
+					{ DevicePlatform.MacCatalyst, new[] { "com.apple.ical.ics" } }, // UTType values
+					{ DevicePlatform.macOS, new[] { "com.apple.ical.ics" } }, // UTType values
+                });
+
 			PickOptions options = new()
 			{
 				PickerTitle = "Please select file(s)"
 				,
 				FileTypes = customFileType
 			};
-#else
-			PickOptions options = new()
-			{
-				PickerTitle = "Please select file(s)"
-				,
-				FileTypes = null // All types allowed ?
-			};
-#endif
 
 			FileResult pickResult = await FilePicker.PickAsync(options);
 
