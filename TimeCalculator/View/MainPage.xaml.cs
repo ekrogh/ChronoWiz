@@ -2297,7 +2297,7 @@ public partial class MainPage : ContentPage
 	{
 		CorrectForIcsTimeZone = message.CorrectForTimeZone;
 
-		SelectFilesResult selectedFiles = await FileHandler.SelectFiles(filetypeToReadFrom);
+		SelectFilesResult selectedFiles = await OLD_FileHandler.SelectFiles(filetypeToReadFrom);
 
 		On_FileToReadFromSelectedAsync(selectedFiles);
 
@@ -2531,7 +2531,7 @@ public partial class MainPage : ContentPage
 
 		using MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(CalendarItem));
 
-		FileSaverResult fileSaveResult = await FileHandler.SaveToTextFile(stream, "Calendar.ics");
+		FileSaverResult fileSaveResult = await OLD_FileHandler.SaveToTextFile(stream, "Calendar.ics");
 
 		// Close file
 		stream.Dispose();
@@ -2553,7 +2553,7 @@ public partial class MainPage : ContentPage
 		{
 			using MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(CalendarItem));
 
-			FileSaverResult fileSaveResult = await FileHandler.SaveToTextFile(stream, arg2.pickResult.FullPath);
+			FileSaverResult fileSaveResult = await OLD_FileHandler.SaveToTextFile(stream, arg2.pickResult.FullPath);
 
 			// Close file
 			stream.Dispose();

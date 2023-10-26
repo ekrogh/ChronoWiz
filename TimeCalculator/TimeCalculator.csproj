@@ -98,6 +98,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Filehandlers\NEW_FileHandler.cs" />
 	  <Compile Remove="NEW_MainPage.xaml.cs" />
 	  <Compile Remove="OLD_MainPage.xaml.cs" />
 	  <Compile Remove="Orig_MainPage.xaml.cs" />
@@ -117,6 +118,7 @@
 
 	<ItemGroup>
 	  <None Include="..\.editorconfig" Link=".editorconfig" />
+	  <None Include="Filehandlers\NEW_FileHandler.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

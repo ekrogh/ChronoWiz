@@ -1,18 +1,18 @@
 ﻿using CommunityToolkit.Maui.Storage;
-using TimeCalculator.MessageThings;
+using PdfCalculator.MessageThings;
 
-namespace TimeCalculator.FileHandlers;
+namespace PdfCalculator.FileHandlers;
 
-public partial class OLD_FileHandler
+public partial class NEW_FileHandler
 {
-	//readonly IFileSaver fileSaver;
+	readonly IFileSaver fileSaver;
 
-	//public FileHandler(IFileSaver fileSaver)
-	//{
-	//	this.fileSaver = fileSaver;
-	//}
+	public NEW_FileHandler(IFileSaver fileSaver)
+	{
+		this.fileSaver = fileSaver;
+	}
 
-	public static async Task<SelectFilesResult> SelectFiles(string filetype)
+	public async Task<SelectFilesResult> SelectFilesToReadFrom(string[] filetypes)
 	{
 		try
 		{
@@ -33,11 +33,10 @@ public partial class OLD_FileHandler
 			{
 				PickerTitle = "Please select file(s)"
 				,
-				FileTypes = null // All types allowed ?
+				FileTypes = FilePickerFileType.Pdf
 			};
 #endif
-
-			FileResult pickResult = await FilePicker.PickAsync(options);
+			var pickResult = await FilePicker.PickMultipleAsync(options);
 
 			if (pickResult != null)
 			{
@@ -45,7 +44,17 @@ public partial class OLD_FileHandler
 
 				args.DidPick = true;
 
-				args.pickResult = pickResult;
+				args.TheSelectedFilesInfo = new List<SelectedFileInfo>();
+
+				SelectedFileInfo urlHere = new SelectedFileInfo();
+
+				foreach (var file in pickResult)
+				{
+					// Open the document for read
+					urlHere.TheStream = await file.OpenReadAsync(); ;
+
+					args.TheSelectedFilesInfo.Add(urlHere);
+				}
 
 				return args;
 
@@ -63,7 +72,7 @@ public partial class OLD_FileHandler
 		}
 	}
 
-	public static async Task<FileSaverResult> SaveToTextFile(MemoryStream TheStream, string filename)
+	public async Task<FileSaverResult> SaveToTextFile(MemoryStream TheStream, string filename)
 	{
 		try
 		{
