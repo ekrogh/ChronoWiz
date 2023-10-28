@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using TimeCalculator.FileHandlers;
 
@@ -195,10 +194,8 @@ public partial class MainPage : ContentPage
 		}
 	}
 
-	private bool firstTime = true;
 	private bool firstTimeWdthOrHeightChanged = true;
 
-	double nativeTotalStackWidthLandscape = 731.0;
 	double nativeTotalStackHeightPortrait = 732.0;
 
 
@@ -1033,7 +1030,7 @@ public partial class MainPage : ContentPage
 		}
 
 		DoCalculate();
-	
+
 		JustDidCalculation = true;
 	}
 
@@ -2260,9 +2257,9 @@ public partial class MainPage : ContentPage
 		{
 			ClearTotYMWDHM(null);
 		}
-		
+
 		DoCalculate();
-	
+
 		JustDidCalculation = true;
 	}
 
@@ -2404,6 +2401,13 @@ public partial class MainPage : ContentPage
 							   , "OK"
 						   );
 			}
+
+			await Shell.Current.GoToAsync
+			(
+				"..\\.."
+				, true
+			);
+
 		}
 	}
 
@@ -2535,6 +2539,15 @@ public partial class MainPage : ContentPage
 
 		// Close file
 		stream.Dispose();
+
+		if (fileSaveResult.IsSuccessful)
+		{
+			await Shell.Current.GoToAsync
+			(
+				"..\\.."
+				, true
+			);
+		}
 	}
 
 	[RelayCommand]

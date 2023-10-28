@@ -26,21 +26,20 @@ public partial class OLD_FileHandler
 
 			FileResult pickResult = await FilePicker.PickAsync(options);
 
+			var args = new SelectFilesResult();
+
 			if (pickResult != null)
 			{
-				var args = new SelectFilesResult();
-
 				args.DidPick = true;
-
-				args.pickResult = pickResult;
-
-				return args;
-
 			}
 			else
 			{
-				return null;
+				args.DidPick = false;
 			}
+
+			args.pickResult = pickResult;
+
+			return args;
 		}
 		catch (Exception ex)
 		{

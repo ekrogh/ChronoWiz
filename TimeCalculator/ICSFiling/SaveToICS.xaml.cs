@@ -2,66 +2,67 @@
 using Microsoft.Maui.Graphics;
 using CommunityToolkit.Mvvm.Messaging;
 
-namespace TimeCalculator
+namespace TimeCalculator;
+
+public partial class SaveToICS : ContentPage
 {
-	public partial class SaveToICS : ContentPage
+	public SaveToICS()
 	{
-		public SaveToICS()
+		InitializeComponent();
+
+		Summary.Focus();
+	}
+
+#if WINDOWS
+	protected override void OnSizeAllocated(double width, double height)
+	{
+		base.OnSizeAllocated(width, height);
+
+		TotalStack.Scale = 1.0f / TotalStack.Scale;
+
+		double WidthFactor = width * 0.9f / TotalStack.Width;
+		double HeightFactor = height * 0.9f / TotalStack.Height;
+
+		if (WidthFactor < HeightFactor)
 		{
-			InitializeComponent();
-
-			Summary.Focus();
+			TotalStack.Scale = WidthFactor;
 		}
-
-		protected override void OnSizeAllocated(double width, double height)
+		else
 		{
-			base.OnSizeAllocated(width, height);
-
-			TotalStack.Scale = 1.0f / TotalStack.Scale;
-
-			double WidthFactor = width * 0.9f / TotalStack.Width;
-			double HeightFactor = height * 0.9f / TotalStack.Height;
-
-			if (WidthFactor < HeightFactor)
-			{
-				TotalStack.Scale = WidthFactor;
-			}
-			else
-			{
-				TotalStack.Scale = HeightFactor;
-			}
+			TotalStack.Scale = HeightFactor;
 		}
+	}
+#endif
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-		private async void SaveICSButton_Clicked(object sender, EventArgs e)
+	private async void SaveICSButton_Clicked(object sender, EventArgs e)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+	{
+		SaveToIcsMessageArgs IcsDescription = new SaveToIcsMessageArgs
 		{
-			SaveToIcsMessageArgs IcsDescription = new SaveToIcsMessageArgs
-			{
-				EventName_Summary = Summary.Text,
-				TheDescription = Description.Text,
-				Location = LocationEntry.Text
-			};
+			EventName_Summary = Summary.Text,
+			TheDescription = Description.Text,
+			Location = LocationEntry.Text
+		};
 
-			if ((Summary.Text == null) || (Summary.Text == ""))
-			{
-				IcsDescription.EventName_Summary = "Summary";
-			}
-			if ((Description.Text == null) || (Description.Text == ""))
-			{
-				IcsDescription.TheDescription = "Description";
-			}
-			if ((LocationEntry.Text == null) || (LocationEntry.Text == ""))
-			{
-				IcsDescription.Location = "Location";
-			}
-
-			// Fire the message
-			WeakReferenceMessenger.Default.Send
-			(
-				IcsDescription
-				, MessengerKeys.SaveToIcsMessageKey
-			);
+		if ((Summary.Text == null) || (Summary.Text == ""))
+		{
+			IcsDescription.EventName_Summary = "Summary";
 		}
+		if ((Description.Text == null) || (Description.Text == ""))
+		{
+			IcsDescription.TheDescription = "Description";
+		}
+		if ((LocationEntry.Text == null) || (LocationEntry.Text == ""))
+		{
+			IcsDescription.Location = "Location";
+		}
+
+		// Fire the message
+		WeakReferenceMessenger.Default.Send
+		(
+			IcsDescription
+			, MessengerKeys.SaveToIcsMessageKey
+		);
 	}
 }

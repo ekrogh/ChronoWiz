@@ -4,9 +4,17 @@ public partial class FileICS : ContentPage
 {
 	public FileICS()
 	{
-		InitializeComponent();
+		try
+		{
+			InitializeComponent();
+		}
+		catch (Exception ex)
+		{
+			var tst = ex;
+		}
 	}
 
+#if WINDOWS
 	protected override void OnSizeAllocated(double width, double height)
 	{
 		base.OnSizeAllocated(width, height);
@@ -25,6 +33,7 @@ public partial class FileICS : ContentPage
 			TotalStack.Scale = HeightFactor;
 		}
 	}
+#endif
 
 	private async void OpenICSButton_Clicked(object sender, EventArgs e)
 	{
