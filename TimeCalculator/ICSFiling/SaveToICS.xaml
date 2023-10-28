@@ -4,9 +4,9 @@
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-	ios:Page.UseSafeArea="True"
 	xmlns:local="clr-namespace:TimeCalculator;assembly=TimeCalculator"
 	x:Name="SaveToICSContentPageName"
+	ios:Page.UseSafeArea="True"
 	>
 
 	<ContentPage.Resources>
@@ -21,10 +21,6 @@
 					Property="TextColor"
 					Value="{AppThemeBinding Light=Black,
 					                        Dark=White}"
-					/>
-				<Setter
-					Property="IsEnabled"
-					Value="False"
 					/>
 			</Style>
 
@@ -47,10 +43,6 @@
 					Property="HorizontalTextAlignment"
 					Value="Start"
 					/>
-				<Setter
-					Property="IsEnabled"
-					Value="True"
-					/>
 			</Style>
 
 			<Style
@@ -70,10 +62,6 @@
 					Property="BorderWidth"
 					Value="0.5"
 					/>
-				<Setter
-					Property="IsEnabled"
-					Value="True"
-					/>
 			</Style>
 
 		</ResourceDictionary>
@@ -84,10 +72,14 @@
 
 		<StackLayout
 			x:Name="TotalStack"
-			Margin="0,0,0,10"
+			VerticalOptions="Start"
 			>
+
 			<Image
+				x:Name="TheImage"
+				Margin="0,-23,0,0"
 				Source="savetoics.png"
+				VerticalOptions="Start"
 				/>
 
 			<Label

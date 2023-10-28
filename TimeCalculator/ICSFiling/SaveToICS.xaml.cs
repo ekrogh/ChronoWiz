@@ -1,6 +1,4 @@
-﻿using TimeCalculator.MessageThings;
-using Microsoft.Maui.Graphics;
-using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 
 namespace TimeCalculator;
 
@@ -13,15 +11,24 @@ public partial class SaveToICS : ContentPage
 		Summary.Focus();
 	}
 
-#if WINDOWS
+	//#if WINDOWS
+#if (WINDOWS || ANDROID)
 	protected override void OnSizeAllocated(double width, double height)
 	{
 		base.OnSizeAllocated(width, height);
 
 		TotalStack.Scale = 1.0f / TotalStack.Scale;
 
-		double WidthFactor = width * 0.9f / TotalStack.Width;
-		double HeightFactor = height * 0.9f / TotalStack.Height;
+		var DisplayOrientation = DeviceDisplay.Current.MainDisplayInfo.Orientation;
+
+		double ScaleF = 1.0f;
+		if (DisplayOrientation == DisplayOrientation.Landscape)
+		{
+			ScaleF = 0.9f;
+		}
+
+		double WidthFactor = width * ScaleF / TotalStack.Width;
+		double HeightFactor = height * ScaleF / TotalStack.Height;
 
 		if (WidthFactor < HeightFactor)
 		{
@@ -31,6 +38,10 @@ public partial class SaveToICS : ContentPage
 		{
 			TotalStack.Scale = HeightFactor;
 		}
+
+		Dispatcher.Dispatch(() =>
+			(SaveToICSContentPageName as IView).InvalidateArrange());
+
 	}
 #endif
 
