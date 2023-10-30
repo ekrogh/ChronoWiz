@@ -299,7 +299,7 @@
 							Margin="3,0"
 							Command="{Binding CalcStartTimeBtnClickedCommand}"
 							Style="{DynamicResource DynamicBaseButtonStyle}"
-							Text="Calculate -->"
+							Text="Calculate --&gt;"
 							/>
 						<DatePicker
 							x:Name="StartDatePicker"
@@ -344,7 +344,7 @@
 					Margin="0,0,3,0"
 					Command="{Binding CalcYMWDHMBtnClickedCommand}"
 					Style="{DynamicResource DynamicBaseButtonStyle}"
-					Text="Calculate -->"
+					Text="Calculate --&gt;"
 					VerticalOptions="Center"
 					/>
 
@@ -591,7 +591,7 @@
 							Margin="3,0"
 							Command="{Binding CalcEndTimeBtnClickedCommand}"
 							Style="{DynamicResource DynamicBaseButtonStyle}"
-							Text="Calculate -->"
+							Text="Calculate --&gt;"
 							/>
 						<DatePicker
 							x:Name="EndDatePicker"
