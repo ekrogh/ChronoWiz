@@ -22,10 +22,6 @@
 					Value="{AppThemeBinding Light=Black,
 					                        Dark=White}"
 					/>
-				<Setter
-					Property="IsEnabled"
-					Value="False"
-					/>
 			</Style>
 
 			<Style
@@ -42,12 +38,13 @@
 					                        Dark=#FF9E5B10}"
 					/>
 				<Setter
-					Property="BorderWidth"
-					Value="0.5"
+					Property="BackgroundColor"
+					Value="{AppThemeBinding Light={StaticResource Primary},
+					                        Dark=#FF333333}"
 					/>
 				<Setter
-					Property="IsEnabled"
-					Value="True"
+					Property="BorderWidth"
+					Value="0.5"
 					/>
 			</Style>
 
@@ -85,7 +82,7 @@
 
 			</StackLayout>
 		</ScrollView>
-		
+
 	</ContentPage.Content>
 
 </ContentPage>

@@ -59,6 +59,11 @@
 					                        Dark=#FF9E5B10}"
 					/>
 				<Setter
+					Property="BackgroundColor"
+					Value="{AppThemeBinding Light={StaticResource Primary},
+					                        Dark=#FF333333}"
+					/>
+				<Setter
 					Property="BorderWidth"
 					Value="0.5"
 					/>
@@ -96,7 +101,6 @@
 					/>
 
 				<Label
-					IsEnabled="False"
 					Style="{StaticResource baseLabelStyle}"
 					Text="Description"
 					/>

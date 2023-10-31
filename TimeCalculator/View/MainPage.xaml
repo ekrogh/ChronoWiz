@@ -27,10 +27,6 @@
 					Property="FontSize"
 					Value="Small"
 					/>
-				<Setter
-					Property="IsEnabled"
-					Value="True"
-					/>
 			</Style>
 
 			<Style
@@ -90,10 +86,6 @@
 					Property="HorizontalTextAlignment"
 					Value="End"
 					/>
-				<Setter
-					Property="IsEnabled"
-					Value="True"
-					/>
 			</Style>
 
 			<Style
@@ -134,8 +126,9 @@
 					Value="0.5"
 					/>
 				<Setter
-					Property="IsEnabled"
-					Value="True"
+					Property="BackgroundColor"
+					Value="{AppThemeBinding Light={StaticResource Primary},
+					                        Dark=#FF333333}"
 					/>
 			</Style>
 
@@ -156,10 +149,6 @@
 					Property="TextColor"
 					Value="{AppThemeBinding Light=Blue,
 					                        Dark=#FFFFFFB4}"
-					/>
-				<Setter
-					Property="IsEnabled"
-					Value="True"
 					/>
 				<Setter
 					Property="FontFamily"
@@ -194,10 +183,6 @@
 					                        Dark=#FFFFFFB4}"
 					/>
 				<Setter
-					Property="IsEnabled"
-					Value="True"
-					/>
-				<Setter
 					Property="FontSize"
 					Value="Small"
 					/>
@@ -214,10 +199,6 @@
 				<Setter
 					Property="TextColor"
 					Value="Black"
-					/>
-				<Setter
-					Property="IsEnabled"
-					Value="True"
 					/>
 				<Setter
 					Property="FontFamily"
@@ -248,10 +229,6 @@
 				<Setter
 					Property="TextColor"
 					Value="Black"
-					/>
-				<Setter
-					Property="IsEnabled"
-					Value="True"
 					/>
 				<Setter
 					Property="FontSize"
