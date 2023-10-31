@@ -59,6 +59,11 @@
 					                        Dark=#FF9E5B10}"
 					/>
 				<Setter
+					Property="BackgroundColor"
+					Value="{AppThemeBinding Light={StaticResource Primary},
+					                        Dark=#FF333333}"
+					/>
+				<Setter
 					Property="BorderWidth"
 					Value="0.5"
 					/>
@@ -70,63 +75,64 @@
 
 	<ContentPage.Content>
 
-		<StackLayout
-			x:Name="TotalStack"
-			VerticalOptions="Start"
-			>
-
-			<Image
-				x:Name="TheImage"
-				Margin="0,-23,0,0"
-				Source="savetoics.png"
+		<ScrollView>
+			<StackLayout
+				x:Name="TotalStack"
 				VerticalOptions="Start"
-				/>
+				>
 
-			<Label
-				Style="{StaticResource baseLabelStyle}"
-				Text="Summary (&quot;Event Name&quot;)"
-				/>
-			<Entry
-				x:Name="Summary"
-				Keyboard="Text"
-				Placeholder="Summary"
-				ReturnType="Next"
-				Style="{StaticResource baseEntryStyle}"
-				/>
+				<Image
+					x:Name="TheImage"
+					Margin="0,-23,0,0"
+					Source="savetoics.png"
+					VerticalOptions="Start"
+					/>
 
-			<Label
-				IsEnabled="False"
-				Style="{StaticResource baseLabelStyle}"
-				Text="Description"
-				/>
-			<Entry
-				x:Name="Description"
-				Keyboard="Text"
-				Placeholder="Description"
-				ReturnType="Next"
-				Style="{StaticResource baseEntryStyle}"
-				/>
+				<Label
+					Style="{StaticResource baseLabelStyle}"
+					Text="Summary (&quot;Event Name&quot;)"
+					/>
+				<Entry
+					x:Name="Summary"
+					Keyboard="Text"
+					Placeholder="Summary"
+					ReturnType="Next"
+					Style="{StaticResource baseEntryStyle}"
+					/>
 
-			<Label
-				Style="{StaticResource baseLabelStyle}"
-				Text="Location"
-				/>
-			<Entry
-				x:Name="LocationEntry"
-				Keyboard="Text"
-				Placeholder="Location"
-				ReturnType="Next"
-				Style="{StaticResource baseEntryStyle}"
-				/>
+				<Label
+					Style="{StaticResource baseLabelStyle}"
+					Text="Description"
+					/>
+				<Entry
+					x:Name="Description"
+					Keyboard="Text"
+					Placeholder="Description"
+					ReturnType="Next"
+					Style="{StaticResource baseEntryStyle}"
+					/>
 
-			<Button
-				x:Name="SaveICSButton"
-				Clicked="SaveICSButton_Clicked"
-				Style="{StaticResource baseButtonStyle}"
-				Text="Save to .ics file"
-				/>
+				<Label
+					Style="{StaticResource baseLabelStyle}"
+					Text="Location"
+					/>
+				<Entry
+					x:Name="LocationEntry"
+					Keyboard="Text"
+					Placeholder="Location"
+					ReturnType="Next"
+					Style="{StaticResource baseEntryStyle}"
+					/>
 
-		</StackLayout>
+				<Button
+					x:Name="SaveICSButton"
+					Clicked="SaveICSButton_Clicked"
+					Style="{StaticResource baseButtonStyle}"
+					Text="Save to .ics file"
+					/>
+
+			</StackLayout>
+		</ScrollView>
 
 	</ContentPage.Content>
 
