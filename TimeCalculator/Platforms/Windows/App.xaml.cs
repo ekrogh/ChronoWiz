@@ -21,5 +21,4 @@ namespace TimeCalculator.WinUI
 
 		protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
 	}
-
 }
