@@ -11,6 +11,7 @@ public partial class MainPage : ContentPage
 {
 	public MainPage()
 	{
+#if DEBUG
 		try
 		{
 			InitializeComponent();
@@ -19,7 +20,9 @@ public partial class MainPage : ContentPage
 		{
 			var tst = ex;
 		}
-
+#else
+			InitializeComponent();
+#endif
 		BindingContext = this;
 
 		WeakReferenceMessenger.Default.Register<SaveToIcsMessageArgs, string>
@@ -70,6 +73,16 @@ public partial class MainPage : ContentPage
 		EndDatePicker.Date = DateTime.Now.Date;
 
 
+#if __MACCATALYST__
+		SetOrientationRight
+		(
+			DeviceDisplay.Current.MainDisplayInfo.Width
+				,
+			DeviceDisplay.Current.MainDisplayInfo.Height
+				,
+			DisplayOrientation.Landscape
+		);
+#else
 		SetOrientationRight
 		(
 			DeviceDisplay.Current.MainDisplayInfo.Width
@@ -78,7 +91,7 @@ public partial class MainPage : ContentPage
 				,
 			DeviceDisplay.Current.MainDisplayInfo.Orientation
 		);
-
+#endif
 		DeviceDisplay.Current.MainDisplayInfoChanged += Current_MainDisplayInfoChanged;
 	}
 
