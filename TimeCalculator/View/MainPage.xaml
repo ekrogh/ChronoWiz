@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
 	x:Class="TimeCalculator.View.MainPage"
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -11,313 +11,313 @@
 	Shell.NavBarIsVisible="False"
 	>
 
-	<ContentPage.Resources>
-		<ResourceDictionary>
-			<Style
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style
 				x:Key="baseLabelStyle"
 				x:Name="baseLabelStyleName"
 				TargetType="Label"
 				>
-				<Setter
+                <Setter
 					Property="TextColor"
 					Value="{AppThemeBinding Light=Black,
 					                        Dark=White}"
 					/>
-				<Setter
+                <Setter
 					Property="FontSize"
 					Value="Small"
 					/>
-			</Style>
+            </Style>
 
-			<Style
+            <Style
 				x:Key="baseLabelStyleEntries"
 				BasedOn="{StaticResource baseLabelStyle}"
 				TargetType="Label"
 				>
-				<Setter
+                <Setter
 					Property="FontSize"
 					Value="Micro"
 					/>
-			</Style>
+            </Style>
 
-			<Style
+            <Style
 				x:Key="baseStartEndDateTimeEntryLabelStyle"
 				BasedOn="{StaticResource baseLabelStyle}"
 				TargetType="Label"
 				>
-				<Setter
+                <Setter
 					Property="HorizontalOptions"
 					Value="Center"
 					/>
-				<Setter
+                <Setter
 					Property="VerticalOptions"
 					Value="Center"
 					/>
-				<Setter
+                <Setter
 					Property="FontSize"
 					Value="Micro"
 					/>
-			</Style>
+            </Style>
 
-			<Style
+            <Style
 				x:Key="baseEntryStyle"
 				x:Name="baseEntryStyleName"
 				TargetType="Entry"
 				>
-				<Setter
+                <Setter
 					Property="FontSize"
 					Value="Small"
 					/>
-				<Setter
+                <Setter
 					Property="Keyboard"
 					Value="Numeric"
 					/>
-				<Setter
+                <Setter
 					Property="BackgroundColor"
 					Value="{AppThemeBinding Light=Yellow,
 					                        Dark=#FF00004B}"
 					/>
-				<Setter
+                <Setter
 					Property="TextColor"
 					Value="{AppThemeBinding Light=Blue,
 					                        Dark=#FFFFFFB4}"
 					/>
-				<Setter
+                <Setter
 					Property="HorizontalTextAlignment"
 					Value="End"
 					/>
-			</Style>
+            </Style>
 
-			<Style
+            <Style
 				x:Key="baseStartEndDateTimeEntryStyle"
 				x:Name="baseStartEndDateTimeEntryStyleName"
 				BasedOn="{StaticResource baseEntryStyle}"
 				TargetType="Entry"
 				>
-				<Setter
+                <Setter
 					Property="HorizontalTextAlignment"
 					Value="Center"
 					/>
-				<Setter
+                <Setter
 					Property="HorizontalOptions"
 					Value="Fill"
 					/>
-				<Setter
+                <Setter
 					Property="VerticalOptions"
 					Value="Center"
 					/>
-			</Style>
+            </Style>
 
-			<Style
+            <Style
 				x:Key="baseButtonStyle"
 				TargetType="Button"
 				>
-				<Setter
+                <Setter
 					Property="BorderColor"
 					Value="Gray"
 					/>
-				<Setter
+                <Setter
 					Property="TextColor"
 					Value="{AppThemeBinding Light=#FF579AE5,
 					                        Dark=#FF9E5B10}"
 					/>
-				<Setter
+                <Setter
 					Property="BorderWidth"
 					Value="0.5"
 					/>
-				<Setter
+                <Setter
 					Property="BackgroundColor"
 					Value="{AppThemeBinding Light={StaticResource Primary},
 					                        Dark=#FF333333}"
 					/>
-			</Style>
+            </Style>
 
-			<Style
+            <Style
 				x:Key="baseDatePickerStyle_WO_WidthRequest"
 				TargetType="DatePicker"
 				>
-				<Setter
+                <Setter
 					Property="VerticalOptions"
 					Value="Center"
 					/>
-				<Setter
+                <Setter
 					Property="BackgroundColor"
 					Value="{AppThemeBinding Light=Yellow,
 					                        Dark=#FF00004B}"
 					/>
-				<Setter
+                <Setter
 					Property="TextColor"
 					Value="{AppThemeBinding Light=Blue,
 					                        Dark=#FFFFFFB4}"
 					/>
-				<Setter
+                <Setter
 					Property="FontFamily"
 					Value="Courier"
 					/>
-				<Setter
+                <Setter
 					Property="FontSize"
 					Value="Small"
 					/>
-			</Style>
+            </Style>
 
-			<Style
+            <Style
 				x:Key="baseTimePickerStyle"
 				TargetType="TimePicker"
 				>
-				<Setter
+                <Setter
 					Property="HorizontalOptions"
 					Value="StartAndExpand"
 					/>
-				<Setter
+                <Setter
 					Property="VerticalOptions"
 					Value="Center"
 					/>
-				<Setter
+                <Setter
 					Property="BackgroundColor"
 					Value="{AppThemeBinding Light=Yellow,
 					                        Dark=#FF00004B}"
 					/>
-				<Setter
+                <Setter
 					Property="TextColor"
 					Value="{AppThemeBinding Light=Blue,
 					                        Dark=#FFFFFFB4}"
 					/>
-				<Setter
+                <Setter
 					Property="FontSize"
 					Value="Small"
 					/>
-			</Style>
+            </Style>
 
-			<Style
+            <Style
 				x:Key="baseGTKDatePickerStyle_WO_WidthRequest"
 				TargetType="DatePicker"
 				>
-				<Setter
+                <Setter
 					Property="VerticalOptions"
 					Value="Center"
 					/>
-				<Setter
+                <Setter
 					Property="TextColor"
 					Value="Black"
 					/>
-				<Setter
+                <Setter
 					Property="FontFamily"
 					Value="Courier"
 					/>
-				<Setter
+                <Setter
 					Property="FontSize"
 					Value="Default"
 					/>
-				<Setter
+                <Setter
 					Property="FontAttributes"
 					Value="Bold"
 					/>
-			</Style>
+            </Style>
 
-			<Style
+            <Style
 				x:Key="baseGTKTimePickerStyle"
 				TargetType="TimePicker"
 				>
-				<Setter
+                <Setter
 					Property="HorizontalOptions"
 					Value="StartAndExpand"
 					/>
-				<Setter
+                <Setter
 					Property="VerticalOptions"
 					Value="Center"
 					/>
-				<Setter
+                <Setter
 					Property="TextColor"
 					Value="Black"
 					/>
-				<Setter
+                <Setter
 					Property="FontSize"
 					Value="Default"
 					/>
-				<Setter
+                <Setter
 					Property="FontAttributes"
 					Value="Bold"
 					/>
-			</Style>
+            </Style>
 
-		</ResourceDictionary>
-	</ContentPage.Resources>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
 
-	<ContentPage.Content>
+    <ContentPage.Content>
 
-		<StackLayout
+        <StackLayout
 			x:Name="TotalStackName"
 			HorizontalOptions="CenterAndExpand"
 			Orientation="Vertical"
 			VerticalOptions="CenterAndExpand"
 			>
-			<StackLayout
+            <StackLayout
 				x:Name="StartDateTimeStacAndPlus"
 				HorizontalOptions="Center"
 				Orientation="Vertical"
 				Spacing="0"
 				>
-				<StackLayout
+                <StackLayout
 					x:Name="StartLabelNDateTimeStack"
 					Orientation="Vertical"
 					>
-					<Label
+                    <Label
 						x:Name="StartDateTimeIntroLabelName"
 						LineBreakMode="NoWrap"
 						Style="{StaticResource baseStartEndDateTimeEntryLabelStyle}"
 						Text="Start Date + Time"
 						/>
-					<StackLayout
+                    <StackLayout
 						x:Name="StartDateTimeStack"
 						Orientation="Horizontal"
 						>
-						<Button
+                        <Button
 							Margin="3,0"
 							Command="{Binding CalcStartTimeBtnClickedCommand}"
 							Style="{DynamicResource DynamicBaseButtonStyle}"
 							Text="Calculate --&gt;"
 							/>
-						<DatePicker
+                        <DatePicker
 							x:Name="StartDatePicker"
 							DateSelected="StartDatePicker_DateSelected"
 							HorizontalOptions="CenterAndExpand"
 							Style="{StaticResource baseDatePickerStyle_WO_WidthRequest}"
 							/>
-						<TimePicker
+                        <TimePicker
 							x:Name="StartTimePicker"
 							PropertyChanged="StartTimePicker_PropertyChanged"
-							Style="{StaticResource baseTimePickerStyle}"
+							Style="{StaticResource baseTimePickerStyle}" Margin="2,0,0,0"
 							/>
-						<Label
+                        <Label
 							x:Name="StartDayName"
 							LineBreakMode="WordWrap"
 							MinimumWidthRequest="30"
 							Style="{StaticResource baseStartEndDateTimeEntryLabelStyle}"
 							Text=" MMM "
 							/>
-						<Button
+                        <Button
 							Command="{Binding StartDateTimeNowButtonClickedCommand}"
 							Style="{StaticResource baseButtonStyle}"
 							Text="Now"
 							VerticalOptions="Center"
 							/>
-					</StackLayout>
-				</StackLayout>
-				<Label
+                    </StackLayout>
+                </StackLayout>
+                <Label
 					x:Name="LabelPlus"
 					HorizontalOptions="Center"
 					Style="{StaticResource baseLabelStyleEntries}"
 					Text="+"
 					/>
-			</StackLayout>
+            </StackLayout>
 
-			<StackLayout
+            <StackLayout
 				x:Name="entriesOuterStack"
 				Orientation="Horizontal"
 				>
 
-				<Button
+                <Button
 					Margin="0,0,3,0"
 					Command="{Binding CalcYMWDHMBtnClickedCommand}"
 					Style="{DynamicResource DynamicBaseButtonStyle}"
@@ -325,323 +325,323 @@
 					VerticalOptions="Center"
 					/>
 
-				<!--  time entries  -->
-				<StackLayout
+                <!--  time entries  -->
+                <StackLayout
 					x:Name="EntriesCenterOuterStack"
 					>
-					<StackLayout
+                    <StackLayout
 						x:Name="EntriesCenterCombndStack"
 						>
 
-						<StackLayout
+                        <StackLayout
 							x:Name="CombndYearsStackName"
 							>
-							<Label
+                            <Label
 								Style="{StaticResource baseLabelStyleEntries}"
 								Text="  Years"
 								/>
-							<Entry
+                            <Entry
 								x:Name="CombndYears"
 								Completed="OnCombndYearsCompleted"
 								Focused="OnCombndYMWDHMFocused"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnCombndYearsUnfocused"
 								/>
-						</StackLayout>
+                        </StackLayout>
 
-						<StackLayout
+                        <StackLayout
 							x:Name="CombndMonthsStackName"
 							>
-							<Label
+                            <Label
 								Style="{StaticResource baseLabelStyleEntries}"
 								Text="+ Months"
 								/>
-							<Entry
+                            <Entry
 								x:Name="CombndMonths"
 								Completed="OnCombndMonthsCompleted"
 								Focused="OnCombndYMWDHMFocused"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnCombndMonthsUnfocused"
 								/>
-						</StackLayout>
+                        </StackLayout>
 
-						<StackLayout
+                        <StackLayout
 							x:Name="CombndWeeksStackName"
 							>
-							<Label
+                            <Label
 								Style="{StaticResource baseLabelStyleEntries}"
 								Text="+ Weeks"
 								/>
-							<Entry
+                            <Entry
 								x:Name="CombndWeeks"
 								Completed="OnCombndWeeksCompleted"
 								Focused="OnCombndYMWDHMFocused"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnCombndWeeksUnfocused"
 								/>
-						</StackLayout>
+                        </StackLayout>
 
-						<StackLayout
+                        <StackLayout
 							x:Name="CombndDaysStackName"
 							>
-							<Label
+                            <Label
 								Style="{StaticResource baseLabelStyleEntries}"
 								Text="+ Days"
 								/>
-							<Entry
+                            <Entry
 								x:Name="CombndDays"
 								Completed="OnCombndDaysCompleted"
 								Focused="OnCombndYMWDHMFocused"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnCombndDaysUnfocused"
 								/>
-						</StackLayout>
+                        </StackLayout>
 
-						<StackLayout
+                        <StackLayout
 							x:Name="CombndHoursStackName"
 							>
-							<Label
+                            <Label
 								Style="{StaticResource baseLabelStyleEntries}"
 								Text="+ Hours"
 								/>
-							<Entry
+                            <Entry
 								x:Name="CombndHours"
 								Completed="OnCombndHoursCompleted"
 								Focused="OnCombndYMWDHMFocused"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnCombndHoursUnfocused"
 								/>
-						</StackLayout>
+                        </StackLayout>
 
-						<StackLayout
+                        <StackLayout
 							x:Name="CombndMinutesStackName"
 							>
-							<Label
+                            <Label
 								Style="{StaticResource baseLabelStyleEntries}"
 								Text="+ Minutes"
 								/>
-							<Entry
+                            <Entry
 								x:Name="CombndMinutes"
 								Completed="OnCombndMinutesCompleted"
 								Focused="OnCombndYMWDHMFocused"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnCombndMinutesUnfocused"
 								/>
-						</StackLayout>
+                        </StackLayout>
 
-					</StackLayout>
+                    </StackLayout>
 
-					<!--  Total time  -->
-					<StackLayout
+                    <!--  Total time  -->
+                    <StackLayout
 						x:Name="EntriesCenterTotStack"
 						>
 
-						<StackLayout
+                        <StackLayout
 							x:Name="TotYearsStackName"
 							>
-							<Label
+                            <Label
 								Style="{StaticResource baseLabelStyleEntries}"
 								Text="   Years Tot."
 								/>
-							<Entry
+                            <Entry
 								x:Name="TotYears"
 								Completed="OnTotYearsCompleted"
 								Focused="OnTotYMWDHMFocused"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnTotYearsUnfocused"
 								/>
-						</StackLayout>
+                        </StackLayout>
 
-						<StackLayout
+                        <StackLayout
 							x:Name="TotMonthsStackName"
 							>
-							<Label
+                            <Label
 								Style="{StaticResource baseLabelStyleEntries}"
 								Text="or Months Tot."
 								/>
-							<Entry
+                            <Entry
 								x:Name="TotMonths"
 								Completed="OnTotMonthsCompleted"
 								Focused="OnTotYMWDHMFocused"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnTotMonthsUnfocused"
 								/>
-						</StackLayout>
+                        </StackLayout>
 
-						<StackLayout
+                        <StackLayout
 							x:Name="TotWeeksStackName"
 							>
-							<Label
+                            <Label
 								Style="{StaticResource baseLabelStyleEntries}"
 								Text="or Weeks Tot."
 								/>
-							<Entry
+                            <Entry
 								x:Name="TotWeeks"
 								Completed="OnTotWeeksCompleted"
 								Focused="OnTotYMWDHMFocused"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnTotWeeksUnfocused"
 								/>
-						</StackLayout>
+                        </StackLayout>
 
-						<StackLayout
+                        <StackLayout
 							x:Name="TotDaysStackName"
 							>
-							<Label
+                            <Label
 								Style="{StaticResource baseLabelStyleEntries}"
 								Text="or Days Tot."
 								/>
-							<Entry
+                            <Entry
 								x:Name="TotDays"
 								Completed="OnTotDaysCompleted"
 								Focused="OnTotYMWDHMFocused"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnTotDaysUnfocused"
 								/>
-						</StackLayout>
+                        </StackLayout>
 
-						<StackLayout
+                        <StackLayout
 							x:Name="TotHoursStackName"
 							>
-							<Label
+                            <Label
 								Style="{StaticResource baseLabelStyleEntries}"
 								Text="or Hours Tot."
 								/>
-							<Entry
+                            <Entry
 								x:Name="TotHours"
 								Completed="OnTotHoursCompleted"
 								Focused="OnTotYMWDHMFocused"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnTotHoursUnfocused"
 								/>
-						</StackLayout>
+                        </StackLayout>
 
-						<StackLayout
+                        <StackLayout
 							x:Name="TotMinutesStackName"
 							>
-							<Label
+                            <Label
 								Style="{StaticResource baseLabelStyleEntries}"
 								Text="or Minutes Tot"
 								/>
-							<Entry
+                            <Entry
 								x:Name="TotMinutes"
 								Completed="OnTotMinutesCompleted"
 								Focused="OnTotYMWDHMFocused"
 								Style="{StaticResource baseEntryStyle}"
 								Unfocused="OnTotMinutesUnfocused"
 								/>
-						</StackLayout>
+                        </StackLayout>
 
-					</StackLayout>
+                    </StackLayout>
 
-				</StackLayout>
+                </StackLayout>
 
-			</StackLayout>
+            </StackLayout>
 
-			<StackLayout
+            <StackLayout
 				x:Name="EndDateTimeAndCalculateAndClearAllButtonsStackName"
 				HorizontalOptions="Center"
 				Orientation="Vertical"
 				Spacing="0"
 				>
-				<Label
+                <Label
 					x:Name="LabelEqual"
 					HorizontalOptions="Center"
 					Style="{StaticResource baseLabelStyleEntries}"
 					Text="="
 					/>
-				<StackLayout
+                <StackLayout
 					x:Name="EndLabelNDateTimeStack"
 					Orientation="Vertical"
 					>
-					<Label
+                    <Label
 						x:Name="EndDateTimeIntroLabelName"
 						LineBreakMode="NoWrap"
 						Style="{StaticResource baseStartEndDateTimeEntryLabelStyle}"
 						Text="End Date + Time"
 						/>
-					<StackLayout
+                    <StackLayout
 						x:Name="EndDateTimeStack"
 						Orientation="Horizontal"
 						>
-						<Button
+                        <Button
 							Margin="3,0"
 							Command="{Binding CalcEndTimeBtnClickedCommand}"
 							Style="{DynamicResource DynamicBaseButtonStyle}"
 							Text="Calculate --&gt;"
 							/>
-						<DatePicker
+                        <DatePicker
 							x:Name="EndDatePicker"
 							DateSelected="EndDatePicker_DateSelected"
 							HorizontalOptions="CenterAndExpand"
 							Style="{StaticResource baseDatePickerStyle_WO_WidthRequest}"
 							/>
-						<TimePicker
+                        <TimePicker
 							x:Name="EndTimePicker"
 							PropertyChanged="EndTimePicker_PropertyChanged"
-							Style="{StaticResource baseTimePickerStyle}"
+							Style="{StaticResource baseTimePickerStyle}" Margin="2,0,0,0"
 							/>
-						<Label
+                        <Label
 							x:Name="EndDayName"
 							LineBreakMode="WordWrap"
 							MinimumWidthRequest="30"
 							Style="{StaticResource baseStartEndDateTimeEntryLabelStyle}"
 							Text=" MMM "
 							/>
-						<Button
+                        <Button
 							Command="{Binding EndDateTimeNowButtonClickedCommand}"
 							Style="{StaticResource baseButtonStyle}"
 							Text="Now"
 							VerticalOptions="Center"
 							/>
-					</StackLayout>
-				</StackLayout>
-				<StackLayout
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout
 					x:Name="calculateAndClearAllButtonsStackName"
 					HorizontalOptions="CenterAndExpand"
 					Orientation="Horizontal"
 					VerticalOptions="Center"
 					>
-					<StackLayout.Margin>
-						<OnPlatform
+                    <StackLayout.Margin>
+                        <OnPlatform
 							x:TypeArguments="Thickness"
 							>
-							<On
+                            <On
 								Platform="MacCatalyst, UWP, GTK"
 								Value="0, 20, 0, 0"
 								/>
-						</OnPlatform>
-					</StackLayout.Margin>
-					<StackLayout.Spacing>
-						<OnPlatform
+                        </OnPlatform>
+                    </StackLayout.Margin>
+                    <StackLayout.Spacing>
+                        <OnPlatform
 							x:TypeArguments="x:Double"
 							>
-							<On
+                            <On
 								Platform="Android"
 								Value="10"
 								/>
-							<On
+                            <On
 								Platform="iOS"
 								Value="20"
 								/>
-							<On
+                            <On
 								Platform="MacCatalyst, WinUI, GTK"
 								Value="100"
 								/>
-						</OnPlatform>
-					</StackLayout.Spacing>
-					<Button
+                        </OnPlatform>
+                    </StackLayout.Spacing>
+                    <Button
 						Command="{Binding ClearAllButtonClickedCommand}"
 						HorizontalOptions="Start"
 						Style="{DynamicResource DynamicBaseButtonStyle}"
 						Text="Clear All"
 						/>
-					<Button
+                    <Button
 						Command="{Binding FileButton_ClickedCommand}"
 						Style="{DynamicResource DynamicBaseButtonStyle}"
 						Text="File..."
 						/>
-					<Button
+                    <Button
 						Command="{Binding HelpButtonClickedCommand}"
 						FontAttributes="Bold"
 						HorizontalOptions="End"
@@ -650,13 +650,13 @@
 						VerticalOptions="Center"
 						/>
 
-				</StackLayout>
-			</StackLayout>
+                </StackLayout>
+            </StackLayout>
 
-		</StackLayout>
+        </StackLayout>
 
 
 
-	</ContentPage.Content>
+    </ContentPage.Content>
 
 </ContentPage>
