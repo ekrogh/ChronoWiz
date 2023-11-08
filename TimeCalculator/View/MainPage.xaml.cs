@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using ObjCRuntime;
 using TimeCalculator.FileHandlers;
 
 namespace TimeCalculator.View;
@@ -34,24 +35,53 @@ public partial class MainPage : ContentPage
 
 		Resources["DynamicBaseButtonStyle"] = Resources["baseButtonStyle"];
 
-		ListOfCmbndEntrys = new List<Entry>()
+		ListOfCmbndEntrys = new Dictionary<Entry, EntryAndInt>()
 		{
-			  CombndYears
-			, CombndMonths
-			, CombndWeeks
-			, CombndDays
-			, CombndHours
-			, CombndMinutes
+			{ CombndYears,		new EntryAndInt { TheEntry = CombndYears,	TheValue = 0 } }
+			,
+			{ CombndMonths,		new EntryAndInt { TheEntry = CombndMonths,	TheValue = 0 } }
+			,
+			{ CombndWeeks,		new EntryAndInt { TheEntry = CombndWeeks,	TheValue = 0 } }
+			,
+			{ CombndDays,		new EntryAndInt { TheEntry = CombndDays,	TheValue = 0 } }
+			,
+			{ CombndHours,		new EntryAndInt { TheEntry = CombndHours,	TheValue = 0 } }
+			,
+			{ CombndMinutes,	new EntryAndInt { TheEntry = CombndMinutes,	TheValue = 0 } }
 		};
-		ListOfTotEntrys = new List<Entry>()
+		ListOfTotEntrys = new Dictionary<Entry, EntryAndInt>()
 		{
-			  TotYears
-			, TotMonths
-			, TotWeeks
-			, TotDays
-			, TotHours
-			, TotMinutes
+			{ TotYears,		new EntryAndInt { TheEntry = TotYears,   TheValue = 0 } }
+			,
+			{ TotMonths,	new EntryAndInt { TheEntry = TotMonths,  TheValue = 0 } }
+			,
+			{ TotWeeks,		new EntryAndInt { TheEntry = TotWeeks,   TheValue = 0 } }
+			,
+			{ TotDays,		new EntryAndInt { TheEntry = TotDays,    TheValue = 0 } }
+			,
+			{ TotHours,		new EntryAndInt { TheEntry = TotHours,   TheValue = 0 } }
+			,
+			{ TotMinutes,	new EntryAndInt { TheEntry = TotMinutes, TheValue = 0 } }
 		};
+
+		//ListOfCmbndEntrys = new List<Entry>()
+		//{
+		//	  CombndYears
+		//	, CombndMonths
+		//	, CombndWeeks
+		//	, CombndDays
+		//	, CombndHours
+		//	, CombndMinutes
+		//};
+		//ListOfTotEntrys = new List<Entry>()
+		//{
+		//	  TotYears
+		//	, TotMonths
+		//	, TotWeeks
+		//	, TotDays
+		//	, TotHours
+		//	, TotMinutes
+		//};
 
 		StartDateIn = DateTime.Now.Date;
 		StartTimeIn = DateTime.Now.TimeOfDay;
@@ -252,9 +282,15 @@ public partial class MainPage : ContentPage
 		set => PrivEnteredYMWDHMTimeSpan = value;
 	}
 
-
-	List<Entry> ListOfCmbndEntrys;
-	List<Entry> ListOfTotEntrys;
+	public class EntryAndInt
+	{
+		public Entry TheEntry;
+		public int TheValue;
+	};
+	Dictionary<Entry, EntryAndInt> ListOfCmbndEntrys;
+	Dictionary<Entry, EntryAndInt> ListOfTotEntrys;
+	//List<Entry> ListOfCmbndEntrys;
+	//List<Entry> ListOfTotEntrys;
 
 
 	// Total values for dateTime span
@@ -2278,22 +2314,12 @@ public partial class MainPage : ContentPage
 
 	private void OnTotYMWDHMFocused(object sender, FocusEventArgs e)
 	{
-		if (JustDidCalculation)
-		{
 			ClearYMWDHM((Entry)sender);
-
-			JustDidCalculation = false;
-		}
 	}
 
 	private void OnCombndYMWDHMFocused(object sender, FocusEventArgs e)
 	{
-		if (JustDidCalculation)
-		{
-			ClearYMWDHM((Entry)sender);
-
-			JustDidCalculation = false;
-		}
+		ClearTotYMWDHM(null);
 	}
 
 	// Calendar
