@@ -286,6 +286,7 @@
 							/>
 						<TimePicker
 							x:Name="StartTimePicker"
+							Margin="2,0,0,0"
 							PropertyChanged="StartTimePicker_PropertyChanged"
 							Style="{StaticResource baseTimePickerStyle}"
 							/>
@@ -578,6 +579,7 @@
 							/>
 						<TimePicker
 							x:Name="EndTimePicker"
+							Margin="2,0,0,0"
 							PropertyChanged="EndTimePicker_PropertyChanged"
 							Style="{StaticResource baseTimePickerStyle}"
 							/>
