@@ -356,12 +356,15 @@ public partial class MainPage : ContentPage
 		}
 	}
 
-	private void ClearTotIOVars()
+	private void ClearTotIOVars(Entry ImInFocus)
 	{
 		// Total values for dateTime span
-		foreach (KeyValuePair<Entry, int> entry in DictionaryOfTotalEntries)
+		foreach (Entry entry in DictionaryOfTotalEntries.Keys)
 		{
-			DictionaryOfTotalEntries[entry.Key] = 0;
+			if (entry != ImInFocus)
+			{
+				DictionaryOfTotalEntries[entry] = 0;
+			}
 		}
 		// Total values for dateTime span
 		TotYearsOut = 0;
@@ -371,14 +374,18 @@ public partial class MainPage : ContentPage
 		TotHoursOut = 0;
 		TotMinutesOut = 0;
 	}
-	private void ClearCmbndIOVars()
+
+	private void ClearCombinedIOVars(Entry ImInFocus)
 	{
-		// Values for "Combnd" dateTime span
+		// Values for "Combined" dateTime span
 		foreach (Entry entry in DictionaryOfCombinedEntries.Keys)
 		{
-			DictionaryOfCombinedEntries[entry] = 0;
+			if (entry != ImInFocus)
+			{
+				DictionaryOfCombinedEntries[entry] = 0;
+			}
 		}
-		// Combnd
+		// Combined
 		CombndYearsOut = 0;
 		CombndMonthsOut = 0;
 		CombndWeeksOut = 0;
@@ -471,7 +478,7 @@ public partial class MainPage : ContentPage
 		RWTotYMWDHM(ImInFocus);
 	}
 
-	private void ClearCmbndYMWDHM(Entry ImInFocus)
+	private void ClearCombinedYMWDHM(Entry ImInFocus)
 	{
 		foreach (Entry CurEntry in DictionaryOfCombinedEntries.Keys)
 		{
@@ -480,7 +487,7 @@ public partial class MainPage : ContentPage
 				CurEntry.Text = "";
 			}
 		}
-		ClearCmbndIOVars();
+		ClearCombinedIOVars(ImInFocus);
 	}
 
 	private void ClearTotYMWDHM(Entry ImInFocus)
@@ -492,19 +499,19 @@ public partial class MainPage : ContentPage
 				CurEntry.Text = "";
 			}
 		}
-		ClearTotIOVars();
+		ClearTotIOVars(ImInFocus);
 	}
 
 	private void ClearYMWDHM(Entry ImInFocus)
 	{
-		ClearCmbndYMWDHM(ImInFocus);
+		ClearCombinedYMWDHM(ImInFocus);
 		ClearTotYMWDHM(ImInFocus);
 	}
 
 	private void ClearAllIOVars()
 	{
-		ClearTotIOVars();
-		ClearCmbndIOVars();
+		ClearTotIOVars(null);
+		ClearCombinedIOVars(null);
 	}
 
 	private void DoClearAll()
@@ -716,6 +723,7 @@ public partial class MainPage : ContentPage
 	private void OnCombinedEntryFocused(object sender, FocusEventArgs e)
 	{
 		ClearTotYMWDHM(null);
+		//((Entry)sender).SelectionLength = ((Entry)sender).Text.Length;
 	}
 
 	private void OnCombinedEntryUnfocused(object sender, FocusEventArgs e)
@@ -748,6 +756,7 @@ public partial class MainPage : ContentPage
 	private void OnTotEntryFocused(object sender, FocusEventArgs e)
 	{
 		ClearYMWDHM((Entry)sender);
+		//((Entry)sender).SelectionLength = ((Entry)sender).Text.Length;
 	}
 
 	private void OnTotEntryUnfocused(object sender, FocusEventArgs e)
@@ -1059,27 +1068,27 @@ public partial class MainPage : ContentPage
 		} // if (DoCalcYMWDHM) ..else
 
 
-		bool TotChk = true;
+		bool TotalsAllZero = true;
 		foreach (int TheValue in DictionaryOfTotalEntries.Values)
 		{
-			TotChk &= TheValue == 0;
+			TotalsAllZero &= TheValue == 0;
 		}
 
-		bool CombinedChk = true;
+		bool CombinedsAllZero = true;
 		foreach (int TheValue in DictionaryOfCombinedEntries.Values)
 		{
-			CombinedChk &= TheValue == 0;
+			CombinedsAllZero &= TheValue == 0;
 		}
 
 		if (DoCalcEndTime)
 		{ // DoCalcEndTime = true
-			if (!TotChk || !CombinedChk)
+			if (!TotalsAllZero || !CombinedsAllZero)
 			{
-				if (TotChk || CombinedChk)
+				if (TotalsAllZero || CombinedsAllZero)
 				{
 					EndDateTimeOut = DateTime.MaxValue; // <=> no EndDateTimeOut found
 
-					if (!TotChk)
+					if (!TotalsAllZero)
 					{
 						for (int i = 0; i < DictionaryOfTotalEntries.Count; i++)
 						{
@@ -1163,7 +1172,7 @@ public partial class MainPage : ContentPage
 								}
 							}
 						}
-					} // if (!TotChk)
+					} // if (!TotalsAllZero)
 					else
 					{ // Must be Combined time span
 
@@ -1181,37 +1190,37 @@ public partial class MainPage : ContentPage
 										case (int)EntryNames.years:
 											{
 												EndDateTimeOut =
-													StartDateTimeIn.AddYears(TheKeyValuePair.Value);
+													EndDateTimeOut.AddYears(TheKeyValuePair.Value);
 												break;
 											}
 										case (int)EntryNames.months:
 											{
 												EndDateTimeOut =
-													StartDateTimeIn.AddMonths(TheKeyValuePair.Value);
+													EndDateTimeOut.AddMonths(TheKeyValuePair.Value);
 												break;
 											}
 										case (int)EntryNames.weeks:
 											{
 												EndDateTimeOut =
-													StartDateTimeIn.AddDays(TheKeyValuePair.Value * 7);
+													EndDateTimeOut.AddDays(TheKeyValuePair.Value * 7);
 												break;
 											}
 										case (int)EntryNames.days:
 											{
 												EndDateTimeOut =
-													StartDateTimeIn.AddDays(TheKeyValuePair.Value);
+													EndDateTimeOut.AddDays(TheKeyValuePair.Value);
 												break;
 											}
 										case (int)EntryNames.hours:
 											{
 												EndDateTimeOut =
-													StartDateTimeIn.AddHours(TheKeyValuePair.Value);
+													EndDateTimeOut.AddHours(TheKeyValuePair.Value);
 												break;
 											}
 										case (int)EntryNames.minutes:
 											{
 												EndDateTimeOut =
-													StartDateTimeIn.AddMinutes(TheKeyValuePair.Value);
+													EndDateTimeOut.AddMinutes(TheKeyValuePair.Value);
 												break;
 											}
 										default:
@@ -1237,7 +1246,7 @@ public partial class MainPage : ContentPage
 							i++;
 						}
 
-					}  // if (!TotChk) ... else ...
+					}  // if (!TotalsAllZero) ... else ...
 
 					if (EndDateTimeOut != DateTime.MaxValue)
 					{
@@ -1260,7 +1269,7 @@ public partial class MainPage : ContentPage
 						CalcAndShowTimeSpans();
 					}
 
-				} // if ( !(!TotChk && !CombinedChk) )
+				} // if ( !(!TotalsAllZero && !CombinedsAllZero) )
 				else
 				{
 					await DisplayAlert
@@ -1269,8 +1278,8 @@ public partial class MainPage : ContentPage
 						   , "Not both \"Total\" and \"Combined\" time spans can be used"
 						   , "OK"
 					   );
-				} // if ( !(!TotChk && !CombinedChk) ) ... else ...
-			} // if ( !(TotChk && CombinedChk) )
+				} // if ( !(!TotalsAllZero && !CombinedsAllZero) ) ... else ...
+			} // if ( !(TotalsAllZero && CombinedsAllZero) )
 			else
 			{
 				// Output values
@@ -1293,20 +1302,20 @@ public partial class MainPage : ContentPage
 				// Show Time Spans.
 				CalcAndShowTimeSpans();
 
-			} //  // if ( !(TotChk && CombinedChk) ) ... else ...
+			} //  // if ( !(TotalsAllZero && CombinedsAllZero) ) ... else ...
 		} // if (!DoCalcEndTime) ... else ...
 
 		if (DoCalcStartTime)
 		{ // DoCalcStartTime = true
 			if (!DoCalcEndTime)
 			{
-				if (!(TotChk && CombinedChk))
+				if (!(TotalsAllZero && CombinedsAllZero))
 				{
-					if (!(!TotChk && !CombinedChk))
+					if (!(!TotalsAllZero && !CombinedsAllZero))
 					{
 						StartDateTimeOut = DateTime.MaxValue; // <=> no StartDateTimeOut found
 
-						if (!TotChk)
+						if (!TotalsAllZero)
 						{
 							for (int i = 0; i < DictionaryOfTotalEntries.Count; i++)
 							{
@@ -1390,7 +1399,7 @@ public partial class MainPage : ContentPage
 									}
 								}
 							}
-						} // if (!TotChk)
+						} // if (!TotalsAllZero)
 						else
 						{ // Must be Combnd time span
 
@@ -1408,37 +1417,37 @@ public partial class MainPage : ContentPage
 											case (int)EntryNames.years:
 												{
 													StartDateTimeOut =
-														EndDateTimeIn.AddYears(-(TheKeyValuePair.Value));
+														StartDateTimeOut.AddYears(-(TheKeyValuePair.Value));
 													break;
 												}
 											case (int)EntryNames.months:
 												{
 													StartDateTimeOut =
-														EndDateTimeIn.AddMonths(-(TheKeyValuePair.Value));
+														StartDateTimeOut.AddMonths(-(TheKeyValuePair.Value));
 													break;
 												}
 											case (int)EntryNames.weeks:
 												{
 													StartDateTimeOut =
-														EndDateTimeIn.AddDays(-((TheKeyValuePair.Value) * 7));
+														StartDateTimeOut.AddDays(-((TheKeyValuePair.Value) * 7));
 													break;
 												}
 											case (int)EntryNames.days:
 												{
 													StartDateTimeOut =
-														EndDateTimeIn.AddDays(-(TheKeyValuePair.Value));
+														StartDateTimeOut.AddDays(-(TheKeyValuePair.Value));
 													break;
 												}
 											case (int)EntryNames.hours:
 												{
 													StartDateTimeOut =
-														EndDateTimeIn.AddHours(-(TheKeyValuePair.Value));
+														StartDateTimeOut.AddHours(-(TheKeyValuePair.Value));
 													break;
 												}
 											case (int)EntryNames.minutes:
 												{
 													StartDateTimeOut =
-														EndDateTimeIn.AddMinutes(-(TheKeyValuePair.Value));
+														StartDateTimeOut.AddMinutes(-(TheKeyValuePair.Value));
 													break;
 												}
 											default:
@@ -1464,7 +1473,7 @@ public partial class MainPage : ContentPage
 								i++;
 							}
 
-						}  // if (!TotChk) ... else ...
+						}  // if (!TotalsAllZero) ... else ...
 
 						if (StartDateTimeOut != DateTime.MaxValue)
 						{
@@ -1487,7 +1496,7 @@ public partial class MainPage : ContentPage
 							CalcAndShowTimeSpans();
 						}
 
-					} // if ( !(!TotChk && !CombinedChk) )
+					} // if ( !(!TotalsAllZero && !CombinedsAllZero) )
 					else
 					{
 						await DisplayAlert
@@ -1496,8 +1505,8 @@ public partial class MainPage : ContentPage
 							   , "Not both \"Total\" and \"Combined\" time spans can be used"
 							   , "OK"
 						   );
-					} // if ( !(!TotChk && !CombinedChk) ) ... else ...
-				} // if ( !(TotChk && CombinedChk) )
+					} // if ( !(!TotalsAllZero && !CombinedsAllZero) ) ... else ...
+				} // if ( !(TotalsAllZero && CombinedsAllZero) )
 				else
 				{
 
@@ -1521,7 +1530,7 @@ public partial class MainPage : ContentPage
 					// Show Time Spans.
 					CalcAndShowTimeSpans();
 
-				} //  // if ( !(TotChk && CombinedChk) ) ... else ...
+				} //  // if ( !(TotalsAllZero && CombinedsAllZero) ) ... else ...
 			} // if (!DoCalcEndTime)
 			else
 			{ // DoCalcEndTime = true
