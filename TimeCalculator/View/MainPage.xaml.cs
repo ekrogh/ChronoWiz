@@ -34,23 +34,33 @@ public partial class MainPage : ContentPage
 
 		Resources["DynamicBaseButtonStyle"] = Resources["baseButtonStyle"];
 
-		ListOfCmbndEntrys = new List<Entry>()
+		DictionaryOfCombinedEntries = new Dictionary<Entry, int>()
 		{
-			  CombndYears
-			, CombndMonths
-			, CombndWeeks
-			, CombndDays
-			, CombndHours
-			, CombndMinutes
+			{ CombndYears,      0 }
+			,
+			{ CombndMonths,     0 }
+			,
+			{ CombndWeeks,      0 }
+			,
+			{ CombndDays,       0 }
+			,
+			{ CombndHours,      0 }
+			,
+			{ CombndMinutes,    0 }
 		};
-		ListOfTotEntrys = new List<Entry>()
+		DictionaryOfTotalEntries = new Dictionary<Entry, int>()
 		{
-			  TotYears
-			, TotMonths
-			, TotWeeks
-			, TotDays
-			, TotHours
-			, TotMinutes
+			{ TotYears,     0 }
+			,
+			{ TotMonths,    0 }
+			,
+			{ TotWeeks,     0 }
+			,
+			{ TotDays,      0 }
+			,
+			{ TotHours,     0 }
+			,
+			{ TotMinutes,   0 }
 		};
 
 		StartDateIn = DateTime.Now.Date;
@@ -231,8 +241,6 @@ public partial class MainPage : ContentPage
 
 	public TimeSpan StartTimeIn { get; set; }
 
-	public bool JustDidCalculation { get; set; } = false;
-
 	public bool DoCalcStartTime { get; set; } = false;
 	public DateTime StartDateTimeOut { get; set; }
 
@@ -252,25 +260,13 @@ public partial class MainPage : ContentPage
 		set => PrivEnteredYMWDHMTimeSpan = value;
 	}
 
-
-	List<Entry> ListOfCmbndEntrys;
-	List<Entry> ListOfTotEntrys;
-
+	// Values for "Combined" dateTime span
+	private Dictionary<Entry, int> DictionaryOfCombinedEntries;
 
 	// Total values for dateTime span
-	private Int32 TotYearsIn = 0;
-	private Int32 TotMonthsIn = 0;
-	private Int32 TotWeeksIn = 0;
-	private Int32 TotDaysIn = 0;
-	private Int32 TotHoursIn = 0;
-	private Int32 TotMinutesIn = 0;
-	// Values for "Combnd" dateTime span
-	private int CombndYearsIn = 0;
-	private int CombndMonthsIn = 0;
-	private int CombndWeeksIn = 0;
-	private int CombndDaysIn = 0;
-	private int CombndHoursIn = 0;
-	private int CombndMinutesIn = 0;
+	public Dictionary<Entry, int> DictionaryOfTotalEntries;
+
+
 	// Output values
 	// Combnd
 	private int CombndYearsOut = 0;
@@ -358,15 +354,16 @@ public partial class MainPage : ContentPage
 		}
 	}
 
-	private void ClearTotIOVars()
+	private void ClearTotIOVars(Entry ImInFocus)
 	{
 		// Total values for dateTime span
-		TotYearsIn = 0;
-		TotMonthsIn = 0;
-		TotWeeksIn = 0;
-		TotDaysIn = 0;
-		TotHoursIn = 0;
-		TotMinutesIn = 0;
+		foreach (Entry entry in DictionaryOfTotalEntries.Keys)
+		{
+			if (entry != ImInFocus)
+			{
+				DictionaryOfTotalEntries[entry] = 0;
+			}
+		}
 		// Total values for dateTime span
 		TotYearsOut = 0;
 		TotMonthsOut = 0;
@@ -375,16 +372,18 @@ public partial class MainPage : ContentPage
 		TotHoursOut = 0;
 		TotMinutesOut = 0;
 	}
-	private void ClearCmbndIOVars()
+
+	private void ClearCombinedIOVars(Entry ImInFocus)
 	{
-		// Values for "Combnd" dateTime span
-		CombndYearsIn = 0;
-		CombndMonthsIn = 0;
-		CombndWeeksIn = 0;
-		CombndDaysIn = 0;
-		CombndHoursIn = 0;
-		CombndMinutesIn = 0;
-		// Combnd
+		// Values for "Combined" dateTime span
+		foreach (Entry entry in DictionaryOfCombinedEntries.Keys)
+		{
+			if (entry != ImInFocus)
+			{
+				DictionaryOfCombinedEntries[entry] = 0;
+			}
+		}
+		// Combined
 		CombndYearsOut = 0;
 		CombndMonthsOut = 0;
 		CombndWeeksOut = 0;
@@ -393,128 +392,40 @@ public partial class MainPage : ContentPage
 		CombndMinutesOut = 0;
 	}
 
-	private void EnableCmbndYMWDHM(Entry ImInFocus)
+	private void ClearCombinedYMWDHM(Entry ImInFocus)
 	{
-		foreach (Entry CurEntry in ListOfCmbndEntrys)
-		{
-			if (CurEntry != ImInFocus)
-			{
-				CurEntry.IsReadOnly = false;
-				//CurEntry.IsEnabled = true;
-			}
-		}
-	}
-
-	private void EnableTotYMWDHM(Entry ImInFocus)
-	{
-		foreach (Entry CurEntry in ListOfTotEntrys)
-		{
-			if (CurEntry != ImInFocus)
-			{
-				CurEntry.IsReadOnly = false;
-				//CurEntry.IsEnabled = true;
-			}
-		}
-	}
-
-	private void EnableYMWDHM(Entry ImInFocus)
-	{
-		EnableCmbndYMWDHM(ImInFocus);
-		EnableTotYMWDHM(ImInFocus);
-	}
-
-	private void DisableCmbndYMWDHM(Entry ImInFocus)
-	{
-		foreach (Entry CurEntry in ListOfCmbndEntrys)
-		{
-			if (CurEntry != ImInFocus)
-			{
-				CurEntry.IsReadOnly = true;
-				//CurEntry.IsEnabled = false;
-			}
-		}
-	}
-
-	private void DisableTotYMWDHM(Entry ImInFocus)
-	{
-		foreach (Entry CurEntry in ListOfTotEntrys)
-		{
-			if (CurEntry != ImInFocus)
-			{
-				CurEntry.IsReadOnly = true;
-				//CurEntry.IsEnabled = false;
-			}
-		}
-	}
-
-	private void DisableYMWDHM(Entry ImInFocus)
-	{
-		DisableCmbndYMWDHM(ImInFocus);
-		DisableTotYMWDHM(ImInFocus);
-	}
-
-	private void RWCmbndYMWDHM(Entry ImInFocus)
-	{
-		foreach (Entry CurEntry in ListOfCmbndEntrys)
-		{
-			if (CurEntry != ImInFocus)
-			{
-				CurEntry.IsReadOnly = false;
-			}
-		}
-	}
-
-	private void RWTotYMWDHM(Entry ImInFocus)
-	{
-		foreach (Entry CurEntry in ListOfTotEntrys)
-		{
-			if (CurEntry != ImInFocus)
-			{
-				CurEntry.IsReadOnly = false;
-			}
-		}
-	}
-
-	private void RWYMWDHM(Entry ImInFocus)
-	{
-		RWCmbndYMWDHM(ImInFocus);
-		RWTotYMWDHM(ImInFocus);
-	}
-
-	private void ClearCmbndYMWDHM(Entry ImInFocus)
-	{
-		foreach (Entry CurEntry in ListOfCmbndEntrys)
+		foreach (Entry CurEntry in DictionaryOfCombinedEntries.Keys)
 		{
 			if (CurEntry != ImInFocus)
 			{
 				CurEntry.Text = "";
 			}
 		}
-		ClearCmbndIOVars();
+		ClearCombinedIOVars(ImInFocus);
 	}
 
 	private void ClearTotYMWDHM(Entry ImInFocus)
 	{
-		foreach (Entry CurEntry in ListOfTotEntrys)
+		foreach (Entry CurEntry in DictionaryOfTotalEntries.Keys)
 		{
 			if (CurEntry != ImInFocus)
 			{
 				CurEntry.Text = "";
 			}
 		}
-		ClearTotIOVars();
+		ClearTotIOVars(ImInFocus);
 	}
 
 	private void ClearYMWDHM(Entry ImInFocus)
 	{
-		ClearCmbndYMWDHM(ImInFocus);
+		ClearCombinedYMWDHM(ImInFocus);
 		ClearTotYMWDHM(ImInFocus);
 	}
 
 	private void ClearAllIOVars()
 	{
-		ClearTotIOVars();
-		ClearCmbndIOVars();
+		ClearTotIOVars(null);
+		ClearCombinedIOVars(null);
 	}
 
 	private void DoClearAll()
@@ -525,7 +436,6 @@ public partial class MainPage : ContentPage
 
 		ClearYMWDHM(null);
 
-		// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
 		if (DeviceInfo.Platform == DevicePlatform.iOS)
 		{
 			CombndYears.WidthRequest = 105;
@@ -621,14 +531,8 @@ public partial class MainPage : ContentPage
 		LabelEqual.Text = "-";
 		LabelPlus.Text = "=";
 
-		if (JustDidCalculation)
-		{
-			ClearTotYMWDHM(null);
-		}
-
 		DoCalculate();
 
-		JustDidCalculation = true;
 	}
 
 	private void CheckSetEndDateTime()
@@ -723,306 +627,68 @@ public partial class MainPage : ContentPage
 
 
 	//FROM HERE Combined
-	//Combined Years...
 
-	private void OnCombndYearsFocused(object sEnder, EventArgs args)
+	private void OnCombinedEntryFocused(object sender, FocusEventArgs e)
 	{
-		CombndYearsIn = 0;
+		ClearTotYMWDHM(null);
+		//((Entry)sender).SelectionLength = ((Entry)sender).Text.Length;
 	}
 
-	private void OnCombndYearsUnfocused(object sender, FocusEventArgs e)
+	private void OnCombinedEntryUnfocused(object sender, FocusEventArgs e)
 	{
-		OnCombndYearsCompleted(sender, e);
+		OnCombinedEntryCompleted(sender, e);
 	}
 
-	private async void OnCombndYearsCompleted(object sEnder, EventArgs args)
+	private async void OnCombinedEntryCompleted(object sEnder, EventArgs args)
 	{
-		if ((CombndYears.Text.Length != 0) && !int.TryParse(CombndYears.Text, out CombndYearsIn))
+		Entry TheEntry = ((Entry)sEnder);
+		if (!int.TryParse(TheEntry.Text, out int result) && (TheEntry.Text.Length != 0))
 		{
-			CombndYearsIn = 0;
-			var TextHolder = CombndYears.Text;
-			CombndYears.Text = "";
+			DictionaryOfCombinedEntries[TheEntry] = 0;
+			var TextHolder = TheEntry.Text;
+			TheEntry.Text = "";
 			await DisplayAlert("Invalid \"Combined Years\" ", TextHolder, "OK");
-			CombndYears.Focus();
+			TheEntry.Focus();
 		}
-	}
-
-
-	//Combined Months...
-
-	private void OnCombndMonthsFocused(object sEnder, EventArgs args)
-	{
-		CombndMonthsIn = 0;
-	}
-
-	private void OnCombndMonthsUnfocused(object sender, FocusEventArgs e)
-	{
-		OnCombndMonthsCompleted(sender, e);
-	}
-
-	private async void OnCombndMonthsCompleted(object sEnder, EventArgs args)
-	{
-		if ((CombndMonths.Text.Length != 0) && !int.TryParse(CombndMonths.Text, out CombndMonthsIn))
+		else
 		{
-			CombndMonthsIn = 0;
-			var TextHolder = CombndMonths.Text;
-			CombndMonths.Text = "";
-			await DisplayAlert("Invalid \"Combined Months\" ", TextHolder, "OK");
-			CombndMonths.Focus();
+			DictionaryOfCombinedEntries[TheEntry] = result;
 		}
 	}
 
-
-	//Combined Weeks...
-
-	private void OnCombndWeeksFocused(object sEnder, EventArgs args)
-	{
-		CombndWeeksIn = 0;
-	}
-
-	private void OnCombndWeeksUnfocused(object sender, FocusEventArgs e)
-	{
-		OnCombndWeeksCompleted(sender, e);
-	}
-
-	private async void OnCombndWeeksCompleted(object sEnder, EventArgs args)
-	{
-		if ((CombndWeeks.Text.Length != 0) && !int.TryParse(CombndWeeks.Text, out CombndWeeksIn))
-		{
-			CombndWeeksIn = 0;
-			var TextHolder = CombndWeeks.Text;
-			CombndWeeks.Text = "";
-			await DisplayAlert("Invalid \"Combined Weeks\" ", TextHolder, "OK");
-			CombndWeeks.Focus();
-		}
-	}
-
-
-	//Combined Days...
-
-	private void OnCombndDaysFocused(object sEnder, EventArgs args)
-	{
-		CombndDaysIn = 0;
-	}
-
-	private void OnCombndDaysUnfocused(object sender, FocusEventArgs e)
-	{
-		OnCombndDaysCompleted(sender, e);
-	}
-
-	private async void OnCombndDaysCompleted(object sEnder, EventArgs args)
-	{
-		if ((CombndDays.Text.Length != 0) && !int.TryParse(CombndDays.Text, out CombndDaysIn))
-		{
-			CombndDaysIn = 0;
-			var TextHolder = CombndDays.Text;
-			CombndDays.Text = "";
-			await DisplayAlert("Invalid \"Combined Days\" ", TextHolder, "OK");
-			CombndDays.Focus();
-		}
-	}
-
-
-	//Combined Hours...
-
-	private void OnCombndHoursFocused(object sEnder, EventArgs args)
-	{
-		CombndHoursIn = 0;
-	}
-
-	private void OnCombndHoursUnfocused(object sender, FocusEventArgs e)
-	{
-		OnCombndHoursCompleted(sender, e);
-	}
-
-	private async void OnCombndHoursCompleted(object sEnder, EventArgs args)
-	{
-		if ((CombndHours.Text.Length != 0) && !int.TryParse(CombndHours.Text, out CombndHoursIn))
-		{
-			CombndHoursIn = 0;
-			var TextHolder = CombndHours.Text;
-			CombndHours.Text = "";
-			await DisplayAlert("Invalid \"Combined Hours\" ", TextHolder, "OK");
-			CombndHours.Focus();
-		}
-	}
-
-
-	//Combined Minutes...
-
-	private void OnCombndMinutesFocused(object sEnder, EventArgs args)
-	{
-		CombndMinutesIn = 0;
-	}
-
-	private void OnCombndMinutesUnfocused(object sender, FocusEventArgs e)
-	{
-		OnCombndMinutesCompleted(sender, e);
-	}
-
-	private async void OnCombndMinutesCompleted(object sEnder, EventArgs args)
-	{
-		if ((CombndMinutes.Text.Length != 0) && !int.TryParse(CombndMinutes.Text, out CombndMinutesIn))
-		{
-			CombndMinutesIn = 0;
-			var TextHolder = CombndMinutes.Text;
-			CombndMinutes.Text = "";
-			await DisplayAlert("Invalid \"Combined Minutes\" ", TextHolder, "OK");
-			CombndMinutes.Focus();
-		}
-	}
 	//TO HERE Combined
 
 
 	//FROM HERE Total
-	//Total Years...
 
-	private void OnTotYearsFocused(object sEnder, EventArgs args)
+	private void OnTotEntryFocused(object sender, FocusEventArgs e)
 	{
-		TotYearsIn = 0;
+		ClearYMWDHM((Entry)sender);
+		//((Entry)sender).SelectionLength = ((Entry)sender).Text.Length;
 	}
 
-	private void OnTotYearsUnfocused(object sender, FocusEventArgs e)
+	private void OnTotEntryUnfocused(object sender, FocusEventArgs e)
 	{
-		OnTotYearsCompleted(sender, e);
+		OnTotEntryCompleted(sender, e);
 	}
 
-	private async void OnTotYearsCompleted(object sEnder, EventArgs args)
+	private async void OnTotEntryCompleted(object sEnder, EventArgs args)
 	{
-		if ((TotYears.Text.Length != 0) && !Int32.TryParse(TotYears.Text, out TotYearsIn))
+		Entry TheEntry = ((Entry)sEnder);
+		if (!int.TryParse(TheEntry.Text, out int result) && (TheEntry.Text.Length != 0))
 		{
-			TotYearsIn = 0;
-			var TextHolder = TotYears.Text;
-			TotYears.Text = "";
+			DictionaryOfTotalEntries[TheEntry] = 0;
+			var TextHolder = TheEntry.Text;
+			TheEntry.Text = "";
 			await DisplayAlert("Invalid \"Total Years\" ", TextHolder, "OK");
-			TotYears.Focus();
+			TheEntry.Focus();
 		}
-	}
-
-
-	//Total Months...
-
-	private void OnTotMonthsFocused(object sEnder, EventArgs args)
-	{
-		TotMonthsIn = 0;
-	}
-
-	private void OnTotMonthsUnfocused(object sender, FocusEventArgs e)
-	{
-		OnTotMonthsCompleted(sender, e);
-	}
-
-	private async void OnTotMonthsCompleted(object sEnder, EventArgs args)
-	{
-		if ((TotMonths.Text.Length != 0) && !int.TryParse(TotMonths.Text, out TotMonthsIn))
+		else
 		{
-			TotMonthsIn = 0;
-			var TextHolder = TotMonths.Text;
-			TotMonths.Text = "";
-			await DisplayAlert("Invalid \"Total Months\" ", TextHolder, "OK");
-			TotMonths.Focus();
+			DictionaryOfTotalEntries[TheEntry] = result;
 		}
 	}
 
-
-	//Total Weeks...
-
-	private void OnTotWeeksFocused(object sEnder, EventArgs args)
-	{
-		TotWeeksIn = 0;
-	}
-
-	private void OnTotWeeksUnfocused(object sender, FocusEventArgs e)
-	{
-		OnTotWeeksCompleted(sender, e);
-	}
-
-	private async void OnTotWeeksCompleted(object sEnder, EventArgs args)
-	{
-		if ((TotWeeks.Text.Length != 0) && !int.TryParse(TotWeeks.Text, out TotWeeksIn))
-		{
-			TotWeeksIn = 0;
-			var TextHolder = TotWeeks.Text;
-			TotWeeks.Text = "";
-			await DisplayAlert("Invalid \"Total Weeks\" ", TextHolder, "OK");
-			TotWeeks.Focus();
-		}
-	}
-
-
-	//Total Days...
-
-	private void OnTotDaysFocused(object sEnder, EventArgs args)
-	{
-		TotDaysIn = 0;
-	}
-
-	private void OnTotDaysUnfocused(object sender, FocusEventArgs e)
-	{
-		OnTotDaysCompleted(sender, e);
-	}
-
-	private async void OnTotDaysCompleted(object sEnder, EventArgs args)
-	{
-		if ((TotDays.Text.Length != 0) && !int.TryParse(TotDays.Text, out TotDaysIn))
-		{
-			TotDaysIn = 0;
-			var TextHolder = TotDays.Text;
-			TotDays.Text = "";
-			await DisplayAlert("Invalid \"Total Days\" ", TextHolder, "OK");
-			TotDays.Focus();
-		}
-	}
-
-
-	//Total Hours...
-
-	private void OnTotHoursFocused(object sEnder, EventArgs args)
-	{
-		TotHoursIn = 0;
-	}
-
-	private void OnTotHoursUnfocused(object sender, FocusEventArgs e)
-	{
-		OnTotHoursCompleted(sender, e);
-	}
-
-	private async void OnTotHoursCompleted(object sEnder, EventArgs args)
-	{
-		if ((TotHours.Text.Length != 0) && !int.TryParse(TotHours.Text, out TotHoursIn))
-		{
-			TotHoursIn = 0;
-			var TextHolder = TotHours.Text;
-			TotHours.Text = "";
-			await DisplayAlert("Invalid \"Total Hours\" ", TextHolder, "OK");
-			TotHours.Focus();
-		}
-	}
-
-
-	//Total Minutes...
-
-	private void OnTotMinutesFocused(object sEnder, EventArgs args)
-	{
-		TotMinutesIn = 0;
-	}
-
-	private void OnTotMinutesUnfocused(object sender, FocusEventArgs e)
-	{
-		OnTotMinutesCompleted(sender, e);
-	}
-
-	private async void OnTotMinutesCompleted(object sEnder, EventArgs args)
-	{
-		if ((TotMinutes.Text.Length != 0) && !int.TryParse(TotMinutes.Text, out TotMinutesIn))
-		{
-			TotMinutesIn = 0;
-			var TextHolder = TotMinutes.Text;
-			TotMinutes.Text = "";
-			await DisplayAlert("Invalid \"Total Minutes\" ", TextHolder, "OK");
-			TotMinutes.Focus();
-		}
-	}
 	//TO HERE Total
 
 
@@ -1037,14 +703,8 @@ public partial class MainPage : ContentPage
 		LabelEqual.Text = "=";
 		LabelPlus.Text = "+";
 
-		if (JustDidCalculation)
-		{
-			ClearTotYMWDHM(null);
-		}
-
 		DoCalculate();
 
-		JustDidCalculation = true;
 	}
 
 
@@ -1227,18 +887,25 @@ public partial class MainPage : ContentPage
 		DoCalculate();
 	}
 
+	enum EntryNames : int
+	{
+		years = 0
+		,
+		months = 1
+		,
+		weeks = 2
+		,
+		days = 3
+		,
+		hours = 4
+		,
+		minutes = 5
+	}
+
 	private async void DoCalculate()
 	{
-		//if (DeviceInfo.Platform == DevicePlatform.GTK)
-		//{
-		//	StartTimeIn = new TimeSpan(GtkStartHourPicker.SelectedIndex, GtkStartMinutsPicker.SelectedIndex, 0);
-		//	EndTimeIn = new TimeSpan(GtkEndHourPicker.SelectedIndex, GtkEndMinutsPicker.SelectedIndex, 0);
-		//}
-		//else
-		//{
 		StartTimeIn = StartTimePicker.Time;
 		EndTimeIn = EndTimePicker.Time;
-		//}
 
 		StartDateIn = StartDatePicker.Date;
 		EndDateIn = EndDatePicker.Date;
@@ -1259,475 +926,221 @@ public partial class MainPage : ContentPage
 		{ // !DoCalcYMWDHM
 		  // Read all controls
 		  // Combined
-			if ((CombndYears.Text.Length != 0) && !int.TryParse(CombndYears.Text, out CombndYearsIn))
+			foreach (Entry CurEntry in DictionaryOfCombinedEntries.Keys)
 			{
-				CombndYearsIn = 0;
-				string TextHolder = CombndYears.Text;
-				CombndYears.Text = "";
-				await DisplayAlert("Invalid \"Combined Years\" ", TextHolder, "OK");
-				CombndYears.Focus();
-			}
-			if ((CombndMonths.Text.Length != 0) && !int.TryParse(CombndMonths.Text, out CombndMonthsIn))
-			{
-				CombndMonthsIn = 0;
-				var TextHolder = CombndMonths.Text;
-				CombndMonths.Text = "";
-				await DisplayAlert("Invalid \"Combined Months\" ", TextHolder, "OK");
-				CombndMonths.Focus();
-			}
-			if ((CombndWeeks.Text.Length != 0) && !int.TryParse(CombndWeeks.Text, out CombndWeeksIn))
-			{
-				CombndWeeksIn = 0;
-				var TextHolder = CombndWeeks.Text;
-				CombndWeeks.Text = "";
-				await DisplayAlert("Invalid \"Combined Weeks\" ", TextHolder, "OK");
-				CombndWeeks.Focus();
-			}
-			if ((CombndDays.Text.Length != 0) && !int.TryParse(CombndDays.Text, out CombndDaysIn))
-			{
-				CombndDaysIn = 0;
-				var TextHolder = CombndDays.Text;
-				CombndDays.Text = "";
-				await DisplayAlert("Invalid \"Combined Days\" ", TextHolder, "OK");
-				CombndDays.Focus();
-			}
-			if ((CombndHours.Text.Length != 0) && !int.TryParse(CombndHours.Text, out CombndHoursIn))
-			{
-				CombndHoursIn = 0;
-				var TextHolder = CombndHours.Text;
-				CombndHours.Text = "";
-				await DisplayAlert("Invalid \"Combined Hours\" ", TextHolder, "OK");
-				CombndHours.Focus();
-			}
-			if ((CombndMinutes.Text.Length != 0) && !int.TryParse(CombndMinutes.Text, out CombndMinutesIn))
-			{
-				CombndMinutesIn = 0;
-				var TextHolder = CombndMinutes.Text;
-				CombndMinutes.Text = "";
-				await DisplayAlert("Invalid \"Combined Minutes\" ", TextHolder, "OK");
-				CombndMinutes.Focus();
+				if (!int.TryParse(CurEntry.Text, out int result) && (CurEntry.Text.Length != 0))
+				{
+					DictionaryOfCombinedEntries[CurEntry] = 0;
+					string TextHolder = CurEntry.Text;
+					CurEntry.Text = "";
+					await DisplayAlert("Invalid \"Combined Value\" ", TextHolder, "OK");
+					CurEntry.Focus();
+					return;
+				}
+				else
+				{
+					DictionaryOfCombinedEntries[CurEntry] = result;
+				}
 			}
 			// Total
-			if ((TotYears.Text.Length != 0) && !Int32.TryParse(TotYears.Text, out TotYearsIn))
+			foreach (Entry CurEntry in DictionaryOfTotalEntries.Keys)
 			{
-				TotYearsIn = 0;
-				var TextHolder = TotYears.Text;
-				TotYears.Text = "";
-				await DisplayAlert("Invalid \"Total Years\" ", TextHolder, "OK");
-				TotYears.Focus();
-			}
-			if ((TotMonths.Text.Length != 0) && !Int32.TryParse(TotMonths.Text, out TotMonthsIn))
-			{
-				TotMonthsIn = 0;
-				var TextHolder = TotMonths.Text;
-				TotMonths.Text = "";
-				await DisplayAlert("Invalid \"Total Months\" ", TextHolder, "OK");
-				TotMonths.Focus();
-			}
-			if ((TotWeeks.Text.Length != 0) && !Int32.TryParse(TotWeeks.Text, out TotWeeksIn))
-			{
-				TotWeeksIn = 0;
-				var TextHolder = TotWeeks.Text;
-				TotWeeks.Text = "";
-				await DisplayAlert("Invalid \"Total Weeks\" ", TextHolder, "OK");
-				TotWeeks.Focus();
-			}
-			if ((TotDays.Text.Length != 0) && !Int32.TryParse(TotDays.Text, out TotDaysIn))
-			{
-				TotDaysIn = 0;
-				var TextHolder = TotDays.Text;
-				TotDays.Text = "";
-				await DisplayAlert("Invalid \"Total Days\" ", TextHolder, "OK");
-				TotDays.Focus();
-			}
-			if ((TotHours.Text.Length != 0) && !Int32.TryParse(TotHours.Text, out TotHoursIn))
-			{
-				TotHoursIn = 0;
-				var TextHolder = TotHours.Text;
-				TotHours.Text = "";
-				await DisplayAlert("Invalid \"Total Hours\" ", TextHolder, "OK");
-				TotHours.Focus();
-			}
-			if ((TotMinutes.Text.Length != 0) && !Int32.TryParse(TotMinutes.Text, out TotMinutesIn))
-			{
-				TotMinutesIn = 0;
-				var TextHolder = TotMinutes.Text;
-				TotMinutes.Text = "";
-				await DisplayAlert("Invalid \"Total Minutes\" ", TextHolder, "OK");
-				TotMinutes.Focus();
+				if (!int.TryParse(CurEntry.Text, out int result) && (CurEntry.Text.Length != 0))
+				{
+					DictionaryOfTotalEntries[CurEntry] = 0;
+					string TextHolder = CurEntry.Text;
+					CurEntry.Text = "";
+					await DisplayAlert("Invalid \"Total Value\" ", TextHolder, "OK");
+					CurEntry.Focus();
+					return;
+				}
+				else
+				{
+					DictionaryOfTotalEntries[CurEntry] = result;
+				}
 			}
 		} // if (DoCalcYMWDHM) ..else
 
 
+		bool TotalsAllZero = true;
+		foreach (int TheValue in DictionaryOfTotalEntries.Values)
+		{
+			TotalsAllZero &= TheValue == 0;
+		}
+
+		bool CombinedsAllZero = true;
+		foreach (int TheValue in DictionaryOfCombinedEntries.Values)
+		{
+			CombinedsAllZero &= TheValue == 0;
+		}
+
 		if (DoCalcEndTime)
 		{ // DoCalcEndTime = true
-			bool TotChk = (TotYearsIn == 0) &&
-							  (TotMonthsIn == 0) &&
-							  (TotWeeksIn == 0) &&
-							  (TotDaysIn == 0) &&
-							  (TotHoursIn == 0) &&
-							  (TotMinutesIn == 0);
-
-			bool CombndChk = (CombndYearsIn == 0) &&
-							 (CombndMonthsIn == 0) &&
-							 (CombndWeeksIn == 0) &&
-							 (CombndDaysIn == 0) &&
-							 (CombndHoursIn == 0) &&
-							 (CombndMinutesIn == 0);
-
-			if (!TotChk || !CombndChk)
+			if (!TotalsAllZero || !CombinedsAllZero)
 			{
-				if (TotChk || CombndChk)
+				if (TotalsAllZero || CombinedsAllZero)
 				{
 					EndDateTimeOut = DateTime.MaxValue; // <=> no EndDateTimeOut found
 
-					if (!TotChk)
+					if (!TotalsAllZero)
 					{
-						if (TotYearsIn != 0)
+						for (int i = 0; i < DictionaryOfTotalEntries.Count; i++)
 						{
-							if ((TotMonthsIn == 0) &&
-								(TotWeeksIn == 0) &&
-								(TotDaysIn == 0) &&
-								(TotHoursIn == 0) &&
-								(TotMinutesIn == 0))
+							if (DictionaryOfTotalEntries.ElementAt(i).Value != 0)
 							{
-								try
+								bool RestIsZero = true;
+								for (int j = i + 1; j < DictionaryOfTotalEntries.Count; j++)
 								{
-									EndDateTimeOut = StartDateTimeIn.AddYears(TotYearsIn);
+									RestIsZero &= DictionaryOfTotalEntries.ElementAt(j).Value == 0;
 								}
-								catch (ArgumentOutOfRangeException outOfRange)
-								{
-									await DisplayAlert
-									   (
-										   "Argument Out Of Range"
-										   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Total Years\" added = " + TotYearsIn.ToString()
-										   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
-										   , "OK"
-									   );
-									TotYearsIn = 0;
-									TotYears.Text = "";
-									TotYears.Focus();
-									return;
-								}
-							}
-							else
-							{
-								await DisplayAlert
-								   (
-									   "Type error"
-									   , "Only one \"Total\" value allowed"
-									   , "OK"
-								   );
-							}
-						} // if (TotYearsIn != 0)
-						else
-						{
-							if (TotMonthsIn != 0)
-							{
-								if ((TotWeeksIn == 0) &&
-									(TotDaysIn == 0) &&
-									(TotHoursIn == 0) &&
-									(TotMinutesIn == 0))
+
+								if (RestIsZero)
 								{
 									try
 									{
-										EndDateTimeOut = StartDateTimeIn.AddMonths(TotMonthsIn);
+										switch (i)
+										{
+											case (int)EntryNames.years:
+												{
+													EndDateTimeOut =
+														StartDateTimeIn.AddYears(DictionaryOfTotalEntries.ElementAt(i).Value);
+													break;
+												}
+											case (int)EntryNames.months:
+												{
+													EndDateTimeOut =
+														StartDateTimeIn.AddMonths(DictionaryOfTotalEntries.ElementAt(i).Value);
+													break;
+												}
+											case (int)EntryNames.weeks:
+												{
+													EndDateTimeOut =
+														StartDateTimeIn.AddDays((DictionaryOfTotalEntries.ElementAt(i).Value) * 7);
+													break;
+												}
+											case (int)EntryNames.days:
+												{
+													EndDateTimeOut =
+														StartDateTimeIn.AddDays(DictionaryOfTotalEntries.ElementAt(i).Value);
+													break;
+												}
+											case (int)EntryNames.hours:
+												{
+													EndDateTimeOut =
+														StartDateTimeIn.AddHours(DictionaryOfTotalEntries.ElementAt(i).Value);
+													break;
+												}
+											case (int)EntryNames.minutes:
+												{
+													EndDateTimeOut =
+														StartDateTimeIn.AddMinutes(DictionaryOfTotalEntries.ElementAt(i).Value);
+													break;
+												}
+											default:
+												break;
+										}
 									}
 									catch (ArgumentOutOfRangeException outOfRange)
 									{
 										await DisplayAlert
 										   (
 											   "Argument Out Of Range"
-											   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Total Months\" added = " + TotMonthsIn.ToString()
+											   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Total Years\" added = " + DictionaryOfTotalEntries.ElementAt(i).Value.ToString()
 											   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
 											   , "OK"
 										   );
-										TotMonthsIn = 0;
-										TotMonths.Text = "";
-										TotMonths.Focus();
+										DictionaryOfTotalEntries[DictionaryOfTotalEntries.ElementAt(i).Key] = 0;
+										DictionaryOfTotalEntries.ElementAt(i).Key.Text = "";
+										DictionaryOfTotalEntries.ElementAt(i).Key.Focus();
 										return;
 									}
-								}
+								} // if (RestIsZero)
 								else
 								{
 									await DisplayAlert
 									   (
 										   "Type error"
-										   , "Only one \"Total\" value allowed"
+										   , "Only one \"Total\" TheValue allowed"
 										   , "OK"
 									   );
 								}
-							} // if (TotMonthsIn != 0)
-							else
-							{
-								if (TotWeeksIn != 0)
-								{
-									if ((TotDaysIn == 0) &&
-									   (TotHoursIn == 0) &&
-									   (TotMinutesIn == 0))
-									{
-										try
-										{
-											EndDateTimeOut = StartDateTimeIn.AddDays(TotWeeksIn * 7);
-										}
-										catch (ArgumentOutOfRangeException outOfRange)
-										{
-											await DisplayAlert
-											   (
-												   "Argument Out Of Range"
-												   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Total Weeks\" added = " + TotWeeksIn.ToString()
-												   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
-												   , "OK"
-											   );
-											TotWeeksIn = 0;
-											TotWeeks.Text = "";
-											TotWeeks.Focus();
-											return;
-										}
-									}
-									else
-									{
-										await DisplayAlert
-										   (
-											   "Type error"
-											   , "Only one \"Total\" value allowed"
-											   , "OK"
-										   );
-									}
-								} // if (TotWeeksIn != 0)
-								else
-								{
-									if (TotDaysIn != 0)
-									{
-										if ((TotHoursIn == 0) &&
-											(TotMinutesIn == 0))
-										{
-											try
-											{
-												EndDateTimeOut = StartDateTimeIn.AddDays(TotDaysIn);
-											}
-											catch (ArgumentOutOfRangeException outOfRange)
-											{
-												await DisplayAlert
-												   (
-													   "Argument Out Of Range"
-													   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Total Days\" added = " + TotDaysIn.ToString()
-													   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
-													   , "OK"
-												   );
-												TotDaysIn = 0;
-												TotDays.Text = "";
-												TotDays.Focus();
-												return;
-											}
-										}
-										else
-										{
-											await DisplayAlert
-											   (
-												   "Type error"
-												   , "Only one \"Total\" value allowed"
-												   , "OK"
-											   );
-										}
-									} // if (TotDaysIn != 0)
-									else
-									{
-										if (TotHoursIn != 0)
-										{
-											if (TotMinutesIn == 0)
-											{
-												try
-												{
-													EndDateTimeOut = StartDateTimeIn.AddHours(TotHoursIn);
-												}
-												catch (ArgumentOutOfRangeException outOfRange)
-												{
-													await DisplayAlert
-													   (
-														   "Argument Out Of Range"
-														   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Total Hours\" added = " + TotHoursIn.ToString()
-														   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
-														   , "OK"
-													   );
-													TotHoursIn = 0;
-													TotHours.Text = "";
-													TotHours.Focus();
-													return;
-												}
-											}
-											else
-											{
-												await DisplayAlert
-												   (
-													   "Type error"
-													   , "Only one \"Total\" value allowed"
-													   , "OK"
-												   );
-											}
-										} // if (TotHoursIn != 0)
-										else
-										{
-											if (TotMinutesIn != 0)
-											{
-												try
-												{
-													EndDateTimeOut = StartDateTimeIn.AddMinutes(TotMinutesIn);
-												}
-												catch (ArgumentOutOfRangeException outOfRange)
-												{
-													await DisplayAlert
-													   (
-														   "Argument Out Of Range"
-														   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Total Minutes\" added = " + TotMinutesIn.ToString()
-														   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
-														   , "OK"
-													   );
-													TotMinutesIn = 0;
-													TotMinutes.Text = "";
-													TotMinutes.Focus();
-													return;
-												}
-											} // if (TotMinutesIn != 0)
-										} // if (TotHoursIn != 0) .. else ...
-									} // if (TotDaysIn != 0) ... else ...
-								} // if (TotWeeksIn != 0) ... else ...
-							} // if (TotMonthsIn != 0) ... else ...
-						} // if (TotYearsIn != 0) ... else ...
-					} // if (!TotChk)
+							}
+						}
+					} // if (!TotalsAllZero)
 					else
-					{ // Must be Combnd time span
+					{ // Must be Combined time span
 
 						EndDateTimeOut = StartDateTimeIn;
 
-						if (CombndYearsIn != 0)
+						int i = 0;
+						foreach (KeyValuePair<Entry, int> TheKeyValuePair in DictionaryOfCombinedEntries)
 						{
-							try
+							if (TheKeyValuePair.Value != 0)
 							{
-								EndDateTimeOut = EndDateTimeOut.AddYears(CombndYearsIn);
+								try
+								{
+									switch (i)
+									{
+										case (int)EntryNames.years:
+											{
+												EndDateTimeOut =
+													EndDateTimeOut.AddYears(TheKeyValuePair.Value);
+												break;
+											}
+										case (int)EntryNames.months:
+											{
+												EndDateTimeOut =
+													EndDateTimeOut.AddMonths(TheKeyValuePair.Value);
+												break;
+											}
+										case (int)EntryNames.weeks:
+											{
+												EndDateTimeOut =
+													EndDateTimeOut.AddDays(TheKeyValuePair.Value * 7);
+												break;
+											}
+										case (int)EntryNames.days:
+											{
+												EndDateTimeOut =
+													EndDateTimeOut.AddDays(TheKeyValuePair.Value);
+												break;
+											}
+										case (int)EntryNames.hours:
+											{
+												EndDateTimeOut =
+													EndDateTimeOut.AddHours(TheKeyValuePair.Value);
+												break;
+											}
+										case (int)EntryNames.minutes:
+											{
+												EndDateTimeOut =
+													EndDateTimeOut.AddMinutes(TheKeyValuePair.Value);
+												break;
+											}
+										default:
+											break;
+									}
+								}
+								catch (ArgumentOutOfRangeException outOfRange)
+								{
+									await DisplayAlert
+									   (
+										   "Argument Out Of Range"
+										   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Combined Years\" added = " + TheKeyValuePair.Key.ToString()
+										   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
+										   , "OK"
+									   );
+									DictionaryOfCombinedEntries[TheKeyValuePair.Key] = 0;
+									TheKeyValuePair.Key.Text = "";
+									TheKeyValuePair.Key.Focus();
+									return;
+								}
 							}
-							catch (ArgumentOutOfRangeException outOfRange)
-							{
-								await DisplayAlert
-								   (
-									   "Argument Out Of Range"
-									   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Combined Years\" added = " + CombndYearsIn.ToString()
-									   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
-									   , "OK"
-								   );
-								CombndYearsIn = 0;
-								CombndYears.Text = "";
-								CombndYears.Focus();
-								return;
-							}
-						} // if (CombndYearsIn != 0)
-						if (CombndMonthsIn != 0)
-						{
-							try
-							{
-								EndDateTimeOut = EndDateTimeOut.AddMonths(CombndMonthsIn);
-							}
-							catch (ArgumentOutOfRangeException outOfRange)
-							{
-								await DisplayAlert
-								   (
-									   "Argument Out Of Range"
-									   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Combined Months\" added = " + CombndMonthsIn.ToString()
-									   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
-									   , "OK"
-								   );
-								CombndMonthsIn = 0;
-								CombndMonths.Text = "";
-								CombndMonths.Focus();
-								return;
-							}
-						} // if (CombndMonthsIn != 0)
-						if (CombndWeeksIn != 0)
-						{
-							try
-							{
-								EndDateTimeOut = EndDateTimeOut.AddDays(CombndWeeksIn * 7);
-							}
-							catch (ArgumentOutOfRangeException outOfRange)
-							{
-								await DisplayAlert
-								   (
-									   "Argument Out Of Range"
-									   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Combined Weeks\" added = " + CombndWeeksIn.ToString()
-									   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
-									   , "OK"
-								   );
-								CombndWeeksIn = 0;
-								CombndWeeks.Text = "";
-								CombndWeeks.Focus();
-								return;
-							}
-						} // if (CombndWeeksIn != 0)
-						if (CombndDaysIn != 0)
-						{
-							try
-							{
-								EndDateTimeOut = EndDateTimeOut.AddDays(CombndDaysIn);
-							}
-							catch (ArgumentOutOfRangeException outOfRange)
-							{
-								await DisplayAlert
-								   (
-									   "Argument Out Of Range"
-									   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Combined Days\" added = " + CombndDaysIn.ToString()
-									   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
-									   , "OK"
-								   );
-								CombndDaysIn = 0;
-								CombndDays.Text = "";
-								CombndDays.Focus();
-								return;
-							}
-						} // if (CombndDaysIn != 0)
-						if (CombndHoursIn != 0)
-						{
-							try
-							{
-								EndDateTimeOut = EndDateTimeOut.AddHours(CombndHoursIn);
-							}
-							catch (ArgumentOutOfRangeException outOfRange)
-							{
-								await DisplayAlert
-								   (
-									   "Argument Out Of Range"
-									   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Combined Hours\" added = " + CombndHoursIn.ToString()
-									   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
-									   , "OK"
-								   );
-								CombndHoursIn = 0;
-								CombndHours.Text = "";
-								CombndHours.Focus();
-								return;
-							}
-						} // if (CombndHoursIn != 0)
-						if (CombndMinutesIn != 0)
-						{
-							try
-							{
-								EndDateTimeOut = EndDateTimeOut.AddMinutes(CombndMinutesIn);
-							}
-							catch (ArgumentOutOfRangeException outOfRange)
-							{
-								await DisplayAlert
-								   (
-									   "Argument Out Of Range"
-									   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Combined Minutes\" added = " + CombndMinutesIn.ToString()
-									   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
-									   , "OK"
-								   );
-								CombndMinutesIn = 0;
-								CombndMinutes.Text = "";
-								CombndMinutes.Focus();
-								return;
-							}
-						} // if (CombndMinutesIn != 0)
 
-					}  // if (!TotChk) ... else ...
+							i++;
+						}
+
+					}  // if (!TotalsAllZero) ... else ...
 
 					if (EndDateTimeOut != DateTime.MaxValue)
 					{
@@ -1750,7 +1163,7 @@ public partial class MainPage : ContentPage
 						CalcAndShowTimeSpans();
 					}
 
-				} // if ( !(!TotChk && !CombndChk) )
+				} // if ( !(!TotalsAllZero && !CombinedsAllZero) )
 				else
 				{
 					await DisplayAlert
@@ -1759,8 +1172,8 @@ public partial class MainPage : ContentPage
 						   , "Not both \"Total\" and \"Combined\" time spans can be used"
 						   , "OK"
 					   );
-				} // if ( !(!TotChk && !CombndChk) ) ... else ...
-			} // if ( !(TotChk && CombndChk) )
+				} // if ( !(!TotalsAllZero && !CombinedsAllZero) ) ... else ...
+			} // if ( !(TotalsAllZero && CombinedsAllZero) )
 			else
 			{
 				// Output values
@@ -1783,390 +1196,178 @@ public partial class MainPage : ContentPage
 				// Show Time Spans.
 				CalcAndShowTimeSpans();
 
-				//await DisplayAlert
-				//   (
-				//	   "Type error"
-				//	   , "When \"Start Date + Time\" entered and no \"End Date + Time\" either a \"Total\" or \"Combined\" time span must be entered"
-				//	   , "OK"
-				//   );
-			} //  // if ( !(TotChk && CombndChk) ) ... else ...
+			} //  // if ( !(TotalsAllZero && CombinedsAllZero) ) ... else ...
 		} // if (!DoCalcEndTime) ... else ...
 
 		if (DoCalcStartTime)
 		{ // DoCalcStartTime = true
 			if (!DoCalcEndTime)
 			{
-				bool TotChk = (TotYearsIn == 0) &&
-							  (TotMonthsIn == 0) &&
-							  (TotWeeksIn == 0) &&
-							  (TotDaysIn == 0) &&
-							  (TotHoursIn == 0) &&
-							  (TotMinutesIn == 0);
-
-				bool CombndChk = (CombndYearsIn == 0) &&
-								 (CombndMonthsIn == 0) &&
-								 (CombndWeeksIn == 0) &&
-								 (CombndDaysIn == 0) &&
-								 (CombndHoursIn == 0) &&
-								 (CombndMinutesIn == 0);
-
-				if (!(TotChk && CombndChk))
+				if (!(TotalsAllZero && CombinedsAllZero))
 				{
-					if (!(!TotChk && !CombndChk))
+					if (!(!TotalsAllZero && !CombinedsAllZero))
 					{
 						StartDateTimeOut = DateTime.MaxValue; // <=> no StartDateTimeOut found
 
-						if (!TotChk)
+						if (!TotalsAllZero)
 						{
-							if (TotYearsIn != 0)
+							for (int i = 0; i < DictionaryOfTotalEntries.Count; i++)
 							{
-								if ((TotMonthsIn == 0) &&
-									(TotWeeksIn == 0) &&
-									(TotDaysIn == 0) &&
-									(TotHoursIn == 0) &&
-									(TotMinutesIn == 0))
+								if (DictionaryOfTotalEntries.ElementAt(i).Value != 0)
 								{
-									try
+									bool RestIsZero = true;
+									for (int j = i + 1; j < DictionaryOfTotalEntries.Count; j++)
 									{
-										StartDateTimeOut = EndDateTimeIn.AddYears(-TotYearsIn);
+										RestIsZero &= DictionaryOfTotalEntries.ElementAt(j).Value == 0;
 									}
-									catch (ArgumentOutOfRangeException outOfRange)
-									{
-										await DisplayAlert
-										   (
-											   "Argument Out Of Range"
-											   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Total Years\" subtracted = " + TotYearsIn.ToString()
-											   + ".\r\nDate+Time Min. Value is " + DateTime.MinValue.ToString("u").Remove(16)
-											   , "OK"
-										   );
-										TotYearsIn = 0;
-										TotYears.Text = "";
-										TotYears.Focus();
-										return;
-									}
-								}
-								else
-								{
-									await DisplayAlert
-									   (
-										   "Type error"
-										   , "Only one \"Total\" value allowed"
-										   , "OK"
-									   );
-								}
-							} // if (TotYearsIn != 0)
-							else
-							{
-								if (TotMonthsIn != 0)
-								{
-									if ((TotWeeksIn == 0) &&
-										(TotDaysIn == 0) &&
-										(TotHoursIn == 0) &&
-										(TotMinutesIn == 0))
+
+									if (RestIsZero)
 									{
 										try
 										{
-											StartDateTimeOut = EndDateTimeIn.AddMonths(-TotMonthsIn);
+											switch (i)
+											{
+												case (int)EntryNames.years:
+													{
+														StartDateTimeOut =
+															EndDateTimeIn.AddYears(-(DictionaryOfTotalEntries.ElementAt(i).Value));
+														break;
+													}
+												case (int)EntryNames.months:
+													{
+														StartDateTimeOut =
+															EndDateTimeIn.AddMonths(-(DictionaryOfTotalEntries.ElementAt(i).Value));
+														break;
+													}
+												case (int)EntryNames.weeks:
+													{
+														StartDateTimeOut =
+															EndDateTimeIn.AddDays(-((DictionaryOfTotalEntries.ElementAt(i).Value) * 7));
+														break;
+													}
+												case (int)EntryNames.days:
+													{
+														StartDateTimeOut =
+															EndDateTimeIn.AddDays(-(DictionaryOfTotalEntries.ElementAt(i).Value));
+														break;
+													}
+												case (int)EntryNames.hours:
+													{
+														StartDateTimeOut =
+															EndDateTimeIn.AddHours(-(DictionaryOfTotalEntries.ElementAt(i).Value));
+														break;
+													}
+												case (int)EntryNames.minutes:
+													{
+														StartDateTimeOut =
+															EndDateTimeIn.AddMinutes(-(DictionaryOfTotalEntries.ElementAt(i).Value));
+														break;
+													}
+												default:
+													break;
+											}
 										}
 										catch (ArgumentOutOfRangeException outOfRange)
 										{
 											await DisplayAlert
 											   (
 												   "Argument Out Of Range"
-												   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Total Months\" subtracted = " + TotMonthsIn.ToString()
-												   + ".\r\nDate+Time Min. Value is " + DateTime.MinValue.ToString("u").Remove(16)
+												   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Total Years\" added = " + DictionaryOfTotalEntries.ElementAt(i).Value.ToString()
+												   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
 												   , "OK"
 											   );
-											TotMonthsIn = 0;
-											TotMonths.Text = "";
-											TotMonths.Focus();
+											DictionaryOfTotalEntries[DictionaryOfTotalEntries.ElementAt(i).Key] = 0;
+											DictionaryOfTotalEntries.ElementAt(i).Key.Text = "";
+											DictionaryOfTotalEntries.ElementAt(i).Key.Focus();
 											return;
 										}
-									}
+									} // if (RestIsZero)
 									else
 									{
 										await DisplayAlert
 										   (
 											   "Type error"
-											   , "Only one \"Total\" value allowed"
+											   , "Only one \"Total\" TheValue allowed"
 											   , "OK"
 										   );
 									}
-								} // if (TotMonthsIn != 0)
-								else
-								{
-									if (TotWeeksIn != 0)
-									{
-										if ((TotDaysIn == 0) &&
-										   (TotHoursIn == 0) &&
-										   (TotMinutesIn == 0))
-										{
-											try
-											{
-												StartDateTimeOut = EndDateTimeIn.AddDays(-(TotWeeksIn * 7));
-											}
-											catch (ArgumentOutOfRangeException outOfRange)
-											{
-												await DisplayAlert
-												   (
-													   "Argument Out Of Range"
-													   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Total Weeks\" subtracted = " + TotWeeksIn.ToString()
-													   + ".\r\nDate+Time Min. Value is " + DateTime.MinValue.ToString("u").Remove(16)
-													   , "OK"
-												   );
-												TotWeeksIn = 0;
-												TotWeeks.Text = "";
-												TotWeeks.Focus();
-												return;
-											}
-										}
-										else
-										{
-											await DisplayAlert
-											   (
-												   "Type error"
-												   , "Only one \"Total\" value allowed"
-												   , "OK"
-											   );
-										}
-									} // if (TotWeeksIn != 0)
-									else
-									{
-										if (TotDaysIn != 0)
-										{
-											if ((TotHoursIn == 0) &&
-												(TotMinutesIn == 0))
-											{
-												try
-												{
-													StartDateTimeOut = EndDateTimeIn.AddDays(-TotDaysIn);
-												}
-												catch (ArgumentOutOfRangeException outOfRange)
-												{
-													await DisplayAlert
-													   (
-														   "Argument Out Of Range"
-														   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Total Days\" subtracted = " + TotDaysIn.ToString()
-														   + ".\r\nDate+Time Min. Value is " + DateTime.MinValue.ToString("u").Remove(16)
-														   , "OK"
-													   );
-													TotDaysIn = 0;
-													TotDays.Text = "";
-													TotDays.Focus();
-													return;
-												}
-											}
-											else
-											{
-												await DisplayAlert
-												   (
-													   "Type error"
-													   , "Only one \"Total\" value allowed"
-													   , "OK"
-												   );
-											}
-										} // if (TotDaysIn != 0)
-										else
-										{
-											if (TotHoursIn != 0)
-											{
-												if (TotMinutesIn == 0)
-												{
-													try
-													{
-														StartDateTimeOut = EndDateTimeIn.AddHours(-TotHoursIn);
-													}
-													catch (ArgumentOutOfRangeException outOfRange)
-													{
-														await DisplayAlert
-														   (
-															   "Argument Out Of Range"
-															   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Total Hours\" subtracted = " + TotHoursIn.ToString()
-															   + ".\r\nDate+Time Min. Value is " + DateTime.MinValue.ToString("u").Remove(16)
-															   , "OK"
-														   );
-														TotHoursIn = 0;
-														TotHours.Text = "";
-														TotHours.Focus();
-														return;
-													}
-												}
-												else
-												{
-													await DisplayAlert
-													   (
-														   "Type error"
-														   , "Only one \"Total\" value allowed"
-														   , "OK"
-													   );
-												}
-											} // if (TotHoursIn != 0)
-											else
-											{
-												if (TotMinutesIn != 0)
-												{
-													try
-													{
-														StartDateTimeOut = EndDateTimeIn.AddMinutes(-TotMinutesIn);
-													}
-													catch (ArgumentOutOfRangeException outOfRange)
-													{
-														await DisplayAlert
-														   (
-															   "Argument Out Of Range"
-															   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Total Minutes\" subtracted = " + TotMinutesIn.ToString()
-															   + ".\r\nDate+Time Min. Value is " + DateTime.MinValue.ToString("u").Remove(16)
-															   , "OK"
-														   );
-														TotMinutesIn = 0;
-														TotMinutes.Text = "";
-														TotMinutes.Focus();
-														return;
-													}
-												} // if (TotMinutesIn != 0)
-												  //else
-												  //{
-												  //    MessageBox.Show("At least one Total value must be entered", "Type error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-												  //} // if (TotMinutesIn != 0) ... else ...
-											} // if (TotHoursIn != 0) .. else ...
-										} // if (TotDaysIn != 0) ... else ...
-									} // if (TotWeeksIn != 0) ... else ...
-								} // if (TotMonthsIn != 0) ... else ...
-							} // if (TotYearsIn != 0) ... else ...
-						} // if (!TotChk)
+								}
+							}
+						} // if (!TotalsAllZero)
 						else
 						{ // Must be Combnd time span
 
 							StartDateTimeOut = EndDateTimeIn;
 
-							if (CombndYearsIn != 0)
+							int i = 0;
+							foreach (KeyValuePair<Entry, int> TheKeyValuePair in DictionaryOfCombinedEntries)
 							{
-								try
+								if (TheKeyValuePair.Value != 0)
 								{
-									StartDateTimeOut = StartDateTimeOut.AddYears(-CombndYearsIn);
+									try
+									{
+										switch (i)
+										{
+											case (int)EntryNames.years:
+												{
+													StartDateTimeOut =
+														StartDateTimeOut.AddYears(-(TheKeyValuePair.Value));
+													break;
+												}
+											case (int)EntryNames.months:
+												{
+													StartDateTimeOut =
+														StartDateTimeOut.AddMonths(-(TheKeyValuePair.Value));
+													break;
+												}
+											case (int)EntryNames.weeks:
+												{
+													StartDateTimeOut =
+														StartDateTimeOut.AddDays(-((TheKeyValuePair.Value) * 7));
+													break;
+												}
+											case (int)EntryNames.days:
+												{
+													StartDateTimeOut =
+														StartDateTimeOut.AddDays(-(TheKeyValuePair.Value));
+													break;
+												}
+											case (int)EntryNames.hours:
+												{
+													StartDateTimeOut =
+														StartDateTimeOut.AddHours(-(TheKeyValuePair.Value));
+													break;
+												}
+											case (int)EntryNames.minutes:
+												{
+													StartDateTimeOut =
+														StartDateTimeOut.AddMinutes(-(TheKeyValuePair.Value));
+													break;
+												}
+											default:
+												break;
+										}
+									}
+									catch (ArgumentOutOfRangeException outOfRange)
+									{
+										await DisplayAlert
+										   (
+											   "Argument Out Of Range"
+											   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Combined Years\" added = " + TheKeyValuePair.Key.ToString()
+											   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
+											   , "OK"
+										   );
+										DictionaryOfCombinedEntries[TheKeyValuePair.Key] = 0;
+										TheKeyValuePair.Key.Text = "";
+										TheKeyValuePair.Key.Focus();
+										return;
+									}
 								}
-								catch (ArgumentOutOfRangeException outOfRange)
-								{
-									await DisplayAlert
-									   (
-										   "Argument Out Of Range"
-										   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Combined Years\" subtracted = " + CombndYearsIn.ToString()
-										   + ".\r\nDate+Time Min. Value is " + DateTime.MinValue.ToString("u").Remove(16)
-										   , "OK"
-									   );
-									CombndYearsIn = 0;
-									CombndYears.Text = "";
-									CombndYears.Focus();
-									return;
-								}
-							} // if (CombndYearsIn != 0)
-							if (CombndMonthsIn != 0)
-							{
-								try
-								{
-									StartDateTimeOut = StartDateTimeOut.AddMonths(-CombndMonthsIn);
-								}
-								catch (ArgumentOutOfRangeException outOfRange)
-								{
-									await DisplayAlert
-									   (
-										   "Argument Out Of Range"
-										   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Combined Months\" subtracted = " + CombndMonthsIn.ToString()
-										   + ".\r\nDate+Time Min. Value is " + DateTime.MinValue.ToString("u").Remove(16)
-										   , "OK"
-									   );
-									CombndMonthsIn = 0;
-									CombndMonths.Text = "";
-									CombndMonths.Focus();
-									return;
-								}
-							} // if (CombndMonthsIn != 0)
-							if (CombndWeeksIn != 0)
-							{
-								try
-								{
-									StartDateTimeOut = StartDateTimeOut.AddDays(-(CombndWeeksIn * 7));
-								}
-								catch (ArgumentOutOfRangeException outOfRange)
-								{
-									await DisplayAlert
-									   (
-										   "Argument Out Of Range"
-										   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Combined Weeks\" subtracted = " + CombndWeeksIn.ToString()
-										   + ".\r\nDate+Time Min. Value is " + DateTime.MinValue.ToString("u").Remove(16)
-										   , "OK"
-									   );
-									CombndWeeksIn = 0;
-									CombndWeeks.Text = "";
-									CombndWeeks.Focus();
-									return;
-								}
-							} // if (CombndWeeksIn != 0)
-							if (CombndDaysIn != 0)
-							{
-								try
-								{
-									StartDateTimeOut = StartDateTimeOut.AddDays(-CombndDaysIn);
-								}
-								catch (ArgumentOutOfRangeException outOfRange)
-								{
-									await DisplayAlert
-									   (
-										   "Argument Out Of Range"
-										   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Combined Days\" subtracted = " + CombndDaysIn.ToString()
-										   + ".\r\nDate+Time Min. Value is " + DateTime.MinValue.ToString("u").Remove(16)
-										   , "OK"
-									   );
-									CombndDaysIn = 0;
-									CombndDays.Text = "";
-									CombndDays.Focus();
-									return;
-								}
-							} // if (CombndDaysIn != 0)
-							if (CombndHoursIn != 0)
-							{
-								try
-								{
-									StartDateTimeOut = StartDateTimeOut.AddHours(-CombndHoursIn);
-								}
-								catch (ArgumentOutOfRangeException outOfRange)
-								{
-									await DisplayAlert
-									   (
-										   "Argument Out Of Range"
-										   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Combined Hours\" subtracted = " + CombndHoursIn.ToString()
-										   + ".\r\nDate+Time Min. Value is " + DateTime.MinValue.ToString("u").Remove(16)
-										   , "OK"
-									   );
-									CombndHoursIn = 0;
-									CombndHours.Text = "";
-									CombndHours.Focus();
-									return;
-								}
-							} // if (CombndHoursIn != 0)
-							if (CombndMinutesIn != 0)
-							{
-								try
-								{
-									StartDateTimeOut = StartDateTimeOut.AddMinutes(-CombndMinutesIn);
-								}
-								catch (ArgumentOutOfRangeException outOfRange)
-								{
-									await DisplayAlert
-									   (
-										   "Argument Out Of Range"
-										   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Combined Minutes\" subtracted = " + CombndMinutesIn.ToString()
-										   + ".\r\nDate+Time Min. Value is " + DateTime.MinValue.ToString("u").Remove(16)
-										   , "OK"
-									   );
-									CombndMinutesIn = 0;
-									CombndMinutes.Text = "";
-									CombndMinutes.Focus();
-									return;
-								}
-							} // if (CombndMinutesIn != 0)
 
-						}  // if (!TotChk) ... else ...
+								i++;
+							}
+
+						}  // if (!TotalsAllZero) ... else ...
 
 						if (StartDateTimeOut != DateTime.MaxValue)
 						{
@@ -2189,7 +1390,7 @@ public partial class MainPage : ContentPage
 							CalcAndShowTimeSpans();
 						}
 
-					} // if ( !(!TotChk && !CombndChk) )
+					} // if ( !(!TotalsAllZero && !CombinedsAllZero) )
 					else
 					{
 						await DisplayAlert
@@ -2198,8 +1399,8 @@ public partial class MainPage : ContentPage
 							   , "Not both \"Total\" and \"Combined\" time spans can be used"
 							   , "OK"
 						   );
-					} // if ( !(!TotChk && !CombndChk) ) ... else ...
-				} // if ( !(TotChk && CombndChk) )
+					} // if ( !(!TotalsAllZero && !CombinedsAllZero) ) ... else ...
+				} // if ( !(TotalsAllZero && CombinedsAllZero) )
 				else
 				{
 
@@ -2223,13 +1424,7 @@ public partial class MainPage : ContentPage
 					// Show Time Spans.
 					CalcAndShowTimeSpans();
 
-					//await DisplayAlert
-					//   (
-					//	   "Error"
-					//	   , "When \"Calculate\" \"End Date + Time\" selected then either a \"Total\" or \"Combined\" time span must be entered"
-					//	   , "OK"
-					//   );
-				} //  // if ( !(TotChk && CombndChk) ) ... else ...
+				} //  // if ( !(TotalsAllZero && CombinedsAllZero) ) ... else ...
 			} // if (!DoCalcEndTime)
 			else
 			{ // DoCalcEndTime = true
@@ -2266,34 +1461,8 @@ public partial class MainPage : ContentPage
 		LabelEqual.Text = "=";
 		LabelPlus.Text = "+";
 
-		if (JustDidCalculation)
-		{
-			ClearTotYMWDHM(null);
-		}
-
 		DoCalculate();
 
-		JustDidCalculation = true;
-	}
-
-	private void OnTotYMWDHMFocused(object sender, FocusEventArgs e)
-	{
-		if (JustDidCalculation)
-		{
-			ClearYMWDHM((Entry)sender);
-
-			JustDidCalculation = false;
-		}
-	}
-
-	private void OnCombndYMWDHMFocused(object sender, FocusEventArgs e)
-	{
-		if (JustDidCalculation)
-		{
-			ClearYMWDHM((Entry)sender);
-
-			JustDidCalculation = false;
-		}
 	}
 
 	// Calendar
@@ -2585,4 +1754,5 @@ public partial class MainPage : ContentPage
 			stream.Dispose();
 		}
 	}
+
 }

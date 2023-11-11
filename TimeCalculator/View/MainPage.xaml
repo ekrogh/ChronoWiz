@@ -343,10 +343,10 @@
 								/>
 							<Entry
 								x:Name="CombndYears"
-								Completed="OnCombndYearsCompleted"
-								Focused="OnCombndYMWDHMFocused"
+								Completed="OnCombinedEntryCompleted"
+								Focused="OnCombinedEntryFocused"
 								Style="{StaticResource baseEntryStyle}"
-								Unfocused="OnCombndYearsUnfocused"
+								Unfocused="OnCombinedEntryUnfocused"
 								/>
 						</StackLayout>
 
@@ -359,10 +359,10 @@
 								/>
 							<Entry
 								x:Name="CombndMonths"
-								Completed="OnCombndMonthsCompleted"
-								Focused="OnCombndYMWDHMFocused"
+								Completed="OnCombinedEntryCompleted"
+								Focused="OnCombinedEntryFocused"
 								Style="{StaticResource baseEntryStyle}"
-								Unfocused="OnCombndMonthsUnfocused"
+								Unfocused="OnCombinedEntryUnfocused"
 								/>
 						</StackLayout>
 
@@ -375,10 +375,10 @@
 								/>
 							<Entry
 								x:Name="CombndWeeks"
-								Completed="OnCombndWeeksCompleted"
-								Focused="OnCombndYMWDHMFocused"
+								Completed="OnCombinedEntryCompleted"
+								Focused="OnCombinedEntryFocused"
 								Style="{StaticResource baseEntryStyle}"
-								Unfocused="OnCombndWeeksUnfocused"
+								Unfocused="OnCombinedEntryUnfocused"
 								/>
 						</StackLayout>
 
@@ -391,10 +391,10 @@
 								/>
 							<Entry
 								x:Name="CombndDays"
-								Completed="OnCombndDaysCompleted"
-								Focused="OnCombndYMWDHMFocused"
+								Completed="OnCombinedEntryCompleted"
+								Focused="OnCombinedEntryFocused"
 								Style="{StaticResource baseEntryStyle}"
-								Unfocused="OnCombndDaysUnfocused"
+								Unfocused="OnCombinedEntryUnfocused"
 								/>
 						</StackLayout>
 
@@ -407,10 +407,10 @@
 								/>
 							<Entry
 								x:Name="CombndHours"
-								Completed="OnCombndHoursCompleted"
-								Focused="OnCombndYMWDHMFocused"
+								Completed="OnCombinedEntryCompleted"
+								Focused="OnCombinedEntryFocused"
 								Style="{StaticResource baseEntryStyle}"
-								Unfocused="OnCombndHoursUnfocused"
+								Unfocused="OnCombinedEntryUnfocused"
 								/>
 						</StackLayout>
 
@@ -423,10 +423,10 @@
 								/>
 							<Entry
 								x:Name="CombndMinutes"
-								Completed="OnCombndMinutesCompleted"
-								Focused="OnCombndYMWDHMFocused"
+								Completed="OnCombinedEntryCompleted"
+								Focused="OnCombinedEntryFocused"
 								Style="{StaticResource baseEntryStyle}"
-								Unfocused="OnCombndMinutesUnfocused"
+								Unfocused="OnCombinedEntryUnfocused"
 								/>
 						</StackLayout>
 
@@ -446,10 +446,10 @@
 								/>
 							<Entry
 								x:Name="TotYears"
-								Completed="OnTotYearsCompleted"
-								Focused="OnTotYMWDHMFocused"
+								Completed="OnTotEntryCompleted"
+								Focused="OnTotEntryFocused"
 								Style="{StaticResource baseEntryStyle}"
-								Unfocused="OnTotYearsUnfocused"
+								Unfocused="OnTotEntryUnfocused"
 								/>
 						</StackLayout>
 
@@ -462,10 +462,10 @@
 								/>
 							<Entry
 								x:Name="TotMonths"
-								Completed="OnTotMonthsCompleted"
-								Focused="OnTotYMWDHMFocused"
+								Completed="OnTotEntryCompleted"
+								Focused="OnTotEntryFocused"
 								Style="{StaticResource baseEntryStyle}"
-								Unfocused="OnTotMonthsUnfocused"
+								Unfocused="OnTotEntryUnfocused"
 								/>
 						</StackLayout>
 
@@ -478,10 +478,10 @@
 								/>
 							<Entry
 								x:Name="TotWeeks"
-								Completed="OnTotWeeksCompleted"
-								Focused="OnTotYMWDHMFocused"
+								Completed="OnTotEntryCompleted"
+								Focused="OnTotEntryFocused"
 								Style="{StaticResource baseEntryStyle}"
-								Unfocused="OnTotWeeksUnfocused"
+								Unfocused="OnTotEntryUnfocused"
 								/>
 						</StackLayout>
 
@@ -494,10 +494,10 @@
 								/>
 							<Entry
 								x:Name="TotDays"
-								Completed="OnTotDaysCompleted"
-								Focused="OnTotYMWDHMFocused"
+								Completed="OnTotEntryCompleted"
+								Focused="OnTotEntryFocused"
 								Style="{StaticResource baseEntryStyle}"
-								Unfocused="OnTotDaysUnfocused"
+								Unfocused="OnTotEntryUnfocused"
 								/>
 						</StackLayout>
 
@@ -510,10 +510,10 @@
 								/>
 							<Entry
 								x:Name="TotHours"
-								Completed="OnTotHoursCompleted"
-								Focused="OnTotYMWDHMFocused"
+								Completed="OnTotEntryCompleted"
+								Focused="OnTotEntryFocused"
 								Style="{StaticResource baseEntryStyle}"
-								Unfocused="OnTotHoursUnfocused"
+								Unfocused="OnTotEntryUnfocused"
 								/>
 						</StackLayout>
 
@@ -526,10 +526,10 @@
 								/>
 							<Entry
 								x:Name="TotMinutes"
-								Completed="OnTotMinutesCompleted"
-								Focused="OnTotYMWDHMFocused"
+								Completed="OnTotEntryCompleted"
+								Focused="OnTotEntryFocused"
 								Style="{StaticResource baseEntryStyle}"
-								Unfocused="OnTotMinutesUnfocused"
+								Unfocused="OnTotEntryUnfocused"
 								/>
 						</StackLayout>
 
