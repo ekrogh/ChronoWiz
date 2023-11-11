@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Formats.Tar;
 using TimeCalculator.FileHandlers;
 
 namespace TimeCalculator.View;
@@ -241,8 +242,6 @@ public partial class MainPage : ContentPage
 
 	public TimeSpan StartTimeIn { get; set; }
 
-	public bool JustDidCalculation { get; set; } = false;
-
 	public bool DoCalcStartTime { get; set; } = false;
 	public DateTime StartDateTimeOut { get; set; }
 
@@ -394,90 +393,6 @@ public partial class MainPage : ContentPage
 		CombndMinutesOut = 0;
 	}
 
-	private void EnableCmbndYMWDHM(Entry ImInFocus)
-	{
-		foreach (Entry CurEntry in DictionaryOfCombinedEntries.Keys)
-		{
-			if (CurEntry != ImInFocus)
-			{
-				CurEntry.IsReadOnly = false;
-			}
-		}
-	}
-
-	private void EnableTotYMWDHM(Entry ImInFocus)
-	{
-		foreach (Entry CurEntry in DictionaryOfTotalEntries.Keys)
-		{
-			if (CurEntry != ImInFocus)
-			{
-				CurEntry.IsReadOnly = false;
-			}
-		}
-	}
-
-	private void EnableYMWDHM(Entry ImInFocus)
-	{
-		EnableCmbndYMWDHM(ImInFocus);
-		EnableTotYMWDHM(ImInFocus);
-	}
-
-	private void DisableCmbndYMWDHM(Entry ImInFocus)
-	{
-		foreach (Entry CurEntry in DictionaryOfCombinedEntries.Keys)
-		{
-			if (CurEntry != ImInFocus)
-			{
-				CurEntry.IsReadOnly = true;
-			}
-		}
-	}
-
-	private void DisableTotYMWDHM(Entry ImInFocus)
-	{
-		foreach (Entry CurEntry in DictionaryOfTotalEntries.Keys)
-		{
-			if (CurEntry != ImInFocus)
-			{
-				CurEntry.IsReadOnly = true;
-			}
-		}
-	}
-
-	private void DisableYMWDHM(Entry ImInFocus)
-	{
-		DisableCmbndYMWDHM(ImInFocus);
-		DisableTotYMWDHM(ImInFocus);
-	}
-
-	private void RWCmbndYMWDHM(Entry ImInFocus)
-	{
-		foreach (Entry CurEntry in DictionaryOfCombinedEntries.Keys)
-		{
-			if (CurEntry != ImInFocus)
-			{
-				CurEntry.IsReadOnly = false;
-			}
-		}
-	}
-
-	private void RWTotYMWDHM(Entry ImInFocus)
-	{
-		foreach (Entry CurEntry in DictionaryOfTotalEntries.Keys)
-		{
-			if (CurEntry != ImInFocus)
-			{
-				CurEntry.IsReadOnly = false;
-			}
-		}
-	}
-
-	private void RWYMWDHM(Entry ImInFocus)
-	{
-		RWCmbndYMWDHM(ImInFocus);
-		RWTotYMWDHM(ImInFocus);
-	}
-
 	private void ClearCombinedYMWDHM(Entry ImInFocus)
 	{
 		foreach (Entry CurEntry in DictionaryOfCombinedEntries.Keys)
@@ -617,14 +532,8 @@ public partial class MainPage : ContentPage
 		LabelEqual.Text = "-";
 		LabelPlus.Text = "=";
 
-		if (JustDidCalculation)
-		{
-			ClearTotYMWDHM(null);
-		}
-
 		DoCalculate();
 
-		JustDidCalculation = true;
 	}
 
 	private void CheckSetEndDateTime()
@@ -795,14 +704,8 @@ public partial class MainPage : ContentPage
 		LabelEqual.Text = "=";
 		LabelPlus.Text = "+";
 
-		if (JustDidCalculation)
-		{
-			ClearTotYMWDHM(null);
-		}
-
 		DoCalculate();
 
-		JustDidCalculation = true;
 	}
 
 
@@ -1002,16 +905,8 @@ public partial class MainPage : ContentPage
 
 	private async void DoCalculate()
 	{
-		//if (DeviceInfo.Platform == DevicePlatform.GTK)
-		//{
-		//	StartTimeIn = new TimeSpan(GtkStartHourPicker.SelectedIndex, GtkStartMinutsPicker.SelectedIndex, 0);
-		//	EndTimeIn = new TimeSpan(GtkEndHourPicker.SelectedIndex, GtkEndMinutsPicker.SelectedIndex, 0);
-		//}
-		//else
-		//{
 		StartTimeIn = StartTimePicker.Time;
 		EndTimeIn = EndTimePicker.Time;
-		//}
 
 		StartDateIn = StartDatePicker.Date;
 		EndDateIn = EndDatePicker.Date;
@@ -1032,37 +927,37 @@ public partial class MainPage : ContentPage
 		{ // !DoCalcYMWDHM
 		  // Read all controls
 		  // Combined
-			foreach (Entry entry in DictionaryOfCombinedEntries.Keys)
+			foreach (Entry CurEntry in DictionaryOfCombinedEntries.Keys)
 			{
-				if (!int.TryParse(entry.Text, out int result) && (entry.Text.Length != 0))
+				if (!int.TryParse(CurEntry.Text, out int result) && (CurEntry.Text.Length != 0))
 				{
-					DictionaryOfCombinedEntries[entry] = 0;
-					string TextHolder = entry.Text;
-					entry.Text = "";
+					DictionaryOfCombinedEntries[CurEntry] = 0;
+					string TextHolder = CurEntry.Text;
+					CurEntry.Text = "";
 					await DisplayAlert("Invalid \"Combined Value\" ", TextHolder, "OK");
-					entry.Focus();
+					CurEntry.Focus();
 					return;
 				}
 				else
 				{
-					DictionaryOfCombinedEntries[entry] = result;
+					DictionaryOfCombinedEntries[CurEntry] = result;
 				}
 			}
 			// Total
-			foreach (Entry entry in DictionaryOfTotalEntries.Keys)
+			foreach (Entry CurEntry in DictionaryOfTotalEntries.Keys)
 			{
-				if (!int.TryParse(entry.Text, out int result) && (entry.Text.Length != 0))
+				if (!int.TryParse(CurEntry.Text, out int result) && (CurEntry.Text.Length != 0))
 				{
-					DictionaryOfTotalEntries[entry] = 0;
-					string TextHolder = entry.Text;
-					entry.Text = "";
+					DictionaryOfTotalEntries[CurEntry] = 0;
+					string TextHolder = CurEntry.Text;
+					CurEntry.Text = "";
 					await DisplayAlert("Invalid \"Total Value\" ", TextHolder, "OK");
-					entry.Focus();
+					CurEntry.Focus();
 					return;
 				}
 				else
 				{
-					DictionaryOfTotalEntries[entry] = result;
+					DictionaryOfTotalEntries[CurEntry] = result;
 				}
 			}
 		} // if (DoCalcYMWDHM) ..else
@@ -1095,7 +990,7 @@ public partial class MainPage : ContentPage
 							if (DictionaryOfTotalEntries.ElementAt(i).Value != 0)
 							{
 								bool RestIsZero = true;
-								for (int j = i; j < DictionaryOfTotalEntries.Count; j++)
+								for (int j = i + 1; j < DictionaryOfTotalEntries.Count; j++)
 								{
 									RestIsZero &= DictionaryOfTotalEntries.ElementAt(j).Value == 0;
 								}
@@ -1322,7 +1217,7 @@ public partial class MainPage : ContentPage
 								if (DictionaryOfTotalEntries.ElementAt(i).Value != 0)
 								{
 									bool RestIsZero = true;
-									for (int j = i; j < DictionaryOfTotalEntries.Count; j++)
+									for (int j = i + 1; j < DictionaryOfTotalEntries.Count; j++)
 									{
 										RestIsZero &= DictionaryOfTotalEntries.ElementAt(j).Value == 0;
 									}
@@ -1567,14 +1462,8 @@ public partial class MainPage : ContentPage
 		LabelEqual.Text = "=";
 		LabelPlus.Text = "+";
 
-		if (JustDidCalculation)
-		{
-			ClearTotYMWDHM(null);
-		}
-
 		DoCalculate();
 
-		JustDidCalculation = true;
 	}
 
 	// Calendar
