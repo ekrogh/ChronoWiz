@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace TimeCalculator
+namespace DateAndTimeCalculator
 {
 	public class Program
 	{

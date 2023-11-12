@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace TimeCalculator
+namespace DateAndTimeCalculator
 {
 	[Register("AppDelegate")]
 	public class AppDelegate : MauiUIApplicationDelegate

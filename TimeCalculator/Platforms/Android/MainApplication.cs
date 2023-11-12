@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace TimeCalculator
+namespace DateAndTimeCalculator
 {
 	[Application]
 	public class MainApplication : MauiApplication

@@ -1,4 +1,4 @@
-﻿namespace TimeCalculator;
+﻿namespace DateAndTimeCalculator;
 
 public partial class AboutHelp : ContentPage
 {
@@ -17,8 +17,9 @@ public partial class AboutHelp : ContentPage
 		}
 
 		AppNameAndVer.Text =
+							AppInfo.Current.Name
 							//"\""
-							"TimeCalculator"
+							//"DateAndTimeCalculator"
 							//+ "\""
 							+ "  Version: "
 							+ VersionTracking.Default.CurrentVersion.ToString()

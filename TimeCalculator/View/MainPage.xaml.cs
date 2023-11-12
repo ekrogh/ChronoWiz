@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Formats.Tar;
-using TimeCalculator.FileHandlers;
+using DateAndTimeCalculator.FileHandlers;
 
-namespace TimeCalculator.View;
+namespace DateAndTimeCalculator.View;
 
 // Learn more about making custom code visible in the Xamarin.Forms previewer
 // by visiting https://aka.ms/xamarinforms-previewer
