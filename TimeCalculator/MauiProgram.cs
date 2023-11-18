@@ -1,4 +1,4 @@
-﻿namespace TimeCalculator
+﻿namespace DateAndTimeCalculator
 {
 	public static class MauiProgram
 	{

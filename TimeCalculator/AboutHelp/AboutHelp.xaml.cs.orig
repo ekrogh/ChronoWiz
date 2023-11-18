@@ -17,9 +17,8 @@ public partial class AboutHelp : ContentPage
 		}
 
 		AppNameAndVer.Text =
-							AppInfo.Current.Name
 							//"\""
-							//"DateAndTimeCalculator"
+							"DateAndTimeCalculator"
 							//+ "\""
 							+ "  Version: "
 							+ VersionTracking.Default.CurrentVersion.ToString()

@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 
-namespace TimeCalculator;
+namespace DateAndTimeCalculator;
 
 public partial class OpenICS : ContentPage
 {

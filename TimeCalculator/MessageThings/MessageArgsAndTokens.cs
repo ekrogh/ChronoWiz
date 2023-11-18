@@ -1,4 +1,4 @@
-﻿namespace TimeCalculator.MessageThings;
+﻿namespace DateAndTimeCalculator.MessageThings;
 
 // .ics file
 public class SaveToIcsMessageArgs : EventArgs

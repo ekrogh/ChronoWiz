@@ -1,4 +1,4 @@
-﻿namespace TimeCalculator
+﻿namespace DateAndTimeCalculator
 {
 	public partial class App : Application
 	{

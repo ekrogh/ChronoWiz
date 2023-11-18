@@ -2,7 +2,7 @@ using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 using System;
 
-namespace TimeCalculator
+namespace DateAndTimeCalculator
 {
 	internal class Program : MauiApplication
 	{
