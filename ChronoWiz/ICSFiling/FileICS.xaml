@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+	x:Class="ChronoWiz.FileICS"
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+	xmlns:local="clr-namespace:ChronoWiz;assembly=ChronoWiz"
+	x:Name="FileICSContentPageName"
+	ios:Page.UseSafeArea="True"
+	>
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+
+			<Style
+				x:Key="baseLabelStyle"
+				x:Name="baseLabelStyleName"
+				TargetType="Label"
+				>
+				<Setter
+					Property="TextColor"
+					Value="{AppThemeBinding Light=Black,
+					                        Dark=White}"
+					/>
+			</Style>
+
+			<Style
+				x:Key="baseButtonStyle"
+				TargetType="Button"
+				>
+				<Setter
+					Property="BorderColor"
+					Value="Gray"
+					/>
+				<Setter
+					Property="TextColor"
+					Value="{AppThemeBinding Light=#FF579AE5,
+					                        Dark=#FF9E5B10}"
+					/>
+				<Setter
+					Property="BackgroundColor"
+					Value="{AppThemeBinding Light={StaticResource Primary},
+					                        Dark=#FF333333}"
+					/>
+				<Setter
+					Property="BorderWidth"
+					Value="0.5"
+					/>
+			</Style>
+
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
+	<ContentPage.Content>
+
+		<ScrollView>
+			<StackLayout
+				x:Name="TotalStack"
+				Padding="20"
+				>
+				<Image
+					Margin="0,0,0,20"
+					Source="fileics.png"
+					/>
+
+				<Button
+					x:Name="OpenICSButton"
+					Clicked="OpenICSButton_Clicked"
+					Style="{StaticResource baseButtonStyle}"
+					Text="Open"
+					/>
+
+				<Button
+					x:Name="SaveToICSButton"
+					Clicked="SaveToICSButton_ClickedAsync"
+					Style="{StaticResource baseButtonStyle}"
+					Text="Save"
+					/>
+
+
+
+			</StackLayout>
+		</ScrollView>
+
+	</ContentPage.Content>
+</ContentPage>

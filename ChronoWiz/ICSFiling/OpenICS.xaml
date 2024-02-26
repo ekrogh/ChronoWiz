@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+	x:Class="ChronoWiz.OpenICS"
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+	xmlns:local="clr-namespace:ChronoWiz;assembly=ChronoWiz"
+	x:Name="OpenICSContentPageName"
+	ios:Page.UseSafeArea="True"
+	>
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+
+			<Style
+				x:Key="baseLabelStyle"
+				x:Name="baseLabelStyleName"
+				TargetType="Label"
+				>
+				<Setter
+					Property="TextColor"
+					Value="{AppThemeBinding Light=Black,
+					                        Dark=White}"
+					/>
+			</Style>
+
+			<Style
+				x:Key="baseButtonStyle"
+				TargetType="Button"
+				>
+				<Setter
+					Property="BorderColor"
+					Value="Gray"
+					/>
+				<Setter
+					Property="TextColor"
+					Value="{AppThemeBinding Light=#FF579AE5,
+					                        Dark=#FF9E5B10}"
+					/>
+				<Setter
+					Property="BackgroundColor"
+					Value="{AppThemeBinding Light={StaticResource Primary},
+					                        Dark=#FF333333}"
+					/>
+				<Setter
+					Property="BorderWidth"
+					Value="0.5"
+					/>
+			</Style>
+
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
+
+	<ContentPage.Content>
+
+		<ScrollView>
+			<StackLayout
+				x:Name="TotalStack"
+				Margin="0,0,0,10"
+				>
+				<Image
+					Source="openics.png"
+					/>
+				<Label
+					HorizontalOptions="Start"
+					Text="Correct for time zone"
+					TextColor="{AppThemeBinding Light=Black,
+					                            Dark=White}"
+					/>
+				<Switch
+					x:Name="SwitchTimeZone"
+					HorizontalOptions="Start"
+					IsToggled="false"
+					OnColor="Green"
+					/>
+				<Button
+					Clicked="Open_Button_Clicked"
+					Style="{StaticResource baseButtonStyle}"
+					Text="Open"
+					/>
+
+			</StackLayout>
+		</ScrollView>
+
+	</ContentPage.Content>
+
+</ContentPage>
