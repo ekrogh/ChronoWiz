@@ -5,6 +5,11 @@ VisualStudioVersion = 17.8.34219.65
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChronoWiz", "ChronoWiz\ChronoWiz.csproj", "{5A0393FD-407E-4277-A7DE-ED662A9C1E2F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MajorMinorBuildRevisionNumbersXmlFile", "MajorMinorBuildRevisionNumbersXmlFile", "{67B64E48-E3FB-4458-B1A0-34692A96A59C}"
+	ProjectSection(SolutionItems) = preProject
+		MajorMinorBuildRevisionNumbers.xml = MajorMinorBuildRevisionNumbers.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
