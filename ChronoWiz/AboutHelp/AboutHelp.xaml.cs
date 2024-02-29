@@ -22,8 +22,7 @@ public partial class AboutHelp : ContentPage
 							//"ChronoWiz"
 							//+ "\""
 							+ "  Version: "
-							+ VersionTracking.Default.CurrentVersion.ToString()
-							+ VersionTracking.Default.CurrentBuild.ToString();
+							+ VersionTracking.CurrentVersion;
 	}
 
 	private async void UsersGuideButton_Clicked(object sender, EventArgs e)
