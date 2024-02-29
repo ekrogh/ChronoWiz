@@ -6,10 +6,6 @@
 	<false/>
 	<key>NSHumanReadableCopyright</key>
 	<string>ChronoWiz © 2024 eksit</string>
-	<key>UIDeviceFamily</key>
-	<array>
-		<integer>6</integer>
-	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>arm64</string>
@@ -19,6 +15,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -29,5 +26,9 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>6</integer>
+	</array>
 </dict>
 </plist>
