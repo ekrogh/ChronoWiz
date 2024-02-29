@@ -15,48 +15,37 @@
 		<ResourceDictionary>
 			<Style
 				x:Key="baseButtonStyle"
-				TargetType="Button"
-				>
+				TargetType="Button">
 				<Setter
 					Property="BorderColor"
-					Value="Gray"
-					/>
+					Value="Gray" />
 				<Setter
 					Property="TextColor"
 					Value="{AppThemeBinding Light=#FF579AE5,
-					                        Dark=#FF9E5B10}"
-					/>
+					                        Dark=#FF9E5B10}" />
 				<Setter
 					Property="BorderWidth"
-					Value="0.5"
-					/>
-				<Setter
-					Property="IsEnabled"
-					Value="True"
-					/>
-			</Style>
-
-			<!--<Style
-				x:Key="AndroidBaseButtonStyle"
-				BasedOn="{StaticResource baseButtonStyle}"
-				TargetType="Button"
-				>
+					Value="0.5" />
 				<Setter
 					Property="BackgroundColor"
-					Value="{AppThemeBinding Light=Default,
-					                        Dark=#FF333333}"
-					/>
-			</Style>-->
+					Value="{AppThemeBinding Light={StaticResource Primary},
+					                        Dark=#FF333333}" />
+			</Style>
 
 			<Style
 				x:Key="baseLabelStyle"
 				x:Name="baseLabelStyleName"
-				TargetType="Label"
-				>
+				TargetType="Label">
+				<Setter
+					Property="TextColor"
+					Value="{AppThemeBinding Light=Black,
+					                        Dark=White}" />
+				<Setter
+					Property="FontSize"
+					Value="Small" />
 				<Setter
 					Property="Margin"
-					Value="0, 50, 0, 50"
-					/>
+					Value="0, 50, 0, 50" />
 			</Style>
 
 		</ResourceDictionary>
@@ -76,7 +65,7 @@
 			<Button
 				x:Name="UsersGuideButton"
 				Clicked="UsersGuideButton_Clicked"
-				Style="{DynamicResource DynamicBaseButtonStyle}"
+				Style="{StaticResource baseButtonStyle}"
 				Text="User`s Guide"
 				/>
 			<Label
@@ -88,13 +77,13 @@
 			<Button
 				x:Name="MyUrlButton"
 				Clicked="MyUrlButton_Clicked"
-				Style="{DynamicResource DynamicBaseButtonStyle}"
+				Style="{StaticResource baseButtonStyle}"
 				Text="http://eksit.dk"
 				/>
 			<Button
 				x:Name="EmaiBtn"
 				Clicked="EmaiBtn_Clicked"
-				Style="{DynamicResource DynamicBaseButtonStyle}"
+				Style="{StaticResource baseButtonStyle}"
 				Text="timedatecalculator@eksit.dk"
 				/>
 		</StackLayout>

@@ -6,23 +6,15 @@ public partial class AboutHelp : ContentPage
 	{
 		InitializeComponent();
 
-		if (DeviceInfo.Platform == DevicePlatform.Android)
-		{
-			AboutHelpContentPageName.SetAppThemeColor(BackgroundColorProperty, Colors.White, Colors.Black);
-			Resources["DynamicBaseButtonStyle"] = Resources["AndroidBaseButtonStyle"];
-		}
-		else
-		{
-			Resources["DynamicBaseButtonStyle"] = Resources["baseButtonStyle"];
-		}
-
 		AppNameAndVer.Text =
 							AppInfo.Current.Name
-							//"\""
-							//"ChronoWiz"
-							//+ "\""
 							+ "  Version: "
-							+ VersionTracking.CurrentVersion;
+							+ VersionTracking.Default.CurrentVersion
+#if ANDROID
+							+ '.'
+							+ VersionTracking.Default.CurrentBuild
+#endif
+							;
 	}
 
 	private async void UsersGuideButton_Clicked(object sender, EventArgs e)
