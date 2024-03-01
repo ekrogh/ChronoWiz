@@ -6,7 +6,6 @@
 	<true/>
 	<key>UIDeviceFamily</key>
 	<array>
-		<string>6</string>
 		<integer>1</integer>
 		<integer>2</integer>
 	</array>

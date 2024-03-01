@@ -6,15 +6,31 @@ public partial class AboutHelp : ContentPage
 	{
 		InitializeComponent();
 
+		var curVer = AppInfo.Current.Version;
+
 		AppNameAndVer.Text =
 							AppInfo.Current.Name
 							+ "  Version: "
-							+ VersionTracking.Default.CurrentVersion
+							+ curVer.Major
+							+ '.'
+							+ curVer.Minor
+							+ '.'
+							+ curVer.Build
 #if ANDROID
 							+ '.'
-							+ VersionTracking.Default.CurrentBuild
+							+ curVer.Revision
 #endif
 							;
+
+		//		AppNameAndVer.Text =
+		//							AppInfo.Current.Name
+		//							+ "  Version: "
+		//							+ AppInfo.Current.VersionString
+		//#if ANDROID
+		//							+ '.'
+		//							+ AppInfo.Current.BuildString
+		//#endif
+		//							;
 	}
 
 	private async void UsersGuideButton_Clicked(object sender, EventArgs e)

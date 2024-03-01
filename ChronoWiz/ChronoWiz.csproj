@@ -35,6 +35,8 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<AssemblyVersion>1.1.1.1</AssemblyVersion>
+		<FileVersion>1.1.1.1</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -98,37 +100,50 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
-    <CodesignKey>Apple Development: Created via API (K928FRRPW3)</CodesignKey>
-    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignProvision></CodesignProvision>
+    <ProvisioningType>manual</ProvisioningType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
     <ApplicationId>dk.eksit.chronowiz</ApplicationId>
     <ApplicationTitle>ChronoWiz</ApplicationTitle>
+    <ApplicationDisplayVersion>1.1.1.1</ApplicationDisplayVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
     <ApplicationId>dk.eksit.chronowiz</ApplicationId>
     <ApplicationTitle>ChronoWiz</ApplicationTitle>
+    <ApplicationDisplayVersion>1.1.1.1</ApplicationDisplayVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
     <ApplicationId>dk.eksit.chronowiz</ApplicationId>
     <ApplicationTitle>ChronoWiz</ApplicationTitle>
+    <ApplicationDisplayVersion>1.1.1.1</ApplicationDisplayVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
     <ApplicationId>dk.eksit.chronowiz</ApplicationId>
     <ApplicationTitle>ChronoWiz</ApplicationTitle>
+    <ApplicationDisplayVersion>1.1.1.1</ApplicationDisplayVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'" />
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
+    <ApplicationDisplayVersion>1.1.1.1</ApplicationDisplayVersion>
+  </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'" />
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
+    <ApplicationDisplayVersion>1.1.1.1</ApplicationDisplayVersion>
+  </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'" />
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
+    <ApplicationDisplayVersion>1.1.1.1</ApplicationDisplayVersion>
+  </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'" />
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
+    <ApplicationDisplayVersion>1.1.1.1</ApplicationDisplayVersion>
+  </PropertyGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionChronoWizHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 </Project>
