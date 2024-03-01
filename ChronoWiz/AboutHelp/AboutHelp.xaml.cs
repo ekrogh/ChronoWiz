@@ -16,21 +16,11 @@ public partial class AboutHelp : ContentPage
 							+ curVer.Minor
 							+ '.'
 							+ curVer.Build
-#if ANDROID
+#if ANDROID || IOS
 							+ '.'
 							+ curVer.Revision
 #endif
 							;
-
-		//		AppNameAndVer.Text =
-		//							AppInfo.Current.Name
-		//							+ "  Version: "
-		//							+ AppInfo.Current.VersionString
-		//#if ANDROID
-		//							+ '.'
-		//							+ AppInfo.Current.BuildString
-		//#endif
-		//							;
 	}
 
 	private async void UsersGuideButton_Clicked(object sender, EventArgs e)
