@@ -219,8 +219,6 @@ public partial class MainPage : ContentPage
 
 	private bool firstTimeWdthOrHeightChanged = true;
 
-	double nativeTotalStackHeightPortrait = 732.0;
-
 
 	DatePicker MacStartDatePicker = new DatePicker();
 	DatePicker MacEndDatePicker = new DatePicker();
@@ -507,16 +505,6 @@ public partial class MainPage : ContentPage
 
 		ClearAllIOVars();
 	}
-
-
-	private double TotalStackNameScaleLast = 1.0f;
-	private double scrollViewNameScaleLast = 1.0f;
-	private double ContentPageNameScaleLast = 1.0f;
-	private double StartDateTimeStacAndPlusScaleLast = 1.0f;
-	private double entriesOuterGridScaleLast = 1.0f;
-	private double EndDateTimeAndCalculateAndClearAllButtonsStackNameScaleLast = 1.0f;
-
-
 
 
 	// Start date-time...
@@ -1470,7 +1458,6 @@ public partial class MainPage : ContentPage
 	private bool CorrectForIcsTimeZone = false;
 
 	private readonly string filetypeToReadFrom = "ics";
-	private readonly string filetypeToSaveTo = "ics";
 
 	private async void On_OpenIcsMessageReceived(object recipient, OpenIcsMessageArgs message)
 	{
