@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 .DS_Store
 .gitignore
+/Applications/ChronoWiz-1.1.1.1.pkg
