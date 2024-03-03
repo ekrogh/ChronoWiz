@@ -4,8 +4,6 @@
 <dict>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
-	<key>CFBundleIconFile</key>
-	<string>appicon.ico</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSHumanReadableCopyright</key>
@@ -34,5 +32,7 @@
 	<array>
 		<integer>6</integer>
 	</array>
+	<key>CFBundleIconFile</key>
+	<string>macppicon.ico</string>
 </dict>
 </plist>
