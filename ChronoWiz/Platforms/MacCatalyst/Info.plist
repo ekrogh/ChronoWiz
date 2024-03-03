@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleIconName</key>
+	<string>macappicon</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
@@ -32,7 +34,5 @@
 	<array>
 		<integer>6</integer>
 	</array>
-	<key>CFBundleIconFile</key>
-	<string>macppicon.ico</string>
 </dict>
 </plist>
