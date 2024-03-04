@@ -112,6 +112,7 @@
     <ApplicationId>dk.eksit.chronowiz</ApplicationId>
     <ApplicationTitle>ChronoWiz</ApplicationTitle>
     <CreatePackage>false</CreatePackage>
+    <ApplicationDisplayVersion>1.1.1</ApplicationDisplayVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
@@ -122,17 +123,20 @@
     <CodesignKey>3rd Party Mac Developer Application</CodesignKey>
     <PackageSigningKey>3rd Party Mac Developer Installer</PackageSigningKey>
     <CodesignEntitlements>Platforms\MacCatalyst\Entitlements.Debug.plist</CodesignEntitlements>
+    <ApplicationDisplayVersion>1.1.1</ApplicationDisplayVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
     <ApplicationId>dk.eksit.chronowiz</ApplicationId>
     <ApplicationTitle>ChronoWiz</ApplicationTitle>
+    <ApplicationDisplayVersion>1.1.1</ApplicationDisplayVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'" />
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
     <CreatePackage>false</CreatePackage>
+    <ApplicationDisplayVersion>1.1.1</ApplicationDisplayVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
@@ -142,9 +146,20 @@
     <PackageSigningKey>3rd Party Mac Developer Installer: Eigil Krogh (4657Q2Y6NH)</PackageSigningKey>
     <CodesignEntitlements>Platforms\MacCatalyst\Entitlements.Release.plist</CodesignEntitlements>
     <CodesignProvision></CodesignProvision>
+    <ApplicationDisplayVersion>1.1.1</ApplicationDisplayVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'" />
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
+    <ApplicationDisplayVersion>1.1.1</ApplicationDisplayVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android34.0|AnyCPU'">
+    <ApplicationDisplayVersion>1.1.1</ApplicationDisplayVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android34.0|AnyCPU'">
+    <ApplicationDisplayVersion>1.1.1</ApplicationDisplayVersion>
+  </PropertyGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionChronoWizHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 </Project>
