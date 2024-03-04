@@ -8,6 +8,10 @@ public partial class AboutHelp : ContentPage
 
 		var curVer = AppInfo.Current.Version;
 
+#if ANDROID || IOS
+		string revsn = curVer.Revision > -1 ? curVer.Revision.ToString() : "";
+#endif
+
 		AppNameAndVer.Text =
 							AppInfo.Current.Name
 							+ "  Version: "
@@ -18,7 +22,7 @@ public partial class AboutHelp : ContentPage
 							+ curVer.Build
 #if ANDROID || IOS
 							+ '.'
-							+ curVer.Revision
+							+ revsn
 #endif
 							;
 	}
