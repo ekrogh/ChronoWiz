@@ -37,12 +37,11 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 		<Version>1.1.6</Version>
 		<NeutralLanguage>en-150</NeutralLanguage>
-		<PackageCertificateThumbprint>49C81F68FEC4A18641FC0B7FE36FA2D102FD149E</PackageCertificateThumbprint>
 		<AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
 		<GenerateAppInstallerFile>False</GenerateAppInstallerFile>
 		<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
 		<AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-		<AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+		<AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
 		<GenerateTestArtifacts>True</GenerateTestArtifacts>
 		<AppInstallerUri>D:\Users\eigil\projects\MAUI\ChronoWiz\Microsoft_Instller_Pkgs</AppInstallerUri>
 		<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
@@ -50,6 +49,8 @@
 		<PackageIcon>iosmaccatalysticon.png</PackageIcon>
 		<PlatformTarget>AnyCPU</PlatformTarget>
 		<Nullable>enable</Nullable>
+		<DefaultLanguage>en</DefaultLanguage>
+		<PackageCertificateThumbprint>AA1E5FE63005C633213076948D54754A1A7D7236</PackageCertificateThumbprint>
 	</PropertyGroup>
 
 	<ItemGroup>
