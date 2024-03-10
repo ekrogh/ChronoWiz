@@ -51,6 +51,7 @@
 		<Nullable>enable</Nullable>
 		<DefaultLanguage>en</DefaultLanguage>
 		<PackageCertificateThumbprint>AA1E5FE63005C633213076948D54754A1A7D7236</PackageCertificateThumbprint>
+		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -131,7 +132,20 @@
     <ApplicationTitle>ChronoWiz</ApplicationTitle>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|x64'">
+    <ApplicationId>dk.eksit.chronowiz</ApplicationId>
+    <ApplicationTitle>ChronoWiz</ApplicationTitle>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
+    <ApplicationId>dk.eksit.chronowiz</ApplicationId>
+    <ApplicationTitle>ChronoWiz</ApplicationTitle>
+    <CreatePackage>false</CreatePackage>
+    <ApplicationDisplayVersion>1.1.6</ApplicationDisplayVersion>
+    <ApplicationVersion>6</ApplicationVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|x64'">
     <ApplicationId>dk.eksit.chronowiz</ApplicationId>
     <ApplicationTitle>ChronoWiz</ApplicationTitle>
     <CreatePackage>false</CreatePackage>
@@ -151,7 +165,26 @@
     <ApplicationVersion>6</ApplicationVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|x64'">
+    <ApplicationId>dk.eksit.chronowiz</ApplicationId>
+    <ApplicationTitle>ChronoWiz</ApplicationTitle>
+    <CreatePackage>false</CreatePackage>
+    <EnablePackageSigning>true</EnablePackageSigning>
+    <CodesignKey>3rd Party Mac Developer Application</CodesignKey>
+    <PackageSigningKey>3rd Party Mac Developer Installer</PackageSigningKey>
+    <CodesignEntitlements>Platforms\MacCatalyst\Entitlements.Debug.plist</CodesignEntitlements>
+    <ApplicationDisplayVersion>1.1.6</ApplicationDisplayVersion>
+    <ApplicationVersion>6</ApplicationVersion>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
+    <ApplicationId>dk.eksit.chronowiz</ApplicationId>
+    <ApplicationTitle>ChronoWiz</ApplicationTitle>
+    <ApplicationDisplayVersion>1.1.6</ApplicationDisplayVersion>
+    <ApplicationVersion>6</ApplicationVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|x64'">
     <ApplicationId>dk.eksit.chronowiz</ApplicationId>
     <ApplicationTitle>ChronoWiz</ApplicationTitle>
     <ApplicationDisplayVersion>1.1.6</ApplicationDisplayVersion>
@@ -161,6 +194,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'" />
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
+    <CreatePackage>false</CreatePackage>
+    <ApplicationDisplayVersion>1.1.6</ApplicationDisplayVersion>
+    <ApplicationVersion>6</ApplicationVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|x64'">
     <CreatePackage>false</CreatePackage>
     <ApplicationDisplayVersion>1.1.6</ApplicationDisplayVersion>
     <ApplicationVersion>6</ApplicationVersion>
@@ -177,7 +216,23 @@
     <ApplicationVersion>6</ApplicationVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|x64'">
+    <CreatePackage>false</CreatePackage>
+    <EnablePackageSigning>true</EnablePackageSigning>
+    <CodesignKey>3rd Party Mac Developer Application</CodesignKey>
+    <PackageSigningKey>3rd Party Mac Developer Installer: Eigil Krogh (4657Q2Y6NH)</PackageSigningKey>
+    <CodesignEntitlements>Platforms\MacCatalyst\Entitlements.Release.plist</CodesignEntitlements>
+    <CodesignProvision />
+    <ApplicationDisplayVersion>1.1.6</ApplicationDisplayVersion>
+    <ApplicationVersion>6</ApplicationVersion>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
+    <ApplicationDisplayVersion>1.1.6</ApplicationDisplayVersion>
+    <ApplicationVersion>6</ApplicationVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|x64'">
     <ApplicationDisplayVersion>1.1.6</ApplicationDisplayVersion>
     <ApplicationVersion>6</ApplicationVersion>
   </PropertyGroup>
@@ -187,7 +242,17 @@
     <ApplicationVersion>6</ApplicationVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android34.0|x64'">
+    <ApplicationDisplayVersion>1.1.6</ApplicationDisplayVersion>
+    <ApplicationVersion>6</ApplicationVersion>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android34.0|AnyCPU'">
+    <ApplicationDisplayVersion>1.1.6</ApplicationDisplayVersion>
+    <ApplicationVersion>6</ApplicationVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android34.0|x64'">
     <ApplicationDisplayVersion>1.1.6</ApplicationDisplayVersion>
     <ApplicationVersion>6</ApplicationVersion>
   </PropertyGroup>
@@ -197,7 +262,17 @@
     <ApplicationVersion>6</ApplicationVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.22621.0|x64'">
+    <ApplicationDisplayVersion>1.1.6</ApplicationDisplayVersion>
+    <ApplicationVersion>6</ApplicationVersion>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.22621.0|AnyCPU'">
+    <ApplicationDisplayVersion>1.1.6</ApplicationDisplayVersion>
+    <ApplicationVersion>6</ApplicationVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.22621.0|x64'">
     <ApplicationDisplayVersion>1.1.6</ApplicationDisplayVersion>
     <ApplicationVersion>6</ApplicationVersion>
   </PropertyGroup>
