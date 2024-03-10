@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" IgnorableNamespaces="uap rescap">
-  <Identity Name="maui-package-name-placeholder" Publisher="CN=C2E1AE67-4CF2-4308-9E4D-4A6C24FA7B0B" Version="1.1.6.0" />
-  <mp:PhoneIdentity PhoneProductId="AF68C5E6-4708-49EE-A0A2-5AC8897F9594" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="57158guitarFineTune.18753B9934CB" Publisher="CN=C2E1AE67-4CF2-4308-9E4D-4A6C24FA7B0B" Version="1.1.6.0" />
+  <mp:PhoneIdentity PhoneProductId="196886ad-c63f-495a-ab0b-99778fd8406d" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>$placeholder$</DisplayName>
-    <PublisherDisplayName>User Name</PublisherDisplayName>
+    <DisplayName>ChronoWiz</DisplayName>
+    <PublisherDisplayName>Eigil Krogh</PublisherDisplayName>
     <Logo>$placeholder$.png</Logo>
   </Properties>
   <Dependencies>
@@ -16,7 +16,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="$targetentrypoint$">
-      <uap:VisualElements DisplayName="$placeholder$" Description="$placeholder$" Square150x150Logo="$placeholder$.png" Square44x44Logo="$placeholder$.png" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="ChronoWiz" Description="$placeholder$" Square150x150Logo="$placeholder$.png" Square44x44Logo="$placeholder$.png" BackgroundColor="transparent">
         <uap:DefaultTile Square71x71Logo="$placeholder$.png" Wide310x150Logo="$placeholder$.png" Square310x310Logo="$placeholder$.png" />
         <uap:SplashScreen Image="$placeholder$.png" />
         <uap:InitialRotationPreference>
