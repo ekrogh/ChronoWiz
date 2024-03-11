@@ -1,0 +1,1 @@
+java -jar pepk.jar --keystore=ChronoWiz_Keystore.jks --alias=upload --output=ChronoWiz.zip --include-cert --rsa-aes-encryption --encryption-key-path=./ChronoWiz_upload_certificate.pem

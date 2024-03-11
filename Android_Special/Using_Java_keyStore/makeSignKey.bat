@@ -1,0 +1,2 @@
+java -jar pepk.jar --keystore=keystore.jks --alias=upload --output=output.keystore --include-cert --rsa-aes-encryption --encryption-key-path=./encryption_public_key.pem
+@REM java -jar pepk.jar --keystore=keystore.jks --alias=upload --output=output.zip --include-cert --rsa-aes-encryption --encryption-key-path=./encryption_public_key.pem
