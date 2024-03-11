@@ -1,1 +1,1 @@
-dotnet publish -f net8.0-android -c Release -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=.\Android_Special\AndroidStudio_Made\ChronoWiz_Keystore.jks -p:AndroidSigningKeyAlias=upload -p:AndroidSigningKeyPass=6taura -p:AndroidSigningStorePass=6taura
+dotnet publish -f net8.0-android34.0 -c Release -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=D:\Users\eigil\projects\MAUI\ChronoWiz\Android_Special\Using_Java_keyStore\keystore.jks -p:AndroidSigningKeyAlias=upload -p:AndroidSigningKeyPass=6taura -p:AndroidSigningStorePass=6taura
