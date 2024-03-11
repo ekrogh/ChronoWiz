@@ -50,7 +50,7 @@
 		<PlatformTarget>AnyCPU</PlatformTarget>
 		<Nullable>enable</Nullable>
 		<DefaultLanguage>en</DefaultLanguage>
-		<PackageCertificateThumbprint>AA1E5FE63005C633213076948D54754A1A7D7236</PackageCertificateThumbprint>
+		<PackageCertificateThumbprint>AE5B54F637685E8CEA777F2FC66001BFAD0CA9DB</PackageCertificateThumbprint>
 		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 

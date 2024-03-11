@@ -29,22 +29,6 @@
           <uap:Rotation Preference="landscape" />
         </uap:InitialRotationPreference>
       </uap:VisualElements>
-      <Extensions>
-        <uap:Extension Category="windows.fileOpenPicker">
-          <uap:FileOpenPicker>
-            <uap:SupportedFileTypes>
-              <uap:FileType>.ics</uap:FileType>
-            </uap:SupportedFileTypes>
-          </uap:FileOpenPicker>
-        </uap:Extension>
-        <uap:Extension Category="windows.fileSavePicker">
-          <uap:FileSavePicker>
-            <uap:SupportedFileTypes>
-              <uap:FileType>.ics</uap:FileType>
-            </uap:SupportedFileTypes>
-          </uap:FileSavePicker>
-        </uap:Extension>
-      </Extensions>
     </Application>
   </Applications>
   <Capabilities>
