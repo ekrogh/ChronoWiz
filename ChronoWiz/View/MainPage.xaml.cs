@@ -1,6 +1,6 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using ChronoWiz.FileHandlers;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using ChronoWiz.FileHandlers;
 
 namespace ChronoWiz.View;
 
