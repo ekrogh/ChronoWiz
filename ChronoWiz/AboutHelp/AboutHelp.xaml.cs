@@ -29,9 +29,9 @@ public partial class AboutHelp : ContentPage
 
 	private async void UsersGuideButton_Clicked(object sender, EventArgs e)
 	{
-		if (await Launcher.CanOpenAsync(new Uri("http://eksit.dk/users-guide-2/")))
+		if (await Launcher.CanOpenAsync(new Uri("http://eksit.dk/users-guide-3/")))
 		{
-			await Launcher.OpenAsync(new Uri("http://eksit.dk/users-guide-2/"));
+			await Launcher.OpenAsync(new Uri("http://eksit.dk/users-guide-3/"));
 		}
 	}
 
@@ -45,9 +45,9 @@ public partial class AboutHelp : ContentPage
 
 	private async void EmaiBtn_Clicked(object sender, EventArgs e)
 	{
-		if (await Launcher.CanOpenAsync(new Uri("mailto://timedatecalculator@eksit.dk")))
+		if (await Launcher.CanOpenAsync(new Uri("mailto://eks@eksit.dk")))
 		{
-			await Launcher.OpenAsync(new Uri("mailto://timedatecalculator@eksit.dk"));
+			await Launcher.OpenAsync(new Uri("mailto://eks@eksit.dk"));
 		}
 	}
 }

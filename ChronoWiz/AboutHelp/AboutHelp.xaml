@@ -84,7 +84,7 @@
 				x:Name="EmaiBtn"
 				Clicked="EmaiBtn_Clicked"
 				Style="{StaticResource baseButtonStyle}"
-				Text="timedatecalculator@eksit.dk"
+				Text="eks@eksit.dk"
 				/>
 		</StackLayout>
 	</ContentPage.Content>
