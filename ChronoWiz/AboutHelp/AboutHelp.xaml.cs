@@ -29,25 +29,19 @@ public partial class AboutHelp : ContentPage
 
 	private async void UsersGuideButton_Clicked(object sender, EventArgs e)
 	{
-		if (await Launcher.CanOpenAsync(new Uri("http://eksit.dk/users-guide-3/")))
-		{
-			await Launcher.OpenAsync(new Uri("http://eksit.dk/users-guide-3/"));
-		}
+		_ = await Browser.Default.OpenAsync
+				(new Uri("http://eksit.dk/users-guide-3/"), BrowserLaunchMode.SystemPreferred);
 	}
 
 	private async void MyUrlButton_Clicked(object sender, EventArgs e)
 	{
-		if (await Launcher.CanOpenAsync(new Uri("http://eksit.dk/")))
-		{
-			await Launcher.OpenAsync(new Uri("http://eksit.dk/"));
-		}
+		_ = await Browser.Default.OpenAsync
+			(new Uri("http://eksit.dk/"), BrowserLaunchMode.SystemPreferred);
 	}
 
 	private async void EmaiBtn_Clicked(object sender, EventArgs e)
 	{
-		if (await Launcher.CanOpenAsync(new Uri("mailto://eks@eksit.dk")))
-		{
-			await Launcher.OpenAsync(new Uri("mailto://eks@eksit.dk"));
-		}
+		_ = await Browser.Default.OpenAsync
+			(new Uri("mailto:eks@eksit.dk"), BrowserLaunchMode.SystemPreferred);
 	}
 }
