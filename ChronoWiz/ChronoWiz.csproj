@@ -105,7 +105,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
     <CodesignKey>Apple Distribution: Eigil Krogh (4657Q2Y6NH)</CodesignKey>
-    <CodesignProvision></CodesignProvision>
+    <CodesignProvision>
+    </CodesignProvision>
     <ProvisioningType>manual</ProvisioningType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
