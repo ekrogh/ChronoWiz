@@ -1717,6 +1717,11 @@ public partial class MainPage : ContentPage
 				, true
 			);
 		}
+		else
+		{
+			var msg = fileSaveResult.Exception.ToString();
+			await Shell.Current.DisplayAlert("Error", msg, "OK");
+		}
 	}
 
 	[RelayCommand]
