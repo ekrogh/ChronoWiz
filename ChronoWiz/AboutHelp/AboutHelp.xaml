@@ -15,37 +15,46 @@
 		<ResourceDictionary>
 			<Style
 				x:Key="baseButtonStyle"
-				TargetType="Button">
+				TargetType="Button"
+				>
 				<Setter
 					Property="BorderColor"
-					Value="Gray" />
+					Value="Gray"
+					/>
 				<Setter
 					Property="TextColor"
-					Value="{AppThemeBinding Light=#FF579AE5,
-					                        Dark=#FF9E5B10}" />
+					Value="{AppThemeBinding Light=#FFAED42B,
+					                        Dark=#FFCCCCCC}"
+					/>
 				<Setter
 					Property="BorderWidth"
-					Value="0.5" />
+					Value="0.5"
+					/>
 				<Setter
 					Property="BackgroundColor"
 					Value="{AppThemeBinding Light={StaticResource Primary},
-					                        Dark=#FF333333}" />
+					                        Dark=#FF333333}"
+					/>
 			</Style>
 
 			<Style
 				x:Key="baseLabelStyle"
 				x:Name="baseLabelStyleName"
-				TargetType="Label">
+				TargetType="Label"
+				>
 				<Setter
 					Property="TextColor"
 					Value="{AppThemeBinding Light=Black,
-					                        Dark=White}" />
+					                        Dark=White}"
+					/>
 				<Setter
 					Property="FontSize"
-					Value="Small" />
+					Value="Small"
+					/>
 				<Setter
 					Property="Margin"
-					Value="0, 50, 0, 50" />
+					Value="0, 50, 0, 50"
+					/>
 			</Style>
 
 		</ResourceDictionary>
