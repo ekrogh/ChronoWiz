@@ -55,8 +55,8 @@
 					/>
 				<Setter
 					Property="TextColor"
-					Value="{AppThemeBinding Light=#FF579AE5,
-					                        Dark=#FF9E5B10}"
+					Value="{AppThemeBinding Light=#FFAED42B,
+					                        Dark=#FFCCCCCC}"
 					/>
 				<Setter
 					Property="BackgroundColor"

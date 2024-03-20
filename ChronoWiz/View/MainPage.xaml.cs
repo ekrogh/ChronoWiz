@@ -1720,19 +1720,12 @@ public partial class MainPage : ContentPage
 		}
 		else
 		{
-<<<<<<< HEAD
-			var msg = fileSaveResult.Exception.ToString();
-			await Shell.Current.DisplayAlert("Error", msg, "OK");
-		}
-=======
 			var msg = $"File is not saved !!"
 				+
 				$"\n\nException {fileSaveResult.Exception.ToString()}";
 
 			await Shell.Current.DisplayAlert("Error", msg, "OK");
 		}
-
->>>>>>> 630e0e1 (The most significant changes include the update of `Microsoft.Maui.Controls` and `Microsoft.Maui.Controls.Compatibility` packages in `ChronoWiz.csproj` file, the downgrade of the target Android version in the same file, and the addition of an error handling block in `MainPage.xaml.cs` file.)
 	}
 
 	[RelayCommand]
