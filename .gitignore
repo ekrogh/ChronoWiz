@@ -364,3 +364,4 @@ FodyWeavers.xsd
 .DS_Store
 .gitignore
 /Applications/ChronoWiz-1.1.1.1.pkg
+/ChronoWiz/View/MainPage.xaml.cs.LOCAL.cs.orig
