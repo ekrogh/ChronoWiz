@@ -1,0 +1,96 @@
+name: timedatecalculator
+base: core22
+version: "6.18.41"
+summary: Calculates times and time spans
+description: |
+  timedatecalculator
+  calculates time and date from start-/end time
+  and time span or time span from start- and end time and date
+grade: stable # must be 'stable' to release into candidate/stable channels
+confinement: strict # use 'strict' once you have the right plugs and slots
+# confinement: devmode # use 'strict' once you have the right plugs and slots
+# grade: stable # must be 'stable' to release into candidate/stable channels
+# confinement: strict # use 'strict' once you have the right plugs and slots
+# confinement: devmode # use 'strict' once you have the right plugs and slots
+
+architectures:
+  - build-on: armhf
+  - build-on: arm64
+  - build-on: amd64
+  # - build-on: s390x
+  # - build-on: ppc64el
+  # - build-on: i386
+
+layout:
+  /usr/lib/cli/gdk-sharp-2.0:
+    symlink: $SNAP/usr/lib/cli/gdk-sharp-2.0
+  /usr/lib/cli/gtk-sharp-2.0:
+    symlink: $SNAP/usr/lib/cli/gtk-sharp-2.0
+  /usr/lib/cli/glib-sharp-2.0:
+    symlink: $SNAP/usr/lib/cli/glib-sharp-2.0
+  $SNAP/usr/lib/cli/gtk-sharp-2.0/libgtk-x11-2.0.so.0:
+    symlink: $SNAP/usr/lib/x86_64-linux-gnu/libgtk-x11-2.0.so.0
+  $SNAP/usr/lib/cli/gtk-sharp-2.0/libgtk-x11-2.0.so.0.so:
+    symlink: $SNAP/usr/lib/x86_64-linux-gnu/libgtk-x11-2.0.so.0
+  $SNAP/usr/lib/cli/gtk-sharp-2.0/libMonoSupportW.so:
+    symlink: $SNAP/usr/lib/libMonoSupportW.so
+  $SNAP/usr/lib/cli/glib-sharp-2.0/libglib-2.0.so.0:
+    symlink: $SNAP/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0
+  $SNAP/usr/lib/cli/glib-sharp-2.0/libgobject-2.0.so.0:
+    symlink: $SNAP/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0
+  /usr/lib/cli/pango-sharp-2.0:
+    symlink: $SNAP/usr/lib/cli/pango-sharp-2.0
+
+environment:
+  MONO_CFG_DIR: $SNAP/etc
+  MONO_CONFIG: $SNAP/etc/mono/config
+  MONO_GAC_PREFIX: $SNAP/usr/lib/mono
+  MONO_PATH: $SNAP/usr/lib/x86_64-linux-gnu:$SNAP/etc/mono:$SNAP/usr/bin:$SNAP/usr/lib:$SNAP/usr/lib/mono:$SNAP/usr/share/mono:$SNAP/usr/lib/cli:$SNAP/usr/lib/cli/atk-sharp-2.0:$SNAP/usr/lib/cli/gdk-sharp-2.0:$SNAP/usr/lib/cli/gtk-sharp-2.0:$SNAP/usr/lib/cli/glib-sharp-2.0
+
+package-repositories:
+  - type: apt
+    formats: [deb]
+    components: [main]
+    suites: [stable-bionic]
+    key-id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+    url: https://download.mono-project.com/repo/ubuntu
+
+parts:
+  timedatecalculator:
+    source: .
+    plugin: dotnet
+    dotnet-build-configuration: Release
+    dotnet-self-contained-runtime-identifier: linux-x64
+    override-build: |
+      cp ./eksfind.sh $SNAPCRAFT_PART_INSTALL/
+      cp ./ekstxtfind.sh $SNAPCRAFT_PART_INSTALL/
+      cp ./runTDC.sh $SNAPCRAFT_PART_INSTALL/
+      nuget restore
+      cd TimeDateCalculator/TimeDateCalculator.gtk
+      msbuild -t:Rebuild -p:Configuration=release -r:true
+      cd bin/Release
+      # cd Debug
+      cp -rf ./* $SNAPCRAFT_PART_INSTALL/
+    build-packages:
+      - libxml-sax-perl
+      - curl
+      - nuget
+      - apt-transport-https
+      - dirmngr
+      - libgtk2.0-cil-dev
+      - libglade2.0-cil-dev
+      - mono-devel
+      - msbuild
+    stage-packages:
+      - libxml-sax-perl
+      - ca-certificates-mono
+      - gtk-sharp2
+      - libglade2.0-cil
+      - mono-complete
+
+apps:
+  timedatecalculator:
+    extensions: [gnome]
+    command: runTDC.sh
+    plugs:
+      - home

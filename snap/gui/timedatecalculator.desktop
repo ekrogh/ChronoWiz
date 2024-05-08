@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=6.18.41
+Type=Application
+Terminal=false
+Exec=timedatecalculator
+Name=timedatecalculator
+Comment=Time, Date and Time Span calculator
+Icon=${SNAP}/meta/gui/timedatecalculator.png
