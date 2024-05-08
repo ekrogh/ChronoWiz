@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.1.1
+Type=Application
+Terminal=false
+Exec=chronowiz
+Name=chronowiz
+Comment=Time, Date and Time Span calculator
+Icon=${SNAP}/meta/gui/chronowiz.png
