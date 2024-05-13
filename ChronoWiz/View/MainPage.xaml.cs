@@ -1,6 +1,8 @@
 ﻿using ChronoWiz.FileHandlers;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Maui.Devices;
+using Microsoft.Maui.Devices.Sensors;
 
 namespace ChronoWiz.View;
 

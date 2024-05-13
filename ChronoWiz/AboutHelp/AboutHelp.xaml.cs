@@ -1,4 +1,5 @@
-﻿namespace ChronoWiz;
+﻿using Microsoft.Maui.ApplicationModel;
+namespace ChronoWiz;
 
 public partial class AboutHelp : ContentPage
 {

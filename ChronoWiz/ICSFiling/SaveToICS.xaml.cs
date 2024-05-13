@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Maui.Devices.Sensors;
 
 namespace ChronoWiz;
 
