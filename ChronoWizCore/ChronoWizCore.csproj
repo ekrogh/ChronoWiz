@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<UseMaui>true</UseMaui>
+		<TargetFrameworks>net9.0-ios;net9.0-android;net9.0-windows10.0.19041.0;net9.0-maccatalyst</TargetFrameworks>
+		<OutputType>Exe</OutputType>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.51" />
+	</PropertyGroup>
+</Project>

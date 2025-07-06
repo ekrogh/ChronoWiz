@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+	x:Class="ChronoWiz.AboutHelp"
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+	xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	x:Name="AboutHelpContentPageName"
+	ios:Page.UseSafeArea="True"
+	mc:Ignorable="d"
+	>
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<Style
+				x:Key="baseButtonStyle"
+				TargetType="Button"
+				>
+				<Setter
+					Property="BorderColor"
+					Value="Gray"
+					/>
+				<Setter
+					Property="TextColor"
+					Value="{AppThemeBinding Light=#FFAED42B,
+					                        Dark=#FFCCCCCC}"
+					/>
+				<Setter
+					Property="BorderWidth"
+					Value="0.5"
+					/>
+				<Setter
+					Property="BackgroundColor"
+					Value="{AppThemeBinding Light={StaticResource Primary},
+					                        Dark=#FF333333}"
+					/>
+			</Style>
+
+			<Style
+				x:Key="baseLabelStyle"
+				x:Name="baseLabelStyleName"
+				TargetType="Label"
+				>
+				<Setter
+					Property="TextColor"
+					Value="{AppThemeBinding Light=Black,
+					                        Dark=White}"
+					/>
+				<Setter
+					Property="FontSize"
+					Value="Small"
+					/>
+				<Setter
+					Property="Margin"
+					Value="0, 50, 0, 50"
+					/>
+			</Style>
+
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
+	<ContentPage.Content>
+		<StackLayout
+			x:Name="AboutHelpStack"
+			>
+			<Label
+				x:Name="AppNameAndVer"
+				HorizontalTextAlignment="Center"
+				IsEnabled="True"
+				Style="{StaticResource baseLabelStyle}"
+				Text=""
+				/>
+			<Button
+				x:Name="UsersGuideButton"
+				Clicked="UsersGuideButton_Clicked"
+				Style="{StaticResource baseButtonStyle}"
+				Text="User`s Guide"
+				/>
+			<Label
+				x:Name="MeLabel"
+				HorizontalTextAlignment="Center"
+				Style="{StaticResource baseLabelStyle}"
+				Text="Eigil Krogh Sorensen"
+				/>
+			<Button
+				x:Name="MyUrlButton"
+				Clicked="MyUrlButton_Clicked"
+				Style="{StaticResource baseButtonStyle}"
+				Text="http://eksit.dk"
+				/>
+			<Button
+				x:Name="EmaiBtn"
+				Clicked="EmaiBtn_Clicked"
+				Style="{StaticResource baseButtonStyle}"
+				Text="eks@eksit.dk"
+				/>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
