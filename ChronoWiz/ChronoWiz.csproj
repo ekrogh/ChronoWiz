@@ -45,6 +45,7 @@
     <DefaultLanguage>en</DefaultLanguage>
     <PackageCertificateThumbprint>AE5B54F637685E8CEA777F2FC66001BFAD0CA9DB</PackageCertificateThumbprint>
     <Platforms>AnyCPU</Platforms>
+    <WindowsPackageType>None</WindowsPackageType>
   </PropertyGroup>
   <ItemGroup>
     <!-- App Icon -->
