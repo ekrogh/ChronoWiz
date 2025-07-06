@@ -1,6 +1,6 @@
 name: chronowiz
 base: core22
-version: "1.1.1"
+version: "1.4.12"
 summary: Calculates times and time spans
 description: |
   chronowiz
