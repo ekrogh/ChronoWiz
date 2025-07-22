@@ -1,4 +1,6 @@
 ﻿using ChronoWiz.FileHandlers;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
@@ -1702,15 +1704,54 @@ public partial class MainPage : ContentPage
 		string[] filetypesToSaveTo = new string[] { "ics" };
 		SuggestedNameOfFileToSaveTo = Summary;
 
+#if ANDROID
+		// Pick folder
+		var FolderPickerResult = await FolderPicker.Default.PickAsync(default);
+		if (FolderPickerResult.IsSuccessful)
+		{
+			await Toast.Make($"The folder was picked: Name - {FolderPickerResult.Folder.Name}, Path - {FolderPickerResult.Folder.Path}", ToastDuration.Long).Show();
+
+			var folderPath = FolderPickerResult.Folder.Path;
+			// Save file
+			using MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(CalendarItem));
+
+			FileSaverResult fileSaverResult =
+				await FileSaver.Default.SaveAsync(folderPath, "Calendar.ics", stream);
+
+			// Close file
+			stream.Dispose();
+
+			if (fileSaverResult.IsSuccessful)
+			{
+				await Shell.Current.GoToAsync
+				(
+					"..\\.."
+					, true
+				);
+			}
+			else
+			{
+				var msg = $"File is not saved !!"
+					+
+					$"\n\nException {fileSaverResult.Exception.ToString()}";
+
+				await Shell.Current.DisplayAlert("Error", msg, "OK");
+			}
+		}
+		else
+		{
+			await Toast.Make($"The folder was not picked with error: {FolderPickerResult.Exception.Message}").Show();
+		}
+#else // !ANDROID
 		using MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(CalendarItem));
 
-		FileSaverResult fileSaveResult =
-			await FileSaver.Default.SaveAsync("Calendar.ics", stream, default);
+		FileSaverResult fileSaverResult =
+			await FileSaver.Default.SaveAsync("Calendar.ics", stream);
 
 		// Close file
 		stream.Dispose();
 
-		if (fileSaveResult.IsSuccessful)
+		if (fileSaverResult.IsSuccessful)
 		{
 			await Shell.Current.GoToAsync
 			(
@@ -1722,10 +1763,12 @@ public partial class MainPage : ContentPage
 		{
 			var msg = $"File is not saved !!"
 				+
-				$"\n\nException {fileSaveResult.Exception.ToString()}";
+				$"\n\nException {fileSaverResult.Exception.ToString()}";
 
 			await Shell.Current.DisplayAlert("Error", msg, "OK");
 		}
+#endif // ANDROID
+
 	}
 
 	[RelayCommand]
