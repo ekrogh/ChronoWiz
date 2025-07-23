@@ -3,9 +3,9 @@
 // .ics file
 public class SaveToIcsMessageArgs : EventArgs
 {
-	public string TheDescription;
-	public string EventName_Summary;
-	public string Location;
+	public string TheDescription { get; set; } = string.Empty;
+	public string EventName_Summary { get; set; } = string.Empty;
+	public string Location { get; set; } = string.Empty;
 }
 public class OpenIcsMessageArgs : EventArgs
 {
@@ -16,7 +16,7 @@ public class OpenIcsMessageArgs : EventArgs
 public sealed class SelectFilesResult
 {
 	public bool DidPick { get; set; }
-	public FileResult pickResult { get; set; }
+	public FileResult? pickResult { get; set; }
 }
 
 // Message keys

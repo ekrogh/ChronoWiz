@@ -2,7 +2,7 @@
 
 public partial class OLD_FileHandler
 {
-	public static async Task<SelectFilesResult> SelectFiles(string filetype)
+	public static async Task<SelectFilesResult?> SelectFiles(string filetype)
 	{
 		try
 		{
@@ -24,20 +24,20 @@ public partial class OLD_FileHandler
 				FileTypes = customFileType
 			};
 
-			FileResult pickResult = await FilePicker.PickAsync(options);
+			var pickResult = await FilePicker.PickAsync(options);
 
 			var args = new SelectFilesResult();
 
 			if (pickResult != null)
 			{
 				args.DidPick = true;
+				args.pickResult = pickResult;
 			}
 			else
 			{
 				args.DidPick = false;
+				args.pickResult = null!;
 			}
-
-			args.pickResult = pickResult;
 
 			return args;
 		}
@@ -49,7 +49,7 @@ public partial class OLD_FileHandler
 		}
 	}
 
-	public static async Task<FileSaverResult> SaveToTextFile(MemoryStream TheStream, string filename)
+	public static async Task<FileSaverResult?> SaveToTextFile(MemoryStream TheStream, string filename)
 	{
 		try
 		{
