@@ -107,7 +107,8 @@ public partial class MainPage : ContentPage
 		DeviceDisplay.Current.MainDisplayInfoChanged += Current_MainDisplayInfoChanged;
 	}
 
-	private void Current_MainDisplayInfoChanged(object sender, DisplayInfoChangedEventArgs e)
+	// Fix for CS8622: Add nullable annotation to 'sender' parameter
+	private void Current_MainDisplayInfoChanged(object? sender, DisplayInfoChangedEventArgs e)
 	{
 		SetOrientationRight
 		(
@@ -354,7 +355,8 @@ public partial class MainPage : ContentPage
 		}
 	}
 
-	private void ClearTotIOVars(Entry ImInFocus)
+	// Change the parameter type of ClearTotIOVars and ClearCombinedIOVars to allow null
+	private void ClearTotIOVars(Entry? ImInFocus)
 	{
 		// Total values for dateTime span
 		foreach (Entry entry in DictionaryOfTotalEntries.Keys)
@@ -373,7 +375,7 @@ public partial class MainPage : ContentPage
 		TotMinutesOut = 0;
 	}
 
-	private void ClearCombinedIOVars(Entry ImInFocus)
+	private void ClearCombinedIOVars(Entry? ImInFocus)
 	{
 		// Values for "Combined" dateTime span
 		foreach (Entry entry in DictionaryOfCombinedEntries.Keys)
@@ -392,7 +394,8 @@ public partial class MainPage : ContentPage
 		CombndMinutesOut = 0;
 	}
 
-	private void ClearCombinedYMWDHM(Entry ImInFocus)
+	// Change the parameter type of ClearCombinedYMWDHM to accept nullable Entry
+	private void ClearCombinedYMWDHM(Entry? ImInFocus)
 	{
 		foreach (Entry CurEntry in DictionaryOfCombinedEntries.Keys)
 		{
@@ -404,7 +407,8 @@ public partial class MainPage : ContentPage
 		ClearCombinedIOVars(ImInFocus);
 	}
 
-	private void ClearTotYMWDHM(Entry ImInFocus)
+	// Change the parameter type of ClearTotYMWDHM to accept nullable Entry
+	private void ClearTotYMWDHM(Entry? ImInFocus)
 	{
 		foreach (Entry CurEntry in DictionaryOfTotalEntries.Keys)
 		{
@@ -416,7 +420,8 @@ public partial class MainPage : ContentPage
 		ClearTotIOVars(ImInFocus);
 	}
 
-	private void ClearYMWDHM(Entry ImInFocus)
+	// Change the parameter type of ClearYMWDHM to accept nullable Entry
+	private void ClearYMWDHM(Entry? ImInFocus)
 	{
 		ClearCombinedYMWDHM(ImInFocus);
 		ClearTotYMWDHM(ImInFocus);
@@ -1461,30 +1466,30 @@ public partial class MainPage : ContentPage
 
 	private readonly string filetypeToReadFrom = "ics";
 
+	// Fix for CS8604: Add null check before calling On_FileToReadFromSelectedAsync
 	private async void On_OpenIcsMessageReceived(object recipient, OpenIcsMessageArgs message)
 	{
 		CorrectForIcsTimeZone = message.CorrectForTimeZone;
 
-		SelectFilesResult selectedFiles = await OLD_FileHandler.SelectFiles(filetypeToReadFrom);
+		var selectedFiles = await OLD_FileHandler.SelectFiles(filetypeToReadFrom);
 
-		On_FileToReadFromSelectedAsync(selectedFiles);
-
+		if (selectedFiles != null)
+		{
+			On_FileToReadFromSelectedAsync(selectedFiles);
+		}
 	}
 
+	// Fix for CS8600: Converting null literal or possible null value to non-nullable type.
+	// Change 'string line;' to 'string? line;' to allow for possible null value from sr.ReadLine()
 	private async void On_FileToReadFromSelectedAsync(SelectFilesResult arg2)
 	{
-		if (arg2.DidPick)
+		if (arg2.DidPick && arg2.pickResult != null)
 		{
-
-			List<string> TheIcsTxt = new List<string>();
+			List<string> TheIcsTxt = new();
 			try
 			{
-				// Create an instance of StreamReader to read from a file.
-				// The using statement also closes the StreamReader.
-				using StreamReader sr = new StreamReader(await arg2.pickResult.OpenReadAsync());
-				string line;
-				// Read and display lines from the file until the end of
-				// the file is reached.
+				using StreamReader sr = new(await arg2.pickResult.OpenReadAsync());
+				string? line;
 				while ((line = sr.ReadLine()) != null)
 				{
 					TheIcsTxt.Add(line);
@@ -1783,11 +1788,11 @@ public partial class MainPage : ContentPage
 
 	private async void On_FileToSaveToSelected(SelectFilesResult arg2)
 	{
-		if (arg2.DidPick)
+		if (arg2.DidPick && arg2.pickResult != null)
 		{
 			using MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(CalendarItem));
 
-			FileSaverResult fileSaveResult = await OLD_FileHandler.SaveToTextFile(stream, arg2.pickResult.FullPath);
+			FileSaverResult? fileSaveResult = await OLD_FileHandler.SaveToTextFile(stream, arg2.pickResult.FullPath);
 
 			// Close file
 			stream.Dispose();
