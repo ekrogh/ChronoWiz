@@ -107,8 +107,7 @@ public partial class MainPage : ContentPage
 		DeviceDisplay.Current.MainDisplayInfoChanged += Current_MainDisplayInfoChanged;
 	}
 
-	// Fix for CS8622: Add nullable annotation to 'sender' parameter
-	private void Current_MainDisplayInfoChanged(object? sender, DisplayInfoChangedEventArgs e)
+	private void Current_MainDisplayInfoChanged(object sender, DisplayInfoChangedEventArgs e)
 	{
 		SetOrientationRight
 		(
@@ -135,11 +134,11 @@ public partial class MainPage : ContentPage
 		TotalStackName.TranslationY = 0.0f;
 
 
-		if (firstTimeWidthOrHeightChanged)
+		if (firstTimeWdthOrHeightChanged)
 		{
 			StartDateTimeIntroLabelNameFontSizeOrig = StartDateTimeIntroLabelName.FontSize;
 			StartEndDayNameFontSizeOrig = StartDayName.FontSize;
-			firstTimeWidthOrHeightChanged = false;
+			firstTimeWdthOrHeightChanged = false;
 		}
 
 		if (portrait)
@@ -220,27 +219,16 @@ public partial class MainPage : ContentPage
 		}
 	}
 
-	private bool firstTimeWidthOrHeightChanged = true;
+	private bool firstTimeWdthOrHeightChanged = true;
 
 
-	// Simplify 'new' expressions as per IDE0090
+	DatePicker MacStartDatePicker = new DatePicker();
+	DatePicker MacEndDatePicker = new DatePicker();
 
-	// Before:
-	// DatePicker MacStartDatePicker = new DatePicker();
-	// DatePicker MacEndDatePicker = new DatePicker();
-	// Picker GtkStartHourPicker = new Picker();
-	// Picker GtkStartMinutsPicker = new Picker();
-	// Picker GtkEndHourPicker = new Picker();
-	// Picker GtkEndMinutsPicker = new Picker();
-
-	// After:
-	DatePicker MacStartDatePicker = new();
-	DatePicker MacEndDatePicker = new();
-
-	Picker GtkStartHourPicker = new();
-	Picker GtkStartMinutsPicker = new();
-	Picker GtkEndHourPicker = new();
-	Picker GtkEndMinutsPicker = new();
+	Picker GtkStartHourPicker = new Picker();
+	Picker GtkStartMinutsPicker = new Picker();
+	Picker GtkEndHourPicker = new Picker();
+	Picker GtkEndMinutsPicker = new Picker();
 
 	private double StartDateTimeIntroLabelNameFontSizeOrig = 0.0;
 
@@ -366,10 +354,7 @@ public partial class MainPage : ContentPage
 		}
 	}
 
-	// Change the parameter type of ClearTotIOVars, ClearCombinedIOVars, ClearCombinedYMWDHM, ClearTotYMWDHM, ClearYMWDHM, and ClearAllIOVars to accept nullable Entry.
-	// Fix all calls to these methods to pass null where appropriate.
-
-	private void ClearTotIOVars(Entry? ImInFocus)
+	private void ClearTotIOVars(Entry ImInFocus)
 	{
 		// Total values for dateTime span
 		foreach (Entry entry in DictionaryOfTotalEntries.Keys)
@@ -388,7 +373,7 @@ public partial class MainPage : ContentPage
 		TotMinutesOut = 0;
 	}
 
-	private void ClearCombinedIOVars(Entry? ImInFocus)
+	private void ClearCombinedIOVars(Entry ImInFocus)
 	{
 		// Values for "Combined" dateTime span
 		foreach (Entry entry in DictionaryOfCombinedEntries.Keys)
@@ -407,7 +392,7 @@ public partial class MainPage : ContentPage
 		CombndMinutesOut = 0;
 	}
 
-	private void ClearCombinedYMWDHM(Entry? ImInFocus)
+	private void ClearCombinedYMWDHM(Entry ImInFocus)
 	{
 		foreach (Entry CurEntry in DictionaryOfCombinedEntries.Keys)
 		{
@@ -419,7 +404,7 @@ public partial class MainPage : ContentPage
 		ClearCombinedIOVars(ImInFocus);
 	}
 
-	private void ClearTotYMWDHM(Entry? ImInFocus)
+	private void ClearTotYMWDHM(Entry ImInFocus)
 	{
 		foreach (Entry CurEntry in DictionaryOfTotalEntries.Keys)
 		{
@@ -431,7 +416,7 @@ public partial class MainPage : ContentPage
 		ClearTotIOVars(ImInFocus);
 	}
 
-	private void ClearYMWDHM(Entry? ImInFocus)
+	private void ClearYMWDHM(Entry ImInFocus)
 	{
 		ClearCombinedYMWDHM(ImInFocus);
 		ClearTotYMWDHM(ImInFocus);
@@ -1480,28 +1465,24 @@ public partial class MainPage : ContentPage
 	{
 		CorrectForIcsTimeZone = message.CorrectForTimeZone;
 
-		SelectFilesResult? selectedFilesNullable = await OLD_FileHandler.SelectFiles(filetypeToReadFrom);
-		if (selectedFilesNullable is SelectFilesResult selectedFiles)
-		{
-			On_FileToReadFromSelectedAsync(selectedFiles);
-		}
-		// Optionally, handle the case where selectedFilesNullable is null if needed.
-	}
+		SelectFilesResult selectedFiles = await OLD_FileHandler.SelectFiles(filetypeToReadFrom);
 
-	// Fix for CS8600: Converting null literal or possible null value to non-nullable type.
-	// Change 'string line;' to 'string? line;' and update usage accordingly in On_FileToReadFromSelectedAsync
+		On_FileToReadFromSelectedAsync(selectedFiles);
+
+	}
 
 	private async void On_FileToReadFromSelectedAsync(SelectFilesResult arg2)
 	{
-		if (arg2.DidPick && arg2.pickResult != null)
+		if (arg2.DidPick)
 		{
+
 			List<string> TheIcsTxt = new List<string>();
 			try
 			{
 				// Create an instance of StreamReader to read from a file.
 				// The using statement also closes the StreamReader.
 				using StreamReader sr = new StreamReader(await arg2.pickResult.OpenReadAsync());
-				string? line;
+				string line;
 				// Read and display lines from the file until the end of
 				// the file is reached.
 				while ((line = sr.ReadLine()) != null)
@@ -1513,14 +1494,91 @@ public partial class MainPage : ContentPage
 			{
 				// Let the user know what went wrong.
 				await DisplayAlert
-				(
-					"The file could not be read:",
-					e.Message,
-					"OK"
-				);
+						   (
+							   "The file could not be read:"
+							   , e.Message
+							   , "OK"
+						   );
 			}
 
-			// ... rest of the method unchanged ...
+			try
+			{
+				// Time Zone
+				var IdxBEGIN_STANDARD = TheIcsTxt.FindIndex(s => s.Contains(@"BEGIN:STANDARD"));
+				var IdxEND_STANDARD = TheIcsTxt.FindIndex(s => s.Contains(@"END:STANDARD"));
+				var LgthSTANDARD = IdxEND_STANDARD - IdxBEGIN_STANDARD;
+				var TimeIDX = TheIcsTxt.FindIndex(IdxBEGIN_STANDARD, LgthSTANDARD, s => s.Contains(@"TZOFFSETTO:"));
+				int SignIdx = TheIcsTxt[TimeIDX].IndexOfAny("+-".ToCharArray(), TheIcsTxt[TimeIDX].LastIndexOf(':'));
+				var TheSign = TheIcsTxt[TimeIDX][SignIdx];
+				var StartOfTimeStringIDX = ++SignIdx;
+				var LgthOfTimestring = TheIcsTxt[TimeIDX].Length - StartOfTimeStringIDX;
+				var TimeString = TheIcsTxt[TimeIDX].Substring(StartOfTimeStringIDX, LgthOfTimestring);
+
+				var TheTZOFFSETTO = TimeSpan.ParseExact(TimeString, "hhmm", null);
+				if (TheSign == '-')
+				{
+					TheTZOFFSETTO = TimeSpan.Zero - TheTZOFFSETTO;
+				}
+				var BaseUtcOff = TimeZoneInfo.Local.BaseUtcOffset;
+
+				// Start Time
+				TimeIDX = TheIcsTxt.FindIndex(s => s.Contains(@"DTSTART;TZID="));
+				StartOfTimeStringIDX = TheIcsTxt[TimeIDX].LastIndexOf(':') + 1;
+				LgthOfTimestring = TheIcsTxt[TimeIDX].Length - StartOfTimeStringIDX;
+				TimeString = TheIcsTxt[TimeIDX].Substring(StartOfTimeStringIDX, LgthOfTimestring);
+				StartDateTimeOut = DateTime.ParseExact(TimeString, @"yyyyMMddTHHmm00", null);
+
+				if (CorrectForIcsTimeZone)
+				{
+					StartDateTimeOut -= TheTZOFFSETTO; // Calender start time in utc time
+					StartDateTimeOut += BaseUtcOff; // In local time zone time
+				}
+
+				StartDateTimeIn = StartDateTimeOut;
+				StartDateIn = StartDateTimeOut.Date;
+				StartTimeIn = StartDateTimeOut.TimeOfDay;
+
+				SetStartDateTime();
+
+				// End Date Time
+				TimeIDX = TheIcsTxt.FindIndex(s => s.Contains(@"DTEND;TZID="));
+				StartOfTimeStringIDX = TheIcsTxt[TimeIDX].LastIndexOf(':') + 1;
+				LgthOfTimestring = TheIcsTxt[TimeIDX].Length - StartOfTimeStringIDX;
+				TimeString = TheIcsTxt[TimeIDX].Substring(StartOfTimeStringIDX, LgthOfTimestring);
+				EndDateTimeOut = DateTime.ParseExact(TimeString, @"yyyyMMddTHHmm00", null);
+
+				if (CorrectForIcsTimeZone)
+				{
+					EndDateTimeOut -= TheTZOFFSETTO; // Calender End time in utc time
+					EndDateTimeOut += BaseUtcOff; // In local time zone time
+				}
+
+				EndDateTimeIn = EndDateTimeOut;
+				EndDateIn = EndDateTimeOut.Date;
+				EndTimeIn = EndDateTimeOut.TimeOfDay;
+
+				SetEndDateTime();
+
+				// Show Time Spans.
+				CalcAndShowTimeSpans();
+
+			}
+			catch (Exception e)
+			{
+				await DisplayAlert
+						   (
+							   "Bad .ics file"
+							   , e.Message
+							   , "OK"
+						   );
+			}
+
+			await Shell.Current.GoToAsync
+			(
+				"..\\.."
+				, true
+			);
+
 		}
 	}
 
@@ -1725,11 +1783,11 @@ public partial class MainPage : ContentPage
 
 	private async void On_FileToSaveToSelected(SelectFilesResult arg2)
 	{
-		if (arg2.DidPick && arg2.pickResult != null)
+		if (arg2.DidPick)
 		{
 			using MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(CalendarItem));
 
-			FileSaverResult? fileSaveResult = await OLD_FileHandler.SaveToTextFile(stream, arg2.pickResult.FullPath);
+			FileSaverResult fileSaveResult = await OLD_FileHandler.SaveToTextFile(stream, arg2.pickResult.FullPath);
 
 			// Close file
 			stream.Dispose();
