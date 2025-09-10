@@ -208,19 +208,22 @@ public partial class MainPage : ContentPage
 		DoClearAll();
 	}
 
-	protected override void OnSizeAllocated(double width, double height)
+	// One-shot handler to apply scale when content is actually measured
+	private void TotalStackName_SizeChanged_ApplyScaleOnce(object? sender, EventArgs e)
 	{
-		base.OnSizeAllocated(width, height);
+		TotalStackName.SizeChanged -= TotalStackName_SizeChanged_ApplyScaleOnce;
+		ApplyScale(Width, Height);
+		_lastAllocatedWidth = Width;
+		_lastAllocatedHeight = Height;
+	}
 
-		// Avoid re-entrancy and only react to real size changes
+	private void ApplyScale(double width, double height)
+	{
 		if (_isUpdatingScale)
 			return;
-		if (Math.Abs(_lastAllocatedWidth - width) < double.Epsilon && Math.Abs(_lastAllocatedHeight - height) < double.Epsilon)
+		if (width <= 0 || height <= 0)
 			return;
-		_lastAllocatedWidth = width;
-		_lastAllocatedHeight = height;
-
-		if (width <= 0 || height <= 0 || TotalStackName.Width <= 0 || TotalStackName.Height <= 0)
+		if (TotalStackName.Width <= 0 || TotalStackName.Height <= 0)
 			return;
 
 		double widthFactor = width / TotalStackName.Width;
@@ -229,7 +232,6 @@ public partial class MainPage : ContentPage
 		if (newScale <= 0)
 			return;
 
-		// Only apply if scale meaningfully changed to prevent layout loops
 		if (Math.Abs(TotalStackName.Scale - newScale) > 0.001)
 		{
 			_isUpdatingScale = true;
@@ -242,6 +244,36 @@ public partial class MainPage : ContentPage
 				_isUpdatingScale = false;
 			}
 		}
+	}
+
+	protected override void OnSizeAllocated(double width, double height)
+	{
+		base.OnSizeAllocated(width, height);
+
+		// Ignore duplicates
+		if (Math.Abs(_lastAllocatedWidth - width) < double.Epsilon &&
+			Math.Abs(_lastAllocatedHeight - height) < double.Epsilon)
+		{
+			// If initial scale hasn’t run yet but sizes are valid, apply it
+			if (TotalStackName.Width > 0 && TotalStackName.Height > 0)
+			{
+				ApplyScale(width, height);
+			}
+			return;
+		}
+
+		// If content isn't measured yet, apply scale once when it is
+		if (TotalStackName.Width <= 0 || TotalStackName.Height <= 0)
+		{
+			TotalStackName.SizeChanged -= TotalStackName_SizeChanged_ApplyScaleOnce;
+			TotalStackName.SizeChanged += TotalStackName_SizeChanged_ApplyScaleOnce;
+			return;
+		}
+
+		// Normal path
+		ApplyScale(width, height);
+		_lastAllocatedWidth = width;
+		_lastAllocatedHeight = height;
 	}
 
 	private bool firstTimeWdthOrHeightChanged = true;
