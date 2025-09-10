@@ -11,6 +11,11 @@ namespace ChronoWiz.View;
 [DesignTimeVisible(true)]
 public partial class MainPage : ContentPage
 {
+	// Track last allocated size to avoid layout thrashing
+	private double _lastAllocatedWidth = -1;
+	private double _lastAllocatedHeight = -1;
+	private bool _isUpdatingScale;
+
 	public MainPage()
 	{
 #if DEBUG
@@ -205,18 +210,35 @@ public partial class MainPage : ContentPage
 	{
 		base.OnSizeAllocated(width, height);
 
-		TotalStackName.Scale = 1.0f / TotalStackName.Scale;
+		// Avoid re-entrancy and only react to real size changes
+		if (_isUpdatingScale)
+			return;
+		if (Math.Abs(_lastAllocatedWidth - width) < double.Epsilon && Math.Abs(_lastAllocatedHeight - height) < double.Epsilon)
+			return;
+		_lastAllocatedWidth = width;
+		_lastAllocatedHeight = height;
 
-		double WidthFactor = width / TotalStackName.Width;
-		double HeightFactor = height / TotalStackName.Height;
+		if (width <= 0 || height <= 0 || TotalStackName.Width <= 0 || TotalStackName.Height <= 0)
+			return;
 
-		if (WidthFactor < HeightFactor)
+		double widthFactor = width / TotalStackName.Width;
+		double heightFactor = height / TotalStackName.Height;
+		double newScale = widthFactor < heightFactor ? widthFactor : heightFactor;
+		if (newScale <= 0)
+			return;
+
+		// Only apply if scale meaningfully changed to prevent layout loops
+		if (Math.Abs(TotalStackName.Scale - newScale) > 0.001)
 		{
-			TotalStackName.Scale = WidthFactor;
-		}
-		else
-		{
-			TotalStackName.Scale = HeightFactor;
+			_isUpdatingScale = true;
+			try
+			{
+				TotalStackName.Scale = newScale;
+			}
+			finally
+			{
+				_isUpdatingScale = false;
+			}
 		}
 	}
 
