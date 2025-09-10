@@ -11,37 +11,81 @@ public partial class SaveToICS : ContentPage
 		Summary.Focus();
 	}
 
-	//#if WINDOWS
+	// Track last allocated size and re-entrancy to avoid layout thrashing
+	private double _lastAllocatedWidth = -1;
+	private double _lastAllocatedHeight = -1;
+	private bool _isUpdatingScale;
+
 #if (WINDOWS || ANDROID)
+	// One-shot handler to apply scale when content is actually measured
+	private void TotalStack_SizeChanged_ApplyScaleOnce(object? sender, EventArgs e)
+	{
+		TotalStack.SizeChanged -= TotalStack_SizeChanged_ApplyScaleOnce;
+		ApplyScale(Width, Height);
+		_lastAllocatedWidth = Width;
+		_lastAllocatedHeight = Height;
+	}
+
+	private void ApplyScale(double width, double height)
+	{
+		if (_isUpdatingScale)
+			return;
+		if (width <= 0 || height <= 0)
+			return;
+		if (TotalStack.Width <= 0 || TotalStack.Height <= 0)
+			return;
+
+		var orientation = DeviceDisplay.Current.MainDisplayInfo.Orientation;
+		double scaleF = orientation == DisplayOrientation.Landscape ? 0.9 : 1.0;
+
+		double widthFactor = width * scaleF / TotalStack.Width;
+		double heightFactor = height * scaleF / TotalStack.Height;
+		double newScale = widthFactor < heightFactor ? widthFactor : heightFactor;
+		if (newScale <= 0)
+			return;
+
+		if (Math.Abs(TotalStack.Scale - newScale) > 0.001)
+		{
+			_isUpdatingScale = true;
+			try
+			{
+				TotalStack.Scale = newScale;
+			}
+			finally
+			{
+				_isUpdatingScale = false;
+			}
+		}
+	}
+
 	protected override void OnSizeAllocated(double width, double height)
 	{
 		base.OnSizeAllocated(width, height);
 
-		TotalStack.Scale = 1.0f / TotalStack.Scale;
-
-		var DisplayOrientation = DeviceDisplay.Current.MainDisplayInfo.Orientation;
-
-		double ScaleF = 1.0f;
-		if (DisplayOrientation == DisplayOrientation.Landscape)
+		// Ignore duplicate allocations
+		if (Math.Abs(_lastAllocatedWidth - width) < double.Epsilon &&
+			Math.Abs(_lastAllocatedHeight - height) < double.Epsilon)
 		{
-			ScaleF = 0.9f;
+			// If initial scale hasn’t run yet but sizes are valid, apply it once
+			if (TotalStack.Width > 0 && TotalStack.Height > 0)
+			{
+				ApplyScale(width, height);
+			}
+			return;
 		}
 
-		double WidthFactor = width * ScaleF / TotalStack.Width;
-		double HeightFactor = height * ScaleF / TotalStack.Height;
-
-		if (WidthFactor < HeightFactor)
+		// If content isn't measured yet, apply scale once when it is
+		if (TotalStack.Width <= 0 || TotalStack.Height <= 0)
 		{
-			TotalStack.Scale = WidthFactor;
-		}
-		else
-		{
-			TotalStack.Scale = HeightFactor;
+			TotalStack.SizeChanged -= TotalStack_SizeChanged_ApplyScaleOnce;
+			TotalStack.SizeChanged += TotalStack_SizeChanged_ApplyScaleOnce;
+			return;
 		}
 
-		Dispatcher.Dispatch(() =>
-			(SaveToICSContentPageName as IView).InvalidateArrange());
-
+		// Normal path
+		ApplyScale(width, height);
+		_lastAllocatedWidth = width;
+		_lastAllocatedHeight = height;
 	}
 #endif
 
