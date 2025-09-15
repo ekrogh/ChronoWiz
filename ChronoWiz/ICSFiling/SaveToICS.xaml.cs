@@ -12,7 +12,6 @@ public partial class SaveToICS : ContentPage
 	}
 
 	// Track last allocated size and re-entrancy to avoid layout thrashing
-	private double _lastAllocatedWidth = -1;
 	private double _lastAllocatedHeight = -1;
 	private bool _isUpdatingScale;
 
@@ -22,7 +21,6 @@ public partial class SaveToICS : ContentPage
 	{
 		TotalStack.SizeChanged -= TotalStack_SizeChanged_ApplyScaleOnce;
 		ApplyScale(Width, Height);
-		_lastAllocatedWidth = Width;
 		_lastAllocatedHeight = Height;
 	}
 
@@ -63,8 +61,8 @@ public partial class SaveToICS : ContentPage
 		base.OnSizeAllocated(width, height);
 
 		// Ignore duplicate allocations
-		if (Math.Abs(_lastAllocatedWidth - width) < double.Epsilon &&
-			Math.Abs(_lastAllocatedHeight - height) < double.Epsilon)
+		// Only check _lastAllocatedHeight now
+		if (Math.Abs(_lastAllocatedHeight - height) < double.Epsilon)
 		{
 			// If initial scale hasn’t run yet but sizes are valid, apply it once
 			if (TotalStack.Width > 0 && TotalStack.Height > 0)
@@ -84,7 +82,6 @@ public partial class SaveToICS : ContentPage
 
 		// Normal path
 		ApplyScale(width, height);
-		_lastAllocatedWidth = width;
 		_lastAllocatedHeight = height;
 	}
 #endif
