@@ -15,6 +15,25 @@
 					Source="Resources/Styles/Styles.xaml"
 					/>
 			</ResourceDictionary.MergedDictionaries>
+			<Style
+				TargetType="Element"
+				>
+				<Setter
+					Property="Shell.BackgroundColor"
+					Value="{AppThemeBinding Light={StaticResource White},
+					                        Dark=#121212}"
+					/>
+				<Setter
+					Property="Shell.ForegroundColor"
+					Value="{AppThemeBinding Light={StaticResource Black},
+					                        Dark={StaticResource White}}"
+					/>
+				<Setter
+					Property="Shell.TitleColor"
+					Value="{AppThemeBinding Light={StaticResource Black},
+					                        Dark={StaticResource White}}"
+					/>
+			</Style>
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

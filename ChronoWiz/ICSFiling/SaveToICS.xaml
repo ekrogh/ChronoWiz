@@ -7,6 +7,10 @@
 	xmlns:local="clr-namespace:ChronoWiz;assembly=ChronoWiz"
 	x:Name="SaveToICSContentPageName"
 	ios:Page.UseSafeArea="True"
+	Title="Save to ICS"
+	Shell.BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}"
+	Shell.ForegroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
+	Shell.TitleColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
 	>
 
 	<ContentPage.Resources>

@@ -11,6 +11,11 @@ namespace ChronoWiz.View;
 [DesignTimeVisible(true)]
 public partial class MainPage : ContentPage
 {
+	// Track last allocated size to avoid layout thrashing
+	private double _lastAllocatedWidth = -1;
+	private double _lastAllocatedHeight = -1;
+	private bool _isUpdatingScale;
+
 	public MainPage()
 	{
 #if DEBUG
@@ -110,14 +115,16 @@ public partial class MainPage : ContentPage
 	// Fix for CS8622: Add nullable annotation to 'sender' parameter
 	private void Current_MainDisplayInfoChanged(object? sender, DisplayInfoChangedEventArgs e)
 	{
-		SetOrientationRight
-		(
-			e.DisplayInfo.Width
-				,
-			e.DisplayInfo.Height
-				,
-			e.DisplayInfo.Orientation
-		);
+		// Ensure all UI updates happen on the UI thread to avoid WinUI FocusState exceptions
+		MainThread.BeginInvokeOnMainThread(() =>
+		{
+			SetOrientationRight
+			(
+				e.DisplayInfo.Width,
+				e.DisplayInfo.Height,
+				e.DisplayInfo.Orientation
+			);
+		});
 	}
 
 	private void SetOrientationRight
@@ -201,23 +208,72 @@ public partial class MainPage : ContentPage
 		DoClearAll();
 	}
 
+	// One-shot handler to apply scale when content is actually measured
+	private void TotalStackName_SizeChanged_ApplyScaleOnce(object? sender, EventArgs e)
+	{
+		TotalStackName.SizeChanged -= TotalStackName_SizeChanged_ApplyScaleOnce;
+		ApplyScale(Width, Height);
+		_lastAllocatedWidth = Width;
+		_lastAllocatedHeight = Height;
+	}
+
+	private void ApplyScale(double width, double height)
+	{
+		if (_isUpdatingScale)
+			return;
+		if (width <= 0 || height <= 0)
+			return;
+		if (TotalStackName.Width <= 0 || TotalStackName.Height <= 0)
+			return;
+
+		double widthFactor = width / TotalStackName.Width;
+		double heightFactor = height / TotalStackName.Height;
+		double newScale = widthFactor < heightFactor ? widthFactor : heightFactor;
+		if (newScale <= 0)
+			return;
+
+		if (Math.Abs(TotalStackName.Scale - newScale) > 0.001)
+		{
+			_isUpdatingScale = true;
+			try
+			{
+				TotalStackName.Scale = newScale;
+			}
+			finally
+			{
+				_isUpdatingScale = false;
+			}
+		}
+	}
+
 	protected override void OnSizeAllocated(double width, double height)
 	{
 		base.OnSizeAllocated(width, height);
 
-		TotalStackName.Scale = 1.0f / TotalStackName.Scale;
-
-		double WidthFactor = width / TotalStackName.Width;
-		double HeightFactor = height / TotalStackName.Height;
-
-		if (WidthFactor < HeightFactor)
+		// Ignore duplicates
+		if (Math.Abs(_lastAllocatedWidth - width) < double.Epsilon &&
+			Math.Abs(_lastAllocatedHeight - height) < double.Epsilon)
 		{
-			TotalStackName.Scale = WidthFactor;
+			// If initial scale hasn’t run yet but sizes are valid, apply it
+			if (TotalStackName.Width > 0 && TotalStackName.Height > 0)
+			{
+				ApplyScale(width, height);
+			}
+			return;
 		}
-		else
+
+		// If content isn't measured yet, apply scale once when it is
+		if (TotalStackName.Width <= 0 || TotalStackName.Height <= 0)
 		{
-			TotalStackName.Scale = HeightFactor;
+			TotalStackName.SizeChanged -= TotalStackName_SizeChanged_ApplyScaleOnce;
+			TotalStackName.SizeChanged += TotalStackName_SizeChanged_ApplyScaleOnce;
+			return;
 		}
+
+		// Normal path
+		ApplyScale(width, height);
+		_lastAllocatedWidth = width;
+		_lastAllocatedHeight = height;
 	}
 
 	private bool firstTimeWdthOrHeightChanged = true;
@@ -289,26 +345,7 @@ public partial class MainPage : ContentPage
 	{
 		try
 		{
-			// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-			//if (DeviceInfo.Platform == DevicePlatform.GTK)
-			//{
-			//	// Remove event
-			//	GtkStartHourPicker.SelectedIndexChanged -= GtkStartTime_SelectedIndexChanged;
-			//	GtkStartMinutsPicker.SelectedIndexChanged -= GtkStartTime_SelectedIndexChanged;
-			//	// Show time
-			//	GtkStartHourPicker.SelectedIndex = StartTimeIn.Hours;
-			//	GtkStartMinutsPicker.SelectedIndex = StartTimeIn.Minutes;
-			//	// Restore event
-			//	GtkStartHourPicker.SelectedIndexChanged += GtkStartTime_SelectedIndexChanged;
-			//	GtkStartMinutsPicker.SelectedIndexChanged += GtkStartTime_SelectedIndexChanged;
-			//}
-			//else
-			//{
-			//MacStartDatePicker.Date = StartDateIn;
-			//MacStartTimePicker.Time = new TimeSpan(StartTimeIn.Hours, StartTimeIn.Minutes, 0);
-
 			StartTimePicker.Time = new TimeSpan(StartTimeIn.Hours, StartTimeIn.Minutes, 0);
-			//}
 
 			StartDatePicker.Date = StartDateIn;
 
@@ -324,26 +361,7 @@ public partial class MainPage : ContentPage
 	{
 		try
 		{
-			// TODO Xamarin.Forms.Device.RuntimePlatform is no longer supported. Use Microsoft.Maui.Devices.DeviceInfo.Platform instead. For more details see https://learn.microsoft.com/en-us/dotnet/maui/migration/forms-projects#device-changes
-			//if (DeviceInfo.Platform == DevicePlatform.GTK)
-			//{
-			//	// Remove events
-			//	GtkEndHourPicker.SelectedIndexChanged -= GtkEndTime_SelectedIndexChanged;
-			//	GtkEndMinutsPicker.SelectedIndexChanged -= GtkEndTime_SelectedIndexChanged;
-			//	// Show time
-			//	GtkEndHourPicker.SelectedIndex = EndTimeIn.Hours;
-			//	GtkEndMinutsPicker.SelectedIndex = EndTimeIn.Minutes;
-			//	// Restore events
-			//	GtkEndHourPicker.SelectedIndexChanged += GtkEndTime_SelectedIndexChanged;
-			//	GtkEndMinutsPicker.SelectedIndexChanged += GtkEndTime_SelectedIndexChanged;
-			//}
-			//else
-			//{
-			//MacEndDatePicker.Date = EndDateIn;
-			//MacEndTimePicker.Time = new TimeSpan(EndTimeIn.Hours, EndTimeIn.Minutes, 0);
-
 			EndTimePicker.Time = new TimeSpan(EndTimeIn.Hours, EndTimeIn.Minutes, 0);
-			//}
 
 			EndDatePicker.Date = EndDateIn;
 
@@ -595,16 +613,6 @@ public partial class MainPage : ContentPage
 		{
 			StartTimeIn = StartTimePicker.Time;
 
-			//if
-			//(
-			//	(MacStartTimePicker.Time.Hours != StartTimeIn.Hours)
-			//	||
-			//	(MacStartTimePicker.Time.Minutes != StartTimeIn.Minutes)
-			//)
-			//{
-			//	MacStartTimePicker.Time = StartTimeIn;
-			//}
-
 			CheckSetEndDateTime();
 		}
 	}
@@ -769,16 +777,6 @@ public partial class MainPage : ContentPage
 		{
 			EndTimeIn = EndTimePicker.Time;
 
-			//if
-			//(
-			//	(MacEndTimePicker.Time.Hours != EndTimeIn.Hours)
-			//	||
-			//	(MacEndTimePicker.Time.Minutes != EndTimeIn.Minutes)
-			//)
-			//{
-			//	MacEndTimePicker.Time = EndTimeIn;
-			//}
-
 			CheckSetStartDateTime();
 		}
 	}
@@ -808,10 +806,6 @@ public partial class MainPage : ContentPage
 	{
 		CombndYearsOut = EndDateTimeIn.Year - StartDateTimeIn.Year;
 		CombndMonthsOut = EndDateTimeIn.Month - StartDateTimeIn.Month;
-		//if (EndDateTimeIn.Day < StartDateTimeIn.Day)
-		//{
-		//	CombndMonthsOut--;
-		//}
 		if (CombndMonthsOut < 0)
 		{
 			CombndMonthsOut += 12;
@@ -835,46 +829,43 @@ public partial class MainPage : ContentPage
 			ts1 = dtCalc2 - StartDateTimeIn; // Total Days in years + months
 			CombndDaysOut = ts2.Days - ts1.Days;
 		}
-		CombndHoursOut = ts2.Hours; // Extra days besides Days in years + months
-		CombndMinutesOut = ts2.Minutes; // Extra days besides Days in years + months
+		CombndHoursOut = ts2.Hours;   // Extra days besides Days in years + months
+		CombndMinutesOut = ts2.Minutes;
 
 		CombndWeeksOut = (int)(CombndDaysOut / 7);
 		CombndDaysOut %= 7; // Rest after div. w. 7
 
-		TotDaysOut = (Int64)ts2.TotalDays;
-		TotWeeksOut = (Int64)(TotDaysOut / 7);
+		TotDaysOut = (long)ts2.TotalDays;
+		TotWeeksOut = (long)(TotDaysOut / 7);
 		TotMonthsOut = CombndMonthsOut + 12 * CombndYearsOut;
 		TotYearsOut = CombndYearsOut;
-		TotHoursOut = (Int64)ts2.TotalHours;
-		TotMinutesOut = (Int64)ts2.TotalMinutes;
+		TotHoursOut = (long)ts2.TotalHours;
+		TotMinutesOut = (long)ts2.TotalMinutes;
 
-		// Show Combnd in the text boxes
-		CombndDays.Text = CombndDaysOut.ToString();
-		CombndWeeks.Text = CombndWeeksOut.ToString();
-		CombndMonths.Text = CombndMonthsOut.ToString();
-		CombndYears.Text = CombndYearsOut.ToString();
-		CombndHours.Text = CombndHoursOut.ToString();
-		CombndMinutes.Text = CombndMinutesOut.ToString();
+		// Defer all Entry.Text updates to the next UI tick to avoid WinUI FocusState race
+		MainThread.BeginInvokeOnMainThread(() =>
+		{
+			// Combined
+			CombndDays.Text = CombndDaysOut.ToString();
+			CombndWeeks.Text = CombndWeeksOut.ToString();
+			CombndMonths.Text = CombndMonthsOut.ToString();
+			CombndYears.Text = CombndYearsOut.ToString();
+			CombndHours.Text = CombndHoursOut.ToString();
+			CombndMinutes.Text = CombndMinutesOut.ToString();
 
-		// Show Tot. in the text boxes
-		TotDays.Text = TotDaysOut.ToString();
-		if (TotDaysOut > 9999999999)
-		{
-			await DisplayAlert("Total \"Days\" > 9999999999", TotDays.ToString(), "OK");
-		}
-		TotWeeks.Text = TotWeeksOut.ToString();
-		TotMonths.Text = TotMonthsOut.ToString();
-		TotYears.Text = TotYearsOut.ToString();
-		TotHours.Text = TotHoursOut.ToString();
-		if (TotHoursOut > 9999999999)
-		{
-			await DisplayAlert("Total \"Hours\" > 9999999999", TotHours.ToString(), "OK");
-		}
-		TotMinutes.Text = TotMinutesOut.ToString();
-		if (TotMinutesOut > 9999999999)
-		{
-			await DisplayAlert("Total \"Minutes\" > 9999999999", TotMinutes.ToString(), "OK");
-		}
+			// Totals
+			TotDays.Text = TotDaysOut.ToString();
+			TotWeeks.Text = TotWeeksOut.ToString();
+			TotMonths.Text = TotMonthsOut.ToString();
+			TotYears.Text = TotYearsOut.ToString();
+			TotHours.Text = TotHoursOut.ToString();
+			TotMinutes.Text = TotMinutesOut.ToString();
+		});
+
+		// keep alerts after UI updates
+		if (TotDaysOut > 9999999999) await DisplayAlert("Total \"Days\" > 9999999999", TotDays.ToString(), "OK");
+		if (TotHoursOut > 9999999999) await DisplayAlert("Total \"Hours\" > 9999999999", TotHours.ToString(), "OK");
+		if (TotMinutesOut > 9999999999) await DisplayAlert("Total \"Minutes\" > 9999999999", TotMinutes.ToString(), "OK");
 	}
 
 	private void OnCalculateButtonClicked(object sEnder, EventArgs e)
@@ -1079,37 +1070,37 @@ public partial class MainPage : ContentPage
 										case (int)EntryNames.years:
 											{
 												EndDateTimeOut =
-													EndDateTimeOut.AddYears(TheKeyValuePair.Value);
+													StartDateTimeIn.AddYears(TheKeyValuePair.Value);
 												break;
 											}
 										case (int)EntryNames.months:
 											{
 												EndDateTimeOut =
-													EndDateTimeOut.AddMonths(TheKeyValuePair.Value);
+													StartDateTimeIn.AddMonths(TheKeyValuePair.Value);
 												break;
 											}
 										case (int)EntryNames.weeks:
 											{
 												EndDateTimeOut =
-													EndDateTimeOut.AddDays(TheKeyValuePair.Value * 7);
+													StartDateTimeIn.AddDays(TheKeyValuePair.Value * 7);
 												break;
 											}
 										case (int)EntryNames.days:
 											{
 												EndDateTimeOut =
-													EndDateTimeOut.AddDays(TheKeyValuePair.Value);
+													StartDateTimeIn.AddDays(TheKeyValuePair.Value);
 												break;
 											}
 										case (int)EntryNames.hours:
 											{
 												EndDateTimeOut =
-													EndDateTimeOut.AddHours(TheKeyValuePair.Value);
+													StartDateTimeIn.AddHours(TheKeyValuePair.Value);
 												break;
 											}
 										case (int)EntryNames.minutes:
 											{
 												EndDateTimeOut =
-													EndDateTimeOut.AddMinutes(TheKeyValuePair.Value);
+													StartDateTimeIn.AddMinutes(TheKeyValuePair.Value);
 												break;
 											}
 										default:

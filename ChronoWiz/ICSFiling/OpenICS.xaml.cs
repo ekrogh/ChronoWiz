@@ -11,22 +11,40 @@ public partial class OpenICS : ContentPage
 	}
 
 #if WINDOWS
+	private double _lastWidth = -1;
+	private double _lastHeight = -1;
+	private bool _isScaling;
 	protected override void OnSizeAllocated(double width, double height)
 	{
 		base.OnSizeAllocated(width, height);
 
-		TotalStack.Scale = 1.0f / TotalStack.Scale;
+		if (_isScaling)
+			return;
+		if (Math.Abs(_lastWidth - width) < double.Epsilon && Math.Abs(_lastHeight - height) < double.Epsilon)
+			return;
+		_lastWidth = width;
+		_lastHeight = height;
 
-		double WidthFactor = width / TotalStack.Width;
-		double HeightFactor = height / TotalStack.Height;
+		if (width <= 0 || height <= 0 || TotalStack.Width <= 0 || TotalStack.Height <= 0)
+			return;
 
-		if (WidthFactor < HeightFactor)
+		double widthFactor = width / TotalStack.Width;
+		double heightFactor = height / TotalStack.Height;
+		double newScale = widthFactor < heightFactor ? widthFactor : heightFactor;
+		if (newScale <= 0)
+			return;
+
+		if (Math.Abs(TotalStack.Scale - newScale) > 0.001)
 		{
-			TotalStack.Scale = WidthFactor;
-		}
-		else
-		{
-			TotalStack.Scale = HeightFactor;
+			_isScaling = true;
+			try
+			{
+				TotalStack.Scale = newScale;
+			}
+			finally
+			{
+				_isScaling = false;
+			}
 		}
 	}
 #endif
