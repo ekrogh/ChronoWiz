@@ -11,30 +11,9 @@ namespace ChronoWiz.View;
 [DesignTimeVisible(true)]
 public partial class MainPage : ContentPage
 {
-	// Track last allocated size to avoid layout thrashing
-	private double _lastAllocatedWidth = -1;
-	private double _lastAllocatedHeight = -1;
-	private bool _isUpdatingScale; // (still here if we later need reentrancy guard)
-
-	// Track baseline (unscaled) size per current orientation
-	double _baseContentWidth = -1;
-	double _baseContentHeight = -1;
-	private DisplayOrientation? _currentOrientation; // null until first orientation processed
-
 	public MainPage()
 	{
-#if DEBUG
-		try
-		{
-			InitializeComponent();
-		}
-		catch (Exception ex)
-		{
-			var tst = ex;
-		}
-#else
-			InitializeComponent();
-#endif
+		InitializeComponent();
 		BindingContext = this;
 
 		WeakReferenceMessenger.Default.Register<SaveToIcsMessageArgs, string>
@@ -48,30 +27,20 @@ public partial class MainPage : ContentPage
 
 		DictionaryOfCombinedEntries = new Dictionary<Entry, int>()
 		{
-			{ CombndYears,      0 }
-			,
-			{ CombndMonths,     0 }
-			,
-			{ CombndWeeks,      0 }
-			,
-			{ CombndDays,       0 }
-			,
-			{ CombndHours,      0 }
-			,
+			{ CombndYears,      0 },
+			{ CombndMonths,     0 },
+			{ CombndWeeks,      0 },
+			{ CombndDays,       0 },
+			{ CombndHours,      0 },
 			{ CombndMinutes,    0 }
 		};
 		DictionaryOfTotalEntries = new Dictionary<Entry, int>()
 		{
-			{ TotYears,     0 }
-			,
-			{ TotMonths,    0 }
-			,
-			{ TotWeeks,     0 }
-			,
-			{ TotDays,      0 }
-			,
-			{ TotHours,     0 }
-			,
+			{ TotYears,     0 },
+			{ TotMonths,    0 },
+			{ TotWeeks,     0 },
+			{ TotDays,      0 },
+			{ TotHours,     0 },
 			{ TotMinutes,   0 }
 		};
 
@@ -91,70 +60,40 @@ public partial class MainPage : ContentPage
 		EndTimePicker.Time = DateTime.Now.TimeOfDay;
 
 		StartDatePicker.Date = DateTime.Now.Date;
-
 		EndDatePicker.Date = DateTime.Now.Date;
-
 
 #if __MACCATALYST__
 		SetOrientationRight
 		(
-			DeviceDisplay.Current.MainDisplayInfo.Width
-				,
-			DeviceDisplay.Current.MainDisplayInfo.Height
-				,
+			DeviceDisplay.Current.MainDisplayInfo.Width,
+			DeviceDisplay.Current.MainDisplayInfo.Height,
 			DisplayOrientation.Landscape
 		);
 #else
 		SetOrientationRight
 		(
-			DeviceDisplay.Current.MainDisplayInfo.Width
-				,
-			DeviceDisplay.Current.MainDisplayInfo.Height
-				,
+			DeviceDisplay.Current.MainDisplayInfo.Width,
+			DeviceDisplay.Current.MainDisplayInfo.Height,
 			DeviceDisplay.Current.MainDisplayInfo.Orientation
 		);
 #endif
 		DeviceDisplay.Current.MainDisplayInfoChanged += Current_MainDisplayInfoChanged;
 	}
 
-	// Fix for CS8622: Add nullable annotation to 'sender' parameter
 	private void Current_MainDisplayInfoChanged(object? sender, DisplayInfoChangedEventArgs e)
 	{
-		// Ensure all UI updates happen on the UI thread to avoid WinUI FocusState exceptions
 		MainThread.BeginInvokeOnMainThread(() =>
 		{
-			SetOrientationRight
-			(
-				e.DisplayInfo.Width,
-				e.DisplayInfo.Height,
-				e.DisplayInfo.Orientation
-			);
+			SetOrientationRight(e.DisplayInfo.Width, e.DisplayInfo.Height, e.DisplayInfo.Orientation);
 		});
 	}
 
-	private void SetOrientationRight
-	(
-		double DipsWidth
-			,
-		double DipsHight
-			,
-		DisplayOrientation DipsOrient
-	)
+	private void SetOrientationRight(double DipsWidth, double DipsHight, DisplayOrientation DipsOrient)
 	{
 		bool portrait = (DipsOrient == DisplayOrientation.Portrait);
 
-		// If orientation actually changed, reset scaling baseline so landscape & portrait each get their own natural base size.
-		if (_currentOrientation != DipsOrient)
-		{
-			_currentOrientation = DipsOrient;
-			TotalStackName.Scale = 1; // remove previous scale
-			_baseContentWidth = -1;   // force re-capture of baseline dimensions in new orientation
-			_baseContentHeight = -1;
-		}
-
 		TotalStackName.TranslationX = 0.0f;
 		TotalStackName.TranslationY = 0.0f;
-
 
 		if (firstTimeWdthOrHeightChanged)
 		{
@@ -164,13 +103,13 @@ public partial class MainPage : ContentPage
 		}
 
 		if (portrait)
-		{ // Portrait
+		{
 			EntriesCenterOuterStack.Orientation = StackOrientation.Horizontal;
 			EntriesCenterCombndStack.Orientation = StackOrientation.Vertical;
 			EntriesCenterTotStack.Orientation = StackOrientation.Vertical;
 		}
 		else
-		{ // Landscape
+		{
 			EntriesCenterOuterStack.Orientation = StackOrientation.Vertical;
 			EntriesCenterCombndStack.Orientation = StackOrientation.Horizontal;
 			EntriesCenterTotStack.Orientation = StackOrientation.Horizontal;
@@ -180,33 +119,31 @@ public partial class MainPage : ContentPage
 		{
 			StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 			EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-
 		}
 		else if (DeviceInfo.Platform == DevicePlatform.Android)
 		{
-			if (portrait) // Portrait ?
-			{ // Portrait
+			if (portrait)
+			{
 				StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
 				EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
 			}
 			else
-			{ // Landscape
+			{
 				StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 				EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 			}
 
 			StartDayName.WidthRequest = EndDayName.WidthRequest = 50;
-
 		}
 		else if (DeviceInfo.Platform == DevicePlatform.iOS)
 		{
-			if (portrait) // Portrait ?
-			{ // Portrait
+			if (portrait)
+			{
 				StartLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
 				EndLabelNDateTimeStack.Orientation = StackOrientation.Vertical;
 			}
 			else
-			{ // Landscape
+			{
 				StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 				EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 			}
@@ -215,107 +152,32 @@ public partial class MainPage : ContentPage
 		{
 			StartLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
 			EndLabelNDateTimeStack.Orientation = StackOrientation.Horizontal;
-
 			StartDayName.WidthRequest = EndDayName.WidthRequest = 45;
 		}
 
 		DoClearAll();
 	}
 
-	// One-shot handler to apply scale when content is actually measured
-	private void TotalStackName_SizeChanged_ApplyScaleOnce(object? sender, EventArgs e)
-	{
-		TotalStackName.SizeChanged -= TotalStackName_SizeChanged_ApplyScaleOnce;
-		ApplyScale(Width, Height);
-		_lastAllocatedWidth = Width;
-		_lastAllocatedHeight = Height;
-	}
-
-	private void ApplyScale(double width, double height)
-	{
-		if (width <= 0 || height <= 0) return;
-		if (TotalStackName.Width <= 0 || TotalStackName.Height <= 0) return;
-
-		// Capture baseline size (unscaled) for the current orientation
-		if (_baseContentWidth < 0 || _baseContentHeight < 0)
-		{
-			_baseContentWidth = TotalStackName.Width;
-			_baseContentHeight = TotalStackName.Height;
-		}
-
-		// Fit-down only: do not enlarge content, only shrink if it would overflow.
-		var scaleX = width  < _baseContentWidth  ? width  / _baseContentWidth  : 1.0;
-		var scaleY = height < _baseContentHeight ? height / _baseContentHeight : 1.0;
-		var newScale = Math.Min(scaleX, scaleY);
-
-		if (newScale <= 0) newScale = 1; // safety
-
-		if (Math.Abs(TotalStackName.Scale - newScale) > 0.001)
-		{
-			TotalStackName.Scale = newScale;
-		}
-	}
-
-	protected override void OnSizeAllocated(double width, double height)
-	{
-		base.OnSizeAllocated(width, height);
-
-		// Ignore duplicates
-		if (Math.Abs(_lastAllocatedWidth - width) < double.Epsilon &&
-			Math.Abs(_lastAllocatedHeight - height) < double.Epsilon)
-		{
-			// If initial scale hasn’t run yet but sizes are valid, apply it
-			if (TotalStackName.Width > 0 && TotalStackName.Height > 0)
-			{
-				ApplyScale(width, height);
-			}
-			return;
-		}
-
-		// If content isn't measured yet, apply scale once when it is
-		if (TotalStackName.Width <= 0 || TotalStackName.Height <= 0)
-		{
-			TotalStackName.SizeChanged -= TotalStackName_SizeChanged_ApplyScaleOnce;
-			TotalStackName.SizeChanged += TotalStackName_SizeChanged_ApplyScaleOnce;
-			return;
-		}
-
-		// Normal path
-		ApplyScale(width, height);
-		_lastAllocatedWidth = width;
-		_lastAllocatedHeight = height;
-	}
-
 	private bool firstTimeWdthOrHeightChanged = true;
-
 
 	DatePicker MacStartDatePicker = new DatePicker();
 	DatePicker MacEndDatePicker = new DatePicker();
-
 	Picker GtkStartHourPicker = new Picker();
 	Picker GtkStartMinutsPicker = new Picker();
 	Picker GtkEndHourPicker = new Picker();
 	Picker GtkEndMinutsPicker = new Picker();
 
 	private double StartDateTimeIntroLabelNameFontSizeOrig = 0.0;
-
 	private double StartEndDayNameFontSizeOrig = 0.0;
 
 	public DateTime StartDateTimeIn { get; set; }
 	public DateTime StartDateIn { get; set; }
-
-
-
 	public TimeSpan StartTimeIn { get; set; }
-
 	public bool DoCalcStartTime { get; set; } = false;
 	public DateTime StartDateTimeOut { get; set; }
-
 	public DateTime EndDateTimeIn { get; set; }
 	public DateTime EndDateIn { get; set; }
-
 	public TimeSpan EndTimeIn { get; set; }
-
 	public bool DoCalcEndTime { get; set; } = false;
 	public DateTime EndDateTimeOut { get; set; }
 	public bool DoCalcYMWDHM { get; set; } = true;
@@ -323,48 +185,35 @@ public partial class MainPage : ContentPage
 	private TimeSpan PrivEnteredYMWDHMTimeSpan { get; set; } = new TimeSpan(0);
 	public TimeSpan EnteredYMWDHMTimeSpan
 	{
-		get { return PrivEnteredYMWDHMTimeSpan; }
+		get => PrivEnteredYMWDHMTimeSpan;
 		set => PrivEnteredYMWDHMTimeSpan = value;
 	}
 
-	// Values for "Combined" dateTime span
 	private Dictionary<Entry, int> DictionaryOfCombinedEntries;
-
-	// Total values for dateTime span
 	public Dictionary<Entry, int> DictionaryOfTotalEntries;
 
-
-	// Output values
-	// Combnd
 	private int CombndYearsOut = 0;
 	private int CombndMonthsOut = 0;
 	private int CombndWeeksOut = 0;
 	private int CombndDaysOut = 0;
 	private int CombndHoursOut = 0;
 	private int CombndMinutesOut = 0;
-	// Total values for dateTime span
-	private Int64 TotYearsOut = 0;
-	private Int64 TotMonthsOut = 0;
-	private Int64 TotWeeksOut = 0;
-	private Int64 TotDaysOut = 0;
-	private Int64 TotHoursOut = 0;
-	private Int64 TotMinutesOut = 0;
-
+	private long TotYearsOut = 0;
+	private long TotMonthsOut = 0;
+	private long TotWeeksOut = 0;
+	private long TotDaysOut = 0;
+	private long TotHoursOut = 0;
+	private long TotMinutesOut = 0;
 
 	private void SetStartDateTime()
 	{
 		try
 		{
 			StartTimePicker.Time = new TimeSpan(StartTimeIn.Hours, StartTimeIn.Minutes, 0);
-
 			StartDatePicker.Date = StartDateIn;
-
 			StartDayName.Text = StartDateIn.DayOfWeek.ToString().Remove(3);
-
 		}
-		catch (Exception)
-		{
-		}
+		catch (Exception) { }
 	}
 
 	private void SetEndDateTime()
@@ -372,83 +221,52 @@ public partial class MainPage : ContentPage
 		try
 		{
 			EndTimePicker.Time = new TimeSpan(EndTimeIn.Hours, EndTimeIn.Minutes, 0);
-
 			EndDatePicker.Date = EndDateIn;
-
 			EndDayName.Text = EndDateIn.DayOfWeek.ToString().Remove(3);
-
 		}
-		catch (Exception)
-		{
-		}
+		catch (Exception) { }
 	}
 
-	// Change the parameter type of ClearTotIOVars and ClearCombinedIOVars to allow null
 	private void ClearTotIOVars(Entry? ImInFocus)
 	{
-		// Total values for dateTime span
 		foreach (Entry entry in DictionaryOfTotalEntries.Keys)
 		{
 			if (entry != ImInFocus)
-			{
 				DictionaryOfTotalEntries[entry] = 0;
-			}
 		}
-		// Total values for dateTime span
-		TotYearsOut = 0;
-		TotMonthsOut = 0;
-		TotWeeksOut = 0;
-		TotDaysOut = 0;
-		TotHoursOut = 0;
-		TotMinutesOut = 0;
+		TotYearsOut = 0; TotMonthsOut = 0; TotWeeksOut = 0; TotDaysOut = 0; TotHoursOut = 0; TotMinutesOut = 0;
 	}
 
 	private void ClearCombinedIOVars(Entry? ImInFocus)
 	{
-		// Values for "Combined" dateTime span
 		foreach (Entry entry in DictionaryOfCombinedEntries.Keys)
 		{
 			if (entry != ImInFocus)
-			{
 				DictionaryOfCombinedEntries[entry] = 0;
-			}
 		}
-		// Combined
-		CombndYearsOut = 0;
-		CombndMonthsOut = 0;
-		CombndWeeksOut = 0;
-		CombndDaysOut = 0;
-		CombndHoursOut = 0;
-		CombndMinutesOut = 0;
+		CombndYearsOut = 0; CombndMonthsOut = 0; CombndWeeksOut = 0; CombndDaysOut = 0; CombndHoursOut = 0; CombndMinutesOut = 0;
 	}
 
-	// Change the parameter type of ClearCombinedYMWDHM to accept nullable Entry
 	private void ClearCombinedYMWDHM(Entry? ImInFocus)
 	{
 		foreach (Entry CurEntry in DictionaryOfCombinedEntries.Keys)
 		{
 			if (CurEntry != ImInFocus)
-			{
 				CurEntry.Text = "";
-			}
 		}
 		ClearCombinedIOVars(ImInFocus);
 	}
 
-	// Change the parameter type of ClearTotYMWDHM to accept nullable Entry
 	private void ClearTotYMWDHM(Entry? ImInFocus)
 	{
 		foreach (Entry CurEntry in DictionaryOfTotalEntries.Keys)
 		{
 			if (CurEntry != ImInFocus)
-			{
 				CurEntry.Text = "";
-			}
 		}
 		ClearTotIOVars(ImInFocus);
 	}
 
-	// Change the parameter type of ClearYMWDHM to accept nullable Entry
 	private void ClearYMWDHM(Entry? ImInFocus)
 	{
 		ClearCombinedYMWDHM(ImInFocus);
@@ -464,83 +282,32 @@ public partial class MainPage : ContentPage
 	private void DoClearAll()
 	{
 		SetStartDateTime();
-
 		SetEndDateTime();
-
 		ClearYMWDHM(null);
 
 		if (DeviceInfo.Platform == DevicePlatform.iOS)
 		{
-			CombndYears.WidthRequest = 105;
-			CombndMonths.WidthRequest = 105;
-			CombndWeeks.WidthRequest = 105;
-			CombndDays.WidthRequest = 105;
-			CombndHours.WidthRequest = 105;
-			CombndMinutes.WidthRequest = 105;
-
-			TotYears.WidthRequest = 105;
-			TotMonths.WidthRequest = 105;
-			TotWeeks.WidthRequest = 105;
-			TotDays.WidthRequest = 105;
-			TotHours.WidthRequest = 105;
-			TotMinutes.WidthRequest = 105;
-
+			CombndYears.WidthRequest = CombndMonths.WidthRequest = CombndWeeks.WidthRequest = CombndDays.WidthRequest = CombndHours.WidthRequest = CombndMinutes.WidthRequest = 105;
+			TotYears.WidthRequest = TotMonths.WidthRequest = TotWeeks.WidthRequest = TotDays.WidthRequest = TotHours.WidthRequest = TotMinutes.WidthRequest = 105;
 		}
 		else if (DeviceInfo.Platform == DevicePlatform.Android)
 		{
-			CombndYears.WidthRequest = 88;
-			CombndMonths.WidthRequest = 88;
-			CombndWeeks.WidthRequest = 88;
-			CombndDays.WidthRequest = 88;
-			CombndHours.WidthRequest = 88;
-			CombndMinutes.WidthRequest = 88;
-
-			TotYears.WidthRequest = 88;
-			TotMonths.WidthRequest = 88;
-			TotWeeks.WidthRequest = 88;
-			TotDays.WidthRequest = 88;
-			TotHours.WidthRequest = 88;
-			TotMinutes.WidthRequest = 88;
-
+			CombndYears.WidthRequest = CombndMonths.WidthRequest = CombndWeeks.WidthRequest = CombndDays.WidthRequest = CombndHours.WidthRequest = CombndMinutes.WidthRequest = 88;
+			TotYears.WidthRequest = TotMonths.WidthRequest = TotWeeks.WidthRequest = TotDays.WidthRequest = TotHours.WidthRequest = TotMinutes.WidthRequest = 88;
 		}
 		else if (DeviceInfo.Platform == DevicePlatform.WinUI)
 		{
-			CombndYears.WidthRequest = 121;
-			CombndMonths.WidthRequest = 121;
-			CombndWeeks.WidthRequest = 121;
-			CombndDays.WidthRequest = 121;
-			CombndHours.WidthRequest = 121;
-			CombndMinutes.WidthRequest = 121;
-
-			TotYears.WidthRequest = 121;
-			TotMonths.WidthRequest = 121;
-			TotWeeks.WidthRequest = 121;
-			TotDays.WidthRequest = 121;
-			TotHours.WidthRequest = 121;
-			TotMinutes.WidthRequest = 121;
-
+			CombndYears.WidthRequest = CombndMonths.WidthRequest = CombndWeeks.WidthRequest = CombndDays.WidthRequest = CombndHours.WidthRequest = CombndMinutes.WidthRequest = 121;
+			TotYears.WidthRequest = TotMonths.WidthRequest = TotWeeks.WidthRequest = TotDays.WidthRequest = TotHours.WidthRequest = TotMinutes.WidthRequest = 121;
 		}
-		else //Set as UWP
+		else
 		{
-			CombndYears.WidthRequest = 121;
-			CombndMonths.WidthRequest = 121;
-			CombndWeeks.WidthRequest = 121;
-			CombndDays.WidthRequest = 121;
-			CombndHours.WidthRequest = 121;
-			CombndMinutes.WidthRequest = 121;
-
-			TotYears.WidthRequest = 121;
-			TotMonths.WidthRequest = 121;
-			TotWeeks.WidthRequest = 121;
-			TotDays.WidthRequest = 121;
-			TotHours.WidthRequest = 121;
-			TotMinutes.WidthRequest = 121;
-
+			CombndYears.WidthRequest = CombndMonths.WidthRequest = CombndWeeks.WidthRequest = CombndDays.WidthRequest = CombndHours.WidthRequest = CombndMinutes.WidthRequest = 121;
+			TotYears.WidthRequest = TotMonths.WidthRequest = TotWeeks.WidthRequest = TotDays.WidthRequest = TotHours.WidthRequest = TotMinutes.WidthRequest = 121;
 		}
 
 		ClearAllIOVars();
 	}
-
 
 	// Start date-time...
 
@@ -550,12 +317,9 @@ public partial class MainPage : ContentPage
 		DoCalcStartTime = true;
 		DoCalcEndTime = false;
 		DoCalcYMWDHM = false;
-
 		LabelEqual.Text = "-";
 		LabelPlus.Text = "=";
-
 		DoCalculate();
-
 	}
 
 	private void CheckSetEndDateTime()
@@ -566,35 +330,26 @@ public partial class MainPage : ContentPage
 			EndTimeIn = StartTimeIn;
 			SetEndDateTime();
 		}
-		else
+		else if ((EndDateIn == StartDateIn) && (EndTimeIn < StartTimeIn))
 		{
-			if ((EndDateIn == StartDateIn) && (EndTimeIn < StartTimeIn))
-			{
-				EndTimeIn = StartTimeIn;
-				SetEndDateTime();
-			}
+			EndTimeIn = StartTimeIn;
+			SetEndDateTime();
 		}
 	}
 
 	private void StartDatePicker_DateSelected(object sender, DateChangedEventArgs e)
 	{
 		StartDateIn = e.NewDate;
-
 		MacStartDatePicker.Date = StartDateIn;
-
 		StartDayName.Text = StartDateIn.DayOfWeek.ToString().Remove(3);
-
 		CheckSetEndDateTime();
 	}
 
 	private void OnMacStartDatePickerDateSelected(object sEnder, DateChangedEventArgs e)
 	{
 		StartDateIn = e.NewDate;
-
 		StartDatePicker.Date = StartDateIn;
-
 		StartDayName.Text = StartDateIn.DayOfWeek.ToString().Remove(3);
-
 		CheckSetEndDateTime();
 	}
 
@@ -602,18 +357,14 @@ public partial class MainPage : ContentPage
 	{
 		if (e.PropertyName == "Time")
 		{
-			//StartTimeIn = MacStartTimePicker.Time;
-
 			StartTimePicker.Time = StartTimeIn;
-			//StartTimePicker.Time = new TimeSpan(StartTimeIn.Hours, StartTimeIn.Minutes, 0);
-
 			CheckSetEndDateTime();
 		}
 	}
+
 	private void GtkStartTime_SelectedIndexChanged(object sender, EventArgs e)
 	{
 		StartTimeIn = new TimeSpan(GtkStartHourPicker.SelectedIndex, GtkStartMinutsPicker.SelectedIndex, 0);
-
 		CheckSetEndDateTime();
 	}
 
@@ -622,7 +373,6 @@ public partial class MainPage : ContentPage
 		if (e.PropertyName == "Time")
 		{
 			StartTimeIn = StartTimePicker.Time;
-
 			CheckSetEndDateTime();
 		}
 	}
@@ -632,30 +382,20 @@ public partial class MainPage : ContentPage
 	{
 		StartDateIn = DateTime.Now.Date;
 		StartTimeIn = DateTime.Now.TimeOfDay;
-
 		SetStartDateTime();
-
 		CheckSetEndDateTime();
 	}
 
 
 	//FROM HERE Combined
 
-	private void OnCombinedEntryFocused(object sender, FocusEventArgs e)
-	{
-		ClearTotYMWDHM(null);
-		//((Entry)sender).SelectionLength = ((Entry)sender).Text.Length;
-	}
-
-	private void OnCombinedEntryUnfocused(object sender, FocusEventArgs e)
-	{
-		OnCombinedEntryCompleted(sender, e);
-	}
+	private void OnCombinedEntryFocused(object sender, FocusEventArgs e) => ClearTotYMWDHM(null);
+	private void OnCombinedEntryUnfocused(object sender, FocusEventArgs e) => OnCombinedEntryCompleted(sender, e);
 
 	private async void OnCombinedEntryCompleted(object sEnder, EventArgs args)
 	{
-		Entry TheEntry = ((Entry)sEnder);
-		if (!int.TryParse(TheEntry.Text, out int result) && (TheEntry.Text.Length != 0))
+		Entry TheEntry = (Entry)sEnder;
+		if (!int.TryParse(TheEntry.Text, out int result) && TheEntry.Text.Length != 0)
 		{
 			DictionaryOfCombinedEntries[TheEntry] = 0;
 			var TextHolder = TheEntry.Text;
@@ -674,21 +414,13 @@ public partial class MainPage : ContentPage
 
 	//FROM HERE Total
 
-	private void OnTotEntryFocused(object sender, FocusEventArgs e)
-	{
-		ClearYMWDHM((Entry)sender);
-		//((Entry)sender).SelectionLength = ((Entry)sender).Text.Length;
-	}
-
-	private void OnTotEntryUnfocused(object sender, FocusEventArgs e)
-	{
-		OnTotEntryCompleted(sender, e);
-	}
+	private void OnTotEntryFocused(object sender, FocusEventArgs e) => ClearYMWDHM((Entry)sender);
+	private void OnTotEntryUnfocused(object sender, FocusEventArgs e) => OnTotEntryCompleted(sender, e);
 
 	private async void OnTotEntryCompleted(object sEnder, EventArgs args)
 	{
-		Entry TheEntry = ((Entry)sEnder);
-		if (!int.TryParse(TheEntry.Text, out int result) && (TheEntry.Text.Length != 0))
+		Entry TheEntry = (Entry)sEnder;
+		if (!int.TryParse(TheEntry.Text, out int result) && TheEntry.Text.Length != 0)
 		{
 			DictionaryOfTotalEntries[TheEntry] = 0;
 			var TextHolder = TheEntry.Text;
@@ -712,12 +444,9 @@ public partial class MainPage : ContentPage
 		DoCalcStartTime = false;
 		DoCalcEndTime = true;
 		DoCalcYMWDHM = false;
-
 		LabelEqual.Text = "=";
 		LabelPlus.Text = "+";
-
 		DoCalculate();
-
 	}
 
 
@@ -729,35 +458,26 @@ public partial class MainPage : ContentPage
 			StartTimeIn = EndTimeIn;
 			SetStartDateTime();
 		}
-		else
+		else if (StartDateIn == EndDateIn && StartTimeIn > EndTimeIn)
 		{
-			if ((StartDateIn == EndDateIn) && (StartTimeIn > EndTimeIn))
-			{
-				StartTimeIn = EndTimeIn;
-				SetStartDateTime();
-			}
+			StartTimeIn = EndTimeIn;
+			SetStartDateTime();
 		}
 	}
 
 	private void EndDatePicker_DateSelected(object sender, DateChangedEventArgs e)
 	{
 		EndDateIn = e.NewDate;
-
 		MacEndDatePicker.Date = EndDateIn;
-
 		EndDayName.Text = EndDateIn.DayOfWeek.ToString().Remove(3);
-
 		CheckSetStartDateTime();
 	}
 
 	private void OnMacEndDatePickerDateSelected(object sEnder, DateChangedEventArgs e)
 	{
 		EndDateIn = e.NewDate;
-
 		EndDatePicker.Date = EndDateIn;
-
 		EndDayName.Text = EndDateIn.DayOfWeek.ToString().Remove(3);
-
 		CheckSetStartDateTime();
 	}
 
@@ -765,11 +485,7 @@ public partial class MainPage : ContentPage
 	{
 		if (e.PropertyName == "Time")
 		{
-			//EndTimeIn = MacEndTimePicker.Time;
-
 			EndTimePicker.Time = EndTimeIn;
-			//EndTimePicker.Time = new TimeSpan(EndTimeIn.Hours, EndTimeIn.Minutes, 0);
-
 			CheckSetStartDateTime();
 		}
 	}
@@ -777,7 +493,6 @@ public partial class MainPage : ContentPage
 	private void GtkEndTime_SelectedIndexChanged(object sender, EventArgs e)
 	{
 		EndTimeIn = new TimeSpan(GtkEndHourPicker.SelectedIndex, GtkEndMinutsPicker.SelectedIndex, 0);
-
 		CheckSetStartDateTime();
 	}
 
@@ -786,7 +501,6 @@ public partial class MainPage : ContentPage
 		if (e.PropertyName == "Time")
 		{
 			EndTimeIn = EndTimePicker.Time;
-
 			CheckSetStartDateTime();
 		}
 	}
@@ -796,21 +510,12 @@ public partial class MainPage : ContentPage
 	{
 		EndDateIn = DateTime.Now.Date;
 		EndTimeIn = DateTime.Now.TimeOfDay;
-
 		SetEndDateTime();
-
 		CheckSetStartDateTime();
 	}
 
 	[RelayCommand]
-	private void ClearAllButtonClicked()
-	{
-		DoClearAll();
-	}
-
-
-
-	// CALCULATION from here...
+	private void ClearAllButtonClicked() => DoClearAll();
 
 	private async void CalcAndShowTimeSpans()
 	{
@@ -821,11 +526,9 @@ public partial class MainPage : ContentPage
 			CombndMonthsOut += 12;
 			CombndYearsOut--;
 		}
-		DateTime dtCalc1 = StartDateTimeIn;
-		dtCalc1 = dtCalc1.AddYears(CombndYearsOut);
-		dtCalc1 = dtCalc1.AddMonths(CombndMonthsOut);
-		TimeSpan ts1 = dtCalc1 - StartDateTimeIn; // Total Days in years + months
-		TimeSpan ts2 = EndDateTimeIn - StartDateTimeIn; // Total Days in whole time span
+		DateTime dtCalc1 = StartDateTimeIn.AddYears(CombndYearsOut).AddMonths(CombndMonthsOut);
+		TimeSpan ts1 = dtCalc1 - StartDateTimeIn; // Days in years + months
+		TimeSpan ts2 = EndDateTimeIn - StartDateTimeIn; // Whole span
 		CombndDaysOut = ts2.Days - ts1.Days;
 		if (CombndDaysOut < 0)
 		{
@@ -836,34 +539,27 @@ public partial class MainPage : ContentPage
 				CombndYearsOut--;
 			}
 			DateTime dtCalc2 = StartDateTimeIn.AddYears(CombndYearsOut).AddMonths(CombndMonthsOut);
-			ts1 = dtCalc2 - StartDateTimeIn; // Total Days in years + months
-			CombndDaysOut = ts2.Days - ts1.Days;
+			CombndDaysOut = (ts2 - (dtCalc2 - StartDateTimeIn)).Days;
 		}
-		CombndHoursOut = ts2.Hours;   // Extra days besides Days in years + months
+		CombndHoursOut = ts2.Hours;
 		CombndMinutesOut = ts2.Minutes;
-
-		CombndWeeksOut = (int)(CombndDaysOut / 7);
-		CombndDaysOut %= 7; // Rest after div. w. 7
-
+		CombndWeeksOut = CombndDaysOut / 7;
+		CombndDaysOut %= 7;
 		TotDaysOut = (long)ts2.TotalDays;
-		TotWeeksOut = (long)(TotDaysOut / 7);
+		TotWeeksOut = TotDaysOut / 7;
 		TotMonthsOut = CombndMonthsOut + 12 * CombndYearsOut;
 		TotYearsOut = CombndYearsOut;
 		TotHoursOut = (long)ts2.TotalHours;
 		TotMinutesOut = (long)ts2.TotalMinutes;
 
-		// Defer all Entry.Text updates to the next UI tick to avoid WinUI FocusState race
 		MainThread.BeginInvokeOnMainThread(() =>
 		{
-			// Combined
 			CombndDays.Text = CombndDaysOut.ToString();
 			CombndWeeks.Text = CombndWeeksOut.ToString();
 			CombndMonths.Text = CombndMonthsOut.ToString();
 			CombndYears.Text = CombndYearsOut.ToString();
 			CombndHours.Text = CombndHoursOut.ToString();
 			CombndMinutes.Text = CombndMinutesOut.ToString();
-
-			// Totals
 			TotDays.Text = TotDaysOut.ToString();
 			TotWeeks.Text = TotWeeksOut.ToString();
 			TotMonths.Text = TotMonthsOut.ToString();
@@ -872,45 +568,23 @@ public partial class MainPage : ContentPage
 			TotMinutes.Text = TotMinutesOut.ToString();
 		});
 
-		// keep alerts after UI updates
 		if (TotDaysOut > 9999999999) await DisplayAlert("Total \"Days\" > 9999999999", TotDays.ToString(), "OK");
 		if (TotHoursOut > 9999999999) await DisplayAlert("Total \"Hours\" > 9999999999", TotHours.ToString(), "OK");
 		if (TotMinutesOut > 9999999999) await DisplayAlert("Total \"Minutes\" > 9999999999", TotMinutes.ToString(), "OK");
 	}
 
-	private void OnCalculateButtonClicked(object sEnder, EventArgs e)
-	{
-		DoCalculate();
-	}
+	private void OnCalculateButtonClicked(object sEnder, EventArgs e) => DoCalculate();
 
-	enum EntryNames : int
-	{
-		years = 0
-		,
-		months = 1
-		,
-		weeks = 2
-		,
-		days = 3
-		,
-		hours = 4
-		,
-		minutes = 5
-	}
+	enum EntryNames : int { years = 0, months = 1, weeks = 2, days = 3, hours = 4, minutes = 5 }
 
 	private async void DoCalculate()
 	{
 		StartTimeIn = StartTimePicker.Time;
 		EndTimeIn = EndTimePicker.Time;
-
 		StartDateIn = StartDatePicker.Date;
 		EndDateIn = EndDatePicker.Date;
-
-		// Input values
 		EndDateTimeIn = EndDateIn + EndTimeIn;
 		StartDateTimeIn = StartDateIn + StartTimeIn;
-
-		// Output values
 		StartDateTimeOut = DateTime.MaxValue;
 		EndDateTimeOut = DateTime.MaxValue;
 
@@ -919,12 +593,10 @@ public partial class MainPage : ContentPage
 			CalcAndShowTimeSpans();
 		}
 		else
-		{ // !DoCalcYMWDHM
-		  // Read all controls
-		  // Combined
+		{
 			foreach (Entry CurEntry in DictionaryOfCombinedEntries.Keys)
 			{
-				if (!int.TryParse(CurEntry.Text, out int result) && (CurEntry.Text.Length != 0))
+				if (!int.TryParse(CurEntry.Text, out int result) && CurEntry.Text.Length != 0)
 				{
 					DictionaryOfCombinedEntries[CurEntry] = 0;
 					string TextHolder = CurEntry.Text;
@@ -933,15 +605,11 @@ public partial class MainPage : ContentPage
 					CurEntry.Focus();
 					return;
 				}
-				else
-				{
-					DictionaryOfCombinedEntries[CurEntry] = result;
-				}
+				DictionaryOfCombinedEntries[CurEntry] = result;
 			}
-			// Total
 			foreach (Entry CurEntry in DictionaryOfTotalEntries.Keys)
 			{
-				if (!int.TryParse(CurEntry.Text, out int result) && (CurEntry.Text.Length != 0))
+				if (!int.TryParse(CurEntry.Text, out int result) && CurEntry.Text.Length != 0)
 				{
 					DictionaryOfTotalEntries[CurEntry] = 0;
 					string TextHolder = CurEntry.Text;
@@ -950,502 +618,210 @@ public partial class MainPage : ContentPage
 					CurEntry.Focus();
 					return;
 				}
-				else
-				{
-					DictionaryOfTotalEntries[CurEntry] = result;
-				}
+				DictionaryOfTotalEntries[CurEntry] = result;
 			}
-		} // if (DoCalcYMWDHM) ..else
-
-
-		bool TotalsAllZero = true;
-		foreach (int TheValue in DictionaryOfTotalEntries.Values)
-		{
-			TotalsAllZero &= TheValue == 0;
 		}
 
-		bool CombinedsAllZero = true;
-		foreach (int TheValue in DictionaryOfCombinedEntries.Values)
-		{
-			CombinedsAllZero &= TheValue == 0;
-		}
+		bool TotalsAllZero = DictionaryOfTotalEntries.Values.All(v => v == 0);
+		bool CombinedsAllZero = DictionaryOfCombinedEntries.Values.All(v => v == 0);
 
 		if (DoCalcEndTime)
-		{ // DoCalcEndTime = true
+		{
 			if (!TotalsAllZero || !CombinedsAllZero)
 			{
-				if (TotalsAllZero || CombinedsAllZero)
+				if (TotalsAllZero ^ CombinedsAllZero)
 				{
-					EndDateTimeOut = DateTime.MaxValue; // <=> no EndDateTimeOut found
-
+					EndDateTimeOut = DateTime.MaxValue;
 					if (!TotalsAllZero)
 					{
 						for (int i = 0; i < DictionaryOfTotalEntries.Count; i++)
 						{
 							if (DictionaryOfTotalEntries.ElementAt(i).Value != 0)
 							{
-								bool RestIsZero = true;
-								for (int j = i + 1; j < DictionaryOfTotalEntries.Count; j++)
-								{
-									RestIsZero &= DictionaryOfTotalEntries.ElementAt(j).Value == 0;
-								}
-
+								bool RestIsZero = DictionaryOfTotalEntries.Skip(i + 1).All(kv => kv.Value == 0);
 								if (RestIsZero)
 								{
 									try
 									{
 										switch (i)
 										{
-											case (int)EntryNames.years:
-											{
-												EndDateTimeOut =
-													StartDateTimeIn.AddYears(DictionaryOfTotalEntries.ElementAt(i).Value);
-												break;
-											}
-											case (int)EntryNames.months:
-											{
-												EndDateTimeOut =
-													StartDateTimeIn.AddMonths(DictionaryOfTotalEntries.ElementAt(i).Value);
-												break;
-											}
-											case (int)EntryNames.weeks:
-											{
-												EndDateTimeOut =
-													StartDateTimeIn.AddDays((DictionaryOfTotalEntries.ElementAt(i).Value) * 7);
-												break;
-											}
-											case (int)EntryNames.days:
-											{
-												EndDateTimeOut =
-													StartDateTimeIn.AddDays(DictionaryOfTotalEntries.ElementAt(i).Value);
-												break;
-											}
-											case (int)EntryNames.hours:
-											{
-												EndDateTimeOut =
-													StartDateTimeIn.AddHours(DictionaryOfTotalEntries.ElementAt(i).Value);
-												break;
-											}
-											case (int)EntryNames.minutes:
-											{
-												EndDateTimeOut =
-													StartDateTimeIn.AddMinutes(DictionaryOfTotalEntries.ElementAt(i).Value);
-												break;
-											}
-											default:
-												break;
+											case (int)EntryNames.years: EndDateTimeOut = StartDateTimeIn.AddYears(DictionaryOfTotalEntries.ElementAt(i).Value); break;
+											case (int)EntryNames.months: EndDateTimeOut = StartDateTimeIn.AddMonths(DictionaryOfTotalEntries.ElementAt(i).Value); break;
+											case (int)EntryNames.weeks: EndDateTimeOut = StartDateTimeIn.AddDays(DictionaryOfTotalEntries.ElementAt(i).Value * 7); break;
+											case (int)EntryNames.days: EndDateTimeOut = StartDateTimeIn.AddDays(DictionaryOfTotalEntries.ElementAt(i).Value); break;
+											case (int)EntryNames.hours: EndDateTimeOut = StartDateTimeIn.AddHours(DictionaryOfTotalEntries.ElementAt(i).Value); break;
+											case (int)EntryNames.minutes: EndDateTimeOut = StartDateTimeIn.AddMinutes(DictionaryOfTotalEntries.ElementAt(i).Value); break;
 										}
 									}
 									catch (ArgumentOutOfRangeException outOfRange)
 									{
-										await DisplayAlert
-										   (
-											   "Argument Out Of Range"
-											   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Total Years\" added = " + DictionaryOfTotalEntries.ElementAt(i).Value.ToString()
-											   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
-											   , "OK"
-										   );
+										await DisplayAlert("Argument Out Of Range", outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": value = " + DictionaryOfTotalEntries.ElementAt(i).Value + "\nMax DateTime is " + DateTime.MaxValue.ToString("u").Remove(16), "OK");
 										DictionaryOfTotalEntries[DictionaryOfTotalEntries.ElementAt(i).Key] = 0;
 										DictionaryOfTotalEntries.ElementAt(i).Key.Text = "";
 										DictionaryOfTotalEntries.ElementAt(i).Key.Focus();
 										return;
 									}
-								} // if (RestIsZero)
+								}
 								else
 								{
-									await DisplayAlert
-									   (
-										   "Type error"
-										   , "Only one \"Total\" TheValue allowed"
-										   , "OK"
-									   );
+									await DisplayAlert("Type error", "Only one \"Total\" value allowed", "OK");
 								}
 							}
 						}
-					} // if (!TotalsAllZero)
-					else
-					{ // Must be Combined time span
-
+					}
+					else // Combined
+					{
 						EndDateTimeOut = StartDateTimeIn;
-
 						int i = 0;
-						foreach (KeyValuePair<Entry, int> TheKeyValuePair in DictionaryOfCombinedEntries)
+						foreach (var kv in DictionaryOfCombinedEntries)
 						{
-							if (TheKeyValuePair.Value != 0)
+							if (kv.Value != 0)
 							{
 								try
 								{
 									switch (i)
 									{
-										case (int)EntryNames.years:
-										{
-											EndDateTimeOut =
-												StartDateTimeIn.AddYears(TheKeyValuePair.Value);
-											break;
-										}
-										case (int)EntryNames.months:
-										{
-											EndDateTimeOut =
-												StartDateTimeIn.AddMonths(TheKeyValuePair.Value);
-											break;
-										}
-										case (int)EntryNames.weeks:
-										{
-											EndDateTimeOut =
-												StartDateTimeIn.AddDays(TheKeyValuePair.Value * 7);
-											break;
-										}
-										case (int)EntryNames.days:
-										{
-											EndDateTimeOut =
-												StartDateTimeIn.AddDays(TheKeyValuePair.Value);
-											break;
-										}
-										case (int)EntryNames.hours:
-										{
-											EndDateTimeOut =
-												StartDateTimeIn.AddHours(TheKeyValuePair.Value);
-											break;
-										}
-										case (int)EntryNames.minutes:
-										{
-											EndDateTimeOut =
-												StartDateTimeIn.AddMinutes(TheKeyValuePair.Value);
-											break;
-										}
-										default:
-											break;
+										case (int)EntryNames.years: EndDateTimeOut = EndDateTimeOut.AddYears(kv.Value); break;
+										case (int)EntryNames.months: EndDateTimeOut = EndDateTimeOut.AddMonths(kv.Value); break;
+										case (int)EntryNames.weeks: EndDateTimeOut = EndDateTimeOut.AddDays(kv.Value * 7); break;
+										case (int)EntryNames.days: EndDateTimeOut = EndDateTimeOut.AddDays(kv.Value); break;
+										case (int)EntryNames.hours: EndDateTimeOut = EndDateTimeOut.AddHours(kv.Value); break;
+										case (int)EntryNames.minutes: EndDateTimeOut = EndDateTimeOut.AddMinutes(kv.Value); break;
 									}
 								}
 								catch (ArgumentOutOfRangeException outOfRange)
 								{
-									await DisplayAlert
-									   (
-										   "Argument Out Of Range"
-										   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Combined Years\" added = " + TheKeyValuePair.Key.ToString()
-										   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
-										   , "OK"
-									   );
-									DictionaryOfCombinedEntries[TheKeyValuePair.Key] = 0;
-									TheKeyValuePair.Key.Text = "";
-									TheKeyValuePair.Key.Focus();
+									await DisplayAlert("Argument Out Of Range", outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": combined value = " + kv.Value + "\nMax DateTime is " + DateTime.MaxValue.ToString("u").Remove(16), "OK");
+									DictionaryOfCombinedEntries[kv.Key] = 0;
+									kv.Key.Text = "";
+									kv.Key.Focus();
 									return;
 								}
 							}
-
 							i++;
 						}
-
-					}  // if (!TotalsAllZero) ... else ...
+					}
 
 					if (EndDateTimeOut != DateTime.MaxValue)
 					{
-						// Save tmp SartDateTime and EndDateTime
-						var tmpDoCalcEndTime = DoCalcEndTime;
-
-						// Clear and reseteverything
+						var tmpFlag = DoCalcEndTime;
 						DoClearAll();
-
-						// Show Start- and End Date Time
-						DoCalcEndTime = tmpDoCalcEndTime;
-
+						DoCalcEndTime = tmpFlag;
 						EndDateTimeIn = EndDateTimeOut;
 						EndDateIn = EndDateTimeOut.Date;
 						EndTimeIn = EndDateTimeOut.TimeOfDay;
-
 						SetEndDateTime();
-
-						// Show Time Spans.
 						CalcAndShowTimeSpans();
 					}
-
-				} // if ( !(!TotalsAllZero && !CombinedsAllZero) )
+				}
 				else
 				{
-					await DisplayAlert
-					   (
-						   "Type error"
-						   , "Not both \"Total\" and \"Combined\" time spans can be used"
-						   , "OK"
-					   );
-				} // if ( !(!TotalsAllZero && !CombinedsAllZero) ) ... else ...
-			} // if ( !(TotalsAllZero && CombinedsAllZero) )
+					await DisplayAlert("Type error", "Not both \"Total\" and \"Combined\" time spans can be used", "OK");
+				}
+			}
 			else
 			{
-				// Output values
-				EndDateTimeOut = StartDateTimeIn;
-				// Save tmp SartDateTime and EndDateTime
-				var tmpDoCalcEndTime = DoCalcEndTime;
-
-				// Clear and reseteverything
-				DoClearAll();
-
-				// Show Start- and End Date Time
-				DoCalcEndTime = tmpDoCalcEndTime;
-
-				EndDateTimeIn = EndDateTimeOut;
-				EndDateIn = EndDateTimeOut.Date;
-				EndTimeIn = EndDateTimeOut.TimeOfDay;
-
-				SetEndDateTime();
-
-				// Show Time Spans.
-				CalcAndShowTimeSpans();
-
-			} //  // if ( !(TotalsAllZero && CombinedsAllZero) ) ... else ...
-		} // if (!DoCalcEndTime) ... else ...
+				EndDateTimeOut = StartDateTimeIn; var tmpFlag = DoCalcEndTime; DoClearAll(); DoCalcEndTime = tmpFlag; EndDateTimeIn = EndDateTimeOut; EndDateIn = EndDateTimeOut.Date; EndTimeIn = EndDateTimeOut.TimeOfDay; SetEndDateTime(); CalcAndShowTimeSpans();
+			}
+		}
 
 		if (DoCalcStartTime)
-		{ // DoCalcStartTime = true
-			if (!DoCalcEndTime)
+		{
+			if (DoCalcEndTime)
 			{
-				if (!(TotalsAllZero && CombinedsAllZero))
+				await DisplayAlert("Error", "Can't calculate both \"Start\" and \"End\"", "OK");
+				return;
+			}
+			if (!TotalsAllZero || !CombinedsAllZero)
+			{
+				if (TotalsAllZero ^ CombinedsAllZero)
 				{
-					if (!(!TotalsAllZero && !CombinedsAllZero))
+					StartDateTimeOut = DateTime.MaxValue;
+					if (!TotalsAllZero)
 					{
-						StartDateTimeOut = DateTime.MaxValue; // <=> no StartDateTimeOut found
-
-						if (!TotalsAllZero)
+						for (int i = 0; i < DictionaryOfTotalEntries.Count; i++)
 						{
-							for (int i = 0; i < DictionaryOfTotalEntries.Count; i++)
+							if (DictionaryOfTotalEntries.ElementAt(i).Value != 0)
 							{
-								if (DictionaryOfTotalEntries.ElementAt(i).Value != 0)
-								{
-									bool RestIsZero = true;
-									for (int j = i + 1; j < DictionaryOfTotalEntries.Count; j++)
-									{
-										RestIsZero &= DictionaryOfTotalEntries.ElementAt(j).Value == 0;
-									}
-
-									if (RestIsZero)
-									{
-										try
-										{
-											switch (i)
-											{
-												case (int)EntryNames.years:
-												{
-													StartDateTimeOut =
-														EndDateTimeIn.AddYears(-(DictionaryOfTotalEntries.ElementAt(i).Value));
-													break;
-												}
-												case (int)EntryNames.months:
-												{
-													StartDateTimeOut =
-														EndDateTimeIn.AddMonths(-(DictionaryOfTotalEntries.ElementAt(i).Value));
-													break;
-												}
-												case (int)EntryNames.weeks:
-												{
-													StartDateTimeOut =
-														EndDateTimeIn.AddDays(-((DictionaryOfTotalEntries.ElementAt(i).Value) * 7));
-													break;
-												}
-												case (int)EntryNames.days:
-												{
-													StartDateTimeOut =
-														EndDateTimeIn.AddDays(-(DictionaryOfTotalEntries.ElementAt(i).Value));
-													break;
-												}
-												case (int)EntryNames.hours:
-												{
-													StartDateTimeOut =
-														EndDateTimeIn.AddHours(-(DictionaryOfTotalEntries.ElementAt(i).Value));
-													break;
-												}
-												case (int)EntryNames.minutes:
-												{
-													StartDateTimeOut =
-														EndDateTimeIn.AddMinutes(-(DictionaryOfTotalEntries.ElementAt(i).Value));
-													break;
-												}
-												default:
-													break;
-											}
-										}
-										catch (ArgumentOutOfRangeException outOfRange)
-										{
-											await DisplayAlert
-											   (
-												   "Argument Out Of Range"
-												   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Total Years\" added = " + DictionaryOfTotalEntries.ElementAt(i).Value.ToString()
-												   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
-												   , "OK"
-											   );
-											DictionaryOfTotalEntries[DictionaryOfTotalEntries.ElementAt(i).Key] = 0;
-											DictionaryOfTotalEntries.ElementAt(i).Key.Text = "";
-											DictionaryOfTotalEntries.ElementAt(i).Key.Focus();
-											return;
-										}
-									} // if (RestIsZero)
-									else
-									{
-										await DisplayAlert
-										   (
-											   "Type error"
-											   , "Only one \"Total\" TheValue allowed"
-											   , "OK"
-										   );
-									}
-								}
-							}
-						} // if (!TotalsAllZero)
-						else
-						{ // Must be Combnd time span
-
-							StartDateTimeOut = EndDateTimeIn;
-
-							int i = 0;
-							foreach (KeyValuePair<Entry, int> TheKeyValuePair in DictionaryOfCombinedEntries)
-							{
-								if (TheKeyValuePair.Value != 0)
+								bool RestIsZero = DictionaryOfTotalEntries.Skip(i + 1).All(kv => kv.Value == 0);
+								if (RestIsZero)
 								{
 									try
 									{
 										switch (i)
 										{
-											case (int)EntryNames.years:
-											{
-												StartDateTimeOut =
-													StartDateTimeOut.AddYears(-(TheKeyValuePair.Value));
-												break;
-											}
-											case (int)EntryNames.months:
-											{
-												StartDateTimeOut =
-													StartDateTimeOut.AddMonths(-(TheKeyValuePair.Value));
-												break;
-											}
-											case (int)EntryNames.weeks:
-											{
-												StartDateTimeOut =
-													StartDateTimeOut.AddDays(-((TheKeyValuePair.Value) * 7));
-												break;
-											}
-											case (int)EntryNames.days:
-											{
-												StartDateTimeOut =
-													StartDateTimeOut.AddDays(-(TheKeyValuePair.Value));
-												break;
-											}
-											case (int)EntryNames.hours:
-											{
-												StartDateTimeOut =
-													StartDateTimeOut.AddHours(-(TheKeyValuePair.Value));
-												break;
-											}
-											case (int)EntryNames.minutes:
-											{
-												StartDateTimeOut =
-													StartDateTimeOut.AddMinutes(-(TheKeyValuePair.Value));
-												break;
-											}
-											default:
-												break;
+											case (int)EntryNames.years: StartDateTimeOut = EndDateTimeIn.AddYears(-DictionaryOfTotalEntries.ElementAt(i).Value); break;
+											case (int)EntryNames.months: StartDateTimeOut = EndDateTimeIn.AddMonths(-DictionaryOfTotalEntries.ElementAt(i).Value); break;
+											case (int)EntryNames.weeks: StartDateTimeOut = EndDateTimeIn.AddDays(-DictionaryOfTotalEntries.ElementAt(i).Value * 7); break;
+											case (int)EntryNames.days: StartDateTimeOut = EndDateTimeIn.AddDays(-DictionaryOfTotalEntries.ElementAt(i).Value); break;
+											case (int)EntryNames.hours: StartDateTimeOut = EndDateTimeIn.AddHours(-DictionaryOfTotalEntries.ElementAt(i).Value); break;
+											case (int)EntryNames.minutes: StartDateTimeOut = EndDateTimeIn.AddMinutes(-DictionaryOfTotalEntries.ElementAt(i).Value); break;
 										}
 									}
 									catch (ArgumentOutOfRangeException outOfRange)
 									{
-										await DisplayAlert
-										   (
-											   "Argument Out Of Range"
-											   , outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": \"Combined Years\" added = " + TheKeyValuePair.Key.ToString()
-											   + ".\r\nDate+Time Max. Value is " + DateTime.MaxValue.ToString("u").Remove(16)
-											   , "OK"
-										   );
-										DictionaryOfCombinedEntries[TheKeyValuePair.Key] = 0;
-										TheKeyValuePair.Key.Text = "";
-										TheKeyValuePair.Key.Focus();
+										await DisplayAlert("Argument Out Of Range", outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": value = " + DictionaryOfTotalEntries.ElementAt(i).Value + "\nMax DateTime is " + DateTime.MaxValue.ToString("u").Remove(16), "OK");
+										DictionaryOfTotalEntries[DictionaryOfTotalEntries.ElementAt(i).Key] = 0;
+										DictionaryOfTotalEntries.ElementAt(i).Key.Text = "";
+										DictionaryOfTotalEntries.ElementAt(i).Key.Focus();
 										return;
 									}
 								}
-
-								i++;
+								else
+								{
+									await DisplayAlert("Type error", "Only one \"Total\" value allowed", "OK");
+								}
 							}
-
-						}  // if (!TotalsAllZero) ... else ...
-
-						if (StartDateTimeOut != DateTime.MaxValue)
-						{
-							// Save tmp SartDateTime and EndDateTime
-							var tmpDoCalcStartTime = DoCalcStartTime;
-
-							// Clear and reseteverything
-							DoClearAll();
-
-							//// Show Start- and End Date Time
-							DoCalcStartTime = tmpDoCalcStartTime;
-							StartDateTimeIn = StartDateTimeOut;
-
-							StartDateIn = StartDateTimeOut.Date;
-							StartTimeIn = StartDateTimeOut.TimeOfDay;
-
-							SetStartDateTime();
-
-							// Show Time Spans.
-							CalcAndShowTimeSpans();
 						}
-
-					} // if ( !(!TotalsAllZero && !CombinedsAllZero) )
-					else
+					}
+					else // Combined
 					{
-						await DisplayAlert
-						   (
-							   "Type error"
-							   , "Not both \"Total\" and \"Combined\" time spans can be used"
-							   , "OK"
-						   );
-					} // if ( !(!TotalsAllZero && !CombinedsAllZero) ) ... else ...
-				} // if ( !(TotalsAllZero && CombinedsAllZero) )
+						StartDateTimeOut = EndDateTimeIn;
+						int i = 0;
+						foreach (var kv in DictionaryOfCombinedEntries)
+						{
+							if (kv.Value != 0)
+							{
+								try
+								{
+									switch (i)
+									{
+										case (int)EntryNames.years: StartDateTimeOut = StartDateTimeOut.AddYears(-kv.Value); break;
+										case (int)EntryNames.months: StartDateTimeOut = StartDateTimeOut.AddMonths(-kv.Value); break;
+										case (int)EntryNames.weeks: StartDateTimeOut = StartDateTimeOut.AddDays(-kv.Value * 7); break;
+										case (int)EntryNames.days: StartDateTimeOut = StartDateTimeOut.AddDays(-kv.Value); break;
+										case (int)EntryNames.hours: StartDateTimeOut = StartDateTimeOut.AddHours(-kv.Value); break;
+										case (int)EntryNames.minutes: StartDateTimeOut = StartDateTimeOut.AddMinutes(-kv.Value); break;
+									}
+								}
+								catch (ArgumentOutOfRangeException outOfRange)
+								{
+									await DisplayAlert("Argument Out Of Range", outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": combined value = " + kv.Value + "\nMax DateTime is " + DateTime.MaxValue.ToString("u").Remove(16), "OK");
+									DictionaryOfCombinedEntries[kv.Key] = 0; kv.Key.Text = ""; kv.Key.Focus(); return;
+								}
+							}
+							i++;
+						}
+					}
+					if (StartDateTimeOut != DateTime.MaxValue)
+					{
+						var tmpFlag = DoCalcStartTime; DoClearAll(); DoCalcStartTime = tmpFlag; StartDateTimeIn = StartDateTimeOut; StartDateIn = StartDateTimeOut.Date; StartTimeIn = StartDateTimeOut.TimeOfDay; SetStartDateTime(); CalcAndShowTimeSpans();
+					}
+				}
 				else
 				{
-
-					// Output values
-					StartDateTimeOut = EndDateTimeIn;
-					// Save tmp SartDateTime and EndDateTime
-					var tmpDoCalcStartTime = DoCalcStartTime;
-
-					// Clear and reseteverything
-					DoClearAll();
-
-					//// Show Start- and End Date Time
-					DoCalcStartTime = tmpDoCalcStartTime;
-					StartDateTimeIn = StartDateTimeOut;
-
-					StartDateIn = StartDateTimeOut.Date;
-					StartTimeIn = StartDateTimeOut.TimeOfDay;
-
-					SetStartDateTime();
-
-					// Show Time Spans.
-					CalcAndShowTimeSpans();
-
-				} //  // if ( !(TotalsAllZero && CombinedsAllZero) ) ... else ...
-			} // if (!DoCalcEndTime)
+					await DisplayAlert("Type error", "Not both \"Total\" and \"Combined\" time spans can be used", "OK");
+				}
+			}
 			else
-			{ // DoCalcEndTime = true
-				await DisplayAlert
-				   (
-					   "Error"
-					   , "Can't calculate both \"Start Date + Time\" and \"End Date + Time\""
-					   , "OK"
-				   );
-			} // if (!DoCalcEndTime) ... else ...
-		} // if (!DoCalcStartTime) ... else...
-
-	} // private async void OnCalculateButtonClicked(object sEnder, EventArgs e)
-
-	// CALCULATION Ends here...
+			{
+				StartDateTimeOut = EndDateTimeIn; var tmpFlag = DoCalcStartTime; DoClearAll(); DoCalcStartTime = tmpFlag; StartDateTimeIn = StartDateTimeOut; StartDateIn = StartDateTimeOut.Date; StartTimeIn = StartDateTimeOut.TimeOfDay; SetStartDateTime(); CalcAndShowTimeSpans();
+			}
+		}
+	}
 
 	[RelayCommand]
-	private async Task HelpButtonClicked()
-	{
-		await Shell.Current.GoToAsync
-		(
-			nameof(AboutHelp)
-			, true
-		);
-	}
+	private async Task HelpButtonClicked() => await Shell.Current.GoToAsync(nameof(AboutHelp), true);
 
 	[RelayCommand]
 	private void CalcYMWDHMBtnClicked()
@@ -1453,35 +829,23 @@ public partial class MainPage : ContentPage
 		DoCalcStartTime = false;
 		DoCalcEndTime = false;
 		DoCalcYMWDHM = true;
-
 		LabelEqual.Text = "=";
 		LabelPlus.Text = "+";
-
 		DoCalculate();
-
 	}
 
-	// Calendar
 	private string CalendarItem = "";
 	private bool CorrectForIcsTimeZone = false;
-
 	private readonly string filetypeToReadFrom = "ics";
 
-	// Fix for CS8604: Add null check before calling On_FileToReadFromSelectedAsync
 	private async void On_OpenIcsMessageReceived(object recipient, OpenIcsMessageArgs message)
 	{
 		CorrectForIcsTimeZone = message.CorrectForTimeZone;
-
 		var selectedFiles = await OLD_FileHandler.SelectFiles(filetypeToReadFrom);
-
 		if (selectedFiles != null)
-		{
 			On_FileToReadFromSelectedAsync(selectedFiles);
-		}
 	}
 
-	// Fix for CS8600: Converting null literal or possible null value to non-nullable type.
-	// Change 'string line;' to 'string? line;' to allow for possible null value from sr.ReadLine()
 	private async void On_FileToReadFromSelectedAsync(SelectFilesResult arg2)
 	{
 		if (arg2.DidPick && arg2.pickResult != null)
@@ -1492,24 +856,15 @@ public partial class MainPage : ContentPage
 				using StreamReader sr = new(await arg2.pickResult.OpenReadAsync());
 				string? line;
 				while ((line = sr.ReadLine()) != null)
-				{
 					TheIcsTxt.Add(line);
-				}
 			}
 			catch (Exception e)
 			{
-				// Let the user know what went wrong.
-				await DisplayAlert
-					   (
-						   "The file could not be read:"
-						   , e.Message
-						   , "OK"
-					   );
+				await DisplayAlert("The file could not be read:", e.Message, "OK");
 			}
 
 			try
 			{
-				// Time Zone
 				var IdxBEGIN_STANDARD = TheIcsTxt.FindIndex(s => s.Contains(@"BEGIN:STANDARD"));
 				var IdxEND_STANDARD = TheIcsTxt.FindIndex(s => s.Contains(@"END:STANDARD"));
 				var LgthSTANDARD = IdxEND_STANDARD - IdxBEGIN_STANDARD;
@@ -1519,76 +874,35 @@ public partial class MainPage : ContentPage
 				var StartOfTimeStringIDX = ++SignIdx;
 				var LgthOfTimestring = TheIcsTxt[TimeIDX].Length - StartOfTimeStringIDX;
 				var TimeString = TheIcsTxt[TimeIDX].Substring(StartOfTimeStringIDX, LgthOfTimestring);
-
 				var TheTZOFFSETTO = TimeSpan.ParseExact(TimeString, "hhmm", null);
-				if (TheSign == '-')
-				{
-					TheTZOFFSETTO = TimeSpan.Zero - TheTZOFFSETTO;
-				}
+				if (TheSign == '-') TheTZOFFSETTO = TimeSpan.Zero - TheTZOFFSETTO;
 				var BaseUtcOff = TimeZoneInfo.Local.BaseUtcOffset;
-
-				// Start Time
 				TimeIDX = TheIcsTxt.FindIndex(s => s.Contains(@"DTSTART;TZID="));
 				StartOfTimeStringIDX = TheIcsTxt[TimeIDX].LastIndexOf(':') + 1;
 				LgthOfTimestring = TheIcsTxt[TimeIDX].Length - StartOfTimeStringIDX;
 				TimeString = TheIcsTxt[TimeIDX].Substring(StartOfTimeStringIDX, LgthOfTimestring);
 				StartDateTimeOut = DateTime.ParseExact(TimeString, @"yyyyMMddTHHmm00", null);
-
-				if (CorrectForIcsTimeZone)
-				{
-					StartDateTimeOut -= TheTZOFFSETTO; // Calender start time in utc time
-					StartDateTimeOut += BaseUtcOff; // In local time zone time
-				}
-
-				StartDateTimeIn = StartDateTimeOut;
-				StartDateIn = StartDateTimeOut.Date;
-				StartTimeIn = StartDateTimeOut.TimeOfDay;
-
-				SetStartDateTime();
-
-				// End Date Time
+				if (CorrectForIcsTimeZone) { StartDateTimeOut -= TheTZOFFSETTO; StartDateTimeOut += BaseUtcOff; }
+				StartDateTimeIn = StartDateTimeOut; StartDateIn = StartDateTimeOut.Date; StartTimeIn = StartDateTimeOut.TimeOfDay; SetStartDateTime();
 				TimeIDX = TheIcsTxt.FindIndex(s => s.Contains(@"DTEND;TZID="));
 				StartOfTimeStringIDX = TheIcsTxt[TimeIDX].LastIndexOf(':') + 1;
 				LgthOfTimestring = TheIcsTxt[TimeIDX].Length - StartOfTimeStringIDX;
 				TimeString = TheIcsTxt[TimeIDX].Substring(StartOfTimeStringIDX, LgthOfTimestring);
 				EndDateTimeOut = DateTime.ParseExact(TimeString, @"yyyyMMddTHHmm00", null);
-
-				if (CorrectForIcsTimeZone)
-				{
-					EndDateTimeOut -= TheTZOFFSETTO; // Calender End time in utc time
-					EndDateTimeOut += BaseUtcOff; // In local time zone time
-				}
-
-				EndDateTimeIn = EndDateTimeOut;
-				EndDateIn = EndDateTimeOut.Date;
-				EndTimeIn = EndDateTimeOut.TimeOfDay;
-
-				SetEndDateTime();
-
-				// Show Time Spans.
+				if (CorrectForIcsTimeZone) { EndDateTimeOut -= TheTZOFFSETTO; EndDateTimeOut += BaseUtcOff; }
+				EndDateTimeIn = EndDateTimeOut; EndDateIn = EndDateTimeOut.Date; EndTimeIn = EndDateTimeOut.TimeOfDay; SetEndDateTime();
 				CalcAndShowTimeSpans();
-
 			}
 			catch (Exception e)
 			{
-				await DisplayAlert
-					   (
-						   "Bad .ics file"
-						   , e.Message
-						   , "OK"
-					   );
+				await DisplayAlert("Bad .ics file", e.Message, "OK");
 			}
 
-			await Shell.Current.GoToAsync
-			(
-				"..\\.."
-				, true
-			);
-
+			await Shell.Current.GoToAsync("..\\..", true);
 		}
 	}
 
-	string SuggestedNameOfFileToSaveTo = "";
+	private string SuggestedNameOfFileToSaveTo = "";
 	private async void On_SaveToIcsMessageReceived(object recipient, SaveToIcsMessageArgs message)
 	{
 		DateTime DateStart = StartDateIn + StartTimeIn;
@@ -1596,208 +910,86 @@ public partial class MainPage : ContentPage
 		string Summary = message.EventName_Summary;
 		string Location = message.Location;
 		string Description = message.TheDescription;
-		//string FileName = "CalendarItem";
-
-		//create a new stringbuilder instance
-		StringBuilder sb = new StringBuilder();
-
-		//start the calendar item
+		StringBuilder sb = new();
 		sb.AppendLine("BEGIN:VCALENDAR");
 		sb.AppendLine("VERSION:2.0");
 		sb.AppendLine("PRODID:eksit.dk");
-		//sb.AppendLine("CALSCALE:GREGORIAN");
 		sb.AppendLine("METHOD:PUBLISH");
-
-#if true // USE_LOCAL_TIME
+#if true
 		var TimeZoneName = TimeZoneInfo.Local.StandardName;
-		var systemTimeZoneName = TimeZoneInfo.GetSystemTimeZones();
-		var IsDaylightsavingtimeOn = TimeZoneInfo.Local.IsDaylightSavingTime(DateTime.Now);
 		var UtcOffset = TimeZoneInfo.Local.GetUtcOffset(DateTime.Now);
-		var UtcOffsetStr = UtcOffset.ToString("hhmm");
-		if (UtcOffset.Hours >= 0)
-		{
-			UtcOffsetStr = "+" + UtcOffsetStr;
-		}
-		else
-		{
-			UtcOffsetStr = "-" + UtcOffsetStr;
-		}
-
+		var UtcOffsetStr = (UtcOffset.Hours >= 0 ? "+" : "-") + UtcOffset.ToString("hhmm");
 		var BaseUtcOff = TimeZoneInfo.Local.BaseUtcOffset;
-		var BaseUtcOffStr = BaseUtcOff.ToString("hhmm");
-		if (BaseUtcOff.Hours >= 0)
-		{
-			BaseUtcOffStr = "+" + BaseUtcOffStr;
-		}
-		else
-		{
-			BaseUtcOffStr = "-" + BaseUtcOffStr;
-		}
-#else // USE_LOCAL_TIME (USE "Central Standard Time")
+		var BaseUtcOffStr = (BaseUtcOff.Hours >= 0 ? "+" : "-") + BaseUtcOff.ToString("hhmm");
+#else
 		TimeZoneInfo cst = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
 		var TimeZoneName = cst.StandardName;
 		var UtcOffset = cst.GetUtcOffset(DateTime.Now);
-		var UtcOffsetStr = UtcOffset.ToString("hhmm");
-		if (UtcOffset.Hours >= 0)
-		{
-			UtcOffsetStr = "+" + UtcOffsetStr;
-		}
-		else
-		{
-			UtcOffsetStr = "-" + UtcOffsetStr;
-		}
-
+		var UtcOffsetStr = (UtcOffset.Hours >= 0 ? "+" : "-") + UtcOffset.ToString("hhmm");
 		var BaseUtcOff = cst.BaseUtcOffset;
-		var BaseUtcOffStr = BaseUtcOff.ToString("hhmm");
-		if (BaseUtcOff.Hours >= 0)
-		{
-			BaseUtcOffStr = "+" + BaseUtcOffStr;
-		}
-		else
-		{
-			BaseUtcOffStr = "-" + BaseUtcOffStr;
-		}
-#endif // USE_LOCAL_TIME
-
+		var BaseUtcOffStr = (BaseUtcOff.Hours >= 0 ? "+" : "-") + BaseUtcOff.ToString("hhmm");
+#endif
 		sb.AppendLine("BEGIN:VTIMEZONE");
 		sb.AppendLine("TZID:" + TimeZoneName);
-
 		sb.AppendLine("BEGIN:STANDARD");
 		sb.AppendLine("TZOFFSETFROM:" + UtcOffsetStr);
 		sb.AppendLine("TZOFFSETTO:" + BaseUtcOffStr);
 		sb.AppendLine("END:STANDARD");
-
 		sb.AppendLine("BEGIN:DAYLIGHT");
 		sb.AppendLine("TZOFFSETFROM:" + BaseUtcOffStr);
 		sb.AppendLine("TZOFFSETTO:" + UtcOffsetStr);
 		sb.AppendLine("END:DAYLIGHT");
-
 		sb.AppendLine("END:VTIMEZONE");
-
-		//add the event
 		sb.AppendLine("BEGIN:VEVENT");
-
-		//with time zone specified
-		sb.AppendLine("DTSTART;TZID=" + "\"" + TimeZoneName + "\":" + DateStart.ToString("yyyyMMddTHHmm00"));
-		sb.AppendLine("DTEND;TZID=" + "\"" + TimeZoneName + "\":" + DateEnd.ToString("yyyyMMddTHHmm00"));
-		//or without
-		//sb.AppendLine("DTSTART:" + DateStart.ToString("yyyyMMddTHHmm00"));
-		//sb.AppendLine("DTEND:" + DateEnd.ToString("yyyyMMddTHHmm00"));
-
-		sb.AppendLine("SUMMARY:" + Summary + "");
-		sb.AppendLine("LOCATION:" + Location + "");
-		sb.AppendLine("DESCRIPTION:" + Description + "");
+		sb.AppendLine("DTSTART;TZID=\"" + TimeZoneName + "\":" + DateStart.ToString("yyyyMMddTHHmm00"));
+		sb.AppendLine("DTEND;TZID=\"" + TimeZoneName + "\":" + DateEnd.ToString("yyyyMMddTHHmm00"));
+		sb.AppendLine("SUMMARY:" + Summary);
+		sb.AppendLine("LOCATION:" + Location);
+		sb.AppendLine("DESCRIPTION:" + Description);
 		sb.AppendLine("PRIORITY:5");
-
 		sb.AppendLine("END:VEVENT");
-
-		//end calendar item
 		sb.AppendLine("END:VCALENDAR");
-
 		CalendarItem = sb.ToString().Replace("\r", "");
-		//send the calendar item to the browser
-		//Response.ClearHeaders();
-		//Response.Clear();
-		//Response.Buffer = true;
-		//Response.ContentType = "text/calendar";
-		//Response.AddHeader("content-length", CalendarItem.Length.ToString());
-		//Response.AddHeader("content-disposition", "attachment; filename=\"" + FileName + ".ics\"");
-		//Response.Write(CalendarItem);
-		//Response.Flush();
-		//HttpContext.Current.ApplicationInstance.CompleteRequest();
-
-
-		string[] filetypesToSaveTo = new string[] { "ics" };
 		SuggestedNameOfFileToSaveTo = Summary;
-
 #if ANDROID
-		// Pick folder
 		var FolderPickerResult = await FolderPicker.Default.PickAsync(default);
 		if (FolderPickerResult.IsSuccessful)
 		{
 			await Toast.Make($"The folder was picked: Name - {FolderPickerResult.Folder.Name}, Path - {FolderPickerResult.Folder.Path}", ToastDuration.Long).Show();
-
 			var folderPath = FolderPickerResult.Folder.Path;
-			// Save file
-			using MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(CalendarItem));
-
-			FileSaverResult fileSaverResult =
-				await FileSaver.Default.SaveAsync(folderPath, "Calendar.ics", stream);
-
-			// Close file
+			using MemoryStream stream = new(Encoding.Default.GetBytes(CalendarItem));
+			FileSaverResult fileSaverResult = await FileSaver.Default.SaveAsync(folderPath, "Calendar.ics", stream);
 			stream.Dispose();
-
 			if (fileSaverResult.IsSuccessful)
-			{
-				await Shell.Current.GoToAsync
-				(
-					"..\\.."
-					, true
-				);
-			}
+				await Shell.Current.GoToAsync("..\\..", true);
 			else
-			{
-				var msg = $"File is not saved !!"
-					+
-					$"\n\nException {fileSaverResult.Exception.ToString()}";
-
-				await Shell.Current.DisplayAlert("Error", msg, "OK");
-			}
+				await Shell.Current.DisplayAlert("Error", "File is not saved!!\n\n" + fileSaverResult.Exception, "OK");
 		}
 		else
 		{
 			await Toast.Make($"The folder was not picked with error: {FolderPickerResult.Exception.Message}").Show();
 		}
-#else // !ANDROID
-		using MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(CalendarItem));
-
-		FileSaverResult fileSaverResult =
-			await FileSaver.Default.SaveAsync("Calendar.ics", stream);
-
-		// Close file
+#else
+		using MemoryStream stream = new(Encoding.Default.GetBytes(CalendarItem));
+		FileSaverResult fileSaverResult = await FileSaver.Default.SaveAsync("Calendar.ics", stream);
 		stream.Dispose();
-
 		if (fileSaverResult.IsSuccessful)
-		{
-			await Shell.Current.GoToAsync
-			(
-				"..\\.."
-				, true
-			);
-		}
+			await Shell.Current.GoToAsync("..\\..", true);
 		else
-		{
-			var msg = $"File is not saved !!"
-				+
-				$"\n\nException {fileSaverResult.Exception.ToString()}";
-
-			await Shell.Current.DisplayAlert("Error", msg, "OK");
-		}
-#endif // ANDROID
-
+			await Shell.Current.DisplayAlert("Error", "File is not saved!!\n\n" + fileSaverResult.Exception, "OK");
+#endif
 	}
 
 	[RelayCommand]
-	private async Task FileButton_Clicked()
-	{
-		await Shell.Current.GoToAsync
-		(
-			nameof(FileICS)
-			, true
-		);
-	}
+	private async Task FileButton_Clicked() => await Shell.Current.GoToAsync(nameof(FileICS), true);
 
 	private async void On_FileToSaveToSelected(SelectFilesResult arg2)
 	{
 		if (arg2.DidPick && arg2.pickResult != null)
 		{
-			using MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(CalendarItem));
-
+			using MemoryStream stream = new(Encoding.Default.GetBytes(CalendarItem));
 			FileSaverResult? fileSaveResult = await OLD_FileHandler.SaveToTextFile(stream, arg2.pickResult.FullPath);
-
-			// Close file
 			stream.Dispose();
 		}
 	}
-
 }
