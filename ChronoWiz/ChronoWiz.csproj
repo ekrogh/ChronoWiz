@@ -44,15 +44,13 @@
 		<Nullable>enable</Nullable>
 		<DefaultLanguage>en</DefaultLanguage>
 		<PackageCertificateThumbprint>73862029389D9A3A8270E9F3719E3CC7C29976D0</PackageCertificateThumbprint>
-		<Platforms>AnyCPU;x64</Platforms>
-		<WindowsPackageType>None</WindowsPackageType>
+		<Platforms>AnyCPU</Platforms>
+		<WindowsPackageType>MSIX</WindowsPackageType>
 	</PropertyGroup>
 	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
 		<OutputType>WinExe</OutputType>
 		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
 		<WindowsEnableConsoleWindow>false</WindowsEnableConsoleWindow>
-		<Platforms>x64</Platforms>
-		<PlatformTarget>x64</PlatformTarget>
 	</PropertyGroup>
 	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
 		<DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
