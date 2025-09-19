@@ -14,7 +14,12 @@ public partial class MainPage : ContentPage
 	// Track last allocated size to avoid layout thrashing
 	private double _lastAllocatedWidth = -1;
 	private double _lastAllocatedHeight = -1;
-	private bool _isUpdatingScale;
+	private bool _isUpdatingScale; // (still here if we later need reentrancy guard)
+
+	// Track baseline (unscaled) size per current orientation
+	double _baseContentWidth = -1;
+	double _baseContentHeight = -1;
+	private DisplayOrientation? _currentOrientation; // null until first orientation processed
 
 	public MainPage()
 	{
@@ -138,6 +143,15 @@ public partial class MainPage : ContentPage
 	{
 		bool portrait = (DipsOrient == DisplayOrientation.Portrait);
 
+		// If orientation actually changed, reset scaling baseline so landscape & portrait each get their own natural base size.
+		if (_currentOrientation != DipsOrient)
+		{
+			_currentOrientation = DipsOrient;
+			TotalStackName.Scale = 1; // remove previous scale
+			_baseContentWidth = -1;   // force re-capture of baseline dimensions in new orientation
+			_baseContentHeight = -1;
+		}
+
 		TotalStackName.TranslationX = 0.0f;
 		TotalStackName.TranslationY = 0.0f;
 
@@ -219,30 +233,26 @@ public partial class MainPage : ContentPage
 
 	private void ApplyScale(double width, double height)
 	{
-		if (_isUpdatingScale)
-			return;
-		if (width <= 0 || height <= 0)
-			return;
-		if (TotalStackName.Width <= 0 || TotalStackName.Height <= 0)
-			return;
+		if (width <= 0 || height <= 0) return;
+		if (TotalStackName.Width <= 0 || TotalStackName.Height <= 0) return;
 
-		double widthFactor = width / TotalStackName.Width;
-		double heightFactor = height / TotalStackName.Height;
-		double newScale = widthFactor < heightFactor ? widthFactor : heightFactor;
-		if (newScale <= 0)
-			return;
+		// Capture baseline size (unscaled) for the current orientation
+		if (_baseContentWidth < 0 || _baseContentHeight < 0)
+		{
+			_baseContentWidth = TotalStackName.Width;
+			_baseContentHeight = TotalStackName.Height;
+		}
+
+		// Fit-down only: do not enlarge content, only shrink if it would overflow.
+		var scaleX = width  < _baseContentWidth  ? width  / _baseContentWidth  : 1.0;
+		var scaleY = height < _baseContentHeight ? height / _baseContentHeight : 1.0;
+		var newScale = Math.Min(scaleX, scaleY);
+
+		if (newScale <= 0) newScale = 1; // safety
 
 		if (Math.Abs(TotalStackName.Scale - newScale) > 0.001)
 		{
-			_isUpdatingScale = true;
-			try
-			{
-				TotalStackName.Scale = newScale;
-			}
-			finally
-			{
-				_isUpdatingScale = false;
-			}
+			TotalStackName.Scale = newScale;
 		}
 	}
 
@@ -987,41 +997,41 @@ public partial class MainPage : ContentPage
 										switch (i)
 										{
 											case (int)EntryNames.years:
-												{
-													EndDateTimeOut =
-														StartDateTimeIn.AddYears(DictionaryOfTotalEntries.ElementAt(i).Value);
-													break;
-												}
+											{
+												EndDateTimeOut =
+													StartDateTimeIn.AddYears(DictionaryOfTotalEntries.ElementAt(i).Value);
+												break;
+											}
 											case (int)EntryNames.months:
-												{
-													EndDateTimeOut =
-														StartDateTimeIn.AddMonths(DictionaryOfTotalEntries.ElementAt(i).Value);
-													break;
-												}
+											{
+												EndDateTimeOut =
+													StartDateTimeIn.AddMonths(DictionaryOfTotalEntries.ElementAt(i).Value);
+												break;
+											}
 											case (int)EntryNames.weeks:
-												{
-													EndDateTimeOut =
-														StartDateTimeIn.AddDays((DictionaryOfTotalEntries.ElementAt(i).Value) * 7);
-													break;
-												}
+											{
+												EndDateTimeOut =
+													StartDateTimeIn.AddDays((DictionaryOfTotalEntries.ElementAt(i).Value) * 7);
+												break;
+											}
 											case (int)EntryNames.days:
-												{
-													EndDateTimeOut =
-														StartDateTimeIn.AddDays(DictionaryOfTotalEntries.ElementAt(i).Value);
-													break;
-												}
+											{
+												EndDateTimeOut =
+													StartDateTimeIn.AddDays(DictionaryOfTotalEntries.ElementAt(i).Value);
+												break;
+											}
 											case (int)EntryNames.hours:
-												{
-													EndDateTimeOut =
-														StartDateTimeIn.AddHours(DictionaryOfTotalEntries.ElementAt(i).Value);
-													break;
-												}
+											{
+												EndDateTimeOut =
+													StartDateTimeIn.AddHours(DictionaryOfTotalEntries.ElementAt(i).Value);
+												break;
+											}
 											case (int)EntryNames.minutes:
-												{
-													EndDateTimeOut =
-														StartDateTimeIn.AddMinutes(DictionaryOfTotalEntries.ElementAt(i).Value);
-													break;
-												}
+											{
+												EndDateTimeOut =
+													StartDateTimeIn.AddMinutes(DictionaryOfTotalEntries.ElementAt(i).Value);
+												break;
+											}
 											default:
 												break;
 										}
@@ -1068,41 +1078,41 @@ public partial class MainPage : ContentPage
 									switch (i)
 									{
 										case (int)EntryNames.years:
-											{
-												EndDateTimeOut =
-													StartDateTimeIn.AddYears(TheKeyValuePair.Value);
-												break;
-											}
+										{
+											EndDateTimeOut =
+												StartDateTimeIn.AddYears(TheKeyValuePair.Value);
+											break;
+										}
 										case (int)EntryNames.months:
-											{
-												EndDateTimeOut =
-													StartDateTimeIn.AddMonths(TheKeyValuePair.Value);
-												break;
-											}
+										{
+											EndDateTimeOut =
+												StartDateTimeIn.AddMonths(TheKeyValuePair.Value);
+											break;
+										}
 										case (int)EntryNames.weeks:
-											{
-												EndDateTimeOut =
-													StartDateTimeIn.AddDays(TheKeyValuePair.Value * 7);
-												break;
-											}
+										{
+											EndDateTimeOut =
+												StartDateTimeIn.AddDays(TheKeyValuePair.Value * 7);
+											break;
+										}
 										case (int)EntryNames.days:
-											{
-												EndDateTimeOut =
-													StartDateTimeIn.AddDays(TheKeyValuePair.Value);
-												break;
-											}
+										{
+											EndDateTimeOut =
+												StartDateTimeIn.AddDays(TheKeyValuePair.Value);
+											break;
+										}
 										case (int)EntryNames.hours:
-											{
-												EndDateTimeOut =
-													StartDateTimeIn.AddHours(TheKeyValuePair.Value);
-												break;
-											}
+										{
+											EndDateTimeOut =
+												StartDateTimeIn.AddHours(TheKeyValuePair.Value);
+											break;
+										}
 										case (int)EntryNames.minutes:
-											{
-												EndDateTimeOut =
-													StartDateTimeIn.AddMinutes(TheKeyValuePair.Value);
-												break;
-											}
+										{
+											EndDateTimeOut =
+												StartDateTimeIn.AddMinutes(TheKeyValuePair.Value);
+											break;
+										}
 										default:
 											break;
 									}
@@ -1214,41 +1224,41 @@ public partial class MainPage : ContentPage
 											switch (i)
 											{
 												case (int)EntryNames.years:
-													{
-														StartDateTimeOut =
-															EndDateTimeIn.AddYears(-(DictionaryOfTotalEntries.ElementAt(i).Value));
-														break;
-													}
+												{
+													StartDateTimeOut =
+														EndDateTimeIn.AddYears(-(DictionaryOfTotalEntries.ElementAt(i).Value));
+													break;
+												}
 												case (int)EntryNames.months:
-													{
-														StartDateTimeOut =
-															EndDateTimeIn.AddMonths(-(DictionaryOfTotalEntries.ElementAt(i).Value));
-														break;
-													}
+												{
+													StartDateTimeOut =
+														EndDateTimeIn.AddMonths(-(DictionaryOfTotalEntries.ElementAt(i).Value));
+													break;
+												}
 												case (int)EntryNames.weeks:
-													{
-														StartDateTimeOut =
-															EndDateTimeIn.AddDays(-((DictionaryOfTotalEntries.ElementAt(i).Value) * 7));
-														break;
-													}
+												{
+													StartDateTimeOut =
+														EndDateTimeIn.AddDays(-((DictionaryOfTotalEntries.ElementAt(i).Value) * 7));
+													break;
+												}
 												case (int)EntryNames.days:
-													{
-														StartDateTimeOut =
-															EndDateTimeIn.AddDays(-(DictionaryOfTotalEntries.ElementAt(i).Value));
-														break;
-													}
+												{
+													StartDateTimeOut =
+														EndDateTimeIn.AddDays(-(DictionaryOfTotalEntries.ElementAt(i).Value));
+													break;
+												}
 												case (int)EntryNames.hours:
-													{
-														StartDateTimeOut =
-															EndDateTimeIn.AddHours(-(DictionaryOfTotalEntries.ElementAt(i).Value));
-														break;
-													}
+												{
+													StartDateTimeOut =
+														EndDateTimeIn.AddHours(-(DictionaryOfTotalEntries.ElementAt(i).Value));
+													break;
+												}
 												case (int)EntryNames.minutes:
-													{
-														StartDateTimeOut =
-															EndDateTimeIn.AddMinutes(-(DictionaryOfTotalEntries.ElementAt(i).Value));
-														break;
-													}
+												{
+													StartDateTimeOut =
+														EndDateTimeIn.AddMinutes(-(DictionaryOfTotalEntries.ElementAt(i).Value));
+													break;
+												}
 												default:
 													break;
 											}
@@ -1295,41 +1305,41 @@ public partial class MainPage : ContentPage
 										switch (i)
 										{
 											case (int)EntryNames.years:
-												{
-													StartDateTimeOut =
-														StartDateTimeOut.AddYears(-(TheKeyValuePair.Value));
-													break;
-												}
+											{
+												StartDateTimeOut =
+													StartDateTimeOut.AddYears(-(TheKeyValuePair.Value));
+												break;
+											}
 											case (int)EntryNames.months:
-												{
-													StartDateTimeOut =
-														StartDateTimeOut.AddMonths(-(TheKeyValuePair.Value));
-													break;
-												}
+											{
+												StartDateTimeOut =
+													StartDateTimeOut.AddMonths(-(TheKeyValuePair.Value));
+												break;
+											}
 											case (int)EntryNames.weeks:
-												{
-													StartDateTimeOut =
-														StartDateTimeOut.AddDays(-((TheKeyValuePair.Value) * 7));
-													break;
-												}
+											{
+												StartDateTimeOut =
+													StartDateTimeOut.AddDays(-((TheKeyValuePair.Value) * 7));
+												break;
+											}
 											case (int)EntryNames.days:
-												{
-													StartDateTimeOut =
-														StartDateTimeOut.AddDays(-(TheKeyValuePair.Value));
-													break;
-												}
+											{
+												StartDateTimeOut =
+													StartDateTimeOut.AddDays(-(TheKeyValuePair.Value));
+												break;
+											}
 											case (int)EntryNames.hours:
-												{
-													StartDateTimeOut =
-														StartDateTimeOut.AddHours(-(TheKeyValuePair.Value));
-													break;
-												}
+											{
+												StartDateTimeOut =
+													StartDateTimeOut.AddHours(-(TheKeyValuePair.Value));
+												break;
+											}
 											case (int)EntryNames.minutes:
-												{
-													StartDateTimeOut =
-														StartDateTimeOut.AddMinutes(-(TheKeyValuePair.Value));
-													break;
-												}
+											{
+												StartDateTimeOut =
+													StartDateTimeOut.AddMinutes(-(TheKeyValuePair.Value));
+												break;
+											}
 											default:
 												break;
 										}
@@ -1490,11 +1500,11 @@ public partial class MainPage : ContentPage
 			{
 				// Let the user know what went wrong.
 				await DisplayAlert
-						   (
-							   "The file could not be read:"
-							   , e.Message
-							   , "OK"
-						   );
+					   (
+						   "The file could not be read:"
+						   , e.Message
+						   , "OK"
+					   );
 			}
 
 			try
@@ -1562,11 +1572,11 @@ public partial class MainPage : ContentPage
 			catch (Exception e)
 			{
 				await DisplayAlert
-						   (
-							   "Bad .ics file"
-							   , e.Message
-							   , "OK"
-						   );
+					   (
+						   "Bad .ics file"
+						   , e.Message
+						   , "OK"
+					   );
 			}
 
 			await Shell.Current.GoToAsync
