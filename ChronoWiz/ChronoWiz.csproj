@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>
-			net9.0-ios18.0;
-			net9.0-maccatalyst18.0;
-			net9.0-android35.0;
-			net9.0-windows10.0.22621.0
+			net10.0-ios;
+			net10.0-maccatalyst;
+			net10.0-android;
+			net10.0-windows
 		</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-		<!-- <TargetFrameworks>$(TargetFrameworks);net9.0-tizen</TargetFrameworks> -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net10.0-tizen</TargetFrameworks> -->
 		<!-- Note for MacCatalyst:
 		The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
 		When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifer>.
@@ -26,8 +26,8 @@
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">18.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">18.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">29.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</TargetPlatformMinVersion>
@@ -129,44 +129,38 @@
 		<CodesignEntitlements>Platforms/MacCatalyst/Entitlements.Release.plist</CodesignEntitlements>
 		<UseHardenedRuntime>true</UseHardenedRuntime>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
+	<PropertyGroup Condition="'$(TargetFramework)'=='net10.0-ios'">
+		<CodesignKey>Apple Development: Created via API (67T7G84KB5)</CodesignKey>
+		<CodesignProvision>VS: dk.eksit.chronowiz Development</CodesignProvision>
+		<ProvisioningType>manual</ProvisioningType>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
 		<ApplicationId>dk.eksit.chronowiz</ApplicationId>
 		<ApplicationTitle>ChronoWiz</ApplicationTitle>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|x64'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|x64'">
 		<ApplicationId>dk.eksit.chronowiz</ApplicationId>
 		<ApplicationTitle>ChronoWiz</ApplicationTitle>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|x64'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|x64'">
 		<ApplicationId>dk.eksit.chronowiz</ApplicationId>
 		<ApplicationTitle>ChronoWiz</ApplicationTitle>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios17.0|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
 		<ApplicationId>dk.eksit.chronowiz</ApplicationId>
 		<ApplicationTitle>ChronoWiz</ApplicationTitle>
 		<CreatePackage>false</CreatePackage>
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios17.0|x64'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|x64'">
 		<ApplicationId>dk.eksit.chronowiz</ApplicationId>
 		<ApplicationTitle>ChronoWiz</ApplicationTitle>
 		<CreatePackage>false</CreatePackage>
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-maccatalyst|AnyCPU'">
-		<ApplicationId>dk.eksit.chronowiz</ApplicationId>
-		<ApplicationTitle>ChronoWiz</ApplicationTitle>
-		<CreatePackage>false</CreatePackage>
-		<EnablePackageSigning>true</EnablePackageSigning>
-		<CodesignKey>3rd Party Mac Developer Application</CodesignKey>
-		<PackageSigningKey>3rd Party Mac Developer Installer</PackageSigningKey>
-		<CodesignEntitlements>Platforms\MacCatalyst\Entitlements.Debug.plist</CodesignEntitlements>
-		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
-		<ApplicationVersion>12</ApplicationVersion>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-maccatalyst|x64'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-maccatalyst|AnyCPU'">
 		<ApplicationId>dk.eksit.chronowiz</ApplicationId>
 		<ApplicationTitle>ChronoWiz</ApplicationTitle>
 		<CreatePackage>false</CreatePackage>
@@ -177,36 +171,47 @@
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-windows10.0.19041.0|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-maccatalyst|x64'">
+		<ApplicationId>dk.eksit.chronowiz</ApplicationId>
+		<ApplicationTitle>ChronoWiz</ApplicationTitle>
+		<CreatePackage>false</CreatePackage>
+		<EnablePackageSigning>true</EnablePackageSigning>
+		<CodesignKey>3rd Party Mac Developer Application</CodesignKey>
+		<PackageSigningKey>3rd Party Mac Developer Installer</PackageSigningKey>
+		<CodesignEntitlements>Platforms\MacCatalyst\Entitlements.Debug.plist</CodesignEntitlements>
+		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
+		<ApplicationVersion>12</ApplicationVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows10.0.19041.0|AnyCPU'">
 		<ApplicationId>dk.eksit.chronowiz</ApplicationId>
 		<ApplicationTitle>ChronoWiz</ApplicationTitle>
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-windows10.0.19041.0|x64'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows10.0.19041.0|x64'">
 		<ApplicationId>dk.eksit.chronowiz</ApplicationId>
 		<ApplicationTitle>ChronoWiz</ApplicationTitle>
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-windows10.0.19041.0|x64'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows10.0.19041.0|x64'">
 		<ApplicationId>dk.eksit.chronowiz</ApplicationId>
 		<ApplicationTitle>ChronoWiz</ApplicationTitle>
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'" />
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios17.0|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'" />
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-ios|AnyCPU'">
 		<CreatePackage>false</CreatePackage>
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios17.0|x64'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-ios|x64'">
 		<CreatePackage>false</CreatePackage>
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-maccatalyst|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-maccatalyst|AnyCPU'">
 		<CreatePackage>false</CreatePackage>
 		<EnablePackageSigning>true</EnablePackageSigning>
 		<CodesignKey>3rd Party Mac Developer Application</CodesignKey>
@@ -217,7 +222,7 @@
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-maccatalyst|x64'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-maccatalyst|x64'">
 		<CreatePackage>false</CreatePackage>
 		<EnablePackageSigning>true</EnablePackageSigning>
 		<CodesignKey>3rd Party Mac Developer Application</CodesignKey>
@@ -228,28 +233,19 @@
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-windows10.0.19041.0|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows10.0.19041.0|AnyCPU'">
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-windows10.0.19041.0|x64'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows10.0.19041.0|x64'">
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-windows10.0.19041.0|x64'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows10.0.19041.0|x64'">
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
-		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
-		<ApplicationVersion>12</ApplicationVersion>
-		<AndroidSigningStorePass>6taura</AndroidSigningStorePass>
-		<AndroidSigningKeyAlias>upload</AndroidSigningKeyAlias>
-		<AndroidSigningKeyPass>6taura</AndroidSigningKeyPass>
-		<AndroidKeyStore>True</AndroidKeyStore>
-		<AndroidSigningKeyStore>D:\Users\eigil\projects\MAUI\ChronoWiz\Android_Special\Using_Java_keyStore\keystore.jks</AndroidSigningKeyStore>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|x64'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 		<AndroidSigningStorePass>6taura</AndroidSigningStorePass>
@@ -258,7 +254,7 @@
 		<AndroidKeyStore>True</AndroidKeyStore>
 		<AndroidSigningKeyStore>D:\Users\eigil\projects\MAUI\ChronoWiz\Android_Special\Using_Java_keyStore\keystore.jks</AndroidSigningKeyStore>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|x64'">
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 		<AndroidSigningStorePass>6taura</AndroidSigningStorePass>
@@ -267,7 +263,7 @@
 		<AndroidKeyStore>True</AndroidKeyStore>
 		<AndroidSigningKeyStore>D:\Users\eigil\projects\MAUI\ChronoWiz\Android_Special\Using_Java_keyStore\keystore.jks</AndroidSigningKeyStore>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|x64'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 		<AndroidSigningStorePass>6taura</AndroidSigningStorePass>
@@ -276,19 +272,28 @@
 		<AndroidKeyStore>True</AndroidKeyStore>
 		<AndroidSigningKeyStore>D:\Users\eigil\projects\MAUI\ChronoWiz\Android_Special\Using_Java_keyStore\keystore.jks</AndroidSigningKeyStore>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-windows10.0.22621.0|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|x64'">
+		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
+		<ApplicationVersion>12</ApplicationVersion>
+		<AndroidSigningStorePass>6taura</AndroidSigningStorePass>
+		<AndroidSigningKeyAlias>upload</AndroidSigningKeyAlias>
+		<AndroidSigningKeyPass>6taura</AndroidSigningKeyPass>
+		<AndroidKeyStore>True</AndroidKeyStore>
+		<AndroidSigningKeyStore>D:\Users\eigil\projects\MAUI\ChronoWiz\Android_Special\Using_Java_keyStore\keystore.jks</AndroidSigningKeyStore>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows10.0.22621.0|AnyCPU'">
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-windows10.0.22621.0|x64'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows10.0.22621.0|x64'">
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-windows10.0.22621.0|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows10.0.22621.0|AnyCPU'">
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-windows10.0.22621.0|x64'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows10.0.22621.0|x64'">
 		<ApplicationDisplayVersion>1.4.12</ApplicationDisplayVersion>
 		<ApplicationVersion>12</ApplicationVersion>
 	</PropertyGroup>
