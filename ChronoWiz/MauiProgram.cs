@@ -5,8 +5,11 @@
 		public static MauiApp CreateMauiApp()
 		{
 			var builder = MauiApp.CreateBuilder();
+#if (ANDROID || TIZEN || WINDOWS) || (IOS && __IOS_15__) || (MACCATALYST && __MACCATALYST_15__)
 			builder
-				.UseMauiCommunityToolkit()
+				.UseMauiCommunityToolkit();
+#endif
+			builder
 				.UseMauiApp<App>()
 				.ConfigureFonts(fonts =>
 				{
