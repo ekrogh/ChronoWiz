@@ -24,6 +24,7 @@ public sealed class OpenIcsViewModel : ViewModelBase
 	}
 
 	public ICommand OpenCommand { get; }
+	public ICommand GoBackCommand { get; }
 
 	public OpenIcsViewModel()
 		: this(IcsCoordinator.Default)
@@ -34,6 +35,7 @@ public sealed class OpenIcsViewModel : ViewModelBase
 	{
 		_coordinator = coordinator;
 		OpenCommand = new RelayCommand(Open);
+		GoBackCommand = new RelayCommand(() => Navigation?.GoBack(), () => Navigation?.CanGoBack ?? false);
 	}
 
 	private void Open()

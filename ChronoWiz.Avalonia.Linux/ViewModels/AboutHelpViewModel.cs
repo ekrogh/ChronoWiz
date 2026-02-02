@@ -22,6 +22,7 @@ public sealed class AboutHelpViewModel : ViewModelBase
 	public ICommand OpenUsersGuideCommand { get; }
 	public ICommand OpenHomePageCommand { get; }
 	public ICommand OpenEmailCommand { get; }
+	public ICommand GoBackCommand { get; }
 
 	public AboutHelpViewModel()
 		: this(new ProcessLinkOpener())
@@ -34,5 +35,6 @@ public sealed class AboutHelpViewModel : ViewModelBase
 		OpenUsersGuideCommand = new RelayCommand(() => _ = _linkOpener.OpenAsync(Links.UsersGuide));
 		OpenHomePageCommand = new RelayCommand(() => _ = _linkOpener.OpenAsync(Links.HomePage));
 		OpenEmailCommand = new RelayCommand(() => _ = _linkOpener.OpenAsync(Links.MailTo));
+		GoBackCommand = new RelayCommand(() => Navigation?.GoBack(), () => Navigation?.CanGoBack ?? false);
 	}
 }

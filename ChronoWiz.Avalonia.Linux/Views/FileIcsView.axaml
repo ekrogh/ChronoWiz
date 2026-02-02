@@ -5,6 +5,7 @@
              x:DataType="vm:FileIcsViewModel">
 	<ScrollViewer>
 		<StackPanel Margin="20" Spacing="12">
+			<Button Content="Back" Command="{Binding GoBackCommand}" HorizontalAlignment="Left" />
 			<TextBlock Text="{Binding Title}" FontSize="22" FontWeight="SemiBold" />
 			<TextBlock Text="{Binding Status}" Opacity="0.8" />
 			<TextBlock Text="(Wiring filing workflow comes next.)" Opacity="0.7" TextWrapping="Wrap" />

@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using ChronoWiz.Avalonia.Linux.Navigation;
 
 namespace ChronoWiz.Avalonia.Linux.ViewModels;
 
 public abstract class ViewModelBase : INotifyPropertyChanged
 {
+	public INavigationService? Navigation { get; set; }
+
 	public event PropertyChangedEventHandler? PropertyChanged;
 
 	protected void RaisePropertyChanged([CallerMemberName] string? propertyName = null)

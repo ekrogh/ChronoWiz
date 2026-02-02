@@ -5,6 +5,7 @@
              x:DataType="vm:OpenIcsViewModel">
 	<ScrollViewer>
 		<StackPanel Margin="20" Spacing="12">
+			<Button Content="Back" Command="{Binding GoBackCommand}" HorizontalAlignment="Left" />
 			<TextBlock Text="{Binding Title}" FontSize="22" FontWeight="SemiBold" />
 			<TextBlock Text="Correct for time zone" />
 			<ToggleSwitch IsChecked="{Binding CorrectTimeZone}" />

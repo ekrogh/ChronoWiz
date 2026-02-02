@@ -38,6 +38,7 @@ public sealed class SaveToIcsViewModel : ViewModelBase
 	}
 
 	public ICommand SaveCommand { get; }
+	public ICommand GoBackCommand { get; }
 
 	public SaveToIcsViewModel()
 		: this(IcsCoordinator.Default)
@@ -49,6 +50,7 @@ public sealed class SaveToIcsViewModel : ViewModelBase
 	{
 		_coordinator = coordinator;
 		SaveCommand = new RelayCommand(Save);
+		GoBackCommand = new RelayCommand(() => Navigation?.GoBack(), () => Navigation?.CanGoBack ?? false);
 	}
 
 	private void Save()

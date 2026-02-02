@@ -69,8 +69,7 @@
 				<Button Grid.Column="0" Content="Clear All" Command="{Binding ClearAllCommand}" />
 				<Button Grid.Column="1" Content="File..." Command="{Binding GoFileIcsCommand}" />
 				<Button Grid.Column="2" Content="?" Command="{Binding GoHelpCommand}" FontWeight="Bold" />
-				<Button Grid.Column="3" Content="Open .ics" Command="{Binding OpenIcsFileCommand}" />
-				<Button Grid.Column="4" Content="Save .ics" Command="{Binding SaveIcsFileCommand}" />
+				<!-- Open/Save moved to File... page -->
 			</Grid>
 
 			<Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowDefinitions="Auto" ColumnSpacing="10" HorizontalAlignment="Center">
