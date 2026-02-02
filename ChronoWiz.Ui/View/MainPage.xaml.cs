@@ -1,10 +1,16 @@
-﻿using ChronoWiz.FileHandlers;
-using CommunityToolkit.Maui.Alerts;
+﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using System.ComponentModel;
+using System;
+using System.Text;
+using System.Globalization;
 
-namespace ChronoWiz.View;
+using ChronoWiz.Ui.ICSFiling;
+using ChronoWiz.Ui.MessageThings;
+
+namespace ChronoWiz.Ui.View;
 
 // Learn more about making custom code visible in the Xamarin.Forms previewer
 // by visiting https://aka.ms/xamarinforms-previewer
@@ -339,7 +345,7 @@ public partial class MainPage : ContentPage
 
 	private void StartDatePicker_DateSelected(object sender, DateChangedEventArgs e)
 	{
-		StartDateIn = e.NewDate;
+		StartDateIn = e.NewDate ?? StartDateIn;
 		MacStartDatePicker.Date = StartDateIn;
 		StartDayName.Text = StartDateIn.DayOfWeek.ToString().Remove(3);
 		CheckSetEndDateTime();
@@ -347,7 +353,7 @@ public partial class MainPage : ContentPage
 
 	private void OnMacStartDatePickerDateSelected(object sEnder, DateChangedEventArgs e)
 	{
-		StartDateIn = e.NewDate;
+		StartDateIn = e.NewDate ?? StartDateIn;
 		StartDatePicker.Date = StartDateIn;
 		StartDayName.Text = StartDateIn.DayOfWeek.ToString().Remove(3);
 		CheckSetEndDateTime();
@@ -372,7 +378,7 @@ public partial class MainPage : ContentPage
 	{
 		if (e.PropertyName == "Time")
 		{
-			StartTimeIn = StartTimePicker.Time;
+			StartTimeIn = StartTimePicker.Time ?? StartTimeIn;
 			CheckSetEndDateTime();
 		}
 	}
@@ -467,7 +473,7 @@ public partial class MainPage : ContentPage
 
 	private void EndDatePicker_DateSelected(object sender, DateChangedEventArgs e)
 	{
-		EndDateIn = e.NewDate;
+		EndDateIn = e.NewDate ?? EndDateIn;
 		MacEndDatePicker.Date = EndDateIn;
 		EndDayName.Text = EndDateIn.DayOfWeek.ToString().Remove(3);
 		CheckSetStartDateTime();
@@ -475,7 +481,7 @@ public partial class MainPage : ContentPage
 
 	private void OnMacEndDatePickerDateSelected(object sEnder, DateChangedEventArgs e)
 	{
-		EndDateIn = e.NewDate;
+		EndDateIn = e.NewDate ?? EndDateIn;
 		EndDatePicker.Date = EndDateIn;
 		EndDayName.Text = EndDateIn.DayOfWeek.ToString().Remove(3);
 		CheckSetStartDateTime();
@@ -500,7 +506,7 @@ public partial class MainPage : ContentPage
 	{
 		if (e.PropertyName == "Time")
 		{
-			EndTimeIn = EndTimePicker.Time;
+			EndTimeIn = EndTimePicker.Time ?? EndTimeIn;
 			CheckSetStartDateTime();
 		}
 	}
@@ -579,10 +585,10 @@ public partial class MainPage : ContentPage
 
 	private async void DoCalculate()
 	{
-		StartTimeIn = StartTimePicker.Time;
-		EndTimeIn = EndTimePicker.Time;
-		StartDateIn = StartDatePicker.Date;
-		EndDateIn = EndDatePicker.Date;
+		StartTimeIn = StartTimePicker.Time ?? StartTimeIn;
+		EndTimeIn = EndTimePicker.Time ?? EndTimeIn;
+		StartDateIn = StartDatePicker.Date ?? StartDateIn;
+		EndDateIn = EndDatePicker.Date ?? EndDateIn;
 		EndDateTimeIn = EndDateIn + EndTimeIn;
 		StartDateTimeIn = StartDateIn + StartTimeIn;
 		StartDateTimeOut = DateTime.MaxValue;
@@ -841,9 +847,14 @@ public partial class MainPage : ContentPage
 	private async void On_OpenIcsMessageReceived(object recipient, OpenIcsMessageArgs message)
 	{
 		CorrectForIcsTimeZone = message.CorrectForTimeZone;
+		#if NET10_0
+		await DisplayAlert("Not supported on Linux yet", "Opening .ics files via file picker is not wired up for Linux yet.", "OK");
+		return;
+		#else
 		var selectedFiles = await OLD_FileHandler.SelectFiles(filetypeToReadFrom);
 		if (selectedFiles != null)
 			On_FileToReadFromSelectedAsync(selectedFiles);
+		#endif
 	}
 
 	private async void On_FileToReadFromSelectedAsync(SelectFilesResult arg2)
@@ -951,7 +962,10 @@ public partial class MainPage : ContentPage
 		sb.AppendLine("END:VCALENDAR");
 		CalendarItem = sb.ToString().Replace("\r", "");
 		SuggestedNameOfFileToSaveTo = Summary;
-#if ANDROID
+		#if NET10_0
+		await DisplayAlert("Not supported on Linux yet", "Saving .ics files is not wired up for Linux yet.", "OK");
+		return;
+		#elif ANDROID
 		var FolderPickerResult = await FolderPicker.Default.PickAsync(default);
 		if (FolderPickerResult.IsSuccessful)
 		{
@@ -987,9 +1001,15 @@ public partial class MainPage : ContentPage
 	{
 		if (arg2.DidPick && arg2.pickResult != null)
 		{
+			#if NET10_0
+			await DisplayAlert("Not supported on Linux yet", "Saving raw text to a selected file is not wired up for Linux yet.", "OK");
+			return;
+			#else
 			using MemoryStream stream = new(Encoding.Default.GetBytes(CalendarItem));
 			FileSaverResult? fileSaveResult = await OLD_FileHandler.SaveToTextFile(stream, arg2.pickResult.FullPath);
 			stream.Dispose();
+			#endif
 		}
 	}
 }
+

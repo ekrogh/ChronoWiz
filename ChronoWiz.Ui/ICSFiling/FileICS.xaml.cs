@@ -1,4 +1,4 @@
-﻿namespace ChronoWiz;
+namespace ChronoWiz.Ui.ICSFiling;
 
 public partial class FileICS : ContentPage
 {

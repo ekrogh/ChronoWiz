@@ -1,4 +1,6 @@
-﻿namespace ChronoWiz.FileHandlers;
+﻿using ChronoWiz.Ui.MessageThings;
+
+namespace ChronoWiz.FileHandlers;
 
 public partial class OLD_FileHandler
 {
