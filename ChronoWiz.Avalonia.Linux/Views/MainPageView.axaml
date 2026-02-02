@@ -1,0 +1,88 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:ChronoWiz.Avalonia.Linux.ViewModels"
+             x:Class="ChronoWiz.Avalonia.Linux.Views.MainPageView"
+             x:DataType="vm:MainWindowViewModel">
+	<UserControl.Styles>
+		<Style Selector="TimePicker">
+			<Setter Property="Width" Value="140" />
+		</Style>
+	</UserControl.Styles>
+	<ScrollViewer>
+		<StackPanel Margin="20" Spacing="10">
+			<Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowDefinitions="Auto" ColumnSpacing="10" HorizontalAlignment="Center">
+				<TextBlock Grid.Column="0" Text="Start Date + Time" VerticalAlignment="Center" FontSize="12" Opacity="0.85" />
+				<Button Grid.Column="1" Content="Calculate -->" Command="{Binding CalcStartCommand}" />
+				<DatePicker Grid.Column="2" SelectedDate="{Binding StartDate}" />
+				<TimePicker Grid.Column="3" Grid.ColumnSpan="2" SelectedTime="{Binding StartTime}" ClockIdentifier="24HourClock" />
+				<TextBlock Grid.Column="5" Text="{Binding StartDayName}" VerticalAlignment="Center" Width="40" TextAlignment="Center" />
+				<Button Grid.Column="6" Content="Now" Command="{Binding StartNowCommand}" />
+			</Grid>
+
+			<TextBlock Text="+" HorizontalAlignment="Center" FontSize="12" Opacity="0.8" Margin="0,6" />
+
+			<Grid ColumnDefinitions="Auto,Auto,Auto" ColumnSpacing="14" RowDefinitions="Auto" HorizontalAlignment="Center">
+				<Button Grid.Column="0" Content="Calculate -->" Command="{Binding CalcCombinedCommand}" VerticalAlignment="Center" />
+				<Border Grid.Column="1" BorderBrush="#666" BorderThickness="1" Padding="10">
+					<StackPanel Spacing="8">
+						<TextBlock Text="Combined" FontWeight="SemiBold" />
+						<Grid ColumnDefinitions="Auto,120" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="6" ColumnSpacing="10">
+							<TextBlock Grid.Row="0" Grid.Column="0" Text="Years" VerticalAlignment="Center" />
+							<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CombinedYears}" />
+							<TextBlock Grid.Row="1" Grid.Column="0" Text="Months" VerticalAlignment="Center" />
+							<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CombinedMonths}" />
+							<TextBlock Grid.Row="2" Grid.Column="0" Text="Weeks" VerticalAlignment="Center" />
+							<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CombinedWeeks}" />
+							<TextBlock Grid.Row="3" Grid.Column="0" Text="Days" VerticalAlignment="Center" />
+							<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CombinedDays}" />
+							<TextBlock Grid.Row="4" Grid.Column="0" Text="Hours" VerticalAlignment="Center" />
+							<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding CombinedHours}" />
+							<TextBlock Grid.Row="5" Grid.Column="0" Text="Minutes" VerticalAlignment="Center" />
+							<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding CombinedMinutes}" />
+						</Grid>
+					</StackPanel>
+				</Border>
+				<Border Grid.Column="2" BorderBrush="#666" BorderThickness="1" Padding="10">
+					<StackPanel Spacing="8">
+						<TextBlock Text="Total" FontWeight="SemiBold" />
+						<Grid ColumnDefinitions="Auto,120" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="6" ColumnSpacing="10">
+							<TextBlock Grid.Row="0" Grid.Column="0" Text="Years" VerticalAlignment="Center" />
+							<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding TotalYears}" />
+							<TextBlock Grid.Row="1" Grid.Column="0" Text="Months" VerticalAlignment="Center" />
+							<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding TotalMonths}" />
+							<TextBlock Grid.Row="2" Grid.Column="0" Text="Weeks" VerticalAlignment="Center" />
+							<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding TotalWeeks}" />
+							<TextBlock Grid.Row="3" Grid.Column="0" Text="Days" VerticalAlignment="Center" />
+							<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding TotalDays}" />
+							<TextBlock Grid.Row="4" Grid.Column="0" Text="Hours" VerticalAlignment="Center" />
+							<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding TotalHours}" />
+							<TextBlock Grid.Row="5" Grid.Column="0" Text="Minutes" VerticalAlignment="Center" />
+							<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding TotalMinutes}" />
+						</Grid>
+					</StackPanel>
+				</Border>
+			</Grid>
+
+			<TextBlock Text="=" HorizontalAlignment="Center" FontSize="12" Opacity="0.8" Margin="0,6" />
+
+			<Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto" RowDefinitions="Auto" ColumnSpacing="10" HorizontalAlignment="Center" Margin="0,6">
+				<Button Grid.Column="0" Content="Clear All" Command="{Binding ClearAllCommand}" />
+				<Button Grid.Column="1" Content="File..." Command="{Binding GoFileIcsCommand}" />
+				<Button Grid.Column="2" Content="?" Command="{Binding GoHelpCommand}" FontWeight="Bold" />
+				<Button Grid.Column="3" Content="Open .ics" Command="{Binding OpenIcsFileCommand}" />
+				<Button Grid.Column="4" Content="Save .ics" Command="{Binding SaveIcsFileCommand}" />
+			</Grid>
+
+			<Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowDefinitions="Auto" ColumnSpacing="10" HorizontalAlignment="Center">
+				<TextBlock Grid.Column="0" Text="End Date + Time" VerticalAlignment="Center" FontSize="12" Opacity="0.85" />
+				<Button Grid.Column="1" Content="Calculate -->" Command="{Binding CalcEndCommand}" />
+				<DatePicker Grid.Column="2" SelectedDate="{Binding EndDate}" />
+				<TimePicker Grid.Column="3" Grid.ColumnSpan="2" SelectedTime="{Binding EndTime}" ClockIdentifier="24HourClock" />
+				<TextBlock Grid.Column="5" Text="{Binding EndDayName}" VerticalAlignment="Center" Width="40" TextAlignment="Center" />
+				<Button Grid.Column="6" Content="Now" Command="{Binding EndNowCommand}" />
+			</Grid>
+
+			<TextBlock Text="{Binding ResultText}" TextWrapping="Wrap" />
+		</StackPanel>
+	</ScrollViewer>
+</UserControl>

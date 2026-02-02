@@ -17,6 +17,11 @@ public partial class App : Application
 
 	protected override Window CreateWindow(IActivationState? activationState)
 	{
+		if (OperatingSystem.IsLinux())
+		{
+			return new Window(MainPage);
+		}
+
 		return new Window(new AppShell());
 	}
 }

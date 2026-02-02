@@ -1,0 +1,35 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:ChronoWiz.Avalonia.Linux.ViewModels"
+        xmlns:views="clr-namespace:ChronoWiz.Avalonia.Linux.Views"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ChronoWiz.Avalonia.Linux.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="ChronoWiz"
+		SizeToContent="WidthAndHeight"
+		MinWidth="900"
+		MinHeight="600">
+	<Grid ColumnDefinitions="*" RowDefinitions="*">
+		<ContentControl Grid.Column="0" Content="{Binding CurrentPage}">
+			<ContentControl.DataTemplates>
+				<DataTemplate DataType="vm:MainWindowViewModel">
+					<views:MainPageView />
+				</DataTemplate>
+				<DataTemplate DataType="vm:AboutHelpViewModel">
+					<views:AboutHelpView />
+				</DataTemplate>
+				<DataTemplate DataType="vm:OpenIcsViewModel">
+					<views:OpenIcsView />
+				</DataTemplate>
+				<DataTemplate DataType="vm:SaveToIcsViewModel">
+					<views:SaveToIcsView />
+				</DataTemplate>
+				<DataTemplate DataType="vm:FileIcsViewModel">
+					<views:FileIcsView />
+				</DataTemplate>
+			</ContentControl.DataTemplates>
+		</ContentControl>
+	</Grid>
+</Window>

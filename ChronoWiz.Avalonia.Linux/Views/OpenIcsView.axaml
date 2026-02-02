@@ -1,0 +1,16 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:ChronoWiz.Avalonia.Linux.ViewModels"
+             x:Class="ChronoWiz.Avalonia.Linux.Views.OpenIcsView"
+             x:DataType="vm:OpenIcsViewModel">
+	<ScrollViewer>
+		<StackPanel Margin="20" Spacing="12">
+			<TextBlock Text="{Binding Title}" FontSize="22" FontWeight="SemiBold" />
+			<TextBlock Text="Correct for time zone" />
+			<ToggleSwitch IsChecked="{Binding CorrectTimeZone}" />
+			<Button Content="Open" Command="{Binding OpenCommand}" HorizontalAlignment="Left" />
+			<TextBlock Text="{Binding Status}" Opacity="0.8" />
+			<TextBlock Text="(Wiring ICS logic from ChronoWiz.Ui into ChronoWiz.Shared comes next.)" Opacity="0.7" TextWrapping="Wrap" />
+		</StackPanel>
+	</ScrollViewer>
+</UserControl>
