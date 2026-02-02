@@ -26,18 +26,18 @@
 				<Border Grid.Column="1" BorderBrush="#666" BorderThickness="1" Padding="10">
 					<StackPanel Spacing="8">
 						<TextBlock Text="Combined" FontWeight="SemiBold" />
-						<Grid ColumnDefinitions="Auto,120" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="6" ColumnSpacing="10">
-							<TextBlock Grid.Row="0" Grid.Column="0" Text="Years" VerticalAlignment="Center" />
+			<Grid ColumnDefinitions="Auto,120" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="6" ColumnSpacing="10">
+				<TextBlock Grid.Row="0" Grid.Column="0" Text="Years" VerticalAlignment="Center" />
 							<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CombinedYears}" />
-							<TextBlock Grid.Row="1" Grid.Column="0" Text="Months" VerticalAlignment="Center" />
+				<TextBlock Grid.Row="1" Grid.Column="0" Text="+ Months" VerticalAlignment="Center" />
 							<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CombinedMonths}" />
-							<TextBlock Grid.Row="2" Grid.Column="0" Text="Weeks" VerticalAlignment="Center" />
+				<TextBlock Grid.Row="2" Grid.Column="0" Text="+ Weeks" VerticalAlignment="Center" />
 							<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CombinedWeeks}" />
-							<TextBlock Grid.Row="3" Grid.Column="0" Text="Days" VerticalAlignment="Center" />
+				<TextBlock Grid.Row="3" Grid.Column="0" Text="+ Days" VerticalAlignment="Center" />
 							<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CombinedDays}" />
-							<TextBlock Grid.Row="4" Grid.Column="0" Text="Hours" VerticalAlignment="Center" />
+				<TextBlock Grid.Row="4" Grid.Column="0" Text="+ Hours" VerticalAlignment="Center" />
 							<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding CombinedHours}" />
-							<TextBlock Grid.Row="5" Grid.Column="0" Text="Minutes" VerticalAlignment="Center" />
+				<TextBlock Grid.Row="5" Grid.Column="0" Text="+ Minutes" VerticalAlignment="Center" />
 							<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding CombinedMinutes}" />
 						</Grid>
 					</StackPanel>
@@ -45,18 +45,18 @@
 				<Border Grid.Column="2" BorderBrush="#666" BorderThickness="1" Padding="10">
 					<StackPanel Spacing="8">
 						<TextBlock Text="Total" FontWeight="SemiBold" />
-						<Grid ColumnDefinitions="Auto,120" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="6" ColumnSpacing="10">
-							<TextBlock Grid.Row="0" Grid.Column="0" Text="Years" VerticalAlignment="Center" />
+			<Grid ColumnDefinitions="Auto,120" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="6" ColumnSpacing="10">
+				<TextBlock Grid.Row="0" Grid.Column="0" Text="Years" VerticalAlignment="Center" />
 							<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding TotalYears}" />
-							<TextBlock Grid.Row="1" Grid.Column="0" Text="Months" VerticalAlignment="Center" />
+				<TextBlock Grid.Row="1" Grid.Column="0" Text="or Months" VerticalAlignment="Center" />
 							<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding TotalMonths}" />
-							<TextBlock Grid.Row="2" Grid.Column="0" Text="Weeks" VerticalAlignment="Center" />
+				<TextBlock Grid.Row="2" Grid.Column="0" Text="or Weeks" VerticalAlignment="Center" />
 							<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding TotalWeeks}" />
-							<TextBlock Grid.Row="3" Grid.Column="0" Text="Days" VerticalAlignment="Center" />
+				<TextBlock Grid.Row="3" Grid.Column="0" Text="or Days" VerticalAlignment="Center" />
 							<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding TotalDays}" />
-							<TextBlock Grid.Row="4" Grid.Column="0" Text="Hours" VerticalAlignment="Center" />
+				<TextBlock Grid.Row="4" Grid.Column="0" Text="or Hours" VerticalAlignment="Center" />
 							<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding TotalHours}" />
-							<TextBlock Grid.Row="5" Grid.Column="0" Text="Minutes" VerticalAlignment="Center" />
+				<TextBlock Grid.Row="5" Grid.Column="0" Text="or Minutes" VerticalAlignment="Center" />
 							<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding TotalMinutes}" />
 						</Grid>
 					</StackPanel>

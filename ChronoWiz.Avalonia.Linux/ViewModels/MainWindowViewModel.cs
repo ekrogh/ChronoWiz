@@ -310,8 +310,8 @@ public sealed class MainWindowViewModel : ViewModelBase
 		{
 			RouteMain => this,
 			RouteHelp => CreatePage(new AboutHelpViewModel()),
-			RouteOpenIcs => CreatePage(new OpenIcsViewModel()),
-			RouteSaveIcs => CreatePage(new SaveToIcsViewModel()),
+			RouteOpenIcs => CreatePage(new OpenIcsViewModel { Host = this }),
+			RouteSaveIcs => CreatePage(new SaveToIcsViewModel { Host = this }),
 			RouteFileIcs => CreatePage(new FileIcsViewModel()),
 			_ => this
 		};

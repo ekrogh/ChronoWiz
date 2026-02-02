@@ -1,4 +1,5 @@
 using ChronoWiz.Shared.Ics;
+using System;
 using System.Windows.Input;
 
 namespace ChronoWiz.Avalonia.Linux.ViewModels;
@@ -6,6 +7,7 @@ namespace ChronoWiz.Avalonia.Linux.ViewModels;
 public sealed class SaveToIcsViewModel : ViewModelBase
 {
 	private readonly IcsCoordinator _coordinator;
+	public MainWindowViewModel? Host { get; init; }
 
 	public string Title => "Save to ICS";
 
@@ -55,17 +57,38 @@ public sealed class SaveToIcsViewModel : ViewModelBase
 
 	private void Save()
 	{
+		_ = SaveAsync();
+	}
+
+	private async System.Threading.Tasks.Task SaveAsync()
+	{
+		if (Host?.PickAndSaveIcsAsync is null)
+		{
+			Status = "File picker not ready.";
+			return;
+		}
+
 		var summary = string.IsNullOrWhiteSpace(Summary) ? "Summary" : Summary.Trim();
 		var description = string.IsNullOrWhiteSpace(Description) ? "Description" : Description.Trim();
 		var location = string.IsNullOrWhiteSpace(Location) ? "Location" : Location.Trim();
 
-		_coordinator.RequestSave(new SaveIcsRequest
+		_coordinator.RequestSave(new SaveIcsRequest { Summary = summary, Description = description, Location = location });
+		Status = "Saving...";
+		try
 		{
-			Summary = summary,
-			Description = description,
-			Location = location
-		});
-
-		Status = "Save requested.";
+			var start = Host.StartDate?.Date ?? DateTimeOffset.Now.Date;
+			var end = Host.EndDate?.Date ?? DateTimeOffset.Now.Date;
+			var ics = IcsGenerator.GenerateCalendar(start, end, summary, description, location);
+			var saved = await Host.PickAndSaveIcsAsync(ics);
+			Status = saved ? "Saved." : "Save canceled.";
+			if (saved)
+			{
+				Navigation?.GoBack();
+			}
+		}
+		catch (Exception ex)
+		{
+			Status = $"Save failed: {ex.Message}";
+		}
 	}
 }

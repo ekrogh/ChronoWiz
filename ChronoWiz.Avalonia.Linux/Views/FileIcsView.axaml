@@ -3,16 +3,15 @@
              xmlns:vm="clr-namespace:ChronoWiz.Avalonia.Linux.ViewModels"
              x:Class="ChronoWiz.Avalonia.Linux.Views.FileIcsView"
              x:DataType="vm:FileIcsViewModel">
-	<ScrollViewer>
-		<StackPanel Margin="20" Spacing="12">
+	<ScrollViewer Background="#FF000000">
+		<StackPanel Margin="20" Spacing="12" Background="#FF000000">
 			<Button Content="Back" Command="{Binding GoBackCommand}" HorizontalAlignment="Left" />
-			<TextBlock Text="{Binding Title}" FontSize="22" FontWeight="SemiBold" />
+			<TextBlock Text="{Binding Title}" FontSize="22" FontWeight="SemiBold" Foreground="White" />
 			<StackPanel Orientation="Horizontal" Spacing="10">
 				<Button Content="Open .ics" Command="{Binding GoOpenIcsCommand}" />
 				<Button Content="Save .ics" Command="{Binding GoSaveIcsCommand}" />
 			</StackPanel>
-			<TextBlock Text="{Binding Status}" Opacity="0.8" />
-			<TextBlock Text="(Wiring filing workflow comes next.)" Opacity="0.7" TextWrapping="Wrap" />
+			<TextBlock Text="{Binding Status}" Opacity="0.8" Foreground="White" />
 		</StackPanel>
 	</ScrollViewer>
 </UserControl>

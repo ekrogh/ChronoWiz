@@ -15,19 +15,19 @@
 		<ContentControl Grid.Column="0" Content="{Binding CurrentPage}">
 			<ContentControl.DataTemplates>
 				<DataTemplate DataType="vm:MainWindowViewModel">
-					<views:MainPageView />
+					<views:MainPageView DataContext="{Binding}" />
 				</DataTemplate>
 				<DataTemplate DataType="vm:AboutHelpViewModel">
-					<views:AboutHelpView />
+					<views:AboutHelpView DataContext="{Binding}" />
 				</DataTemplate>
 				<DataTemplate DataType="vm:OpenIcsViewModel">
-					<views:OpenIcsView />
+					<views:OpenIcsView DataContext="{Binding}" />
 				</DataTemplate>
 				<DataTemplate DataType="vm:SaveToIcsViewModel">
-					<views:SaveToIcsView />
+					<views:SaveToIcsView DataContext="{Binding}" />
 				</DataTemplate>
 				<DataTemplate DataType="vm:FileIcsViewModel">
-					<views:FileIcsView />
+					<views:FileIcsView DataContext="{Binding}" />
 				</DataTemplate>
 			</ContentControl.DataTemplates>
 		</ContentControl>

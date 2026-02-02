@@ -31,4 +31,8 @@
   <ItemGroup>
     <ProjectReference Include="..\ChronoWiz.Shared\ChronoWiz.Shared.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\IcsFiling\" />
+  </ItemGroup>
 </Project>

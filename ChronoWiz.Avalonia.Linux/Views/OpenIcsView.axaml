@@ -3,15 +3,14 @@
              xmlns:vm="clr-namespace:ChronoWiz.Avalonia.Linux.ViewModels"
              x:Class="ChronoWiz.Avalonia.Linux.Views.OpenIcsView"
              x:DataType="vm:OpenIcsViewModel">
-	<ScrollViewer>
-		<StackPanel Margin="20" Spacing="12">
+	<ScrollViewer Background="#FF000000">
+		<StackPanel Margin="20" Spacing="12" Background="#FF000000">
 			<Button Content="Back" Command="{Binding GoBackCommand}" HorizontalAlignment="Left" />
-			<TextBlock Text="{Binding Title}" FontSize="22" FontWeight="SemiBold" />
-			<TextBlock Text="Correct for time zone" />
+			<TextBlock Text="{Binding Title}" FontSize="22" FontWeight="SemiBold" Foreground="White" />
+			<TextBlock Text="Correct for time zone" Foreground="White" />
 			<ToggleSwitch IsChecked="{Binding CorrectTimeZone}" />
 			<Button Content="Open" Command="{Binding OpenCommand}" HorizontalAlignment="Left" />
-			<TextBlock Text="{Binding Status}" Opacity="0.8" />
-			<TextBlock Text="(Wiring ICS logic from ChronoWiz.Ui into ChronoWiz.Shared comes next.)" Opacity="0.7" TextWrapping="Wrap" />
+			<TextBlock Text="{Binding Status}" Opacity="0.8" Foreground="White" />
 		</StackPanel>
 	</ScrollViewer>
 </UserControl>
