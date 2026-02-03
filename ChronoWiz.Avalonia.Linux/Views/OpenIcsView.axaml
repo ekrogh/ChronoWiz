@@ -1,16 +1,34 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:vm="clr-namespace:ChronoWiz.Avalonia.Linux.ViewModels"
-             x:Class="ChronoWiz.Avalonia.Linux.Views.OpenIcsView"
-             x:DataType="vm:OpenIcsViewModel">
-	<ScrollViewer Background="#FF000000">
-		<StackPanel Margin="20" Spacing="12" Background="#FF000000">
-			<Button Content="Back" Command="{Binding GoBackCommand}" HorizontalAlignment="Left" />
-			<TextBlock Text="{Binding Title}" FontSize="22" FontWeight="SemiBold" Foreground="White" />
-			<TextBlock Text="Correct for time zone" Foreground="White" />
-			<ToggleSwitch IsChecked="{Binding CorrectTimeZone}" />
-			<Button Content="Open" Command="{Binding OpenCommand}" HorizontalAlignment="Left" />
-			<TextBlock Text="{Binding Status}" Opacity="0.8" Foreground="White" />
-		</StackPanel>
-	</ScrollViewer>
+<UserControl
+    x:Class="ChronoWiz.Avalonia.Linux.Views.OpenIcsView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="clr-namespace:ChronoWiz.Avalonia.Linux.ViewModels"
+    x:DataType="vm:OpenIcsViewModel">
+    <ScrollViewer Background="#FF000000">
+        <StackPanel
+            Margin="20"
+            Background="#FF000000"
+            Spacing="12">
+            <Button
+                HorizontalAlignment="Left"
+                Command="{Binding GoBackCommand}"
+                Content="Back" />
+            <Image Source="avares://ChronoWiz.Avalonia.Linux/Assets/IcsFiling/openics.png" />
+            <TextBlock
+                FontSize="22"
+                FontWeight="SemiBold"
+                Foreground="White"
+                Text="{Binding Title}" />
+            <TextBlock Foreground="White" Text="Correct for time zone" />
+            <ToggleSwitch IsChecked="{Binding CorrectTimeZone}" />
+            <Button
+                HorizontalAlignment="Left"
+                Command="{Binding OpenCommand}"
+                Content="Open" />
+            <TextBlock
+                Foreground="White"
+                Opacity="0.8"
+                Text="{Binding Status}" />
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
