@@ -2,8 +2,7 @@
 <Application
 	x:Class="ChronoWiz.Ui.App"
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	>
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
@@ -11,15 +10,9 @@
 				<ResourceDictionary Source="Resources/Styles/Styles.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 			<Style TargetType="Element">
-				<Setter
-					Property="Shell.BackgroundColor"
-					Value="{AppThemeBinding Light={StaticResource White}, Dark=#121212}" />
-				<Setter
-					Property="Shell.ForegroundColor"
-					Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
-				<Setter
-					Property="Shell.TitleColor"
-					Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+				<Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark=#121212}" />
+				<Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+				<Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
 			</Style>
 		</ResourceDictionary>
 	</Application.Resources>

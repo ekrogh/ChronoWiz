@@ -82,7 +82,6 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.30" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.30" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.2" />
-		<PackageReference Include="OpenMaui.Controls.Linux" Version="1.0.0-rc.1" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\ChronoWiz.Ui\ChronoWiz.Ui.csproj" />

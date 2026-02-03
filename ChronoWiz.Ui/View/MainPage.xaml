@@ -8,6 +8,7 @@
 	x:Name="ContentPageName"
 	ios:Page.UseSafeArea="True"
 	x:DataType="view:MainPage"
+	BackgroundColor="{AppThemeBinding Light=White, Dark=Black}"
 	Shell.NavBarIsVisible="False"
 	>
 
