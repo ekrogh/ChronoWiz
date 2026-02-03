@@ -1,4 +1,4 @@
-namespace ChronoWiz.Ui.MessageThings;
+﻿namespace ChronoWiz.MessageThings;
 
 // .ics file
 public class SaveToIcsMessageArgs : EventArgs
@@ -7,7 +7,6 @@ public class SaveToIcsMessageArgs : EventArgs
 	public string EventName_Summary { get; set; } = string.Empty;
 	public string Location { get; set; } = string.Empty;
 }
-
 public class OpenIcsMessageArgs : EventArgs
 {
 	public bool CorrectForTimeZone = false;
@@ -36,4 +35,6 @@ public class MessengerKeys
 	// Open/Save To .ics Description entered
 	public static string SaveToIcsMessageKey { get; } = "SaveToIcsMessageKey";
 	public static string OpenIcsMessageKey { get; } = "OpenIcsMessageKey";
+
+
 }

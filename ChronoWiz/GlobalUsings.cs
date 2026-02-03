@@ -5,4 +5,4 @@ global using System.ComponentModel;
 global using System.Diagnostics;
 global using System.Globalization;
 global using System.Text;
-global using ChronoWiz.Ui.MessageThings;
+global using ChronoWiz.MessageThings;
