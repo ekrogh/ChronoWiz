@@ -29,7 +29,7 @@ public sealed class MainWindowViewModel : ViewModelBase
 		set => SetField(ref _currentPage, value);
 	}
 
-	public INavigationService Navigation { get; }
+	public new INavigationService Navigation { get; }
 
 	public ICommand GoMainCommand { get; }
 	public ICommand GoHelpCommand { get; }

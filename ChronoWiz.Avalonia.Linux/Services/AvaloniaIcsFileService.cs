@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using ChronoWiz.Shared.Ics;
 using System;
 using System.Collections.Generic;
@@ -19,25 +20,28 @@ public sealed class AvaloniaIcsFileService : IIcsFileService
 
 	public async Task<IcsParseResult?> PickAndReadIcsAsync(bool correctForTimeZone)
 	{
-		var picker = new OpenFileDialog
-		{
-			AllowMultiple = false,
-			Filters =
-			{
-				new FileDialogFilter { Name = "iCalendar", Extensions = { "ics" } },
-				new FileDialogFilter { Name = "All", Extensions = { "*" } }
-			}
-		};
-
-		var results = await picker.ShowAsync(_owner);
-		var path = results?.FirstOrDefault();
-		if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
+		var storage = _owner.StorageProvider;
+		if (storage is null)
 			return null;
 
-		List<string> lines;
-		using (var sr = new StreamReader(path))
+		var results = await storage.OpenFilePickerAsync(new FilePickerOpenOptions
 		{
-			lines = new List<string>();
+			AllowMultiple = false,
+			FileTypeFilter = new List<FilePickerFileType>
+			{
+				new FilePickerFileType("iCalendar") { Patterns = new[] { "*.ics" } },
+				FilePickerFileTypes.All
+			}
+		});
+
+		var file = results.FirstOrDefault();
+		if (file is null)
+			return null;
+
+		var lines = new List<string>();
+		await using (var stream = await file.OpenReadAsync())
+		using (var sr = new StreamReader(stream))
+		{
 			while (await sr.ReadLineAsync() is { } line)
 				lines.Add(line);
 		}
@@ -47,21 +51,29 @@ public sealed class AvaloniaIcsFileService : IIcsFileService
 
 	public async Task<bool> PickAndSaveIcsAsync(string icsContent)
 	{
-		var picker = new SaveFileDialog
-		{
-			DefaultExtension = "ics",
-			Filters =
-			{
-				new FileDialogFilter { Name = "iCalendar", Extensions = { "ics" } },
-				new FileDialogFilter { Name = "All", Extensions = { "*" } }
-			}
-		};
-
-		var path = await picker.ShowAsync(_owner);
-		if (string.IsNullOrWhiteSpace(path))
+		var storage = _owner.StorageProvider;
+		if (storage is null)
 			return false;
 
-		await File.WriteAllTextAsync(path, icsContent);
+		var file = await storage.SaveFilePickerAsync(new FilePickerSaveOptions
+		{
+			DefaultExtension = "ics",
+			FileTypeChoices = new List<FilePickerFileType>
+			{
+				new FilePickerFileType("iCalendar") { Patterns = new[] { "*.ics" } },
+				FilePickerFileTypes.All
+			}
+		});
+
+		if (file is null)
+			return false;
+
+		await using (var stream = await file.OpenWriteAsync())
+		using (var sw = new StreamWriter(stream))		
+		{
+			await sw.WriteAsync(icsContent);
+		}
+
 		return true;
 	}
 }
