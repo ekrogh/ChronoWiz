@@ -365,3 +365,4 @@ FodyWeavers.xsd
 .gitignore
 /Applications/ChronoWiz-1.1.1.1.pkg
 /ChronoWiz/View/MainPage.xaml.cs.LOCAL.cs.orig
+/built/
