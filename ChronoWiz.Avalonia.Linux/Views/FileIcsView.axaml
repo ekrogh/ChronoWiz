@@ -19,7 +19,7 @@
                 Foreground="White"
                 Text="{Binding Title}" />
             <Panel>
-                <Image Source="avares://ChronoWiz.Avalonia.Linux/Assets/IcsFiling/fileics.png" />
+                <Image Source="avares://ChronoWiz/Assets/IcsFiling/fileics.png" />
             </Panel>
             <StackPanel Orientation="Horizontal" Spacing="10">
                 <Button Command="{Binding GoOpenIcsCommand}" Content="Open .ics" />

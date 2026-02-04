@@ -6,7 +6,25 @@
     <projectFile kind="XamarinMacOS">ChronoWiz/ChronoWiz.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa576727-bf38-4746-b6b9-966814cb5fb2" name="Changes" comment="" />
+    <list default="true" id="fa576727-bf38-4746-b6b9-966814cb5fb2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ChronoWiz/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChronoWiz/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChronoWiz.Avalonia.Linux/Views/FileIcsView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/ChronoWiz.Avalonia.Linux/Views/FileIcsView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChronoWiz.Avalonia.Linux/Views/OpenIcsView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/ChronoWiz.Avalonia.Linux/Views/OpenIcsView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChronoWiz.Avalonia.Linux/Views/SaveToIcsView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/ChronoWiz.Avalonia.Linux/Views/SaveToIcsView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnetClean.sh" beforeDir="false" afterPath="$PROJECT_DIR$/dotnetClean.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iosPublish_Ad_Hoc.sh" beforeDir="false" afterPath="$PROJECT_DIR$/iosPublish_Ad_Hoc.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iosPublish_App_Store.sh" beforeDir="false" afterPath="$PROJECT_DIR$/iosPublish_App_Store.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macPublish_Ad_Hoc.sh" beforeDir="false" afterPath="$PROJECT_DIR$/macPublish_Ad_Hoc.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macPublish_Ad_Hoc_Develop.sh" beforeDir="false" afterPath="$PROJECT_DIR$/macPublish_Ad_Hoc_Develop.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macPublish_Ad_Hoc_No_Package.sh" beforeDir="false" afterPath="$PROJECT_DIR$/macPublish_Ad_Hoc_No_Package.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macPublish_Ad_Hoc_No_Package_Develop.sh" beforeDir="false" afterPath="$PROJECT_DIR$/macPublish_Ad_Hoc_No_Package_Develop.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macPublish_App_Store.sh" beforeDir="false" afterPath="$PROJECT_DIR$/macPublish_App_Store.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macPublish_App_Store_No_Package.sh" beforeDir="false" afterPath="$PROJECT_DIR$/macPublish_App_Store_No_Package.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macPublish_Outside_App_Store.sh" beforeDir="false" afterPath="$PROJECT_DIR$/macPublish_Outside_App_Store.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macTstPublish_Ad_Hoc.sh" beforeDir="false" afterPath="$PROJECT_DIR$/macTstPublish_Ad_Hoc.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/publish_ChronoWiz_Avalonia_Linux.sh" beforeDir="false" afterPath="$PROJECT_DIR$/publish_ChronoWiz_Avalonia_Linux.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runCW.sh" beforeDir="false" afterPath="$PROJECT_DIR$/runCW.sh" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,26 +36,26 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="39BGZcDxrOnbwT7T9Jxn9xqMHRD" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.ChronoWiz.Avalonia.Linux.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "main",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.ChronoWiz.Avalonia.Linux.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.ChronoWiz.Avalonia.Linux">
     <configuration name="ChronoWiz.Avalonia.Linux" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ChronoWiz.Avalonia.Linux/ChronoWiz.Avalonia.Linux.csproj" />
@@ -81,6 +99,7 @@
       <option name="presentableId" value="Default" />
       <updated>1770162110732</updated>
       <workItem from="1770162115700" duration="162000" />
+      <workItem from="1770168219623" duration="191000" />
     </task>
     <servers />
   </component>
