@@ -47,6 +47,7 @@ parts:
       # - mono-devel
       # - msbuild
     stage-packages:
+      - libproxy1v5
       - libproxy1-plugin-networkmanager
       - libproxy1-plugin-gsettings
       # - gtk-sharp2
@@ -58,6 +59,15 @@ parts:
       # .NET ships a tracepoint provider that depends on liblttng-ust.so.0 on some distros.
       # It's optional for app execution; removing it avoids pulling in legacy LTTng ABI.
       find "$CRAFT_PRIME" -name libcoreclrtraceptprovider.so -type f -delete || true
+
+      # libproxy keeps libpxbackend in a subdir that isn't always on the runtime linker path.
+      # Make it discoverable by placing a symlink in the main multiarch lib dir.
+      for f in "$CRAFT_PRIME"/usr/lib/*/libproxy/libpxbackend-1.0.so; do
+        [ -f "$f" ] || continue
+        libdir="$(dirname "$(dirname "$f")")"
+        ln -sf "libproxy/libpxbackend-1.0.so" "$libdir/libpxbackend-1.0.so" || true
+      done
+
       # Ensure GIO finds proxy resolver modules without creating a broken user cache.
       for d in "$CRAFT_PRIME"/usr/lib/*/gio/modules; do
         [ -d "$d" ] && gio-querymodules "$d" || true
