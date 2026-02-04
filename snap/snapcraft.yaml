@@ -1,96 +1,78 @@
 name: chronowiz
-base: core22
+title: ChronoWiz
+base: core24
 version: "1.4.12"
 summary: Calculates times and time spans
 description: |
   chronowiz
   calculates time and date from start-/end time
-  and time span or time span from start- and end time and date
+  and time span, or time span from start- and end time and date
 grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
-# confinement: devmode # use 'strict' once you have the right plugs and slots
-# grade: stable # must be 'stable' to release into candidate/stable channels
-# confinement: strict # use 'strict' once you have the right plugs and slots
-# confinement: devmode # use 'strict' once you have the right plugs and slots
 
-architectures:
-  - build-on: armhf
-  - build-on: arm64
-  - build-on: amd64
-  # - build-on: s390x
-  # - build-on: ppc64el
-  # - build-on: i386
+# TODO: Replace with your preferred contact info.
+contact: http://eksit.dk
 
-# layout:
-#   /usr/lib/cli/gdk-sharp-2.0:
-#     symlink: $SNAP/usr/lib/cli/gdk-sharp-2.0
-#   /usr/lib/cli/gtk-sharp-2.0:
-#     symlink: $SNAP/usr/lib/cli/gtk-sharp-2.0
-#   /usr/lib/cli/glib-sharp-2.0:
-#     symlink: $SNAP/usr/lib/cli/glib-sharp-2.0
-#   $SNAP/usr/lib/cli/gtk-sharp-2.0/libgtk-x11-2.0.so.0:
-#     symlink: $SNAP/usr/lib/x86_64-linux-gnu/libgtk-x11-2.0.so.0
-#   $SNAP/usr/lib/cli/gtk-sharp-2.0/libgtk-x11-2.0.so.0.so:
-#     symlink: $SNAP/usr/lib/x86_64-linux-gnu/libgtk-x11-2.0.so.0
-#   $SNAP/usr/lib/cli/gtk-sharp-2.0/libMonoSupportW.so:
-#     symlink: $SNAP/usr/lib/libMonoSupportW.so
-#   $SNAP/usr/lib/cli/glib-sharp-2.0/libglib-2.0.so.0:
-#     symlink: $SNAP/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0
-#   $SNAP/usr/lib/cli/glib-sharp-2.0/libgobject-2.0.so.0:
-#     symlink: $SNAP/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0
-#   /usr/lib/cli/pango-sharp-2.0:
-#     symlink: $SNAP/usr/lib/cli/pango-sharp-2.0
+website: http://eksit.dk
+source-code: http://eksit.dk
+issues: http://eksit.dk
+donation: http://eksit.dk
 
-# environment:
-#   MONO_CFG_DIR: $SNAP/etc
-#   MONO_CONFIG: $SNAP/etc/mono/config
-#   MONO_GAC_PREFIX: $SNAP/usr/lib/mono
-#   MONO_PATH: $SNAP/usr/lib/x86_64-linux-gnu:$SNAP/etc/mono:$SNAP/usr/bin:$SNAP/usr/lib:$SNAP/usr/lib/mono:$SNAP/usr/share/mono:$SNAP/usr/lib/cli:$SNAP/usr/lib/cli/atk-sharp-2.0:$SNAP/usr/lib/cli/gdk-sharp-2.0:$SNAP/usr/lib/cli/gtk-sharp-2.0:$SNAP/usr/lib/cli/glib-sharp-2.0
+# SPDX license expression
+license: MIT
 
-# package-repositories:
-#   - type: apt
-#     formats: [deb]
-#     components: [main]
-#     suites: [stable-bionic]
-#     key-id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-#     url: https://download.mono-project.com/repo/ubuntu
+platforms:
+  amd64:
+  arm64:
+  armhf:
 
 parts:
   chronowiz:
+    # Source paths are relative to the project root (where snapcraft.yaml is discovered).
     source: .
     plugin: dotnet
-    dotnet-build-configuration: Release
-    dotnet-self-contained-runtime-identifier: linux-x64
-    # override-build: |
-    #   cp ./eksfind.sh $SNAPCRAFT_PART_INSTALL/
-    #   cp ./ekstxtfind.sh $SNAPCRAFT_PART_INSTALL/
-    #   cp ./runTDC.sh $SNAPCRAFT_PART_INSTALL/
-    #   nuget restore
-    #   cd chronowiz/chronowiz.gtk
-    #   msbuild -t:Rebuild -p:Configuration=release -r:true
-    #   cd bin/Release
-    #   # cd Debug
-    #   cp -rf ./* $SNAPCRAFT_PART_INSTALL/
+    # .NET plugin (v2) settings
+    dotnet-version: "10.0"
+    dotnet-configuration: Release
+    dotnet-project: ChronoWiz.Avalonia.Linux/ChronoWiz.Avalonia.Linux.csproj
+    dotnet-self-contained: true
     build-packages:
-      - libxml-sax-perl
+      - libglib2.0-bin
       # - curl
       # - nuget
       - apt-transport-https
       - dirmngr
-      - libgtk2.0-cil-dev
-      - libglade2.0-cil-dev
+      # - libgtk2.0-cil-dev
+      # - libglade2.0-cil-dev
       # - mono-devel
       # - msbuild
     stage-packages:
-      - libxml-sax-perl
-      - ca-certificates-mono
-      - gtk-sharp2
-      - libglade2.0-cil
+      - libproxy1-plugin-networkmanager
+      - libproxy1-plugin-gsettings
+      # - gtk-sharp2
+      # - libglade2.0-cil
       # - mono-complete
+
+    override-prime: |
+      craftctl default
+      # .NET ships a tracepoint provider that depends on liblttng-ust.so.0 on some distros.
+      # It's optional for app execution; removing it avoids pulling in legacy LTTng ABI.
+      find "$CRAFT_PRIME" -name libcoreclrtraceptprovider.so -type f -delete || true
+      # Ensure GIO finds proxy resolver modules without creating a broken user cache.
+      for d in "$CRAFT_PRIME"/usr/lib/*/gio/modules; do
+        [ -d "$d" ] && gio-querymodules "$d" || true
+      done
 
 apps:
   chronowiz:
     extensions: [gnome]
-    command: runTDC.sh
+    # Produced by dotnet publish for linux (see AssemblyName in the csproj).
+    command: ChronoWiz
     plugs:
       - home
+
+lint:
+  ignore:
+    # Dynamically loaded by GIO; linter can't see the runtime dlopen usage.
+    - library:
+        - usr/lib/*/libproxy.so.*
