@@ -1,4 +1,6 @@
-﻿namespace ChronoWiz;
+﻿using System.Runtime.Versioning;
+
+namespace ChronoWiz;
 
 public partial class AboutHelp : ContentPage
 {
@@ -6,25 +8,24 @@ public partial class AboutHelp : ContentPage
 	{
 		InitializeComponent();
 
-		var curVer = AppInfo.Current.Version;
-
-#if ANDROID || IOS
-		string revsn = curVer.Revision > -1 ? curVer.Revision.ToString() : "";
-#endif
+		var name = AppInfo.Current.Name ?? "";
+		var verStr = AppInfo.Current.VersionString ?? "";
+		if (!System.Version.TryParse(verStr, out var curVer))
+		{
+			AppNameAndVer.Text = string.IsNullOrWhiteSpace(verStr)
+				? name
+				: name + "  Version: " + verStr;
+			return;
+		}
 
 		AppNameAndVer.Text =
-							AppInfo.Current.Name
-							+ "  Version: "
-							+ curVer.Major
-							+ '.'
-							+ curVer.Minor
-							+ '.'
-							+ curVer.Build
-#if ANDROID || IOS
-							+ '.'
-							+ revsn
-#endif
-							;
+			name
+			+ "  Version: "
+			+ curVer.Major
+			+ '.'
+			+ curVer.Minor
+			+ '.'
+			+ curVer.Build;
 	}
 
 	private async void UsersGuideButton_Clicked(object sender, EventArgs e)
@@ -41,7 +42,25 @@ public partial class AboutHelp : ContentPage
 
 	private async void EmaiBtn_Clicked(object sender, EventArgs e)
 	{
-		_ = await Browser.Default.OpenAsync
-			(new Uri("mailto:eks@eksit.dk"), BrowserLaunchMode.SystemPreferred);
+		try
+		{
+			if (!Email.Default.IsComposeSupported)
+			{
+				await DisplayAlertAsync("Email", "Email is not supported on this device.", "OK");
+				return;
+			}
+
+			var message = new EmailMessage
+			{
+				To = new List<string> { "eks@eksit.dk" },
+				Subject = "ChronoWiz",
+			};
+
+			await Email.Default.ComposeAsync(message);
+		}
+		catch (Exception ex)
+		{
+			await DisplayAlertAsync("Email", ex.Message, "OK");
+		}
 	}
 }
