@@ -4,11 +4,9 @@
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
-	xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	x:Name="AboutHelpContentPageName"
 	Title="Help"
-	ios:Page.UseSafeArea="True"
 	Shell.BackgroundColor="{AppThemeBinding Light={StaticResource White},
 	                                        Dark={StaticResource Gray950}}"
 	Shell.ForegroundColor="{AppThemeBinding Light={StaticResource Black},
