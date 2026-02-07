@@ -4,22 +4,34 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
             "name": ".NET MAUI",
-            "type": "maui",
+            "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "maui: Build"
+            "preLaunchTask": "maccatalyst: run",
+            "program": "${workspaceFolder}/.vscode/noop.js"
         },
 
         {
-            "type": "DotNetAutoAttach",
-            "request": "launch",
-            "name": ".NET Core Watch",
-            "args": [],
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            }
+            "name": "Mac Catalyst: Attach (already running)",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}"
+        },
+
+        {
+            "name": "Mac Catalyst: Attach by PID",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${input:ChronoWizPid}"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "ChronoWizPid",
+            "type": "promptString",
+            "description": "Enter ChronoWiz PID (get it via: pgrep -fl ChronoWiz)",
+            "default": ""
         }
     ]
 }

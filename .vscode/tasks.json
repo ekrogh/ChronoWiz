@@ -1,0 +1,67 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "noop-dotnet: build",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        ".vscode/noop-dotnet/noop-dotnet.csproj",
+        "-c",
+        "Debug"
+      ],
+      "problemMatcher": [
+        "$msCompile"
+      ]
+    },
+    {
+      "label": "maui: Build",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "ChronoWiz/ChronoWiz.csproj",
+        "-c",
+        "Debug",
+        "-f",
+        "net10.0-maccatalyst"
+      ],
+      "problemMatcher": [
+        "$msCompile"
+      ],
+      "group": "build"
+    },
+    {
+      "label": "maccatalyst: build",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "ChronoWiz/ChronoWiz.csproj",
+        "-c",
+        "Debug",
+        "-f",
+        "net10.0-maccatalyst"
+      ],
+      "problemMatcher": [
+        "$msCompile"
+      ],
+      "group": "build"
+    },
+    {
+      "label": "maccatalyst: run",
+      "type": "shell",
+      "dependsOn": [
+        "noop-dotnet: build",
+        "maccatalyst: build"
+      ],
+      "command": "open",
+      "args": [
+        "-n",
+        "ChronoWiz/bin/Debug/net10.0-maccatalyst/maccatalyst-x64/ChronoWiz.app"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}
