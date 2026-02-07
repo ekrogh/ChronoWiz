@@ -20,7 +20,6 @@
 
             <Style
                 x:Key="baseLabelStyle"
-                x:Name="baseLabelStyleName"
                 TargetType="Label">
                 <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
             </Style>

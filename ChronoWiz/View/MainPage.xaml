@@ -15,7 +15,6 @@
 		<ResourceDictionary>
 			<Style
 				x:Key="baseLabelStyle"
-				x:Name="baseLabelStyleName"
 				TargetType="Label"
 				>
 				<Setter
@@ -61,7 +60,6 @@
 
 			<Style
 				x:Key="baseEntryStyle"
-				x:Name="baseEntryStyleName"
 				TargetType="Entry"
 				>
 				<Setter
