@@ -19,9 +19,14 @@ class Program
 
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>()
-            .UseX11()
+    {
+        var builder = AppBuilder.Configure<App>()
             .UseSkia() // forces Skia renderer; avoids GLX/OpenGL
             .WithInterFont()
             .LogToTrace();
+
+        return OperatingSystem.IsLinux()
+            ? builder.UseX11()
+            : builder.UsePlatformDetect();
+    }
 }
