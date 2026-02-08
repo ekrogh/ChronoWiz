@@ -901,7 +901,7 @@ public partial class MainPage : ContentPage
             }
             catch (Exception e)
             {
-                await DisplayAlert("Bad .ics file", e.Message, "OK");
+				await DisplayAlertAsync("Bad .ics file", e.Message, "OK");
             }
 
             await Shell.Current.GoToAsync("..\\..", true);

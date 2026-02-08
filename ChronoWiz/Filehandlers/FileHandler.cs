@@ -44,7 +44,7 @@ public partial class OLD_FileHandler
 		catch (Exception ex)
 		{
 			var msg = $"File(s) not selected, {ex.ToString()}";
-			await Shell.Current.DisplayAlert("Error", msg, "OK");
+			await Shell.Current.DisplayAlertAsync("Error", msg, "OK");
 			return null;
 		}
 	}
@@ -58,7 +58,7 @@ public partial class OLD_FileHandler
 		catch (Exception e)
 		{
 			var msg = $"File is not saved, {e.ToString()}";
-			await Shell.Current.DisplayAlert("Error", msg, "OK");
+			await Shell.Current.DisplayAlertAsync("Error", msg, "OK");
 			System.Diagnostics.Debug.WriteLine("SaveToTextFile failed: {0}", e.ToString());
 			return null;
 		}
