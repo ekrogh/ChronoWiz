@@ -29,7 +29,6 @@
 
 			<Style
 				x:Key="baseEntryStyle"
-				x:Name="baseEntryStyleName"
 				TargetType="Entry"
 				>
 				<Setter

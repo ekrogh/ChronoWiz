@@ -88,7 +88,6 @@
 
 			<Style
 				x:Key="baseStartEndDateTimeEntryStyle"
-				x:Name="baseStartEndDateTimeEntryStyleName"
 				BasedOn="{StaticResource baseEntryStyle}"
 				TargetType="Entry"
 				>
