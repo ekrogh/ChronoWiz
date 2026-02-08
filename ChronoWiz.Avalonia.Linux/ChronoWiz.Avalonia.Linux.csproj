@@ -12,6 +12,10 @@
 	<AssemblyName>ChronoWiz</AssemblyName>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="app.manifest" />
   </ItemGroup>
