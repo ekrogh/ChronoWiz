@@ -87,7 +87,7 @@ internal sealed class ZoomToWindowController : IDisposable
 			return;
 
 		// Measure the target at its natural (unscaled) size.
-		SizeRequest measuredSize;
+		Size measuredSize;
 		try
 		{
 			measuredSize = _target.Measure(double.PositiveInfinity, double.PositiveInfinity);
@@ -97,8 +97,8 @@ internal sealed class ZoomToWindowController : IDisposable
 			Dispose();
 			return;
 		}
-		var desiredWidth = measuredSize.Request.Width;
-		var desiredHeight = measuredSize.Request.Height;
+		var desiredWidth = measuredSize.Width;
+		var desiredHeight = measuredSize.Height;
 		if (desiredWidth <= 0 || desiredHeight <= 0)
 			return;
 

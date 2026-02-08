@@ -3,10 +3,8 @@
 	x:Class="ChronoWiz.View.MainPage"
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
 	xmlns:view="clr-namespace:ChronoWiz.View"
 	x:Name="ContentPageName"
-	ios:Page.UseSafeArea="True"
 	x:DataType="view:MainPage"
 	Shell.NavBarIsVisible="False">
 
@@ -75,7 +73,7 @@
 			</Style>
 
 			<Style x:Key="baseTimePickerStyle" TargetType="TimePicker">
-				<Setter Property="HorizontalOptions" Value="StartAndExpand" />
+				<Setter Property="HorizontalOptions" Value="Start" />
 				<Setter Property="VerticalOptions" Value="Center" />
 				<Setter Property="BackgroundColor" Value="{AppThemeBinding Light=Yellow, Dark=#FF00004B}" />
 				<Setter Property="TextColor" Value="{AppThemeBinding Light=Blue, Dark=#FFFFFFB4}" />
@@ -100,7 +98,7 @@
 			</Style>
 
 			<Style x:Key="baseGTKTimePickerStyle" TargetType="TimePicker">
-				<Setter Property="HorizontalOptions" Value="StartAndExpand" />
+				<Setter Property="HorizontalOptions" Value="Start" />
 				<Setter Property="VerticalOptions" Value="Center" />
 				<Setter Property="TextColor" Value="Black" />
 				<Setter Property="FontSize" Value="Default" />
@@ -115,9 +113,9 @@
 
 		<StackLayout
 			x:Name="TotalStackName"
-			HorizontalOptions="CenterAndExpand"
+			HorizontalOptions="Center"
 			Orientation="Vertical"
-			VerticalOptions="CenterAndExpand">
+			VerticalOptions="Center">
 			<StackLayout
 				x:Name="StartDateTimeStacAndPlus"
 				HorizontalOptions="Center"
@@ -138,7 +136,7 @@
 						<DatePicker
 							x:Name="StartDatePicker"
 							DateSelected="StartDatePicker_DateSelected"
-							HorizontalOptions="CenterAndExpand"
+						HorizontalOptions="Center"
 							Style="{StaticResource baseDatePickerStyle_WO_WidthRequest}" />
 						<TimePicker
 							x:Name="StartTimePicker"
@@ -334,7 +332,7 @@
 						<DatePicker
 							x:Name="EndDatePicker"
 							DateSelected="EndDatePicker_DateSelected"
-							HorizontalOptions="CenterAndExpand"
+						HorizontalOptions="Center"
 							Style="{StaticResource baseDatePickerStyle_WO_WidthRequest}" />
 						<TimePicker
 							x:Name="EndTimePicker"
@@ -356,7 +354,7 @@
 				</StackLayout>
 				<StackLayout
 					x:Name="calculateAndClearAllButtonsStackName"
-					HorizontalOptions="CenterAndExpand"
+					HorizontalOptions="Center"
 					Orientation="Horizontal"
 					VerticalOptions="Center">
 					<StackLayout.Margin>

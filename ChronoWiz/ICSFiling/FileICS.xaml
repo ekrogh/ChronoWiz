@@ -3,11 +3,9 @@
 	x:Class="ChronoWiz.FileICS"
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
 	xmlns:local="clr-namespace:ChronoWiz;assembly=ChronoWiz"
 	x:Name="FileICSContentPageName"
 	Title="ICS"
-	ios:Page.UseSafeArea="True"
 	Shell.BackgroundColor="{AppThemeBinding Light={StaticResource White},
 	                                        Dark={StaticResource Gray950}}"
 	Shell.ForegroundColor="{AppThemeBinding Light={StaticResource Black},

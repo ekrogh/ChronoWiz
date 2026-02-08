@@ -414,7 +414,7 @@ public partial class MainPage : ContentPage
             DictionaryOfCombinedEntries[TheEntry] = 0;
             var TextHolder = TheEntry.Text;
             TheEntry.Text = "";
-            await DisplayAlert("Invalid \"Combined Years\" ", TextHolder, "OK");
+			await DisplayAlertAsync("Invalid \"Combined Years\" ", TextHolder, "OK");
             TheEntry.Focus();
         }
         else
@@ -439,7 +439,7 @@ public partial class MainPage : ContentPage
             DictionaryOfTotalEntries[TheEntry] = 0;
             var TextHolder = TheEntry.Text;
             TheEntry.Text = "";
-            await DisplayAlert("Invalid \"Total Years\" ", TextHolder, "OK");
+			await DisplayAlertAsync("Invalid \"Total Years\" ", TextHolder, "OK");
             TheEntry.Focus();
         }
         else
@@ -582,9 +582,9 @@ public partial class MainPage : ContentPage
             TotMinutes.Text = TotMinutesOut.ToString();
         });
 
-        if (TotDaysOut > 9999999999) await DisplayAlert("Total \"Days\" > 9999999999", TotDays.ToString(), "OK");
-        if (TotHoursOut > 9999999999) await DisplayAlert("Total \"Hours\" > 9999999999", TotHours.ToString(), "OK");
-        if (TotMinutesOut > 9999999999) await DisplayAlert("Total \"Minutes\" > 9999999999", TotMinutes.ToString(), "OK");
+		if (TotDaysOut > 9999999999) await DisplayAlertAsync("Total \"Days\" > 9999999999", TotDays.ToString(), "OK");
+		if (TotHoursOut > 9999999999) await DisplayAlertAsync("Total \"Hours\" > 9999999999", TotHours.ToString(), "OK");
+		if (TotMinutesOut > 9999999999) await DisplayAlertAsync("Total \"Minutes\" > 9999999999", TotMinutes.ToString(), "OK");
     }
 
     private void OnCalculateButtonClicked(object sEnder, EventArgs e) => DoCalculate();
@@ -615,7 +615,7 @@ public partial class MainPage : ContentPage
                     DictionaryOfCombinedEntries[CurEntry] = 0;
                     string TextHolder = CurEntry.Text;
                     CurEntry.Text = "";
-                    await DisplayAlert("Invalid \"Combined Value\" ", TextHolder, "OK");
+					await DisplayAlertAsync("Invalid \"Combined Value\" ", TextHolder, "OK");
                     CurEntry.Focus();
                     return;
                 }
@@ -628,7 +628,7 @@ public partial class MainPage : ContentPage
                     DictionaryOfTotalEntries[CurEntry] = 0;
                     string TextHolder = CurEntry.Text;
                     CurEntry.Text = "";
-                    await DisplayAlert("Invalid \"Total Value\" ", TextHolder, "OK");
+					await DisplayAlertAsync("Invalid \"Total Value\" ", TextHolder, "OK");
                     CurEntry.Focus();
                     return;
                 }
@@ -669,7 +669,7 @@ public partial class MainPage : ContentPage
                                     }
                                     catch (ArgumentOutOfRangeException outOfRange)
                                     {
-                                        await DisplayAlert("Argument Out Of Range", outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": value = " + DictionaryOfTotalEntries.ElementAt(i).Value + "\nMax DateTime is " + DateTime.MaxValue.ToString("u").Remove(16), "OK");
+				await DisplayAlertAsync("Argument Out Of Range", outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": value = " + DictionaryOfTotalEntries.ElementAt(i).Value + "\nMax DateTime is " + DateTime.MaxValue.ToString("u").Remove(16), "OK");
                                         DictionaryOfTotalEntries[DictionaryOfTotalEntries.ElementAt(i).Key] = 0;
                                         DictionaryOfTotalEntries.ElementAt(i).Key.Text = "";
                                         DictionaryOfTotalEntries.ElementAt(i).Key.Focus();
@@ -678,7 +678,7 @@ public partial class MainPage : ContentPage
                                 }
                                 else
                                 {
-                                    await DisplayAlert("Type error", "Only one \"Total\" value allowed", "OK");
+										await DisplayAlertAsync("Type error", "Only one \"Total\" value allowed", "OK");
                                 }
                             }
                         }
@@ -705,7 +705,7 @@ public partial class MainPage : ContentPage
                                 }
                                 catch (ArgumentOutOfRangeException outOfRange)
                                 {
-                                    await DisplayAlert("Argument Out Of Range", outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": combined value = " + kv.Value + "\nMax DateTime is " + DateTime.MaxValue.ToString("u").Remove(16), "OK");
+								await DisplayAlertAsync("Argument Out Of Range", outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": combined value = " + kv.Value + "\nMax DateTime is " + DateTime.MaxValue.ToString("u").Remove(16), "OK");
                                     DictionaryOfCombinedEntries[kv.Key] = 0;
                                     kv.Key.Text = "";
                                     kv.Key.Focus();
@@ -730,7 +730,7 @@ public partial class MainPage : ContentPage
                 }
                 else
                 {
-                    await DisplayAlert("Type error", "Not both \"Total\" and \"Combined\" time spans can be used", "OK");
+					await DisplayAlertAsync("Type error", "Not both \"Total\" and \"Combined\" time spans can be used", "OK");
                 }
             }
             else
@@ -743,7 +743,7 @@ public partial class MainPage : ContentPage
         {
             if (DoCalcEndTime)
             {
-                await DisplayAlert("Error", "Can't calculate both \"Start\" and \"End\"", "OK");
+				await DisplayAlertAsync("Error", "Can't calculate both \"Start\" and \"End\"", "OK");
                 return;
             }
             if (!TotalsAllZero || !CombinedsAllZero)
@@ -774,7 +774,7 @@ public partial class MainPage : ContentPage
                                     }
                                     catch (ArgumentOutOfRangeException outOfRange)
                                     {
-                                        await DisplayAlert("Argument Out Of Range", outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": value = " + DictionaryOfTotalEntries.ElementAt(i).Value + "\nMax DateTime is " + DateTime.MaxValue.ToString("u").Remove(16), "OK");
+										await DisplayAlertAsync("Argument Out Of Range", outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": value = " + DictionaryOfTotalEntries.ElementAt(i).Value + "\nMax DateTime is " + DateTime.MaxValue.ToString("u").Remove(16), "OK");
                                         DictionaryOfTotalEntries[DictionaryOfTotalEntries.ElementAt(i).Key] = 0;
                                         DictionaryOfTotalEntries.ElementAt(i).Key.Text = "";
                                         DictionaryOfTotalEntries.ElementAt(i).Key.Focus();
@@ -783,7 +783,7 @@ public partial class MainPage : ContentPage
                                 }
                                 else
                                 {
-                                    await DisplayAlert("Type error", "Only one \"Total\" value allowed", "OK");
+										await DisplayAlertAsync("Type error", "Only one \"Total\" value allowed", "OK");
                                 }
                             }
                         }
@@ -810,7 +810,7 @@ public partial class MainPage : ContentPage
                                 }
                                 catch (ArgumentOutOfRangeException outOfRange)
                                 {
-                                    await DisplayAlert("Argument Out Of Range", outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": combined value = " + kv.Value + "\nMax DateTime is " + DateTime.MaxValue.ToString("u").Remove(16), "OK");
+								await DisplayAlertAsync("Argument Out Of Range", outOfRange.Message.Remove(outOfRange.Message.IndexOf(" name:")) + ": combined value = " + kv.Value + "\nMax DateTime is " + DateTime.MaxValue.ToString("u").Remove(16), "OK");
                                     DictionaryOfCombinedEntries[kv.Key] = 0; kv.Key.Text = ""; kv.Key.Focus(); return;
                                 }
                             }
@@ -824,7 +824,7 @@ public partial class MainPage : ContentPage
                 }
                 else
                 {
-                    await DisplayAlert("Type error", "Not both \"Total\" and \"Combined\" time spans can be used", "OK");
+					await DisplayAlertAsync("Type error", "Not both \"Total\" and \"Combined\" time spans can be used", "OK");
                 }
             }
             else
@@ -874,7 +874,7 @@ public partial class MainPage : ContentPage
             }
             catch (Exception e)
             {
-                await DisplayAlert("The file could not be read:", e.Message, "OK");
+				await DisplayAlertAsync("The file could not be read:", e.Message, "OK");
             }
 
             try
@@ -977,7 +977,7 @@ public partial class MainPage : ContentPage
 			if (fileSaverResult.IsSuccessful)
 				await Shell.Current.GoToAsync("..\\..", true);
 			else
-				await Shell.Current.DisplayAlert("Error", "File is not saved!!\n\n" + fileSaverResult.Exception, "OK");
+				await Shell.Current.DisplayAlertAsync("Error", "File is not saved!!\n\n" + fileSaverResult.Exception, "OK");
 		}
 		else
 		{
@@ -990,7 +990,7 @@ public partial class MainPage : ContentPage
         if (fileSaverResult.IsSuccessful)
             await Shell.Current.GoToAsync("..\\..", true);
         else
-            await Shell.Current.DisplayAlert("Error", "File is not saved!!\n\n" + fileSaverResult.Exception, "OK");
+			await Shell.Current.DisplayAlertAsync("Error", "File is not saved!!\n\n" + fileSaverResult.Exception, "OK");
 #endif
     }
 
