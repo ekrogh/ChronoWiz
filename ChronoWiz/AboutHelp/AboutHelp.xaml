@@ -65,40 +65,43 @@
 	</ContentPage.Resources>
 
 	<ContentPage.Content>
-		<StackLayout
-			x:Name="AboutHelpStack"
-			>
-			<Label
-				x:Name="AppNameAndVer"
-				HorizontalTextAlignment="Center"
-				IsEnabled="True"
-				Style="{StaticResource baseLabelStyle}"
-				Text=""
-				/>
-			<Button
-				x:Name="UsersGuideButton"
-				Clicked="UsersGuideButton_Clicked"
-				Style="{StaticResource baseButtonStyle}"
-				Text="User`s Guide"
-				/>
-			<Label
-				x:Name="MeLabel"
-				HorizontalTextAlignment="Center"
-				Style="{StaticResource baseLabelStyle}"
-				Text="Eigil Krogh Sorensen"
-				/>
-			<Button
-				x:Name="MyUrlButton"
-				Clicked="MyUrlButton_Clicked"
-				Style="{StaticResource baseButtonStyle}"
-				Text="http://eksit.dk"
-				/>
-			<Button
-				x:Name="EmaiBtn"
-				Clicked="EmaiBtn_Clicked"
-				Style="{StaticResource baseButtonStyle}"
-				Text="eks@eksit.dk"
-				/>
-		</StackLayout>
+		<ScrollView>
+			<StackLayout
+				x:Name="AboutHelpStack"
+				Padding="20"
+				>
+				<Label
+					x:Name="AppNameAndVer"
+					HorizontalTextAlignment="Center"
+					IsEnabled="True"
+					Style="{StaticResource baseLabelStyle}"
+					Text=""
+					/>
+				<Button
+					x:Name="UsersGuideButton"
+					Clicked="UsersGuideButton_Clicked"
+					Style="{StaticResource baseButtonStyle}"
+					Text="User`s Guide"
+					/>
+				<Label
+					x:Name="MeLabel"
+					HorizontalTextAlignment="Center"
+					Style="{StaticResource baseLabelStyle}"
+					Text="Eigil Krogh Sorensen"
+					/>
+				<Button
+					x:Name="MyUrlButton"
+					Clicked="MyUrlButton_Clicked"
+					Style="{StaticResource baseButtonStyle}"
+					Text="http://eksit.dk"
+					/>
+				<Button
+					x:Name="EmaiBtn"
+					Clicked="EmaiBtn_Clicked"
+					Style="{StaticResource baseButtonStyle}"
+					Text="eks@eksit.dk"
+					/>
+			</StackLayout>
+		</ScrollView>
 	</ContentPage.Content>
 </ContentPage>

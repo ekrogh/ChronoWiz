@@ -11,6 +11,8 @@ namespace ChronoWiz.View;
 [DesignTimeVisible(true)]
 public partial class MainPage : ContentPage
 {
+	private Ui.ZoomToWindowController? _zoomToWindow;
+
     public MainPage()
     {
         InitializeComponent();
@@ -78,6 +80,10 @@ public partial class MainPage : ContentPage
         );
 #endif
         DeviceDisplay.Current.MainDisplayInfoChanged += Current_MainDisplayInfoChanged;
+
+        // On desktop-sized windows, scale the whole page content to fit.
+        if (DeviceInfo.Platform == DevicePlatform.MacCatalyst || DeviceInfo.Platform == DevicePlatform.WinUI)
+            _zoomToWindow = new Ui.ZoomToWindowController(this, TotalStackName);
     }
 
     private void Current_MainDisplayInfoChanged(object? sender, DisplayInfoChangedEventArgs e)

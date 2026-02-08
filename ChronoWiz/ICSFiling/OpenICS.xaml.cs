@@ -4,7 +4,6 @@ namespace ChronoWiz;
 
 public partial class OpenICS : ContentPage
 {
-
 	public OpenICS()
 	{
 		InitializeComponent();
