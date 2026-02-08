@@ -86,6 +86,14 @@ public partial class MainPage : ContentPage
             _zoomToWindow = new Ui.ZoomToWindowController(this, TotalStackName);
     }
 
+	protected override void OnDisappearing()
+	{
+		DeviceDisplay.Current.MainDisplayInfoChanged -= Current_MainDisplayInfoChanged;
+		_zoomToWindow?.Dispose();
+		_zoomToWindow = null;
+		base.OnDisappearing();
+	}
+
     private void Current_MainDisplayInfoChanged(object? sender, DisplayInfoChangedEventArgs e)
     {
         MainThread.BeginInvokeOnMainThread(() =>

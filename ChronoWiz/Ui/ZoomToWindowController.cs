@@ -2,7 +2,7 @@ using Microsoft.Maui.Controls;
 
 namespace ChronoWiz.Ui;
 
-internal sealed class ZoomToWindowController
+internal sealed class ZoomToWindowController : IDisposable
 {
 	private readonly ContentPage _page;
 	private readonly VisualElement _target;
@@ -12,6 +12,7 @@ internal sealed class ZoomToWindowController
 
 	private bool _updatePending;
 	private double _lastAppliedScale = 1.0;
+	private bool _disposed;
 
 	public ZoomToWindowController(
 		ContentPage page,
@@ -35,31 +36,69 @@ internal sealed class ZoomToWindowController
 		RequestUpdate();
 	}
 
+	public void Dispose()
+	{
+		if (_disposed)
+			return;
+
+		_disposed = true;
+		_page.SizeChanged -= OnPageSizeChanged;
+		_target.SizeChanged -= OnTargetSizeChanged;
+	}
+
 	private void OnPageSizeChanged(object? sender, EventArgs e) => RequestUpdate();
 	private void OnTargetSizeChanged(object? sender, EventArgs e) => RequestUpdate();
 
 	private void RequestUpdate()
 	{
+		if (_disposed)
+			return;
+
 		if (_updatePending)
 			return;
 
 		_updatePending = true;
-		_page.Dispatcher.Dispatch(() =>
+		try
 		{
+			_page.Dispatcher.Dispatch(() =>
+		{
+				if (_disposed)
+				{
+					_updatePending = false;
+					return;
+				}
+
 			_updatePending = false;
 			UpdateScale();
 		});
+		}
+		catch (ObjectDisposedException)
+		{
+			_updatePending = false;
+		}
 	}
 
 	private void UpdateScale()
 	{
+		if (_disposed)
+			return;
+
 		if (_page.Width <= 0 || _page.Height <= 0)
 			return;
 
 		// Measure the target at its natural (unscaled) size.
-		var measuredSize = _target.Measure(double.PositiveInfinity, double.PositiveInfinity);
-		var desiredWidth = measuredSize.Width;
-		var desiredHeight = measuredSize.Height;
+		SizeRequest measuredSize;
+		try
+		{
+			measuredSize = _target.Measure(double.PositiveInfinity, double.PositiveInfinity);
+		}
+		catch (ObjectDisposedException)
+		{
+			Dispose();
+			return;
+		}
+		var desiredWidth = measuredSize.Request.Width;
+		var desiredHeight = measuredSize.Request.Height;
 		if (desiredWidth <= 0 || desiredHeight <= 0)
 			return;
 

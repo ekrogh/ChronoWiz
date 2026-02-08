@@ -61,7 +61,16 @@
 				<Setter Property="VerticalOptions" Value="Center" />
 				<Setter Property="BackgroundColor" Value="{AppThemeBinding Light=Yellow, Dark=#FF00004B}" />
 				<Setter Property="TextColor" Value="{AppThemeBinding Light=Blue, Dark=#FFFFFFB4}" />
-				<Setter Property="FontFamily" Value="Courier" />
+				<Setter Property="FontFamily">
+					<Setter.Value>
+						<OnPlatform x:TypeArguments="x:String">
+							<On Platform="WinUI" Value="OpenSansRegular" />
+							<On Platform="MacCatalyst" Value="Menlo" />
+							<On Platform="iOS" Value="Menlo" />
+							<On Platform="Android" Value="monospace" />
+						</OnPlatform>
+					</Setter.Value>
+				</Setter>
 				<Setter Property="FontSize" Value="Small" />
 			</Style>
 
@@ -76,7 +85,16 @@
 			<Style x:Key="baseGTKDatePickerStyle_WO_WidthRequest" TargetType="DatePicker">
 				<Setter Property="VerticalOptions" Value="Center" />
 				<Setter Property="TextColor" Value="Black" />
-				<Setter Property="FontFamily" Value="Courier" />
+				<Setter Property="FontFamily">
+					<Setter.Value>
+						<OnPlatform x:TypeArguments="x:String">
+							<On Platform="WinUI" Value="OpenSansRegular" />
+							<On Platform="MacCatalyst" Value="Menlo" />
+							<On Platform="iOS" Value="Menlo" />
+							<On Platform="Android" Value="monospace" />
+						</OnPlatform>
+					</Setter.Value>
+				</Setter>
 				<Setter Property="FontSize" Value="Default" />
 				<Setter Property="FontAttributes" Value="Bold" />
 			</Style>
