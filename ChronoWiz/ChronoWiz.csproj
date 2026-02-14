@@ -82,9 +82,9 @@
     <PackageReference Include="CommunityToolkit.Maui" Version="14.0.0" />
     <PackageReference Include="CommunityToolkit.Maui.Markup" Version="7.0.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.31" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.31" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.2" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.40" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.40" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.3" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
