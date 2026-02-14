@@ -1,10 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>
-			net10.0-ios;
-			net10.0-maccatalyst;
-			net10.0-android;
-			net10.0-windows10.0.19041.0</TargetFrameworks>
+      net10.0-ios;
+      net10.0-maccatalyst;
+      net10.0-android</TargetFrameworks>
     <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
     <!-- <TargetFrameworks>$(TargetFrameworks);net10.0-tizen</TargetFrameworks> -->
     <!-- Note for MacCatalyst:
@@ -288,24 +287,8 @@
     <AndroidKeyStore>True</AndroidKeyStore>
     <AndroidSigningKeyStore>D:\Users\eigil\projects\MAUI\ChronoWiz\Android_Special\Using_Java_keyStore\keystore.jks</AndroidSigningKeyStore>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows10.0.22621.0|AnyCPU'">
-    <ApplicationDisplayVersion>2.0.1</ApplicationDisplayVersion>
-    <ApplicationVersion>13</ApplicationVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows10.0.22621.0|x64'">
-    <ApplicationDisplayVersion>2.0.1</ApplicationDisplayVersion>
-    <ApplicationVersion>13</ApplicationVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows10.0.22621.0|AnyCPU'">
-    <ApplicationDisplayVersion>2.0.1</ApplicationDisplayVersion>
-    <ApplicationVersion>13</ApplicationVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows10.0.22621.0|x64'">
-    <ApplicationDisplayVersion>2.0.1</ApplicationDisplayVersion>
-    <ApplicationVersion>13</ApplicationVersion>
-  </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.26100.0</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

@@ -1,3 +1,4 @@
+
 dotnet build -t:Clean
 dotnet clean
 rm -rf /Users/eks/Downloads/ChronoWiz*.pkg
