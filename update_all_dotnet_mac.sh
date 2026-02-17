@@ -13,8 +13,15 @@ if command -v brew >/dev/null 2>&1; then
   brew update
 
   echo "==> Finding installed Homebrew .NET packages"
-  mapfile -t DOTNET_FORMULAE < <(brew list --formula | grep -E '^(dotnet|dotnet-sdk|dotnet-runtime|aspnetcore-runtime)(@.*)?$' || true)
-  mapfile -t DOTNET_CASKS < <(brew list --cask | grep -E '^dotnet-sdk(@.*)?$' || true)
+  DOTNET_FORMULAE=()
+  while IFS= read -r line; do
+    DOTNET_FORMULAE+=("$line")
+  done < <(brew list --formula | grep -E '^(dotnet|dotnet-sdk|dotnet-runtime|aspnetcore-runtime)(@.*)?$' || true)
+
+  DOTNET_CASKS=()
+  while IFS= read -r line; do
+    DOTNET_CASKS+=("$line")
+  done < <(brew list --cask | grep -E '^dotnet-sdk(@.*)?$' || true)
 
   if (( ${#DOTNET_FORMULAE[@]} > 0 )); then
     echo "==> Upgrading .NET formulae: ${DOTNET_FORMULAE[*]}"
@@ -38,10 +45,21 @@ if command -v dotnet >/dev/null 2>&1; then
   dotnet --list-sdks || true
 
   echo "==> Updating .NET workloads"
-  dotnet workload update || true
+  if ! dotnet workload update; then
+    echo "==> Workload update failed without elevated privileges"
+    if command -v sudo >/dev/null 2>&1; then
+      echo "==> Retrying workload update with sudo (may prompt for password)"
+      sudo dotnet workload update || true
+    else
+      echo "==> sudo not available; skipping workload update"
+    fi
+  fi
 
   echo "==> Updating installed global .NET tools"
-  mapfile -t GLOBAL_TOOLS < <(dotnet tool list -g 2>/dev/null | awk 'NR>2 && NF>0 {print $1}' || true)
+  GLOBAL_TOOLS=()
+  while IFS= read -r line; do
+    GLOBAL_TOOLS+=("$line")
+  done < <(dotnet tool list -g 2>/dev/null | awk 'NR>2 && NF>0 {print $1}' || true)
   if (( ${#GLOBAL_TOOLS[@]} > 0 )); then
     for tool in "${GLOBAL_TOOLS[@]}"; do
       echo "   -> Updating $tool"
