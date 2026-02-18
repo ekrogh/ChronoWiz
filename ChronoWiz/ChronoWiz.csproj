@@ -55,8 +55,8 @@
     <WindowsEnableConsoleWindow>false</WindowsEnableConsoleWindow>
   </PropertyGroup>
   <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' and '$(Configuration)' == 'Debug'">
-	<AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
-	<GenerateTemporaryStoreCertificate>False</GenerateTemporaryStoreCertificate>
+    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
+    <GenerateTemporaryStoreCertificate>False</GenerateTemporaryStoreCertificate>
   </PropertyGroup>
   <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
     <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
@@ -190,16 +190,16 @@
     <ApplicationTitle>ChronoWiz</ApplicationTitle>
     <ApplicationDisplayVersion>2.0.1</ApplicationDisplayVersion>
     <ApplicationVersion>13</ApplicationVersion>
-	<AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
-	<GenerateTemporaryStoreCertificate>False</GenerateTemporaryStoreCertificate>
+    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
+    <GenerateTemporaryStoreCertificate>False</GenerateTemporaryStoreCertificate>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows10.0.19041.0|x64'">
     <ApplicationId>dk.eksit.chronowiz</ApplicationId>
     <ApplicationTitle>ChronoWiz</ApplicationTitle>
     <ApplicationDisplayVersion>2.0.1</ApplicationDisplayVersion>
     <ApplicationVersion>13</ApplicationVersion>
-	<AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
-	<GenerateTemporaryStoreCertificate>False</GenerateTemporaryStoreCertificate>
+    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
+    <GenerateTemporaryStoreCertificate>False</GenerateTemporaryStoreCertificate>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows10.0.19041.0|x64'">
     <ApplicationId>dk.eksit.chronowiz</ApplicationId>
