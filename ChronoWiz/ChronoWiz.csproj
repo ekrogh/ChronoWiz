@@ -45,7 +45,6 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Nullable>enable</Nullable>
     <DefaultLanguage>en</DefaultLanguage>
-    <PackageCertificateThumbprint>73862029389D9A3A8270E9F3719E3CC7C29976D0</PackageCertificateThumbprint>
     <Platforms>AnyCPU</Platforms>
     <WindowsPackageType>MSIX</WindowsPackageType>
   </PropertyGroup>
@@ -290,6 +289,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
+    <PackageCertificateKeyFile>ChronoWiz_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
