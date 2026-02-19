@@ -10,6 +10,7 @@
 	<FileVersion>2.0.1.13</FileVersion>
 	<InformationalVersion>2.0.1</InformationalVersion>
 	<AssemblyName>ChronoWiz</AssemblyName>
+	<Platforms>AnyCPU;ARM32;ARM64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>
