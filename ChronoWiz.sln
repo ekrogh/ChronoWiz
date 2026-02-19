@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MajorMinorBuildRevisionNumb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoWiz.Avalonia.Linux", "ChronoWiz.Avalonia.Linux\ChronoWiz.Avalonia.Linux.csproj", "{25A4A63E-9BDE-4912-ACE0-852FCE6B507F}"
 EndProject
+Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "ChronoWiz.StorePackaging", "ChronoWiz.StorePackaging\ChronoWiz.StorePackaging.wapproj", "{6A5B1C6B-14A3-4F15-9A8D-7F0D1B43B0A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
