@@ -13,7 +13,10 @@
                 HorizontalAlignment="Left"
                 Command="{Binding GoBackCommand}"
                 Content="Back" />
-            <Image Source="avares://ChronoWiz/Assets/IcsFiling/openics.png" />
+            <Image Source="avares://ChronoWiz/Assets/IcsFiling/openics.png"
+                Height="150"
+                HorizontalAlignment="Center"
+                Stretch="Uniform" />
             <TextBlock
                 FontSize="22"
                 FontWeight="SemiBold"

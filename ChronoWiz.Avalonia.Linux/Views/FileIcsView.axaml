@@ -18,9 +18,11 @@
                 FontWeight="SemiBold"
                 Foreground="White"
                 Text="{Binding Title}" />
-            <Panel>
-                <Image Source="avares://ChronoWiz/Assets/IcsFiling/fileics.png" />
-            </Panel>
+            <Image
+                Source="avares://ChronoWiz/Assets/IcsFiling/fileics.png"
+                Height="150"
+                HorizontalAlignment="Center"
+                Stretch="Uniform" />
             <StackPanel Orientation="Horizontal" Spacing="10">
                 <Button Command="{Binding GoOpenIcsCommand}" Content="Open .ics" />
                 <Button Command="{Binding GoSaveIcsCommand}" Content="Save .ics" />
