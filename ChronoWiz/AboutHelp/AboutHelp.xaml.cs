@@ -4,9 +4,12 @@ namespace ChronoWiz;
 
 public partial class AboutHelp : ContentPage
 {
+  private Ui.ZoomToWindowController? _zoomToWindow;
+
 	public AboutHelp()
 	{
 		InitializeComponent();
+		_zoomToWindow = new Ui.ZoomToWindowController(this, AboutHelpStack);
 
 		var name = AppInfo.Current.Name ?? "";
 		var verStr = AppInfo.Current.VersionString ?? "";
@@ -26,6 +29,13 @@ public partial class AboutHelp : ContentPage
 			+ curVer.Minor
 			+ '.'
 			+ curVer.Build;
+	}
+
+	protected override void OnDisappearing()
+	{
+		_zoomToWindow?.Dispose();
+		_zoomToWindow = null;
+		base.OnDisappearing();
 	}
 
 	private async void UsersGuideButton_Clicked(object sender, EventArgs e)

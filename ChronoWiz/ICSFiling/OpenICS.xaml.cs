@@ -4,9 +4,19 @@ namespace ChronoWiz;
 
 public partial class OpenICS : ContentPage
 {
+    private Ui.ZoomToWindowController? _zoomToWindow;
+
 	public OpenICS()
 	{
 		InitializeComponent();
+       _zoomToWindow = new Ui.ZoomToWindowController(this, TotalStack);
+	}
+
+	protected override void OnDisappearing()
+	{
+		_zoomToWindow?.Dispose();
+		_zoomToWindow = null;
+		base.OnDisappearing();
 	}
 
 

@@ -4,11 +4,21 @@ namespace ChronoWiz;
 
 public partial class SaveToICS : ContentPage
 {
+  private Ui.ZoomToWindowController? _zoomToWindow;
+
 	public SaveToICS()
 	{
 		InitializeComponent();
+		_zoomToWindow = new Ui.ZoomToWindowController(this, TotalStack);
 
 		Summary.Focus();
+	}
+
+	protected override void OnDisappearing()
+	{
+		_zoomToWindow?.Dispose();
+		_zoomToWindow = null;
+		base.OnDisappearing();
 	}
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously

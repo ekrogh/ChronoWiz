@@ -81,9 +81,7 @@ public partial class MainPage : ContentPage
 #endif
         DeviceDisplay.Current.MainDisplayInfoChanged += Current_MainDisplayInfoChanged;
 
-        // On desktop-sized windows, scale the whole page content to fit.
-        if (DeviceInfo.Platform == DevicePlatform.MacCatalyst || DeviceInfo.Platform == DevicePlatform.WinUI)
-            _zoomToWindow = new Ui.ZoomToWindowController(this, TotalStackName);
+        _zoomToWindow = new Ui.ZoomToWindowController(this, TotalStackName);
     }
 
 	protected override void OnDisappearing()
