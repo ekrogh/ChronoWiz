@@ -9,6 +9,7 @@ internal sealed class ZoomToWindowController : IDisposable
 	private readonly double _minScale;
 	private readonly double _maxScale;
 	private readonly double _padding;
+	private readonly bool _insideScrollView;
 
 	private bool _updatePending;
 	private double _lastAppliedScale = 1.0;
@@ -17,7 +18,7 @@ internal sealed class ZoomToWindowController : IDisposable
 	public ZoomToWindowController(
 		ContentPage page,
 		VisualElement target,
-		double minScale = 0.6,
+      double minScale = 1.0,
 		double maxScale = 3.0,
 		double padding = 12.0)
 	{
@@ -26,9 +27,10 @@ internal sealed class ZoomToWindowController : IDisposable
 		_minScale = minScale;
 		_maxScale = maxScale;
 		_padding = padding;
+		_insideScrollView = IsInsideScrollView(target);
 
-		_target.AnchorX = 0.5;
-		_target.AnchorY = 0.5;
+      _target.AnchorX = _insideScrollView ? 0.0 : 0.5;
+		_target.AnchorY = _insideScrollView ? 0.0 : 0.5;
 
 		_page.SizeChanged += OnPageSizeChanged;
 		_target.SizeChanged += OnTargetSizeChanged;
@@ -97,7 +99,7 @@ internal sealed class ZoomToWindowController : IDisposable
 			Dispose();
 			return;
 		}
-		var desiredWidth = measuredSize.Width;
+      var desiredWidth = _insideScrollView && _target.Width > 0 ? _target.Width : measuredSize.Width;
 		var desiredHeight = measuredSize.Height;
 		if (desiredWidth <= 0 || desiredHeight <= 0)
 			return;
@@ -107,9 +109,11 @@ internal sealed class ZoomToWindowController : IDisposable
 		if (availableWidth <= 0 || availableHeight <= 0)
 			return;
 
-		var scaleX = availableWidth / desiredWidth;
+     var scaleX = availableWidth / desiredWidth;
 		var scaleY = availableHeight / desiredHeight;
-		var newScale = Math.Min(scaleX, scaleY);
+      var newScale = _insideScrollView
+			? Math.Max(1.0, scaleX)
+			: Math.Min(scaleX, scaleY);
 		newScale = Math.Clamp(newScale, _minScale, _maxScale);
 
 		if (Math.Abs(newScale - _lastAppliedScale) < 0.01)
@@ -117,5 +121,16 @@ internal sealed class ZoomToWindowController : IDisposable
 
 		_lastAppliedScale = newScale;
 		_target.Scale = newScale;
+	}
+
+	private static bool IsInsideScrollView(Element element)
+	{
+		for (Element? current = element.Parent; current is not null; current = current.Parent)
+		{
+			if (current is ScrollView)
+				return true;
+		}
+
+		return false;
 	}
 }

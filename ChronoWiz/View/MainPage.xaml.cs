@@ -927,20 +927,11 @@ public partial class MainPage : ContentPage
         sb.AppendLine("VERSION:2.0");
         sb.AppendLine("PRODID:eksit.dk");
         sb.AppendLine("METHOD:PUBLISH");
-#if true
         var TimeZoneName = TimeZoneInfo.Local.StandardName;
         var UtcOffset = TimeZoneInfo.Local.GetUtcOffset(DateTime.Now);
         var UtcOffsetStr = (UtcOffset.Hours >= 0 ? "+" : "-") + UtcOffset.ToString("hhmm");
         var BaseUtcOff = TimeZoneInfo.Local.BaseUtcOffset;
         var BaseUtcOffStr = (BaseUtcOff.Hours >= 0 ? "+" : "-") + BaseUtcOff.ToString("hhmm");
-#else
-		TimeZoneInfo cst = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
-		var TimeZoneName = cst.StandardName;
-		var UtcOffset = cst.GetUtcOffset(DateTime.Now);
-		var UtcOffsetStr = (UtcOffset.Hours >= 0 ? "+" : "-") + UtcOffset.ToString("hhmm");
-		var BaseUtcOff = cst.BaseUtcOffset;
-		var BaseUtcOffStr = (BaseUtcOff.Hours >= 0 ? "+" : "-") + BaseUtcOff.ToString("hhmm");
-#endif
         sb.AppendLine("BEGIN:VTIMEZONE");
         sb.AppendLine("TZID:" + TimeZoneName);
         sb.AppendLine("BEGIN:STANDARD");
@@ -963,32 +954,27 @@ public partial class MainPage : ContentPage
         sb.AppendLine("END:VCALENDAR");
         CalendarItem = sb.ToString().Replace("\r", "");
         SuggestedNameOfFileToSaveTo = Summary;
+        var suggestedFileName = string.IsNullOrWhiteSpace(SuggestedNameOfFileToSaveTo) ? "Calendar" : SuggestedNameOfFileToSaveTo;
+        foreach (var invalid in Path.GetInvalidFileNameChars())
+            suggestedFileName = suggestedFileName.Replace(invalid, '_');
+        var finalFileName = $"{suggestedFileName}.ics";
+
 #if ANDROID
-		var FolderPickerResult = await FolderPicker.Default.PickAsync(default);
-		if (FolderPickerResult.IsSuccessful)
-		{
-			await Toast.Make($"The folder was picked: Name - {FolderPickerResult.Folder.Name}, Path - {FolderPickerResult.Folder.Path}", ToastDuration.Long).Show();
-			var folderPath = FolderPickerResult.Folder.Path;
-			using MemoryStream stream = new(Encoding.Default.GetBytes(CalendarItem));
-			FileSaverResult fileSaverResult = await FileSaver.Default.SaveAsync(folderPath, "Calendar.ics", stream);
-			stream.Dispose();
-			if (fileSaverResult.IsSuccessful)
-				await Shell.Current.GoToAsync("..\\..", true);
-			else
-				await Shell.Current.DisplayAlertAsync("Error", "File is not saved!!\n\n" + fileSaverResult.Exception, "OK");
-		}
-		else
-		{
-			await Toast.Make($"The folder was not picked with error: {FolderPickerResult.Exception.Message}").Show();
-		}
+        var filePath = Path.Combine(FileSystem.Current.CacheDirectory, finalFileName);
+        await File.WriteAllTextAsync(filePath, CalendarItem, Encoding.UTF8);
+        await Share.Default.RequestAsync(new ShareFileRequest
+        {
+            Title = "Save .ics file",
+            File = new ShareFile(filePath)
+        });
+        await Shell.Current.GoToAsync("..\\..", true);
 #else
-        using MemoryStream stream = new(Encoding.Default.GetBytes(CalendarItem));
-        FileSaverResult fileSaverResult = await FileSaver.Default.SaveAsync("Calendar.ics", stream);
-        stream.Dispose();
+        using MemoryStream stream = new(Encoding.UTF8.GetBytes(CalendarItem));
+        FileSaverResult fileSaverResult = await FileSaver.Default.SaveAsync(finalFileName, stream);
         if (fileSaverResult.IsSuccessful)
             await Shell.Current.GoToAsync("..\\..", true);
         else
-			await Shell.Current.DisplayAlertAsync("Error", "File is not saved!!\n\n" + fileSaverResult.Exception, "OK");
+            await Shell.Current.DisplayAlertAsync("Error", "File is not saved!!\n\n" + fileSaverResult.Exception, "OK");
 #endif
     }
 
