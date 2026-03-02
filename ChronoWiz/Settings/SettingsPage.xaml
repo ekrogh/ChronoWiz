@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+	x:Class="ChronoWiz.SettingsPage"
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	Title="Settings"
+	Shell.BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}"
+	Shell.ForegroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
+	Shell.TitleColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}">
+
+	<VerticalStackLayout Padding="20" Spacing="12">
+		<Label
+			FontAttributes="Bold"
+			Text="Zoom to window"
+			TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+		<Grid ColumnSpacing="12">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<Label
+				Grid.Column="0"
+				Text="Enable automatic zoom-to-window behavior"
+				TextColor="{AppThemeBinding Light=Black, Dark=White}"
+				VerticalOptions="Center" />
+			<Switch
+				x:Name="ZoomToWindowSwitch"
+				Grid.Column="1"
+				Toggled="ZoomToWindowSwitch_Toggled"
+				VerticalOptions="Center" />
+		</Grid>
+	</VerticalStackLayout>
+</ContentPage>

@@ -93,7 +93,7 @@ public partial class MainPage : ContentPage
 			_displayInfoSubscribed = true;
 		}
 
-		_zoomToWindow ??= new Ui.ZoomToWindowController(this, TotalStackName);
+      SyncZoomController();
 
 		// Re-apply the current orientation after returning from pickers/pages without clearing user-entered values.
 		var info = DeviceDisplay.Current.MainDisplayInfo;
@@ -138,6 +138,20 @@ public partial class MainPage : ContentPage
 			_zoomToWindow.EndLayoutChange();
 		}
 	}
+
+    private void SyncZoomController()
+    {
+        if (Ui.ZoomSettings.IsZoomToWindowEnabled)
+        {
+            _zoomToWindow ??= new Ui.ZoomToWindowController(this, TotalStackName);
+        }
+        else
+        {
+            _zoomToWindow?.Dispose();
+            _zoomToWindow = null;
+            TotalStackName.Scale = 1.0;
+        }
+    }
 
 	private void SetOrientationRight(double DipsWidth, double DipsHight, DisplayOrientation DipsOrient, bool clearAll = true)
     {
@@ -1031,6 +1045,9 @@ public partial class MainPage : ContentPage
 
     [RelayCommand]
     private async Task FileButton_Clicked() => await Shell.Current.GoToAsync(nameof(FileICS), true);
+
+    [RelayCommand]
+    private async Task SettingsButtonClicked() => await Shell.Current.GoToAsync(nameof(SettingsPage), true);
 
     private async void On_FileToSaveToSelected(SelectFilesResult arg2)
     {

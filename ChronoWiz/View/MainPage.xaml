@@ -378,6 +378,10 @@
 						Command="{Binding FileButton_ClickedCommand}"
 						Style="{DynamicResource DynamicBaseButtonStyle}"
 						Text="File..." />
+                 <Button
+						Command="{Binding SettingsButtonClickedCommand}"
+						Style="{DynamicResource DynamicBaseButtonStyle}"
+						Text="⚙" />
 					<Button
 						Command="{Binding HelpButtonClickedCommand}"
 						FontAttributes="Bold"
