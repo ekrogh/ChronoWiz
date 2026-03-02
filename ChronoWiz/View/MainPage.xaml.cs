@@ -12,6 +12,7 @@ namespace ChronoWiz.View;
 public partial class MainPage : ContentPage
 {
 	private Ui.ZoomToWindowController? _zoomToWindow;
+	private bool _displayInfoSubscribed;
 
     public MainPage()
     {
@@ -79,14 +80,33 @@ public partial class MainPage : ContentPage
             DeviceDisplay.Current.MainDisplayInfo.Orientation
         );
 #endif
-        DeviceDisplay.Current.MainDisplayInfoChanged += Current_MainDisplayInfoChanged;
-
-        _zoomToWindow = new Ui.ZoomToWindowController(this, TotalStackName);
+		// Hook/unhook in OnAppearing/OnDisappearing so navigation away and back keeps layout updates working.
     }
+
+	protected override void OnAppearing()
+	{
+		base.OnAppearing();
+
+		if (!_displayInfoSubscribed)
+		{
+			DeviceDisplay.Current.MainDisplayInfoChanged += Current_MainDisplayInfoChanged;
+			_displayInfoSubscribed = true;
+		}
+
+		_zoomToWindow ??= new Ui.ZoomToWindowController(this, TotalStackName);
+
+		// Re-apply the current orientation after returning from pickers/pages without clearing user-entered values.
+		var info = DeviceDisplay.Current.MainDisplayInfo;
+		ApplyOrientationAndZoom(info.Width, info.Height, info.Orientation, clearAll: false);
+	}
 
 	protected override void OnDisappearing()
 	{
-		DeviceDisplay.Current.MainDisplayInfoChanged -= Current_MainDisplayInfoChanged;
+		if (_displayInfoSubscribed)
+		{
+			DeviceDisplay.Current.MainDisplayInfoChanged -= Current_MainDisplayInfoChanged;
+			_displayInfoSubscribed = false;
+		}
 		_zoomToWindow?.Dispose();
 		_zoomToWindow = null;
 		base.OnDisappearing();
@@ -96,11 +116,30 @@ public partial class MainPage : ContentPage
     {
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            SetOrientationRight(e.DisplayInfo.Width, e.DisplayInfo.Height, e.DisplayInfo.Orientation);
+			ApplyOrientationAndZoom(e.DisplayInfo.Width, e.DisplayInfo.Height, e.DisplayInfo.Orientation);
         });
     }
 
-    private void SetOrientationRight(double DipsWidth, double DipsHight, DisplayOrientation DipsOrient)
+	private void ApplyOrientationAndZoom(double width, double height, DisplayOrientation orientation, bool clearAll = true)
+	{
+		if (_zoomToWindow is null)
+		{
+			SetOrientationRight(width, height, orientation, clearAll);
+			return;
+		}
+
+		_zoomToWindow.BeginLayoutChange();
+		try
+		{
+			SetOrientationRight(width, height, orientation, clearAll);
+		}
+		finally
+		{
+			_zoomToWindow.EndLayoutChange();
+		}
+	}
+
+	private void SetOrientationRight(double DipsWidth, double DipsHight, DisplayOrientation DipsOrient, bool clearAll = true)
     {
         bool portrait = (DipsOrient == DisplayOrientation.Portrait);
 
@@ -167,7 +206,10 @@ public partial class MainPage : ContentPage
             StartDayName.WidthRequest = EndDayName.WidthRequest = 45;
         }
 
-        DoClearAll();
+		if (clearAll)
+			DoClearAll();
+		else
+			ApplyEntryWidthRequests();
     }
 
     private bool firstTimeWdthOrHeightChanged = true;
@@ -297,29 +339,34 @@ public partial class MainPage : ContentPage
         SetEndDateTime();
         ClearYMWDHM(null);
 
-        if (DeviceInfo.Platform == DevicePlatform.iOS)
-        {
-            CombndYears.WidthRequest = CombndMonths.WidthRequest = CombndWeeks.WidthRequest = CombndDays.WidthRequest = CombndHours.WidthRequest = CombndMinutes.WidthRequest = 105;
-            TotYears.WidthRequest = TotMonths.WidthRequest = TotWeeks.WidthRequest = TotDays.WidthRequest = TotHours.WidthRequest = TotMinutes.WidthRequest = 105;
-        }
-        else if (DeviceInfo.Platform == DevicePlatform.Android)
-        {
-            CombndYears.WidthRequest = CombndMonths.WidthRequest = CombndWeeks.WidthRequest = CombndDays.WidthRequest = CombndHours.WidthRequest = CombndMinutes.WidthRequest = 88;
-            TotYears.WidthRequest = TotMonths.WidthRequest = TotWeeks.WidthRequest = TotDays.WidthRequest = TotHours.WidthRequest = TotMinutes.WidthRequest = 88;
-        }
-        else if (DeviceInfo.Platform == DevicePlatform.WinUI)
-        {
-            CombndYears.WidthRequest = CombndMonths.WidthRequest = CombndWeeks.WidthRequest = CombndDays.WidthRequest = CombndHours.WidthRequest = CombndMinutes.WidthRequest = 121;
-            TotYears.WidthRequest = TotMonths.WidthRequest = TotWeeks.WidthRequest = TotDays.WidthRequest = TotHours.WidthRequest = TotMinutes.WidthRequest = 121;
-        }
-        else
-        {
-            CombndYears.WidthRequest = CombndMonths.WidthRequest = CombndWeeks.WidthRequest = CombndDays.WidthRequest = CombndHours.WidthRequest = CombndMinutes.WidthRequest = 121;
-            TotYears.WidthRequest = TotMonths.WidthRequest = TotWeeks.WidthRequest = TotDays.WidthRequest = TotHours.WidthRequest = TotMinutes.WidthRequest = 121;
-        }
+		ApplyEntryWidthRequests();
 
         ClearAllIOVars();
     }
+
+	private void ApplyEntryWidthRequests()
+	{
+		if (DeviceInfo.Platform == DevicePlatform.iOS)
+		{
+			CombndYears.WidthRequest = CombndMonths.WidthRequest = CombndWeeks.WidthRequest = CombndDays.WidthRequest = CombndHours.WidthRequest = CombndMinutes.WidthRequest = 105;
+			TotYears.WidthRequest = TotMonths.WidthRequest = TotWeeks.WidthRequest = TotDays.WidthRequest = TotHours.WidthRequest = TotMinutes.WidthRequest = 105;
+		}
+		else if (DeviceInfo.Platform == DevicePlatform.Android)
+		{
+			CombndYears.WidthRequest = CombndMonths.WidthRequest = CombndWeeks.WidthRequest = CombndDays.WidthRequest = CombndHours.WidthRequest = CombndMinutes.WidthRequest = 88;
+			TotYears.WidthRequest = TotMonths.WidthRequest = TotWeeks.WidthRequest = TotDays.WidthRequest = TotHours.WidthRequest = TotMinutes.WidthRequest = 88;
+		}
+		else if (DeviceInfo.Platform == DevicePlatform.WinUI)
+		{
+			CombndYears.WidthRequest = CombndMonths.WidthRequest = CombndWeeks.WidthRequest = CombndDays.WidthRequest = CombndHours.WidthRequest = CombndMinutes.WidthRequest = 121;
+			TotYears.WidthRequest = TotMonths.WidthRequest = TotWeeks.WidthRequest = TotDays.WidthRequest = TotHours.WidthRequest = TotMinutes.WidthRequest = 121;
+		}
+		else
+		{
+			CombndYears.WidthRequest = CombndMonths.WidthRequest = CombndWeeks.WidthRequest = CombndDays.WidthRequest = CombndHours.WidthRequest = CombndMinutes.WidthRequest = 121;
+			TotYears.WidthRequest = TotMonths.WidthRequest = TotWeeks.WidthRequest = TotDays.WidthRequest = TotHours.WidthRequest = TotMinutes.WidthRequest = 121;
+		}
+	}
 
     // Start date-time...
 
@@ -904,6 +951,10 @@ public partial class MainPage : ContentPage
                 if (CorrectForIcsTimeZone) { EndDateTimeOut -= TheTZOFFSETTO; EndDateTimeOut += BaseUtcOff; }
                 EndDateTimeIn = EndDateTimeOut; EndDateIn = EndDateTimeOut.Date; EndTimeIn = EndDateTimeOut.TimeOfDay; SetEndDateTime();
                 CalcAndShowTimeSpans();
+
+				// Ensure the phone/tablet layout is applied after returning from the picker without clearing the loaded values.
+				var info = DeviceDisplay.Current.MainDisplayInfo;
+				ApplyOrientationAndZoom(info.Width, info.Height, info.Orientation, clearAll: false);
             }
             catch (Exception e)
             {
