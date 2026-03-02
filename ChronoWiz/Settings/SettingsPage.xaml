@@ -4,11 +4,12 @@
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	Title="Settings"
+   SafeAreaEdges="All"
 	Shell.BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}"
 	Shell.ForegroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
 	Shell.TitleColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}">
 
-	<VerticalStackLayout Padding="20" Spacing="12">
+ <VerticalStackLayout x:Name="ZoomSettingsSection" Padding="20" Spacing="12">
 		<Label
 			FontAttributes="Bold"
 			Text="Zoom to window"

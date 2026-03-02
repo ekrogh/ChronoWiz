@@ -6,6 +6,7 @@
 	xmlns:local="clr-namespace:ChronoWiz;assembly=ChronoWiz"
 	x:Name="FileICSContentPageName"
 	Title="ICS"
+   SafeAreaEdges="All"
 	Shell.BackgroundColor="{AppThemeBinding Light={StaticResource White},
 	                                        Dark={StaticResource Gray950}}"
 	Shell.ForegroundColor="{AppThemeBinding Light={StaticResource Black},

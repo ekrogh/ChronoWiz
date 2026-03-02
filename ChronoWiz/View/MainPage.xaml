@@ -6,6 +6,7 @@
 	xmlns:view="clr-namespace:ChronoWiz.View"
 	x:Name="ContentPageName"
 	x:DataType="view:MainPage"
+  SafeAreaEdges="All"
 	Shell.NavBarIsVisible="False">
 
 	<ContentPage.Resources>
@@ -380,6 +381,7 @@
 						Text="File..." />
                  <Button
 						Command="{Binding SettingsButtonClickedCommand}"
+                        IsVisible="{OnIdiom Phone=False, Default=True}"
 						Style="{DynamicResource DynamicBaseButtonStyle}"
 						Text="⚙" />
 					<Button

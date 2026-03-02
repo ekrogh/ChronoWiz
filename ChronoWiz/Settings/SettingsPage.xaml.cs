@@ -7,6 +7,14 @@ public partial class SettingsPage : ContentPage
 	public SettingsPage()
 	{
 		InitializeComponent();
+
+		if (!Ui.ZoomSettings.IsZoomSupportedForCurrentDevice)
+		{
+			ZoomSettingsSection.IsVisible = false;
+			Ui.ZoomSettings.IsZoomToWindowEnabled = false;
+			return;
+		}
+
 		ZoomToWindowSwitch.IsToggled = Ui.ZoomSettings.IsZoomToWindowEnabled;
 		_initialized = true;
 	}

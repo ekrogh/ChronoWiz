@@ -118,7 +118,10 @@ internal sealed class ZoomToWindowController : IDisposable
 		if (_disposed)
 			return;
 
-		if (_page.Width <= 0 || _page.Height <= 0)
+      var viewportWidth = _page.Width;
+		var viewportHeight = _page.Height;
+
+		if (viewportWidth <= 0 || viewportHeight <= 0)
 			return;
 
 		// Measure the target at its natural size.
@@ -141,8 +144,8 @@ internal sealed class ZoomToWindowController : IDisposable
 		if (desiredWidth <= 0 || desiredHeight <= 0)
 			return;
 
-		var availableWidth = Math.Max(0, _page.Width - _padding * 2);
-		var availableHeight = Math.Max(0, _page.Height - _padding * 2);
+       var availableWidth = Math.Max(0, viewportWidth - _padding * 2);
+		var availableHeight = Math.Max(0, viewportHeight - _padding * 2);
 		if (availableWidth <= 0 || availableHeight <= 0)
 			return;
 

@@ -66,19 +66,9 @@ public partial class MainPage : ContentPage
         EndDatePicker.Date = DateTime.Now.Date;
 
 #if __MACCATALYST__
-		SetOrientationRight
-		(
-			DeviceDisplay.Current.MainDisplayInfo.Width,
-			DeviceDisplay.Current.MainDisplayInfo.Height,
-			DisplayOrientation.Landscape
-		);
+		SetOrientationRight(DisplayOrientation.Landscape);
 #else
-        SetOrientationRight
-        (
-            DeviceDisplay.Current.MainDisplayInfo.Width,
-            DeviceDisplay.Current.MainDisplayInfo.Height,
-            DeviceDisplay.Current.MainDisplayInfo.Orientation
-        );
+        SetOrientationRight(DeviceDisplay.Current.MainDisplayInfo.Orientation);
 #endif
 		// Hook/unhook in OnAppearing/OnDisappearing so navigation away and back keeps layout updates working.
     }
@@ -97,7 +87,7 @@ public partial class MainPage : ContentPage
 
 		// Re-apply the current orientation after returning from pickers/pages without clearing user-entered values.
 		var info = DeviceDisplay.Current.MainDisplayInfo;
-		ApplyOrientationAndZoom(info.Width, info.Height, info.Orientation, clearAll: false);
+		ApplyOrientationAndZoom(info.Orientation, clearAll: false);
 	}
 
 	protected override void OnDisappearing()
@@ -116,22 +106,22 @@ public partial class MainPage : ContentPage
     {
         MainThread.BeginInvokeOnMainThread(() =>
         {
-			ApplyOrientationAndZoom(e.DisplayInfo.Width, e.DisplayInfo.Height, e.DisplayInfo.Orientation);
+			ApplyOrientationAndZoom(e.DisplayInfo.Orientation);
         });
     }
 
-	private void ApplyOrientationAndZoom(double width, double height, DisplayOrientation orientation, bool clearAll = true)
+	private void ApplyOrientationAndZoom(DisplayOrientation orientation, bool clearAll = true)
 	{
 		if (_zoomToWindow is null)
 		{
-			SetOrientationRight(width, height, orientation, clearAll);
+			SetOrientationRight(orientation, clearAll);
 			return;
 		}
 
 		_zoomToWindow.BeginLayoutChange();
 		try
 		{
-			SetOrientationRight(width, height, orientation, clearAll);
+			SetOrientationRight(orientation, clearAll);
 		}
 		finally
 		{
@@ -141,7 +131,7 @@ public partial class MainPage : ContentPage
 
     private void SyncZoomController()
     {
-        if (Ui.ZoomSettings.IsZoomToWindowEnabled)
+        if (Ui.ZoomSettings.IsZoomSupportedForCurrentDevice && Ui.ZoomSettings.IsZoomToWindowEnabled)
         {
             _zoomToWindow ??= new Ui.ZoomToWindowController(this, TotalStackName);
         }
@@ -153,7 +143,7 @@ public partial class MainPage : ContentPage
         }
     }
 
-	private void SetOrientationRight(double DipsWidth, double DipsHight, DisplayOrientation DipsOrient, bool clearAll = true)
+	private void SetOrientationRight(DisplayOrientation DipsOrient, bool clearAll = true)
     {
         bool portrait = (DipsOrient == DisplayOrientation.Portrait);
 
@@ -968,7 +958,7 @@ public partial class MainPage : ContentPage
 
 				// Ensure the phone/tablet layout is applied after returning from the picker without clearing the loaded values.
 				var info = DeviceDisplay.Current.MainDisplayInfo;
-				ApplyOrientationAndZoom(info.Width, info.Height, info.Orientation, clearAll: false);
+				ApplyOrientationAndZoom(info.Orientation, clearAll: false);
             }
             catch (Exception e)
             {
@@ -1047,7 +1037,13 @@ public partial class MainPage : ContentPage
     private async Task FileButton_Clicked() => await Shell.Current.GoToAsync(nameof(FileICS), true);
 
     [RelayCommand]
-    private async Task SettingsButtonClicked() => await Shell.Current.GoToAsync(nameof(SettingsPage), true);
+    private async Task SettingsButtonClicked()
+    {
+        if (!Ui.ZoomSettings.IsZoomSupportedForCurrentDevice)
+            return;
+
+        await Shell.Current.GoToAsync(nameof(SettingsPage), true);
+    }
 
     private async void On_FileToSaveToSelected(SelectFilesResult arg2)
     {
