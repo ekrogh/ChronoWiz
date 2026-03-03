@@ -1,30 +1,26 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-	<Version>2.0.1</Version>
-	<AssemblyVersion>2.0.1.13</AssemblyVersion>
-	<FileVersion>2.0.1.13</FileVersion>
-	<InformationalVersion>2.0.1</InformationalVersion>
-	<AssemblyName>ChronoWiz</AssemblyName>
-	<Platforms>AnyCPU;ARM32;ARM64</Platforms>
+    <Version>2.0.2</Version>
+    <AssemblyVersion>2.0.2.14</AssemblyVersion>
+    <FileVersion>2.0.2.14</FileVersion>
+    <InformationalVersion>2.0.2</InformationalVersion>
+    <AssemblyName>ChronoWiz</AssemblyName>
+    <Platforms>AnyCPU;ARM32;ARM64</Platforms>
   </PropertyGroup>
-
   <PropertyGroup>
     <RuntimeIdentifiers>linux-x64;linux-arm64</RuntimeIdentifiers>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="app.manifest" />
   </ItemGroup>
-
   <ItemGroup Condition="'$(OS)' == 'Windows_NT'">
     <ApplicationManifest Include="app.manifest" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.3.12" />
     <PackageReference Include="Avalonia.Desktop" Version="11.3.12" />
@@ -37,7 +33,6 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-
   <ItemGroup>
     <AvaloniaResource Include="Assets\IcsFiling\**" />
   </ItemGroup>
