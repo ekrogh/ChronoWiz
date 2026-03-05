@@ -1,7 +1,7 @@
 name: chronowiz
 title: ChronoWiz
 base: core24
-version: "2.0.1"
+version: "2.0.2"
 summary: Calculates times and time spans
 description: |
   chronowiz
