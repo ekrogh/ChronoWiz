@@ -76,7 +76,9 @@ fi
 
 echo "Using provisioning profile '$PROFILE_NAME' (UUID: $PROFILE_UUID)"
 
-dotnet build -t:Clean
-dotnet clean
+PROJECT_FILE="ChronoWiz/ChronoWiz.csproj"
+
+dotnet build "$PROJECT_FILE" -t:Clean
+dotnet clean "$PROJECT_FILE"
 rm -rf /Users/eks/Downloads/ChronoWiz*.pkg
-dotnet publish ChronoWiz/ChronoWiz.csproj -f net10.0-maccatalyst -c Release -p:MtouchLink=SdkOnly -p:ArchiveOnBuild=true -p:CreatePackage=true -p:EnableCodeSigning=true -p:EnablePackageSigning=true -p:CodesignKey="Apple Distribution: Eigil Krogh (4657Q2Y6NH)" -p:CodesignProvision="$PROFILE_UUID" -p:CodesignEntitlements="Platforms/MacCatalyst/Entitlements.Release.plist" -p:MtouchExtraArgs="--nowarn:7151" -p:PackageSigningKey="3rd Party Mac Developer Installer: Eigil Krogh (4657Q2Y6NH)" -o "/Users/eks/Downloads/"
+dotnet publish "$PROJECT_FILE" -f net10.0-maccatalyst -c Release -p:MtouchLink=SdkOnly -p:ArchiveOnBuild=true -p:CreatePackage=true -p:EnableCodeSigning=true -p:EnablePackageSigning=true -p:CodesignKey="Apple Distribution: Eigil Krogh (4657Q2Y6NH)" -p:CodesignProvision="$PROFILE_UUID" -p:CodesignEntitlements="Platforms/MacCatalyst/Entitlements.Release.plist" -p:MtouchExtraArgs="--nowarn:7151" -p:PackageSigningKey="3rd Party Mac Developer Installer: Eigil Krogh (4657Q2Y6NH)" -o "/Users/eks/Downloads/"
