@@ -13,7 +13,6 @@ public partial class MainPage : ContentPage
 {
 	private Ui.ZoomToWindowController? _zoomToWindow;
 	private bool _displayInfoSubscribed;
-    private bool _initialDisplayInfoApplied;
 
     public MainPage()
     {
@@ -66,6 +65,12 @@ public partial class MainPage : ContentPage
         StartDatePicker.Date = DateTime.Now.Date;
         EndDatePicker.Date = DateTime.Now.Date;
 
+#if __MACCATALYST__
+        SetOrientationRight(DisplayOrientation.Landscape);
+#else
+        SetOrientationRight(DeviceDisplay.Current.MainDisplayInfo.Orientation);
+#endif
+
 		// Hook/unhook in OnAppearing/OnDisappearing so navigation away and back keeps layout updates working.
     }
 
@@ -80,7 +85,10 @@ public partial class MainPage : ContentPage
 		}
 
       SyncZoomController();
-        Dispatcher.Dispatch(ApplyCurrentDisplayInfo);
+
+        // Re-apply the current orientation after returning from pickers/pages without clearing user-entered values.
+        var info = DeviceDisplay.Current.MainDisplayInfo;
+        ApplyOrientationAndZoom(info.Orientation, clearAll: false);
 	}
 
 	protected override void OnDisappearing()
@@ -101,25 +109,6 @@ public partial class MainPage : ContentPage
         {
 			ApplyOrientationAndZoom(e.DisplayInfo.Orientation);
         });
-    }
-
-    private void ApplyCurrentDisplayInfo()
-    {
-#if __MACCATALYST__
-        ApplyOrientationAndZoom(DisplayOrientation.Landscape, clearAll: !_initialDisplayInfoApplied);
-        _initialDisplayInfoApplied = true;
-#else
-        try
-        {
-            var info = DeviceDisplay.Current.MainDisplayInfo;
-            ApplyOrientationAndZoom(info.Orientation, clearAll: !_initialDisplayInfoApplied);
-            _initialDisplayInfoApplied = true;
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"Unable to read display info during startup: {ex}");
-        }
-#endif
     }
 
 	private void ApplyOrientationAndZoom(DisplayOrientation orientation, bool clearAll = true)
