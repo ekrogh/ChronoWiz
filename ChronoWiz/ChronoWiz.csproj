@@ -3,7 +3,9 @@
     <TargetFrameworks>
       net10.0-ios;
       net10.0-maccatalyst;
-      net10.0-android</TargetFrameworks>
+      net10.0-android;
+      net10.0-windows10.0.19041.0
+  </TargetFrameworks>
     <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
     <!-- <TargetFrameworks>$(TargetFrameworks);net10.0-tizen</TargetFrameworks> -->
     <!-- Note for MacCatalyst:
@@ -51,6 +53,7 @@
   <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
     <OutputType>WinExe</OutputType>
     <WindowsEnableConsoleWindow>false</WindowsEnableConsoleWindow>
+    <WindowsAppSdkDeploymentManagerInitialize>false</WindowsAppSdkDeploymentManagerInitialize>
   </PropertyGroup>
   <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' and ('$(Platform)' == 'AnyCPU' or '$(Platform)' == 'Any CPU' or '$(Platform)' == 'x64')">
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
@@ -89,12 +92,12 @@
     <None Remove="Resources\Images\savetoics.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Maui" Version="14.0.1" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="14.2.0" />
     <PackageReference Include="CommunityToolkit.Maui.Markup" Version="7.0.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.41" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.41" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.71" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.71" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.9" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
@@ -439,7 +442,6 @@
     <AndroidSigningKeyStore>D:\Users\eigil\projects\MAUI\ChronoWiz\Android_Special\Using_Java_keyStore\keystore.jks</AndroidSigningKeyStore>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
     <PackageCertificateThumbprint>569E77F30A9279BA4D6A748E37AD680889016975</PackageCertificateThumbprint>
   </PropertyGroup>
   <ProjectExtensions>
